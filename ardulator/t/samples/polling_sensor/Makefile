@@ -1,0 +1,28 @@
+CC=gcc
+CPP=g++
+CFLAGS=-Wall -I.
+CPPFLAGS=$(CFLAGS)
+LD=ld
+
+OBJFILES := $(patsubst %.cpp,%.o,$(wildcard *.cpp *.c))
+
+all: $(OBJFILES)
+	$(CPP) -o project $(OBJFILES)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
+
+%.o: %.cpp
+	$(CPP) $(CPPFLAGS) -c $<
+
+test: all
+	./project -h
+	./project --help
+	./project -r
+	./project --realtime
+
+help:
+	@echo ""
+	@echo "Arduino Emulator Project"
+	@echo "For Dr. Biaz"
+	@echo ""
