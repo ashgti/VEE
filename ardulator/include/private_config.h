@@ -1,7 +1,7 @@
 #ifndef PRIVATE_CONFIG_H
 #define PRIVATE_CONFIG_H
 
-#include "problem.h"
+#include "arduino_api.h"
 #include <map>
 
 using namespace std;
@@ -37,6 +37,7 @@ class Arduino {
   public:
     Arduino();
     void configurePin(int id, int mode);
+    bool add_input_file(char *name);
 };
 
 extern Arduino ardu;

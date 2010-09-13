@@ -22,8 +22,8 @@
   $Id: wiring.h 804 2009-12-18 16:05:52Z dmellis $
 */
 
-#ifndef ARDUINO_H
-#define ARDUINO_H
+#ifndef ARDUINO_API_H
+#define ARDUINO_API_H
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -130,8 +130,6 @@ void loop(void);
 } // extern "C"
 #endif
 
-using namespace std;
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -197,4 +195,4 @@ class HardwareSerial : public Print
 
 extern HardwareSerial Serial;
 
-#endif /* ARDUINO_H */
+#endif /* ARDUINO_API_H */
