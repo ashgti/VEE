@@ -7,14 +7,16 @@ CC=clang
 CXX=clang++
 CPP=clang++
 PERL=perl
-CFLAGS=-I./include
+CFLAGS=-I./include -Wall -g
 CXXFLAGS=$(CFLAGS)
-OBJ_FILES := src/hardware_serial.o src/pin_commands.o src/private_config.o src/timing.o src/ardulator.o
-SRC_FILES := src/hardware_serial.cpp src/pin_commands.cpp src/private_config.cpp src/timing.cpp src/ardulator.cpp
+EXT_SRC_FILES := ext/clock_gettime.c
+EXT_OBJ_FILES := ext/clock_gettime.o
+OBJ_FILES := src/hardware_serial.o src/pin_commands.o src/private_config.o src/timing.o src/main.o src/arduino.o src/input_types.o $(EXT_OBJ_FILES)
+SRC_FILES := src/hardware_serial.cc src/pin_commands.cc src/private_config.cc src/timing.cc src/main.cc src/arduino.cc src/input_types.cc $(EXT_FILES)
 LIB_FILE := libardunio-emulation.a
 # RM=rm -f
 
-all: staticlib
+all: staticlib test
 
 staticlib: $(LIB_FILE)
 
@@ -27,14 +29,12 @@ $(LIB_FILE) : $(OBJ_FILES)
 	$(AR) cvsrS $(LIB_FILE) $?
 	ranlib $(LIB_FILE)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-%.o: %.cpp
+%.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-test: $(LIB_FILE)
-	$(PERL) t/harness.pl
+test: $(LIB_FILE) samples
+	# $(PERL) t/harness.pl
+	samples/polling_sensor/polling_sensor t/samples/polling_sensor/simple.scn
 
 clean: 
 	$(RM) $(OBJ_FILES) $(LIB_FILE)

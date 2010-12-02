@@ -125,6 +125,17 @@ void detachInterrupt(uint8_t);
 
 void setup(void);
 void loop(void);
+void pinConfiguration(void);
+
+void registerPin(const char* signal_id, uint8_t pin_id);
+
+enum ArduinoModel {
+    ArduinoUno = 1,
+    ArduinoMega = 2,
+    ArduinoNano = 3,
+};
+
+void setModel(ArduinoModel model_name);
 
 #ifdef __cplusplus
 } // extern "C"
@@ -135,6 +146,7 @@ extern "C" {
 #endif
 extern void setup();
 extern void loop();
+extern void pinConfiguration();
 #ifdef __cplusplus
 }
 #endif

@@ -1,0 +1,17 @@
+<h1>Hi</h1>
+
+<ul>
+    <li>
+        <p>Upload a test?</p>
+        <p>
+            <form action="run_test_submit" method="post" accept-charset="utf-8">
+                
+                <p><input type="file" name="foo" value="" id="foo"></p>
+                <p><input type="submit" value="Continue &rarr;"></p>
+            </form>
+        </p>
+    </li>
+    <li>
+        <p>History</p>
+    </li>
+</ul>

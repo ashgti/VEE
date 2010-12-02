@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<title>SEE</title>
+    	<script src="/js/jquery.min.js" type="text/javascript"></script>
+    	<script src="/js/arduinolator.js" type="text/javascript"></script>
+    	<link rel="stylesheet" href="/styles/screen.css" type="text/css" media="screen" />
+    </head>
+    <body>
+        <script id="io_template" type="text/x-jquery-tmpl"> 
+            <fieldset>
+                <legend>${id}</legend>
+                <p>Signal Id: <span>${id}</span></p>
+                <p>Value: <span>${val}</span></p>
+                <p>I/O: <span>${ivo}</span></p>
+            </fieldset>
+        </script>
+
+        <script id="mapping_template" type="text/x-jquery-tmpl"> 
+            <fieldset>
+                <legend>Mapping id: ${id}</legend>
+                <p>Correlation:</p>
+                <p>Timing</p>
+                <p>Ratio</p>
+                <fieldset>
+                    <legend>I/O Events</legend>
+                    ${content}
+                </fieldset>
+            </fieldset>
+        </script>
+
+        <script id="event_type_pin" type="text/x-jquery-tmpl">
+            
+        </script>
+
+        <script id="event_type_serial" type="text/x-jquery-tmpl">
+            <label for="timing">Timing:</label>
+            <select name="timing" id="timing">
+                <option selected value="det">Determinate</option>
+            </select>
+            <label for="correlation">Output Expected:</label>
+            <input type="text" name="foo" value="Hello World" id="foo">
+            <label for="ratio">Ratio:</label>
+            <input type="text" name="ratio" value="1/5" id="ratio">
+        </script>
+
+        <nav>
+            <a href="/run_test">Run another Test</a>
+        </nav>
+        <header>
+            <h1>Test Results</h1>
+        </header>
+        <!-- <a id="config_pin" href="#">Configure Input/Output Pin</a> -->
+        <div id="step_zero">
+            <label>Events List:</label>
+            <select multiple name="events_list" id="events_list"></select>
+            <div id="info">
+            </div>
+        </div>
+        <hr>
+        <div id="step_one">
+            <!-- <form id="one">
+                <fieldset>
+                    <legend>I/O Signal COunt</legend>
+                    <label for="input_count">Input</label>
+                    <input name="input_count" id="input_count">
+                    <br>
+                    <label for="output_count">Output</label>
+                    <input name="output_count" id="output_count">
+                    <br>
+                    <input id="update_io_count" type="submit" value="Update">
+                </fieldset>
+            </form> -->
+        </div>
+        <hr>
+        <div id="step_two">
+            <form id="two">
+                <fieldset>
+                    <legend>Configure Events</legend>
+                    <div style="float:left;width:100px;">
+                        <label for=input_listing>Inputs:</label><br>
+                        <select multiple name=input_listing id=input_listing></select>
+                        <br>
+                        <label for=>Outputs:</label><br>
+                        <select multiple name=output_listing id=output_listing></select>
+                    </div>
+                    <fieldset>
+                        <legend>I/O Event:</legend>
+                        <label for="id">Signal ID:</label>
+                        <input name="id" id="id" value="">
+                        <br>
+                        <label for=ivo>I/O:</label>
+                        <select id=ivo name="ivo"><option value="in">I</option><option value="out">O</option></select>
+                        <br>
+                        <label>Event Type</label>
+                        <select name="e_type" id="e_type">
+                            <option selected value="digital">Digital</option>
+                            <option value="serial">Serial</option>
+                        </select>
+                        <br>
+                        <label for=val>Val:</label> 
+                        <input name=val id="val" value="">
+                        <br>
+                        <a href=# id=add_event>Save I/O Event</a>
+                    </fieldset>
+                    <br>
+                    <hr>
+                    <fieldset>
+                        <legend>Mapping:</legend>
+                        <label for="correlation">Correlation:</label>
+                        <select name="correlation" id="correlation">
+                            <option selected value="end">On End</option>
+                            <option value="ind">Independent</option>
+                        </select>
+                        <label for="timing">Timing:</label>
+                        <select name="timing" id="timing">
+                            <option selected value="det">Determinate</option>
+                        </select>
+                        <label for="ratio">Ratio:</label>
+                        <input type="text" name="ratio" value="1/2" id="ratio">
+                        <br>
+                        <a href=# id="add_mapping">Add Mapping</a>
+                    </fieldset>
+                </fieldset>
+            </form>
+        </div>
+
+        <div id="wrapper">
+            <div id="signals">
+                <h2>Signals</h2>
+                <table>
+                    <tr>
+                        <td>
+                            <canvas id="canvas" width="400" height="400"></canvas><br />
+                        </td>
+                        <td id="feedback">
+                        </td>
+                    </tr>
+                </table>
+                <span style="width: 400px; text-align: center;">Time (s)</span>
+            </div>
+            <nav>
+                <a href="/run_test">Run another Test</a>
+            </nav>
+            <div id="settings">
+                <h2>Pin Settings</h2>
+                <form>
+                    <!--
+                    <p>
+                        <label for="default_configuration">Default Configuration</label>
+                        <select id="default_configuration" name="default_configuration">
+                            <option value="other">Other</option>
+                            <option selected value="mega">Mega</option>
+                            <option value="duem">Duemilanove</option>
+                            <option value="nano">Nano</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="default">Default</label>
+                        <input type="checkbox" name="a" value="" id="a">
+                    </p>
+                    <p>
+                        <label for="">Digital Pins</label>
+                        <input name="d_pin_count" value="54" />
+                        <br />
+                        <label for="">Analog Pins</label>
+                        <input name="a_pin_count" value="16" />
+                    </p>
+                    -->
+                    <p>
+                        <textarea style="width: 300px; height: 300px" id="stuff" name="stuff">
+                            Serial a, b, "Input Text", 5
+                            Det c, 5, 1.5
+                            Exp d, 0
+                            Uni e, 0
+                            ---
+                            Serial a, b, "Hello World", 10
+                            Pin c, 1, 0.5
+                            Pin c, 0, 1.5
+                        </textarea>
+                    </p>
+                </form>
+            </div>
+            <div id="debug">
+                <p id="mouse_pos">Mouse</p>
+                <p id="mouse_down">Mouse</p>
+                <p id="frames">Time</p>
+            </div>
+        </div>
+    </body>
+</html>

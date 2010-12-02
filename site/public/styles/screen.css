@@ -1,0 +1,17 @@
+canvas {
+    border: 1px solid #f00;
+}
+
+table td {
+    vertical-align: top;
+}
+
+#wrapper {
+    position: relative;
+}
+
+#settings {
+    position: absolute;
+    top: 0;
+    left: 480px;
+}

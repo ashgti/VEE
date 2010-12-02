@@ -1,0 +1,8 @@
+Serial a, b, "Input Text", 5
+Det c, 5, 1.5
+Exp d, 0
+Uni e, 0
+---
+Serial a, b, "Hello World", 10
+Pin c, 1, 0.5
+Pin c, 0, 1.5
