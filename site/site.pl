@@ -7,18 +7,29 @@ app->log->level("debug");
 
 my $config = LoadFile("config.yaml");
 
-print Dump($config);
-
-END {
-    # Update the configurations
-    DumpFile("config.yaml", $config);
-}
+# print Dump($config);
+# 
+# END {
+#     # Update the configurations
+#     # DumpFile("config.yaml", $config);
+# }
 
 get '/' => sub {
     my $self = shift;
     
-    my $stuff = 'foo bar';
-    return $self->render('configuration', stuff => $stuff);
+    $self->render(
+        title => "Testing Homepage",
+        template => 'index', 
+        layout => "main"
+    );
+};
+
+get '/configuration' => sub {
+    shift->render(
+        title => "Testing Homepage",
+        template => 'configuration',
+        layout => "main"
+    );
 };
 
 get '/run_test' => sub {

@@ -1,9 +1,5 @@
 var HIGH = 1;
 var LOW  = 0;
-var arduinos = {  'mega' : [54, 16],
-                  'duem' : [5, 5],
-                  'nano' : [5, 5],
-                  'other': [-1, -1] };
 var in_count = 5;
 var out_count = 5;
 var events = {};

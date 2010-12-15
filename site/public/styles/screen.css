@@ -15,3 +15,13 @@ table td {
     top: 0;
     left: 480px;
 }
+
+#sidebar {
+    width: 240px;
+    float: left;
+}
+
+#main_content {
+    display: block;
+    float: left;
+}
