@@ -45,8 +45,8 @@
 <% content sidebar => begin %>
 <h2>Saved Tests</h2>
 <ul>
-    <li><a href="#">Name - <small>[m: 10-10-2010]</small></a></li>
-    <li><a href="#">Name - <small>[m: 10-12-2010]</small></a></li>
+    <li><a href="#">Sample 1 - <small>[m: 10-10-2010]</small></a></li>
+    <li><a href="#">Sample 2 - <small>[m: 10-12-2010]</small></a></li>
 </ul>
 <% end %>
 <h2>Configure Events</h2>

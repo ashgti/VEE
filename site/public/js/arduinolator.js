@@ -1,3 +1,4 @@
+"use strict";
 var HIGH = 1;
 var LOW  = 0;
 var in_count = 5;
@@ -10,6 +11,10 @@ $(function () {
         $("#step_one").show();
         
         return false;
+    });
+    
+    $("#load_sample").click(function () {
+        
     });
     
     function update_script() {
@@ -139,222 +144,222 @@ $(function () {
     var frames = 5; /* Per Second */
     var need_to_redraw = false;
     var canvas = $("#canvas");
-    var canvas_width = canvas.width();
-    var canvas_height = canvas.height();
-    var ctx = canvas[0].getContext("2d");
+    if (canvas[0]) {
+        var canvas_width = canvas.width();
+        var canvas_height = canvas.height();
+        var ctx = canvas[0].getContext("2d");
     
-    $("#canvas").data({"evts" : [], 
-                       "registered_objs" : []});
+        $("#canvas").data({"evts" : [], 
+                           "registered_objs" : []});
     
-    function draw_line(x, y, dx, dy, color) {
-        var reg = $("#canvas").data("registered_objs");
+        function draw_line(x, y, dx, dy, color) {
+            var reg = $("#canvas").data("registered_objs");
         
-        reg.push({ 'shape' : function (ctx) {
-            ctx.fillStyle = color;
-            ctx.strokeStyle = color;
+            reg.push({ 'shape' : function (ctx) {
+                ctx.fillStyle = color;
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(dx, dy);
+                ctx.stroke();
+            }});
+        
+            need_to_redraw = true;
+        }
+    
+        function persist(f) {
+            var reg = $("#canvas").data("registered_objs");
+            reg.push({'shape' : function () {
+                f(ctx);
+            }});
+        }
+
+        function redraw() {
+            if (need_to_redraw) {
+                canvas.width(canvas.width());
+                ctx.clearRect(0, 0, canvas_width, canvas_height); // clear canvas
+                for (var i = (10 * pix_to_time); i < canvas_width; i += (10 * pix_to_time)) {
+                    ctx.fillStyle = 'rgb(0, 0, 0)';
+                    ctx.fillText(i / pix_to_time, i - 6, 10);
+                    draw_line(i, 0, i, canvas_height, 'rgb(60, 60, 60)');
+                }
+                var reg_objs = $("#canvas").data("registered_objs");
+                for (var i in reg_objs) {
+                    reg_objs[i].shape(ctx);
+                }
+        
+                need_to_redraw = false;
+            }
+    
+            var new_time = (new Date()).getTime();
+            // $("#frames").text(new_time 
+            // + " and " + last + " frames " + (1 / ((new_time - last)/1000)));
+            // setTimeout(redraw, (1 / frames));
+            last = new_time;
+        }
+
+        function mk_btn(shape, is_clicked, cb, up) {
+            var reg = $("#canvas").data("registered_objs");
+            reg.push({'shape': function () {
+                shape(ctx);
+            }});
+            var evts = $("#canvas").data('evts');
+            evts.push({'check' : is_clicked, 'cb' : cb, 'up' : up});
+            need_to_redraw = true;
+        }
+
+        function square_wave(height, period, interval, start) {
+            var start = 0;
+    
+            need_to_redraw = true;
+        }
+
+        function validate() {
+    
+        }
+
+        $("select[name=default_configuration]").change(function() {
+            $(this).val();
+        });
+    
+        $("#d_pin_count").keyup(function (evt) {
+            validate();
+        });
+        $("#a_pin_count").keyup(function (evt) {
+            validate();
+        });
+    
+        // mk_btn(function (ctx) {
+        //     ctx.fillStyle = "rgb(255, 0, 0)";
+        //     ctx.fillRect(50, 25, 10, 10);
+        // }, function (x, y) {
+        //     return (x >= 50 && x <= 60 && y >= 25 && y <= 35);
+        // }, function (cb) {
+        // });
+    
+        canvas.mousemove(function (evt) {
+            $("#mouse_pos").text(evt.offsetX + " and " + evt.offsetY);
+        });
+    
+        canvas.mousedown(function (evt) {
+            // drag event
+            var evts = $(this).data('evts');
+            $.each($.grep(evts, function (n, i) {
+                return !n.up && n.check(evt.offsetX, evt.offsetY);
+            }), function () {
+                this.cb();
+            });
+        
+            $("#mouse_down").html("Down pressed ").append(debug(evt));
+        });
+    
+        canvas.mouseup(function (evt) {
+            var evts = $(this).data('evts');
+            $.each($.grep(evts, function (n, i) {
+                return n.up && n.check(evt.offsetX, evt.offsetY);
+            }), function () {
+                this.cb();
+            });
+        
+            $("#mouse_down").html("Up event fired ").append(debug(evt));
+        });
+    
+        function draw_grid() {
+            ctx.save();
             ctx.lineWidth = 1;
+            ctx.strokeStyle = "rgba(55, 55, 55, 0.5)";
+            for (var i=1; i <= sf; i++) {
+                ctx.moveTo(i * sf, 0);
+                ctx.lineTo(i * sf, canvas_height);
+            }
+            ctx.stroke();
+            ctx.restore();
+        }
+    
+        draw_grid();
+    
+        var items = 0;
+    
+        function draw_serial(name, row) {
+            items++;
+            var y = items*50;
+            console.log("y is : " + y);
+            var x = 0;
+            ctx.save();
+            ctx.font = "22px 'Linux Libertine', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif";
+            ctx.fillText("Serial Signal: " + name, 5, y - 6);
+            ctx.strokeStyle = 'rgb(255, 0, 0)';
+            ctx.lineWidth = 2;
+            ctx.font = "12px 'Linux Libertine', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif";
             ctx.beginPath();
             ctx.moveTo(x, y);
-            ctx.lineTo(dx, dy);
-            ctx.stroke();
-        }});
-        
-        need_to_redraw = true;
-    }
-    
-    function persist(f) {
-        var reg = $("#canvas").data("registered_objs");
-        reg.push({'shape' : function () {
-            f(ctx);
-        }});
-    }
-
-    function redraw() {
-        if (need_to_redraw) {
-            canvas.width(canvas.width());
-            ctx.clearRect(0, 0, canvas_width, canvas_height); // clear canvas
-            for (var i = (10 * pix_to_time); i < canvas_width; i += (10 * pix_to_time)) {
-                ctx.fillStyle = 'rgb(0, 0, 0)';
-                ctx.fillText(i / pix_to_time, i - 6, 10);
-                draw_line(i, 0, i, canvas_height, 'rgb(60, 60, 60)');
+            ctx.rotate(Math.PI/2);
+            for (var i in row) {
+                ctx.moveTo(y, -1*row[i][0]*sf);
+                ctx.lineTo(y + 50, -1*row[i][0]*sf);
+                ctx.stroke();
+                ctx.fillText(row[i][1], y, -1*row[i][0]*sf - 3);
             }
-            var reg_objs = $("#canvas").data("registered_objs");
-            for (var i in reg_objs) {
-                reg_objs[i].shape(ctx);
-            }
-        
-            need_to_redraw = false;
+            console.log("Done?");
+            ctx.closePath();
+            ctx.restore();
         }
-    
-        var new_time = (new Date()).getTime();
-        // $("#frames").text(new_time 
-        // + " and " + last + " frames " + (1 / ((new_time - last)/1000)));
-        // setTimeout(redraw, (1 / frames));
-        last = new_time;
-    }
-
-    function mk_btn(shape, is_clicked, cb, up) {
-        var reg = $("#canvas").data("registered_objs");
-        reg.push({'shape': function () {
-            shape(ctx);
-        }});
-        var evts = $("#canvas").data('evts');
-        evts.push({'check' : is_clicked, 'cb' : cb, 'up' : up});
-        need_to_redraw = true;
-    }
-
-    function square_wave(height, period, interval, start) {
-        var start = 0;
-    
-        need_to_redraw = true;
-    }
-
-    function validate() {
-    
-    }
-
-    $("select[name=default_configuration]").change(function() {
-        $(this).val();
-    });
-    
-    $("#d_pin_count").keyup(function (evt) {
-        validate();
-    });
-    $("#a_pin_count").keyup(function (evt) {
-        validate();
-    });
-    
-    // mk_btn(function (ctx) {
-    //     ctx.fillStyle = "rgb(255, 0, 0)";
-    //     ctx.fillRect(50, 25, 10, 10);
-    // }, function (x, y) {
-    //     return (x >= 50 && x <= 60 && y >= 25 && y <= 35);
-    // }, function (cb) {
-    // });
-    
-    canvas.mousemove(function (evt) {
-        $("#mouse_pos").text(evt.offsetX + " and " + evt.offsetY);
-    });
-    
-    canvas.mousedown(function (evt) {
-        // drag event
-        var evts = $(this).data('evts');
-        $.each($.grep(evts, function (n, i) {
-            return !n.up && n.check(evt.offsetX, evt.offsetY);
-        }), function () {
-            this.cb();
-        });
+        function draw_pin(name, row) {
+            items++;
+            var y = items*50;
+            console.log("y is : " + y);
+            var x = 0;
+            var state = 0;
+            ctx.save();
+            ctx.font = "22px 'Linux Libertine', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif";
+            ctx.fillText("Digital Signal: " + name, 5, y - 6);
         
-        $("#mouse_down").html("Down pressed ").append(debug(evt));
-    });
-    
-    canvas.mouseup(function (evt) {
-        var evts = $(this).data('evts');
-        $.each($.grep(evts, function (n, i) {
-            return n.up && n.check(evt.offsetX, evt.offsetY);
-        }), function () {
-            this.cb();
-        });
-        
-        $("#mouse_down").html("Up event fired ").append(debug(evt));
-    });
-    
-    function draw_grid() {
-        ctx.save();
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "rgba(55, 55, 55, 0.5)";
-        for (var i=1; i <= sf; i++) {
-            ctx.moveTo(i * sf, 0);
-            ctx.lineTo(i * sf, canvas_height);
-        }
-        ctx.stroke();
-        ctx.restore();
-    }
-    
-    draw_grid();
-    
-    var items = 0;
-    
-    function draw_serial(name, row) {
-        items++;
-        var y = items*50;
-        console.log("y is : " + y);
-        var x = 0;
-        ctx.save();
-        ctx.font = "22px 'Linux Libertine', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif";
-        ctx.fillText("Serial Signal: " + name, 5, y - 6);
-        ctx.strokeStyle = 'rgb(255, 0, 0)';
-        ctx.lineWidth = 2;
-        ctx.font = "12px 'Linux Libertine', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif";
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.rotate(Math.PI/2);
-        for (var i in row) {
-            ctx.moveTo(y, -1*row[i][0]*sf);
-            ctx.lineTo(y + 50, -1*row[i][0]*sf);
-            ctx.stroke();
-            ctx.fillText(row[i][1], y, -1*row[i][0]*sf - 3);
-        }
-        console.log("Done?");
-        ctx.closePath();
-        ctx.restore();
-    }
-    function draw_pin(name, row) {
-        items++;
-        var y = items*50;
-        console.log("y is : " + y);
-        var x = 0;
-        var state = 0;
-        ctx.save();
-        ctx.font = "22px 'Linux Libertine', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif";
-        ctx.fillText("Digital Signal: " + name, 5, y - 6);
-        
-        ctx.strokeStyle = 'rgb(255, 0, 0)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        for (var i in row) {
-            if (state == row[i][0]) {
-            }
-            else {
-                if (state == 0) {
-                    /* move up */
-                    y += 15;
-                    ctx.lineTo(x, y);
-                    state = 1;
+            ctx.strokeStyle = 'rgb(255, 0, 0)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            for (var i in row) {
+                if (state == row[i][0]) {
                 }
                 else {
-                    /* Move down */
-                    y -= 15;
-                    ctx.lineTo(x, y);
-                    state = 0;
+                    if (state == 0) {
+                        /* move up */
+                        y += 15;
+                        ctx.lineTo(x, y);
+                        state = 1;
+                    }
+                    else {
+                        /* Move down */
+                        y -= 15;
+                        ctx.lineTo(x, y);
+                        state = 0;
+                    }
+                }
+                x += row[i][1] * sf;
+                ctx.lineTo(x, y);
+                console.log(x + " and " + y + " or " + row[i]);
+            }
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.restore();
+        
+            // $("#feedback").after("Signal "+name+": <ul><li>Std Dev: </li><li>Median:</li><li>Mode:</li></ul><br/>");
+        }
+    
+        redraw();
+        $.ajax({
+            url: 'http://localhost:3000/js/sample.js',
+            dataType: 'json',
+            success: function (data) {
+                for (var y in data['pins']) {
+                    draw_pin(y, data['pins'][y]);
+                }
+                for (var y in data['serial']) {
+                    draw_serial(y, data['serial'][y]);
                 }
             }
-            x += row[i][1] * sf;
-            ctx.lineTo(x, y);
-            console.log(x + " and " + y + " or " + row[i]);
-        }
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        ctx.restore();
-        
-        // $("#feedback").after("Signal "+name+": <ul><li>Std Dev: </li><li>Median:</li><li>Mode:</li></ul><br/>");
+        });
+        // redraw();
     }
-    
-    redraw();
-    $.ajax({
-        url: 'http://localhost:3000/js/sample.js',
-        dataType: 'json',
-        success: function (data) {
-            for (var y in data['pins']) {
-                draw_pin(y, data['pins'][y]);
-            }
-            for (var y in data['serial']) {
-                draw_serial(y, data['serial'][y]);
-            }
-        }
-    });
-    
-    
-    // redraw();
 });
