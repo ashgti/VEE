@@ -1,8 +1,5 @@
-Serial a, b, "Input Text", 5
-Det c, 5, 1.5
-Exp d, 0
-Uni e, 0
+length: 20.5
+identifiers: ab
 ---
-Serial a, b, "Hello World", 10
-Pin c, 1, 0.5
-Pin c, 0, 1.5
+det a, "a", 2, 2, 4
+det b, 1, 3, 2, 4

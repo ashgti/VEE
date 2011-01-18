@@ -5,27 +5,14 @@
 
 using namespace std;
 
-Arduino::Arduino(ArduinoModel arduino_model) {
+Arduino::Arduino() {
     _log.open("time.log", ifstream::in);
     cout << "Setting up the Arduino\n";
     
     _ticks = 0 ;
     _total_ticks = 0;
-    
-    switch (arduino_model) {
-        case ArduinoUno: 
-            break;
-        case ArduinoMega:
-            for (int i = 1; i <= 54; i++) {
-                _pins.addPin(i, true, true, true);
-            }
-            break;
-        case ArduinoNano:
-            break;
-        default:
-            cout << "Bad configuration to Arduino, check setModel\n\n";
-            exit(1);
-    }
+    _scenario_length = 0;
+    _registered_identifers = "";
 }
 
 Arduino::~Arduino() {
@@ -40,30 +27,35 @@ Arduino::configurePin(uint8_t pin_id, uint8_t mode) {
 bool 
 Arduino::addInputFile(char *name) {
     ifstream ifile;
+    bool header_parsed = false;
     
     ifile.open(name, ifstream::in);
     
-    bool in_vs_out = false;
     while (ifile.good()) {
         string line;
         getline(ifile, line);
         if (line.compare("---") == 0) {
-            in_vs_out = true;
+            header_parsed = true;
             continue;
         }
         size_t found = line.find(" ");
-
+        
         if (found != string::npos) {
             string word = line.substr(0, found);
-            if (in_vs_out) 
-                registerOutputEvent(word, line);
-            else 
-                registerInputEvent(word, line);
+            if (header_parsed) {
+                cout << "Scanning signals\n";
+                registerSignal(word, line);
+            }
+            else {
+                cout << "Scanning Header\n";
+                scanHeaderChunk(word, line);
+            }
         }
     }
     
     ifile.close();
     
+    cout << "done parsing file\n";
     return true;
 }
 
@@ -98,26 +90,28 @@ Arduino::addTicks(uint64_t length) {
 void
 Arduino::updatePinState() {
     // Report Changes in State
-    map<uint8_t, Pin*>::iterator pin_iter;
     
-    for (pin_iter = _pins._mapping.begin();
-         pin_iter != _pins._mapping.end();
-         pin_iter++) {
-         if (pin_iter->second->_flags & 0x1) {
-            cout << "\n   Pin changed: " << pin_iter->first << " to " << pin_iter->second->_val << "\n";
-            pin_iter->second->_flags = 0;
-        }
-    }
-    
+    cout << "Update Pin State";
+    exit(-1);
+}
+
+int
+Arduino::getPin(uint8_t pin_id) {
+    return _pins[pin_id];
 }
 
 void
 Arduino::setPin(uint8_t pin_id, uint8_t val) {
-    if (_pins._mapping[pin_id]->_val != val) {
-        _pins._mapping[pin_id]->_val = val;
-        _pins._mapping[pin_id]->_flags = 0x1;
+    if (_pins[pin_id] != val) {
+        _pins[pin_id] = val;
         cout << timestamp() << "\nUpdating value for: " << static_cast<int>(pin_id) << " " << static_cast<int>(val) << "\n";
     }
+}
+
+void
+Arduino::dispatchSignal(const char *signal_id) {
+    cout << "Dispatching signal " << signal_id << " for " << _signals[signal_id] << "\n";
+    _signals[signal_id];
 }
 
 string
@@ -128,33 +122,70 @@ Arduino::timestamp() {
 }
 
 void
-Arduino::registerInputEvent(string identifer, string line) {
-    map<string, Evt* (*)(bool, string)>::iterator it;
-    if ((it = _evt_responders.find(identifer)) != _evt_responders.end()) {
-        cout << "Got something \n";
-        it->second(true, line);
+Arduino::scanHeaderChunk(string identifier, string line) {
+    if (identifier == "length:") {
+        double run_time;
+        istringstream is;
+
+        is.str(line.substr(identifier.length(), line.length() - identifier.length()));
+        is >> run_time;
+        
+        _registered_identifers = (int) run_time * TICKS_PER_SECOND;
+    } else if (identifier == "identifiers:") {
+        _registered_identifers = line.substr(identifier.length(), line.length() - identifier.length());
     }
     else {
-        throw ArduException("Bad input line.");
+        cout << "Unrecognized header configuration name \"" << identifier << "\"\n";
     }
 }
 
 void
-Arduino::registerOutputEvent(string identifer, string line) {
-    map<string, Evt* (*)(bool, string)>::iterator it;
-    if ((it = _evt_responders.find(identifer)) != _evt_responders.end()) {
-        cout << "Got something \n";
-        it->second(false, line);
+Arduino::registerSignal(string identifer, string line) {
+    cout << "HI! " << identifer << " and " << line << "\n";
+    
+    if (identifer == "det") {
+        stringstream ss(line);
+        int initial_value, length, ratio, constant_processing_time;
+        string name, processing_time;
+        ss.seekg(4, ios::cur);
+        ss >> name;
+        if (name.at(name.length() - 1) == ',') {
+            name = name.substr(0, name.length() - 1);
+        }
+        ss.seekg(1, ios::cur);
+        if (ss.peek() == '"') {
+            cout << "Got a quoted string\n";
+        }
+        ss >> initial_value;
+        ss.seekg(1, ios::cur);
+        ss >> length;
+        ss.seekg(1, ios::cur);
+        ss >> ratio;
+        ss.seekg(1, ios::cur);
+        ss >> processing_time;
+        cout << "got: " << name << " , " << initial_value << " and " << length << "\n";
+        if (processing_time.find("n") != string::npos) {
+            cout << "has a N based length\n";
+        }
+        else {
+            stringstream pt(processing_time);
+            pt >> constant_processing_time; 
+            cout << constant_processing_time << "\n";
+        }
+        
+        // _mapping_
     }
     else {
-        throw ArduException("Bad output line.");
+        cout << "Bad configuration line \"" << line << "\"\n";
+        exit(-1);
     }
 }
 
-bool 
-Arduino::addEventHandler(string id, Evt* (*comp)(bool, string)) {
-    _evt_responders.insert(pair<string, Evt* (*)(bool, string)>(id, comp));
+void
+Arduino::addPin(string signal_id, uint8_t pin_id) {
+    _signal_map[signal_id] = pin_id;
 }
+
 
 
 /* Logging facilities */
@@ -236,9 +267,11 @@ UniEvt::evtHandler(bool in, string line) {
 
 Evt*
 PinEvt::evtHandler(bool in, string line) {
-    PinEvt *result = new PinEvt;
-    cout << "Got PinEvt Evt Generator\n";
-    return result;
+    // PinEvt *result = new PinEvt;
+    // cout << "Got PinEvt Evt Generator\n";
+    cout << "Stuff";
+    exit(-1);
+    // return result;
 }
 
 Evt*

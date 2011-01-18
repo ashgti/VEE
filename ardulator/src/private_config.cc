@@ -9,11 +9,11 @@ using namespace std;
 
 void
 setupComponents() {
-    ardu->addEventHandler(SerialEvt::id(), &SerialEvt::evtHandler);
-    ardu->addEventHandler(PinEvt::id(), &PinEvt::evtHandler);
-    ardu->addEventHandler(DetEvt::id(), &DetEvt::evtHandler);
-    ardu->addEventHandler(UniEvt::id(), &UniEvt::evtHandler);
-    ardu->addEventHandler(ExpEvt::id(), &ExpEvt::evtHandler);
+    // ardu->addEventHandler(SerialEvt::id(), &SerialEvt::evtHandler);
+    // ardu->addEventHandler(PinEvt::id(), &PinEvt::evtHandler);
+    // ardu->addEventHandler(DetEvt::id(), &DetEvt::evtHandler);
+    // ardu->addEventHandler(UniEvt::id(), &UniEvt::evtHandler);
+    // ardu->addEventHandler(ExpEvt::id(), &ExpEvt::evtHandler);
 }
 
 

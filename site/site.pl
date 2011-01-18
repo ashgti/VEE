@@ -7,7 +7,7 @@ app->log->level("debug");
 
 my $config = LoadFile("config.yaml");
 
-print Dump($config);
+# print Dump($config);
 
 END {
     # Update the configurations

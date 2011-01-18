@@ -127,6 +127,8 @@ void setup(void);
 void loop(void);
 void pinConfiguration(void);
 
+void processSignal(const char* signal_id);
+
 void registerPin(const char* signal_id, uint8_t pin_id);
 
 enum ArduinoModel {
@@ -134,8 +136,6 @@ enum ArduinoModel {
     ArduinoMega = 2,
     ArduinoNano = 3,
 };
-
-void setModel(ArduinoModel model_name);
 
 #ifdef __cplusplus
 } // extern "C"

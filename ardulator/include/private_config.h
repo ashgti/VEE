@@ -17,84 +17,20 @@ void wait(double seconds);
 
 void setupComponents();
 
-class Component {
-  public:
-    vector<uint8_t> _pins;
-    vector<string>  _signals;
+enum Distribution {
+    UNI,
+    EXP
 };
 
-class Pin : public Component {
+template <class T>
+class RandNum {
   public:
-    Pin(uint16_t id, bool digital, bool io, bool interupt) 
-            : _id(id), _digital(digital), _io(io), _interupt(interupt) { 
-        _configured = false;
-        _val = 0;
-    }
-    uint16_t _id;
-    bool     _digital;
-    bool     _io;
-    bool     _interupt;
-    bool     _configured;
-    uint16_t _val;
-    uint16_t _flags;
-};
-
-class Serial : public Component {
-  public:
-};
-
-class Evt {
+    unsigned short _Xi[3];
+    Distribution _dis_type;
+    T _range_start, _range_end, _lambda;
     
-};
-
-class PinEvt : public Evt {
-  public:
-    static string id();
-    static Evt* evtHandler(bool in, string line);
-};
-
-class DetEvt : public Evt {
-  public:
-    static Evt* evtHandler(bool in, string line);
-    static string id();
-};
-
-class UniEvt : public Evt {
-  public:
-    static string id();
-    static Evt* evtHandler(bool in, string line);
-};
-
-class ExpEvt : public Evt {
-  public:
-    static string id();
-    static Evt* evtHandler(bool in, string line);
-};
-
-class SerialEvt : public Evt {
-  public:
-    static string id();
-    static Evt* evtHandler(bool in, string line);
-};
-
-
-class PinLayout {
-  private:
-  public:
-    uint32_t _digital_pins;
-    uint32_t _analog_pins;
-    map<uint8_t, Pin*> _mapping;
-    
-    void addPin(int id, bool digital, bool io, bool interupt);    
-    ~PinLayout();
-};
-
-
-class PinEvent {
-    double   _start;
-    double   _end;
-    bool     _pinState;
-    uint32_t _pin_id;
+    RandNum(Distribution dis_type, T lambda, unsigned short seed = 100);
+    T next();
 };
 
 typedef struct ardu_clock_t {
@@ -109,30 +45,38 @@ class Arduino {
     int         _max_pins;
     uint64_t    _ticks;
     uint64_t    _total_ticks;
-    map<double, vector<PinEvent> >
-                _event_data;
-    map<string, Evt* (*)(bool, string)>
-                _evt_responders;
-    PinLayout   _pins;
-    
+    uint64_t    _scenario_length;
+    string      _registered_identifers;
     ardu_clock_t 
                 _timer;
-    
+
+    map<int, void (*)(void)>
+                _interupts;
+    map<string, int>
+                _mapping;
+    map<int, int>
+                _pins;
+    map<string, double>
+                _signals;
+
     void   updatePinState();
     string timestamp();
   public:
     map<string, uint8_t>
                 _signal_map;
 
-    Arduino(ArduinoModel arduino_model);
+    Arduino();
     ~Arduino();
     void configurePin(uint8_t id, uint8_t mode);
+    void addPin(string signal_id, uint8_t pin_id);
     bool addInputFile(char *name);
     void runScenario(double duration);
     bool addEventHandler(string id, Evt* (*)(bool, string));
-    void registerInputEvent(string id, string line);
-    void registerOutputEvent(string id, string line);
+    void scanHeaderChunk(string id, string line);
+    void registerSignal(string id, string line);
     void setPin(uint8_t pin_id, uint8_t val);
+    int  getPin(uint8_t pin_id);
+    void dispatchSignal(const char *name);
     void addTicks(uint64_t);
     void log(int level, string msg);
     void debug(string msg = "");

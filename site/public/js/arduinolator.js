@@ -1,9 +1,19 @@
+Object.keys = Object.keys || function(o) {
+    var result = [];
+    for(var name in o) {
+        if (o.hasOwnProperty(name))
+          result.push(name);
+    }
+    return result;
+};
+
+Object.prototype.keys = function () {
+    return Object.keys(this);
+}
+
+
 var HIGH = 1;
 var LOW  = 0;
-var arduinos = {  'mega' : [54, 16],
-                  'duem' : [5, 5],
-                  'nano' : [5, 5],
-                  'other': [-1, -1] };
 var in_count = 5;
 var out_count = 5;
 var events = {};
@@ -31,7 +41,7 @@ $(function () {
                       eval(foo['rat']) + "\n";
         }
         
-        $("#stuff").text(result);
+        // $("#stuff").text(result);
     }
     
     function io_update() {
@@ -72,6 +82,11 @@ $(function () {
         
     });
     
+    $("#remove").click(function () {
+        alert("clicked me");
+        return false;
+    });
+    
     $("#mapping_listing").change(function () {
         $("#info").html("");
         $("#mapping_listing option:selected").each(function () {
@@ -79,52 +94,28 @@ $(function () {
         });
     });
 
-	$("#add_event").click(function () {
-		mapping[$("#id").val()] = {
-			'id' : $("#id").val(),
-			'type' : $("#e_type").val(),
-			'ivo' : $("#ivo").val(),
-			'val' : $("#val").val()
-		};
-		
-		$("#"+ $("#ivo").val() +"put_listing").append("<option value=\"" + $("#id").val() + "\">"
-			+ $("#id").val() + "</option>");
-		return false;
-	});
-        // 
-        // function add_new_mapping() {
-        //     var output_map = $("#output_map").val();
-        //     var input_map = $("#input_map").val();
-        //     // error checking
-        //     var input_map_arr = [];
-        //     var output_map_arr = [];
-        //     for (var a = 0; a < input_map.length; a++) {
-        //         input_map_arr.push(input_map.charAt(a));
-        //     }
-        //     input_map_arr.sort();
-        //     for (var a = 0; a < output_map.length; a++) {
-        //         output_map_arr.push(output_map.charAt(a));
-        //     }
-        //     output_map_arr.sort();
-        //     var key = input_map_arr.join("") + ':' + output_map_arr.join("");
-        //     mapping[key] = { 'input' : input_map, 
-        //                      'output' : output_map_arr,
-        //                      'cor' : $("#correlation").val(),
-        //                      'tim' : $("#timing").val(),
-        //                      'rat' : $("#ratio").val() };
-        //     $("#mapping_listing").append("<option value=\""+ key +"\">" + key + "</option>");
-        //     
-        //     update_script();
-        //     return false;
-        // }
-        // 
-        // add_new_mapping();
+    $("#add_event").click(function () {
+        mapping[$("#id").val()] = {
+            'id' : $("#id").val(),
+            'type' : $("#e_type").val(),
+            'ivo' : $("#ivo").val(),
+            'val' : $("#val").val()
+        };
+        
+        $("#"+ $("#ivo").val() +"put_listing").append("<option value=\"" + $("#id").val() + "\">" 
+            + $("#id").val() + "</option>");
+        $("").append("<option value=\"" + $("#id").val() + "\">"
+            + $("#id").val() + "</option>");
+        return false;
+    });
     
     $("#add_mapping").click(function () {
-        var id = "";
-        $.each(mapping, function (k,v) {
-            id = id.concat(k);
-        });
+        // Validate Parameters
+        //   If the map is empty
+        if (mapping.length == 0) {
+            
+        }
+        var id = mapping.keys().join('');
         events[id] = mapping;
         $("#events_list").append("<option value=\"" + id + "\">" + id + "</option>");
         mapping = {};
@@ -227,14 +218,6 @@ $(function () {
     $("#a_pin_count").keyup(function (evt) {
         validate();
     });
-    
-    // mk_btn(function (ctx) {
-    //     ctx.fillStyle = "rgb(255, 0, 0)";
-    //     ctx.fillRect(50, 25, 10, 10);
-    // }, function (x, y) {
-    //     return (x >= 50 && x <= 60 && y >= 25 && y <= 35);
-    // }, function (cb) {
-    // });
     
     canvas.mousemove(function (evt) {
         $("#mouse_pos").text(evt.offsetX + " and " + evt.offsetY);
@@ -341,8 +324,6 @@ $(function () {
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.restore();
-        
-        // $("#feedback").after("Signal "+name+": <ul><li>Std Dev: </li><li>Median:</li><li>Mode:</li></ul><br/>");
     }
     
     redraw();
@@ -358,7 +339,4 @@ $(function () {
             }
         }
     });
-    
-    
-    // redraw();
 });

@@ -17,26 +17,23 @@ checkRegistered() throw(ArduException) {
 }
 
 void
-setModel(ArduinoModel arduino_model) {
-    if (registered_model == false) {
-        ardu = new Arduino(arduino_model);
-        registered_model = true;
-    }
-    else {
-        throw ArduException("setModel called twice, should only be called once.");
-    }
-}
-
-void
 registerPin(const char* signal_id, uint8_t pin_id) {
-    string foo(signal_id);
-    cout << "registering pin..." << foo << "\n";
-    ardu->_signal_map[foo] = pin_id;
+    ardu->addPin(string(signal_id), pin_id);
 }
 
 void
 pinMode(uint8_t pin_id, uint8_t mode) {
     ardu->configurePin(pin_id, mode);
+}
+
+int 
+digitalRead(uint8_t pin_id) {
+    return ardu->getPin(pin_id);
+}
+
+void 
+processSignal(const char* signal_id) {
+    ardu->dispatchSignal(signal_id);
 }
 
 void

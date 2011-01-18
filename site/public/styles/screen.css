@@ -15,3 +15,7 @@ table td {
     top: 0;
     left: 480px;
 }
+
+#events_list {
+    width: 300px;
+}

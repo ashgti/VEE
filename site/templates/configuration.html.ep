@@ -52,9 +52,17 @@
         </header>
         <!-- <a id="config_pin" href="#">Configure Input/Output Pin</a> -->
         <div id="step_zero">
+            <label for="simulation_length">Simulation Length:</label>
+            <br>
+            <input type="text" name="simulation_length" value="" id="simulation_length">
+            <br>
             <label>Events List:</label>
+            <br>
             <select multiple name="events_list" id="events_list"></select>
             <div id="info">
+            </div>
+            <div id=buttons>
+                <a id=remove href="#">Remove</a>
             </div>
         </div>
         <hr>
@@ -77,50 +85,51 @@
             <form id="two">
                 <fieldset>
                     <legend>Configure Events</legend>
-                    <div style="float:left;width:100px;">
-                        <label for=input_listing>Inputs:</label><br>
-                        <select multiple name=input_listing id=input_listing></select>
-                        <br>
-                        <label for=>Outputs:</label><br>
-                        <select multiple name=output_listing id=output_listing></select>
-                    </div>
                     <fieldset>
                         <legend>I/O Event:</legend>
                         <label for="id">Signal ID:</label>
+                        <br>
                         <input name="id" id="id" value="">
                         <br>
-                        <label for=ivo>I/O:</label>
-                        <select id=ivo name="ivo"><option value="in">I</option><option value="out">O</option></select>
+                        <!-- <label>Event Type</label>
                         <br>
-                        <label>Event Type</label>
                         <select name="e_type" id="e_type">
                             <option selected value="digital">Digital</option>
                             <option value="serial">Serial</option>
+                        </select> -->
+                        <br>
+                        <label>Signal Type</label>
+                        <br>
+                        <select name="e_type">
+                            <option>Deterministic</option>
+                            <option>Uniform</option>
+                            <option>Exponential</option>
                         </select>
                         <br>
-                        <label for=val>Val:</label> 
+                        <label for=val>Initial Val:</label>
+                        <br>
                         <input name=val id="val" value="">
+                        <br>
+                        <!-- 
+                        # det signal, initial value, length, ratio, process
+                        # uni signal, initial value, a min, b max, a min / 2, process
+                        # exp signal, initial value, average, average/s, process
+                        -->
+                        <label for=len>Length:</label>
+                        <br>
+                        <input name=length id=length>
+                        <br>
+                        <label for=ratio>Ratio:</label>
+                        <br>
+                        <input name=ratio id=ratio>
+                        <br>
+                        <label for=process>Processing Length:</label>
+                        <br>
+                        <input name=process id=process>
                         <br>
                         <a href=# id=add_event>Save I/O Event</a>
                     </fieldset>
                     <br>
-                    <hr>
-                    <fieldset>
-                        <legend>Mapping:</legend>
-                        <label for="correlation">Correlation:</label>
-                        <select name="correlation" id="correlation">
-                            <option selected value="end">On End</option>
-                            <option value="ind">Independent</option>
-                        </select>
-                        <label for="timing">Timing:</label>
-                        <select name="timing" id="timing">
-                            <option selected value="det">Determinate</option>
-                        </select>
-                        <label for="ratio">Ratio:</label>
-                        <input type="text" name="ratio" value="1/2" id="ratio">
-                        <br>
-                        <a href=# id="add_mapping">Add Mapping</a>
-                    </fieldset>
                 </fieldset>
             </form>
         </div>
@@ -168,16 +177,13 @@
                     </p>
                     -->
                     <p>
-                        <textarea style="width: 300px; height: 300px" id="stuff" name="stuff">
-                            Serial a, b, "Input Text", 5
-                            Det c, 5, 1.5
-                            Exp d, 0
-                            Uni e, 0
-                            ---
-                            Serial a, b, "Hello World", 10
-                            Pin c, 1, 0.5
-                            Pin c, 0, 1.5
-                        </textarea>
+                        <textarea style="width: 300px; height: 300px" id="output_sample" name="output_sample">
+length: 20.5
+identifiers: ab
+---
+det a, 1, 2, 2, 4
+det b, 1, 3, 2, 4
+</textarea>
                     </p>
                 </form>
             </div>
