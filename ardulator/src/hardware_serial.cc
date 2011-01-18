@@ -85,7 +85,7 @@ void HardwareSerial::end() {
     cout << "NYI\n" << "\n";
 }
 uint8_t HardwareSerial::available(void) {
-    cout << "NYI\n" << "\n";
+    
 }
 int HardwareSerial::read(void) {
     cout << "NYI\n" << "\n";

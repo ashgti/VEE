@@ -1,22 +1,30 @@
 #include "public_config.h"
 #include "arduino_api.h"
 
+HardwareSerial serial(1, 2);
+
 void
 pinConfiguration() {
     registerPin("a", 0);
-    registerPin("b", 1);
-    registerPin("c", 13);
-    Serial = HardwareSerial(0, 1);
+    registerSerial("b", &serial);
 }
 
 void
 setup() {
-    pinMode(13, OUTPUT);
-    Serial.println("Hi");
+    pinMode(0, INPUT);
 }
 
 void
 loop() {
-    if (digitalRead(0) == HIGH)
+    if (digitalRead(0) == HIGH) {
         processSignal("a");
+    }
+    
+    if (serial.available() > 0) {
+        int incomingByte = 0;
+        incomingByte = serial.read();
+        
+        if (incomingByte == 'b')
+            processSignal("b");
+    }
 }

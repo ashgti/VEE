@@ -36,8 +36,6 @@ int main(int argc, char** argv) {
     setupArduino();
     pinConfiguration();
     setupComponents();
-    double duration = 100.00; // Seconds
-    /* TODO: Convert this to use getopt.h */
     /* Parse the program options */
     if (argc > 1) {
         for (int i = 1; i < argc; i++) {
@@ -56,8 +54,11 @@ int main(int argc, char** argv) {
     }
     
     cout << "Done Parsing the scenario\n\n";
+    ardu->runScenario();
     
-    ardu->runScenario(duration);
+    cout << "Done running the scenario\n";
+    
+    ardu->report();
     
     return 0;
 }

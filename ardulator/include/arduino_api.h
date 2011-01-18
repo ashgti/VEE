@@ -194,6 +194,8 @@ class HardwareSerial : public Print
   private:
     uint8_t _rxen;
     uint8_t _txen;
+    
+    char buff[64];
   public:
     HardwareSerial(int rxPin, int txPin);
     void begin(long);
@@ -204,6 +206,8 @@ class HardwareSerial : public Print
     virtual void write(uint8_t);
     using Print::write; // pull in write(str) and write(buf, size) from Print
 };
+
+void registerSerial(const char* signal_id, HardwareSerial *serial);
 
 extern HardwareSerial Serial;
 

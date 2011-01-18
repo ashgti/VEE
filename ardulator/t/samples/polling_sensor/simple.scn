@@ -1,5 +1,6 @@
 length: 20.5
-identifiers: ab
+identifiers: abc
 ---
-det a, "a", 2, 2, 4
-det b, 1, 3, 2, 4
+det a, 1, 2, 2, 4
+det b, "b", 3, 2, 4
+

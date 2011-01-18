@@ -1,12 +1,5 @@
-# in: 
-#     serial: ab
-#     digital: cd
-# out:
-#     digital: ef
-# corr:
-#     ab->e
-#     cd->f
-digital: ab
+identifiers: ab
+legnth: 20.5
 ---
 # det signal, initial value, length, ratio, process
 # uni signal, initial value, a min, b max, a min / 2, process

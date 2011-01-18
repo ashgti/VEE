@@ -22,6 +22,11 @@ registerPin(const char* signal_id, uint8_t pin_id) {
 }
 
 void
+registerSerial(const char* signal_id, HardwareSerial *serial) {
+    ardu->addSerial(string(signal_id), serial);
+}
+
+void
 pinMode(uint8_t pin_id, uint8_t mode) {
     ardu->configurePin(pin_id, mode);
 }

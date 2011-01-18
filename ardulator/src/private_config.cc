@@ -16,20 +16,3 @@ setupComponents() {
     // ardu->addEventHandler(ExpEvt::id(), &ExpEvt::evtHandler);
 }
 
-
-PinLayout::~PinLayout() {
-    for (size_t i; i < _mapping.size(); i++) {
-        delete _mapping[i];
-    }
-}
-
-void
-PinLayout::addPin(int id, bool digital, bool io, bool interupt) {
-    if (_mapping[id]) {
-        
-    }
-    else {
-        Pin *new_pin = new Pin(id, digital, io, interupt);
-        _mapping[id] = new_pin;
-    }
-}
