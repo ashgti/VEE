@@ -19,3 +19,13 @@ table td {
 #events_list {
     width: 300px;
 }
+
+#sidebar {
+    width: 240px;
+    float: left;
+}
+
+#main_content {
+    display: block;
+    float: left;
+}

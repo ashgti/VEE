@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 **/*.o
+=======
+.AppleDouble
+site/log/*
+.DS_Store
+>>>>>>> 1efa3e68af2b09389d10647b272c801a6a444e5b
