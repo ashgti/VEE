@@ -1,5 +1,3 @@
-#include "arduino_api.h"
-#include "private_config.h"
 #include <sstream>
 #include <sys/time.h>
 #include <signal.h>
@@ -7,6 +5,8 @@
 #include <time.h>
 #include <iostream>
 #include "time_defs.h"
+#include "private_config.h"
+
 
 using namespace std;
 
@@ -17,4 +17,4 @@ delay(unsigned long length) {
     ardu->debug(ss.str());
     ardu->addTicks(MS2T(length)); 
 }
-
+ 

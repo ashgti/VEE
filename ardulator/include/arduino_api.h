@@ -25,6 +25,8 @@
 #ifndef ARDUINO_API_H
 #define ARDUINO_API_H
 
+#include <string>
+#include <fstream>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -168,6 +170,7 @@ class Print
     virtual void write(const uint8_t *buffer, size_t size);
 
     void print(const char[]);
+    void print(const std::string &s);
     void print(char, int = BYTE);
     void print(unsigned char, int = BYTE);
     void print(int, int = DEC);
@@ -177,6 +180,7 @@ class Print
     void print(double, int = 2);
 
     void println(const char[]);
+    void println(const std::string &s);
     void println(char, int = BYTE);
     void println(unsigned char, int = BYTE);
     void println(int, int = DEC);
@@ -194,16 +198,22 @@ class HardwareSerial : public Print
   private:
     uint8_t _rxen;
     uint8_t _txen;
+    uint32_t _baud;
     
-    char buff[64];
+    char _in_buff[64];
+    char _out_buff[64];
+    
+    std::fstream _ofile;
   public:
     HardwareSerial(int rxPin, int txPin);
+    ~HardwareSerial();
     void begin(long);
     void end();
     uint8_t available(void);
     int read(void);
     void flush(void);
     virtual void write(uint8_t);
+    uint8_t pin();
     using Print::write; // pull in write(str) and write(buf, size) from Print
 };
 

@@ -1,11 +1,11 @@
-#include "arduino_api.h"
-#include "private_config.h"
 #include <cstdio>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <algorithm>
 #include <getopt.h>
+#include "private_config.h"
+
 
 using namespace std;
 
@@ -17,17 +17,13 @@ setupArduino() {
 }
 
 void
-print_help_menu(string name) {
+printHelpMenu(string name) {
     cout << "Usage: " << name << " [options] [file ...]" << endl;
     cout << "More usage information\n";
 }
 
-void
-set_realtime(bool flag) {
-    
-}
-
-bool test_input_file(char *name) {
+bool 
+testInputFile(char *name) {
     ifstream ifile(name);
     return ifile;
 }
@@ -39,21 +35,19 @@ int main(int argc, char** argv) {
     /* Parse the program options */
     if (argc > 1) {
         for (int i = 1; i < argc; i++) {
-            cout << "i: " << i << "\n";
             string arg(argv[i]);
             if (arg == "-h" || arg == "--help") {
-                print_help_menu(argv[0]);
+                printHelpMenu(argv[0]);
                 exit(0);
             }
-            if (test_input_file(argv[i])) {
+            if (testInputFile(argv[i])) {
                 cout << "found input file " << argv[i] << "\n\n";
                 ardu->addInputFile(argv[i]);
-                cout << "done?\n";
             }
         }
     }
     
-    cout << "Done Parsing the scenario\n\n";
+    cout << "Done parsing the scenario configuration file\n\n";
     ardu->runScenario();
     
     cout << "Done running the scenario\n";

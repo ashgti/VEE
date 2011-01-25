@@ -19,92 +19,15 @@ addTime(ardu_clock_t &t, int ticks) {
 
 void
 print_clock(string n, ardu_clock_t t){
-    cerr << n << " " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
-}
-
-Pin::Pin() {
-    _history.missed_evts = 0;
-    _history.total_evts = 0;
-    _history.caught_evts = 0;
-}
-
-void 
-Pin::calcNext() {
-    if (_signal_type == ST_DET) {
-        double next = _vals[0] * _vals[1];
-        
-        _next_u._seconds = (int)_vals[0];
-        _next_u._ticks = (_vals[0] - floor(_vals[0])) * TICKS_PER_SECOND;
-        
-        _next_d._seconds = (int)next;
-        _next_d._ticks = (next - floor(next)) * TICKS_PER_SECOND;
-        
-        if (_state == HIGH) {
-            _history.total_evts += 1;
-        }
-    }
-}
-
-void
-Pin::setState(ardu_clock_t t) {
-    if (_signal_type == ST_DET) {
-        if (_state == HIGH) {
-            if (t._seconds >= _next_d._seconds &&
-                    t._ticks > _next_d._ticks) {
-                double next = _vals[0] * _vals[1];
-                int overflow = 0;
-                _next_d._ticks += (next - floor(next)) * TICKS_PER_SECOND;
-                if (_next_d._ticks > TICKS_PER_SECOND) {
-                    _next_d._ticks -= TICKS_PER_SECOND;
-                    overflow = 1;
-                }
-                _next_d._seconds += (int)next + overflow;
-                cerr << "Signal: " << _name << " switched to LOW @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
-                _history.missed_evts += 1;
-                _state = LOW;
-            }
-        }
-        else {
-            if (t._seconds >= _next_u._seconds && 
-                    t._ticks > _next_u._ticks) {
-                double next = _vals[0] * _vals[1];
-                int overflow = 0;
-                _next_u._ticks += (next - floor(next)) * TICKS_PER_SECOND;
-                if (_next_u._ticks > TICKS_PER_SECOND) {
-                    _next_u._ticks -= TICKS_PER_SECOND;
-                    overflow = 1;
-                }
-                _next_u._seconds += (int)next + overflow;
-                cerr << "Signal: " << _name << " switched to HIGH @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
-                _history.total_evts += 1;
-                _state = HIGH;
-            }
-        }
-    }
-    
-    _last_t = t;
-}
-
-int
-Pin::process() {
-    assert(_configured == true);
-    _state = LOW;
-    _history.caught_evts += 1;
-    
-    return _processing_time * TICKS_PER_SECOND;
-}
-
-void
-Pin::report() {
-    cout << "Reporting for " << _name << "\n";
-    cout << "   Total Events: " << _history.total_evts << "\n";
-    cout << "  Missed Events: " << _history.missed_evts << "\n";
-    
-    cout << "--------------------------\n";
+    ardu->_debug << n << " " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
 }
 
 Arduino::Arduino() {
-    _log.open("time.log", ifstream::in);
+    _log.exceptions ( ifstream::failbit | ifstream::badbit );
+    _debug.exceptions ( ifstream::failbit | ifstream::badbit );
+    
+    _log.open("dispatch.log", fstream::out | fstream::trunc);
+    _debug.open("debug.log",  fstream::out | fstream::trunc);
     cout << "Setting up the Arduino\n";
     
     _ticks = 0 ;
@@ -115,7 +38,14 @@ Arduino::Arduino() {
 }
 
 Arduino::~Arduino() {
-    _log.close();
+    if (_log.is_open()) {
+        _log << "\n\n";
+        _log.close();
+    }
+    if (_debug.is_open()) {
+        _debug << "\n\n";
+        _debug.close();
+    }
 }
 
 void
@@ -125,10 +55,10 @@ Arduino::configurePin(uint8_t pin_id, uint8_t mode) {
     
     if (it != _pins.end()) {
         _pins[pin_id]->_mode = mode;
-        cerr << "Configuring Pin " << (int)pin_id << " to mode: " << (int)mode <<  "\n";
+        _debug << "Configuring Pin " << (int)pin_id << " to mode: " << (int)mode <<  "\n";
     }
     else {
-        cerr << "Error, pin configured that is not registed\n";
+        _debug << "Error, pin configured that is not registed\n";
     }
 }
 
@@ -151,11 +81,11 @@ Arduino::addInputFile(char *name) {
         if (found != string::npos) {
             string word = line.substr(0, found);
             if (header_parsed) {
-                cerr << "Scanning signals\n";
+                _debug << "Scanning signals\n";
                 registerSignal(word, line);
             }
             else {
-                cerr << "Scanning Header\n";
+                _debug << "Scanning Header\n";
                 scanHeaderChunk(word, line);
             }
         }
@@ -163,7 +93,7 @@ Arduino::addInputFile(char *name) {
     
     ifile.close();
     
-    cerr << "done parsing file\n";
+    _debug << "done parsing file\n";
     return true;
 }
 
@@ -172,17 +102,17 @@ Arduino::runScenario() {
     _timer._seconds = 0;
     _timer._ticks   = 0;
     setup();
-    cerr << "Attempting to run the Scenario\n\n";
+    _debug << "Attempting to run the Scenario\n\n";
     
-    print_clock("sl", _scenario_length);
-    print_clock("tr", _timer);
+    print_clock("Scenario Length: ", _scenario_length);
+    print_clock("Runtime Timer:", _timer);
     while (!((_timer._seconds > _scenario_length._seconds) || (_timer._seconds == _scenario_length._seconds && _timer._ticks >= _scenario_length._ticks))) {
         loop();
         addTicks(1);
         updatePinState();
     }
-    print_clock("sl", _scenario_length);
-    print_clock("tr", _timer);
+    print_clock("Scenario Length: ", _scenario_length);
+    print_clock("Runtime Timer:", _timer);
     
     cout << "--------------------------\n";
 }
@@ -207,7 +137,10 @@ Arduino::updatePinState() {
 
 int
 Arduino::getPin(uint8_t pin_id) {
-    return _pins[pin_id]->_state;
+    if (_pins.find(pin_id) == _pins.end())
+        return 0;
+    else
+        return _pins[pin_id]->_state;
 }
 
 void
@@ -230,7 +163,7 @@ Arduino::dispatchSignal(const char *signal_id) {
     }
     
     updatePinState();
-    cout << "Dispatching signal " << signal_id << " for " << _mapping[signal_id] << " a " << ticks << "\n";
+    _log << "Dispatching signal " << signal_id << " for " << _mapping[signal_id] << " a " << ticks << "\n";
 }
 
 string
@@ -249,7 +182,7 @@ Arduino::scanHeaderChunk(string identifier, string line) {
         is.str(line.substr(identifier.length(), line.length() - identifier.length()));
         is >> run_time;
         
-        cout << "Got a runtime length of " << run_time << "\n\n";
+        cout << "Configuration parsed runtime of " << run_time << "\n";
         _scenario_length._seconds = (int)run_time;
         _scenario_length._ticks = (run_time - floor(run_time)) * TICKS_PER_SECOND;
     } else if (identifier == "identifiers:") {
@@ -261,125 +194,27 @@ Arduino::scanHeaderChunk(string identifier, string line) {
 }
 
 void
-Arduino::registerSignal(string identifer, string line) {
-    cout << identifer << " and " << line << "\n";
-    
-    Pin *p = new Pin;
-    
+Arduino::registerSignal(string identifer, string line) {    
+    Pin *p = NULL;
+    int pin_id = -1;
+    string name = "";
     if (identifer == "det") {
-        stringstream ss(line);
-        ValueType val_type;
-        int initial_value, length, ratio, processing_time;
-        string name, string_val;
-        ss.seekg(4, ios::cur);
-        ss >> name;
-        if (name.at(name.length() - 1) == ',') {
-            name = name.substr(0, name.length() - 1);
-        }
-        ss.seekg(1, ios::cur);
-        if (ss.peek() == '"') {
-            val_type = VT_SERIAL;
-            cout << "Got a quoted string\n";
-            ss >> string_val; 
-        }
-        else {
-            val_type = VT_DIGITAL;
-            ss >> initial_value;
-        }
-        ss.seekg(1, ios::cur);
-        ss >> length;
-        ss.seekg(1, ios::cur);
-        ss >> ratio;
-        ss.seekg(1, ios::cur);
-        ss >> processing_time;
-        if (val_type == VT_DIGITAL) {
-            cout << "got D: " << name << ", " << initial_value << " and " << length << " r:" << ratio << "\n";
-        }
-        else {
-            cout << "got S: " << name << ", " << string_val << " and " << length << " r:" << ratio << "\n";
-        }
-        
-        if (_mapping.find(name) != _mapping.end()) {
-            int pin_id = _mapping[name];
-            p->_name = name;
-            p->_state = -1;
-            p->_flags = 0;
-            p->_val_type = val_type;
-            p->_signal_type = ST_DET;
-            if (val_type == VT_SERIAL)
-                p->_string_val = string_val;
-            if (val_type == VT_DIGITAL) {
-                p->_digital_val = initial_value;
-                p->_state = initial_value;
-            }
-            p->_vals[0] = length;
-            p->_vals[1] = ratio;
-            p->_processing_time = processing_time;
-            p->_configured = true;
-        
-            map<string, intptr_t>::iterator mit;
-            for (mit = _mapping.begin(); mit != _mapping.end(); mit++) {
-                cout << "got : " << mit->first << " b: " << mit->second << "\n";
-            }
-            
-            p->calcNext();
-        
-            cout << "Pin_id: " << pin_id << "\n";
-            _pins[pin_id] = p;
-        }
+        p = new DetPin();
     }
     else if (identifer == "uni") {
-        /*
-        stringstream ss(line);
-        ValueType val_type;
-        int initial_value, length, ratio, processing_time;
-        string name, string_val;
-        ss.seekg(4, ios::cur);
-        ss >> name;
-        if (name.at(name.length() - 1) == ',') {
-            name = name.substr(0, name.length() - 1);
-        }
-        ss.seekg(1, ios::cur);
-        if (ss.peek() == '"') {
-            val_type = VT_SERIAL;
-            cout << "Got a quoted string\n";
-            ss >> string_val; 
-        }
-        else {
-            val_type = VT_DIGITAL;
-            ss >> initial_value;
-        }
-        ss.seekg(1, ios::cur);
-        ss >> length;
-        ss.seekg(1, ios::cur);
-        ss >> ratio;
-        ss.seekg(1, ios::cur);
-        ss >> processing_time;
-        if (val_type == VT_DIGITAL) {
-            cout << "got: " << name << ", " << initial_value << " and " << length << " r:" << ratio << "\n";
-        }
-        else {
-            cout << "got: " << name << ", " << string_val << " and " << length << " r:" << ratio << "\n";
-        }
-        
-        int pin_id = _mapping[name];
-        p->_state = -1;
-        p->_flags = 0;
-        p->_val_type = val_type;
-        if (val_type == VT_SERIAL)
-            p->_string_val = string_val;
-        if (val_type == VT_DIGITAL) 
-            p->_digital_val = initial_value;
-        p->_vals[0] = length;
-        p->_vals[1] = ratio;
-        p->_processing_time = processing_time;
-        p->_configured = true;
-        _pins[pin_id] = p;
-        */
+        p = new UniPin();
+    }
+    else if (identifer == "exp") {
+        p = new ExpPin();
     }
     else {
         cout << "Bad configuration line \"" << line << "\"\n";
         exit(-1);
+    }
+    name = p->parseConfiguration(line);
+    pin_id = _mapping[name];
+    if (p != NULL && pin_id != -1 && name != "") {
+        _pins[pin_id] = p;
     }
 }
 
@@ -390,7 +225,7 @@ Arduino::addPin(string signal_id, uint8_t pin_id) {
 
 void
 Arduino::addSerial(string signal_id, HardwareSerial *serial) {
-    _mapping[signal_id] = (intptr_t)serial;
+    _mapping[signal_id] = serial->pin();
 }
 
 

@@ -72,20 +72,37 @@ class Pin {
     history_t _history;
     
     Pin();
-    Pin(SignalType st, int lambda) {
-        _num = new RandNum<int>(st, lambda);
-    }
 
     int process();
     void report();
     
     void setState(ardu_clock_t t);
-    void calcNext();
+    void initializeTimers();
+    
+    virtual string parseConfiguration(string);
+};
+
+class DetPin : public Pin {
+  public:
+    DetPin();
+    string parseConfiguration(string);
+};
+
+class UniPin : public Pin {
+  public:
+    UniPin();
+    string parseConfiguration(string);
+};
+
+class ExpPin : public Pin {
+  public:
+    ExpPin();
+    string parseConfiguration(string);
 };
 
 class Arduino {
   private:
-    ifstream    _log;
+    fstream     _log;
     bool        _flag;
     int         _max_pins;
     uint64_t    _ticks;
@@ -106,6 +123,9 @@ class Arduino {
   public:
     map<int, Pin*>
                 _pins;
+    fstream     _debug;
+    
+    char *_buffers[128];
 
     Arduino();
     ~Arduino();

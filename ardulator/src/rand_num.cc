@@ -19,6 +19,6 @@ T RandNum<T>::next() {
     }
     if (_dis_type == ST_EXP) {
         double val = erand48(_Xi);
-        return _range_start + _lambda * sin(M_PI * val);
+        return -_lambda * log(val);
     }
 }

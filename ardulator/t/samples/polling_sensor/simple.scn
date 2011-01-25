@@ -1,6 +1,8 @@
-length: 20.5
-identifiers: abc
+length: 55.5
 ---
 det a, 1, 2, 2, 4
-det b, "b", 3, 2, 4
+det b, 1, 3.5, 2.25, 4
+det c, "c", 3, 2, 4
+uni d, 1, 4, 4
+exp e, 1, 4, 4
 
