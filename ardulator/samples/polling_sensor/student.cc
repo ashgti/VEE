@@ -1,4 +1,3 @@
-// #include "public_config.h"
 #include "arduino_api.h"
 
 void
@@ -6,6 +5,8 @@ pinConfiguration() {
     registerPin("a", 0);
     registerPin("b", 1);
     registerSerial("c", &Serial);
+    registerPin("d", 2);
+    registerPin("e", 3);
 }
 
 void
@@ -30,7 +31,18 @@ loop() {
         int incomingByte = 0;
         incomingByte = Serial.read();
         
-        if (incomingByte == 'c')
+        if (incomingByte == 'c') {
             processSignal("c");
+        }
+    }
+    
+    delay(100);
+    
+    if (digitalRead(2) == HIGH) {
+        processSignal("d");
+    }
+    
+    if (digitalRead(3) == HIGH) {
+        processSignal("e");
     }
 }

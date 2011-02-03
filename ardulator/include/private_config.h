@@ -19,7 +19,7 @@ void wait(double seconds);
 void setupComponents();
 
 enum SignalType { ST_UNI, ST_DET, ST_EXP };
-enum ValueType { VT_DIGITAL, VT_SERIAL, VT_RAND_STRING };
+enum ValueType { VT_DIGITAL = 1, VT_SERIAL = 2, VT_ANALOG = 3, VT_RAND_STRING = 4 };
 
 template <class T>
 class RandNum {
@@ -50,14 +50,12 @@ class Pin {
     string _const_string;
     SignalType _signal_type;
     ValueType _val_type;
-    double _vals[3];
-    
-    int _mode;
-    
     bool _configured;
     
-    int _state;
-    int _flags;
+    uint32_t _state; /* Current state, could be 0 to 1024, or higher
+                      * depending on the accuracy of the A2D */
+    uint8_t  _flags;
+    uint8_t  _mode;  /* INPUT | OUTPUT mode */
     
     ardu_clock_t _next_u;
     ardu_clock_t _next_d;
@@ -65,7 +63,10 @@ class Pin {
     
     string _name;
     
-    int _processing_time;
+    double _mu;
+    
+    double _length, _ratio;
+    
     string _string_val;
     int _digital_val;
 
@@ -79,25 +80,31 @@ class Pin {
     void setState(ardu_clock_t t);
     void initializeTimers();
     
+    void parseStart(stringstream &ss);
+    
     virtual string parseConfiguration(string);
+    virtual void updateState(ardu_clock_t &t, int new_state);
 };
 
 class DetPin : public Pin {
   public:
     DetPin();
     string parseConfiguration(string);
+    void updateState(ardu_clock_t &t, int new_state);
 };
 
 class UniPin : public Pin {
   public:
     UniPin();
     string parseConfiguration(string);
+    void updateState(ardu_clock_t &t, int new_state);
 };
 
 class ExpPin : public Pin {
   public:
     ExpPin();
     string parseConfiguration(string);
+    void updateState(ardu_clock_t &t, int new_state);
 };
 
 class Arduino {
@@ -115,17 +122,17 @@ class Arduino {
 
     map<int, void (*)(void)>
                 _interupts;
-    map<string, intptr_t>
-                _mapping;
 
     void   updatePinState();
     string timestamp();
   public:
     map<int, Pin*>
                 _pins;
+    map<string, intptr_t>
+                _mapping;
     fstream     _debug;
     
-    char *_buffers[128];
+    string* _buffers[256];
 
     Arduino();
     ~Arduino();

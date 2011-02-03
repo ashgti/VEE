@@ -135,12 +135,29 @@ Arduino::updatePinState() {
     }
 }
 
+/*
+ * Analog Reads take 100 ms 
+ * Digital Reads 58 cycles 
+ */
 int
 Arduino::getPin(uint8_t pin_id) {
     if (_pins.find(pin_id) == _pins.end())
-        return 0;
-    else
-        return _pins[pin_id]->_state;
+        return LOW;
+    else {
+        if (_pins[pin_id]->_val_type == VT_SERIAL) {
+            return LOW;
+        }
+        else if (_pins[pin_id]->_val_type == VT_DIGITAL) {
+            addTicks(58);
+            return _pins[pin_id]->_state;
+        }
+        else if (_pins[pin_id]->_val_type == VT_ANALOG) {
+            addTicks(MS2T(100));
+            return _pins[pin_id]->_state;
+        }
+        else 
+            return LOW;
+    }
 }
 
 void
@@ -185,8 +202,12 @@ Arduino::scanHeaderChunk(string identifier, string line) {
         cout << "Configuration parsed runtime of " << run_time << "\n";
         _scenario_length._seconds = (int)run_time;
         _scenario_length._ticks = (run_time - floor(run_time)) * TICKS_PER_SECOND;
-    } else if (identifier == "identifiers:") {
+    } 
+    else if (identifier == "identifiers:") {
         _registered_identifers = line.substr(identifier.length(), line.length() - identifier.length());
+    }
+    else if (identifier == "#") {
+        // this is a comment, do nothing with this line
     }
     else {
         cout << "Unrecognized header configuration name \"" << identifier << "\"\n";
@@ -219,48 +240,16 @@ Arduino::registerSignal(string identifer, string line) {
 }
 
 void
-Arduino::addPin(string signal_id, uint8_t pin_id) {
-    _mapping[signal_id] = pin_id;
+Arduino::addPin(string signal_name, uint8_t pin_id) {
+    _mapping[signal_name] = pin_id;
 }
 
 void
-Arduino::addSerial(string signal_id, HardwareSerial *serial) {
-    _mapping[signal_id] = serial->pin();
+Arduino::addSerial(string signal_name, HardwareSerial *serial) {
+    _mapping[signal_name] = serial->pin();
 }
 
-
-
-/* Logging facilities */
-void
-Arduino::log(int level, string msg) {
-    cout << timestamp() << " : " << "level [" << level << "] msg: " << msg << "\n";
-}
-
-void
-Arduino::debug(string msg) {
-    log(5, msg);
-}
-
-void
-Arduino::info(string msg) {
-    log(4, msg);
-}
-
-void
-Arduino::warn(string msg) {
-    log(3, msg);
-}
-
-void
-Arduino::error(string msg) {
-    log(2, msg);
-}
-
-void
-Arduino::critical(string msg) {
-    log(1, msg);
-}
-
+/* Reporting facilities */
 void
 Arduino::report() {
     map<int, Pin*>::iterator it;

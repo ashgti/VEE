@@ -3,7 +3,7 @@
 #include <cassert>
 #include <private_config.h>
 
-template <class T> 
+template <class T>
 RandNum<T>::RandNum(SignalType dis_type, T lambda, unsigned short seed) : _dis_type(dis_type), _lambda(lambda) {
     assert(lambda > 0);
     _Xi[0] = _Xi[1] = 0; _Xi[2] = seed;

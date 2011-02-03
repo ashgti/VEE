@@ -173,8 +173,7 @@ void Print::println(double n, int digits) {
   println();
 }
 
-
-HardwareSerial::HardwareSerial(int rx, int tx) : _rxen(rx), _txen(tx) {
+HardwareSerial::HardwareSerial(int rx, int tx) : _rxen(rx), _txen(tx), _rb_head(0), _rb_tail(0) {
 }
 
 HardwareSerial::~HardwareSerial() {
@@ -183,7 +182,7 @@ HardwareSerial::~HardwareSerial() {
 }
 
 void HardwareSerial::begin(long b) {
-    ardu->_buffers[_rxen] = _in_buff;
+    ardu->_buffers[_rxen] = &_out_buff;
     _baud = b;
     char filename[50];
     if (_rxen == 255 && _txen == 254) {
@@ -203,15 +202,21 @@ void HardwareSerial::end() {
     if (_ofile.is_open())
         _ofile.close();
 }
+
 uint8_t HardwareSerial::available(void) {
-    return 0;
+    return _out_buff.length();
 }
+
 int HardwareSerial::read(void) {
-    cout << "NYI\n" << "\n";
+    int r = _out_buff[0];
+    _out_buff = _out_buff.substr(1, _out_buff.length());
+    return r;
 }
+
 void HardwareSerial::flush(void) {
-    cout << "NYI\n" << "\n";
+    
 }
+
 void HardwareSerial::write(uint8_t c) {
     _ofile << (char)c;
     

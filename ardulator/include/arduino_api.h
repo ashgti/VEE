@@ -200,8 +200,11 @@ class HardwareSerial : public Print
     uint8_t _txen;
     uint32_t _baud;
     
-    char _in_buff[64];
-    char _out_buff[64];
+    std::string _in_buff;
+    std::string _out_buff;
+    
+    uint8_t _rb_head;
+    uint8_t _rb_tail;
     
     std::fstream _ofile;
   public:

@@ -32,7 +32,7 @@ pinMode(uint8_t pin_id, uint8_t mode) {
 
 int 
 digitalRead(uint8_t pin_id) {
-    return ardu->getPin(pin_id);
+    return ardu->getPin(pin_id) ? HIGH : LOW;;
 }
 
 void 
@@ -45,4 +45,12 @@ digitalWrite(uint8_t pin_id, uint8_t value) {
     ardu->setPin(pin_id, value);
 }
 
+int
+analogRead(uint8_t pin_id) {
+    return ardu->getPin(pin_id);
+}
 
+void
+analogWrite(uint8_t pin_id, uint8_t value) {
+    ardu->setPin(pin_id, value);
+}    

@@ -12,9 +12,6 @@ using namespace std;
 
 void
 delay(unsigned long length) {
-    stringstream ss; 
-    ss << "Delay of " << length << " a "<< MS2T(length) << " vs " << TICKS_PER_SECOND;
-    ardu->debug(ss.str());
     ardu->addTicks(MS2T(length)); 
 }
  
