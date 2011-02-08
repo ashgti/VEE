@@ -56,8 +56,7 @@ class Pin {
     uint8_t  _flags;
     uint8_t  _mode;  /* INPUT | OUTPUT mode */
     
-    ardu_clock_t _next_u;
-    ardu_clock_t _next_d;
+    ardu_clock_t _next;
     ardu_clock_t _last_t;
     
     string _name;
@@ -68,6 +67,8 @@ class Pin {
     
     string _string_val;
     int _digital_val;
+    
+    bool _caught_flag;
 
     history_t _history;
     

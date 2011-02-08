@@ -9,6 +9,7 @@
 using namespace std;
 
 Pin::Pin() {
+    _caught_flag = false;
     _history.missed_evts = 0;
     _history.total_evts = 0;
     _history.caught_evts = 0;
@@ -27,14 +28,7 @@ UniPin::UniPin() : Pin() {
 void 
 Pin::initializeTimers() {
     if (_signal_type == ST_DET) {
-        double next = _length * _ratio;
-        
-        _next_u._seconds = (int)_length;
-        _next_u._ticks = (_length - floor(_length)) * TICKS_PER_SECOND;
-        
-        _next_d._seconds = (int)next;
-        _next_d._ticks = (next - floor(next)) * TICKS_PER_SECOND;
-        
+        _state = LOW;
         if (_state == HIGH) {
             _history.total_evts += 1;
         }
@@ -42,54 +36,59 @@ Pin::initializeTimers() {
 }
 
 void
-Pin::setState(ardu_clock_t t) {
-    if (_signal_type == ST_DET) {
-        if (_val_type == VT_SERIAL) {
-            if (_state == HIGH) {
-                if (t._seconds >= _next_d._seconds &&
-                        t._ticks > _next_d._ticks) {
+Pin::setState(ardu_clock_t &t) {
+    if (_val_type == VT_SERIAL) {
+        if (_state == HIGH) {
+            if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
+                    t._ticks > _next._ticks)) {
+                if (_caught_flag == false)
                     _history.missed_evts += 1;
-                    updateState(t, LOW);
-                }
-            }
-            else {
-                if (t._seconds >= _next_u._seconds && 
-                        t._ticks > _next_u._ticks) {
-                    _history.total_evts += 1;
-                    updateState(t, HIGH);
-                }
+                updateState(t, LOW);
+                _caught_flag = false;
             }
         }
-        else if (_val_type == VT_DIGITAL) {
-            if (_state == HIGH) {
-                if (t._seconds >= _next_d._seconds &&
-                        t._ticks > _next_d._ticks) {
-                    _history.missed_evts += 1;
-                    updateState(t, LOW);
-                }
-            }
-            else {
-                if (t._seconds >= _next_u._seconds && 
-                        t._ticks > _next_u._ticks) {
-                    _history.total_evts += 1;
-                    updateState(t, HIGH);
-                }
+        else {
+            if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
+                    t._ticks > _next._ticks)) {
+                _history.total_evts += 1;
+                updateState(t, HIGH);
             }
         }
-        else if (_val_type == VT_ANALOG) {
-            if (_state == HIGH) {
-                if (t._seconds >= _next_d._seconds &&
-                        t._ticks > _next_d._ticks) {
+    }
+    else if (_val_type == VT_DIGITAL) {
+        if (_state == HIGH) {
+            if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
+                    t._ticks > _next._ticks)) {
+                if (_caught_flag == false) {
                     _history.missed_evts += 1;
-                    updateState(t, LOW);
                 }
+                updateState(t, LOW);
+                _caught_flag = false;
             }
-            else {
-                if (t._seconds >= _next_u._seconds && 
-                        t._ticks > _next_u._ticks) {
-                    _history.total_evts += 1;
-                    updateState(t, HIGH);
-                }
+        }
+        else {
+            if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
+                    t._ticks > _next._ticks)) {
+                _history.total_evts += 1;
+                updateState(t, HIGH);
+            }
+        }
+    }
+    else if (_val_type == VT_ANALOG) {
+        if (_state == HIGH) {
+            if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
+                    t._ticks > _next._ticks)) {
+                if (_caught_flag == false)
+                    _history.missed_evts += 1;
+                updateState(t, LOW);
+                _caught_flag = false;
+            }
+        }
+        else {
+            if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
+                    t._ticks > _next._ticks)) {
+                _history.total_evts += 1;
+                updateState(t, HIGH);
             }
         }
     }
@@ -106,56 +105,83 @@ Pin::updateState(ardu_clock_t &t, int new_state) {
 void
 DetPin::updateState(ardu_clock_t &t, int new_state) {
     double next = _length * _ratio;
+
     int overflow = 0;
-    _next_d._ticks += (next - floor(next)) * TICKS_PER_SECOND;
-    if (_next_d._ticks > TICKS_PER_SECOND) {
-        _next_d._ticks -= TICKS_PER_SECOND;
+    _next._ticks += (next - floor(next)) * TICKS_PER_SECOND;
+    if (_next._ticks > TICKS_PER_SECOND) {
+        _next._ticks -= TICKS_PER_SECOND;
         overflow = 1;
     }
-    _next_d._seconds += (int)next + overflow;
-    ardu->_debug << "Signal: " << _name << " switched to LOW @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
+    _next._seconds += floor(next) + overflow;
+    cout << "Signal: " << _name << " switched to ";
+    if (new_state == HIGH)
+        cout << "HIGH";
+    else
+        cout << "LOW";
+    cout  << " @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
     _state = new_state;
 }
 
 void
 UniPin::updateState(ardu_clock_t &t, int new_state) {
-    double next = _num->next();
+    double next = 0;
+    if (new_state == HIGH) {
+        next = _num->next();
+    } 
+    else {
+        next = 0.1 * _length; 
+    }
     
-    cout << "NEXT: " << next << "\n";
     int overflow = 0;
-    _next_d._ticks += (next - floor(next)) * TICKS_PER_SECOND;
-    if (_next_d._ticks > TICKS_PER_SECOND) {
-        _next_d._ticks -= TICKS_PER_SECOND;
+    _next._ticks += (next - floor(next)) * TICKS_PER_SECOND;
+    if (_next._ticks > TICKS_PER_SECOND) {
+        _next._ticks -= TICKS_PER_SECOND;
         overflow = 1;
     }
-    _next_d._seconds += (int)next + overflow;
-    ardu->_debug << "Signal: " << _name << " switched to LOW @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
+    _next._seconds += floor(next) + overflow;
+    
+    ardu->_debug << "Signal: " << _name << " switched to ";
+    if (new_state == HIGH)
+        ardu->_debug << "HIGH";
+    else
+        ardu->_debug << "LOW";
+    ardu->_debug  << " @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
     _state = new_state;
 }
 
 void
 ExpPin::updateState(ardu_clock_t &t, int new_state) {
-    double next = _num->next();
+    double next = 0;
+    if (new_state == HIGH) 
+        next = _num->next();
+    else
+        next = (_mu * 0.01) * _length;
+    
     int overflow = 0;
-    _next_d._ticks += (next - floor(next)) * TICKS_PER_SECOND;
-    if (_next_d._ticks > TICKS_PER_SECOND) {
-        _next_d._ticks -= TICKS_PER_SECOND;
+    _next._ticks += (next - floor(next)) * TICKS_PER_SECOND;
+    if (_next._ticks > TICKS_PER_SECOND) {
+        _next._ticks -= TICKS_PER_SECOND;
         overflow = 1;
     }
-    _next_d._seconds += (int)next + overflow;
+    
+    _next._seconds += (int)next + overflow;
     ardu->_debug << "Signal: " << _name << " switched to LOW @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
     _state = new_state;
 }
 
 int
 Pin::process() {
-    assert(_configured == true);
-    _state = LOW;
-    _history.caught_evts += 1;
+    if (_caught_flag == false && _state == HIGH) {
+        _history.caught_evts += 1;
+        _caught_flag = true;
+    }
+    else {
+        cerr << "Processing event that has been handled. ";
+    }
     
-    cerr << "Processing: " << _name << "\n";
+    ardu->_debug << "Processing: " << _name << "\n";
     
-    return _mu * TICKS_PER_SECOND;
+    return (_mu * 0.01) * _length * TICKS_PER_SECOND;
 }
 
 void
