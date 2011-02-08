@@ -29,9 +29,6 @@ void
 Pin::initializeTimers() {
     if (_signal_type == ST_DET) {
         _state = LOW;
-        if (_state == HIGH) {
-            _history.total_evts += 1;
-        }
     }
 }
 
@@ -100,12 +97,11 @@ void
 Pin::finalize(ardu_clock_t &t) {
     if (_val_type == VT_SERIAL) {
         if (_state == HIGH) {
-            if (t._seconds >= _next._seconds &&
-                    t._ticks > _next._ticks) {
+            if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
+                    t._ticks > _next._ticks)) {
                 if (_caught_flag == false) {
                     _history.missed_evts += 1;
                 }
-                _caught_flag = false;
             }
         }
     }
@@ -116,7 +112,6 @@ Pin::finalize(ardu_clock_t &t) {
                 if (_caught_flag == false) {
                     _history.missed_evts += 1;
                 }
-                _caught_flag = false;
             }
         }
     }
@@ -126,7 +121,6 @@ Pin::finalize(ardu_clock_t &t) {
                     t._ticks > _next._ticks) {
                 if (_caught_flag == false)
                     _history.missed_evts += 1;
-                _caught_flag = false;
             }
         }
     }
@@ -213,7 +207,7 @@ Pin::process() {
         _caught_flag = true;
     }
     else {
-        cerr << "Processing event that has been handled. ";
+        cerr << "Processing event that has been handled.\n";
     }
     
     ardu->_debug << "Processing: " << _name << "\n";
@@ -234,7 +228,7 @@ ExpPin::report() {
     cout << "                   Mu: " << _mu << "\n";
     cout << "                   --\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
-    cout << "         Total Events: " << _history.total_evts << "\n";
+    cout << "         Total Events: " << _history.missed_evts + _history.caught_evts << "\n";
     
     cout << "--------------------------\n\n";
 }
@@ -248,7 +242,7 @@ DetPin::report() {
     cout << "                   Mu: " << _mu << "\n";
     cout << "                   --\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
-    cout << "         Total Events: " << _history.total_evts << "\n";
+    cout << "         Total Events: " << _history.missed_evts + _history.caught_evts << "\n";
     
     cout << "--------------------------\n\n";
 }
@@ -260,7 +254,7 @@ UniPin::report() {
     cout << "                   Mu: " << _mu << "\n";
     cout << "                  --\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
-    cout << "         Total Events: " << _history.total_evts << "\n";
+    cout << "         Total Events: " << _history.total_evts + _history.caught_evts << "\n";
     
     cout << "--------------------------\n\n";
 }
