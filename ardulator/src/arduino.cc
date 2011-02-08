@@ -20,6 +20,8 @@ addTime(ardu_clock_t &t, int ticks) {
 void
 print_clock(string n, ardu_clock_t t){
     ardu->_debug << n << " " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
+    
+    ardu->_debug.flush();
 }
 
 Arduino::Arduino() {
@@ -40,10 +42,12 @@ Arduino::Arduino() {
 Arduino::~Arduino() {
     if (_log.is_open()) {
         _log << "\n\n";
+        _log.flush();
         _log.close();
     }
     if (_debug.is_open()) {
         _debug << "\n\n";
+        _debug.flush();
         _debug.close();
     }
 }
