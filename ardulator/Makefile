@@ -1,6 +1,3 @@
-CC=clang
-CXX=clang++
-CPP=clang++
 PERL=perl
 CFLAGS=-I./include -Wall -g -Wextra
 CXXFLAGS=$(CFLAGS)
@@ -14,7 +11,7 @@ all: staticlib test
 staticlib: $(LIB_FILE)
 
 sample: $(LIB_FILE) student.o
-	$(CXX) $(CXXFLAGS) -v -o $@ $(LIB_FILE) student.o $(LD_FLAGS)
+	$(CXX) $(CXXFLAGS) -v -o $@ student.o $(LIB_FILE) $(LD_FLAGS)
 
 $(LIB_FILE) : $(OBJ_FILES)
 	$(AR) cvsrS $(LIB_FILE) $?
