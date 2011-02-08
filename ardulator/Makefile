@@ -34,6 +34,9 @@ test: $(LIB_FILE) samples
 t2: $(LIB_FILE) samples
 	time samples/polling_sensor/polling_sensor t/samples/polling_sensor/one.scn
 
+t3: $(LIB_FILE) samples
+	time samples/polling_sensor/polling_sensor t/one.scn
+
 clean: 
 	$(RM) $(OBJ_FILES) $(LIB_FILE)
 

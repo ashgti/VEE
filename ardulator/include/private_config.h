@@ -21,15 +21,14 @@ void setupComponents();
 enum SignalType { ST_UNI, ST_DET, ST_EXP };
 enum ValueType { VT_DIGITAL = 1, VT_SERIAL = 2, VT_ANALOG = 3, VT_RAND_STRING = 4 };
 
-template <class T>
 class RandNum {
   public:
     unsigned short _Xi[3];
     SignalType _dis_type;
-    T _range_start, _range_end, _lambda;
+    double _range_start, _range_end, _lambda;
 
-    RandNum(SignalType dis_type, T lambda, unsigned short seed = 100);
-    T next();
+    RandNum(SignalType dis_type, double lambda, unsigned short seed = 100);
+    double next();
 };
 
 typedef struct ardu_clock_t {
@@ -46,7 +45,7 @@ typedef struct history_t {
 
 class Pin {
   public:
-    RandNum<int> *_num;
+    RandNum *_num;
     string _const_string;
     SignalType _signal_type;
     ValueType _val_type;
@@ -75,7 +74,6 @@ class Pin {
     Pin();
 
     int process();
-    void report();
     
     void setState(ardu_clock_t t);
     void initializeTimers();
@@ -84,6 +82,7 @@ class Pin {
     
     virtual string parseConfiguration(string);
     virtual void updateState(ardu_clock_t &t, int new_state);
+    virtual void report();
 };
 
 class DetPin : public Pin {
@@ -91,6 +90,7 @@ class DetPin : public Pin {
     DetPin();
     string parseConfiguration(string);
     void updateState(ardu_clock_t &t, int new_state);
+    void report();
 };
 
 class UniPin : public Pin {
@@ -98,6 +98,7 @@ class UniPin : public Pin {
     UniPin();
     string parseConfiguration(string);
     void updateState(ardu_clock_t &t, int new_state);
+    void report();
 };
 
 class ExpPin : public Pin {
@@ -105,6 +106,7 @@ class ExpPin : public Pin {
     ExpPin();
     string parseConfiguration(string);
     void updateState(ardu_clock_t &t, int new_state);
+    void report();
 };
 
 class Arduino {

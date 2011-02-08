@@ -119,7 +119,9 @@ DetPin::updateState(ardu_clock_t &t, int new_state) {
 
 void
 UniPin::updateState(ardu_clock_t &t, int new_state) {
-    double next = _length * _ratio;
+    double next = _num->next();
+    
+    cout << "NEXT: " << next << "\n";
     int overflow = 0;
     _next_d._ticks += (next - floor(next)) * TICKS_PER_SECOND;
     if (_next_d._ticks > TICKS_PER_SECOND) {
@@ -133,7 +135,7 @@ UniPin::updateState(ardu_clock_t &t, int new_state) {
 
 void
 ExpPin::updateState(ardu_clock_t &t, int new_state) {
-    double next = _length * _ratio;
+    double next = _num->next();
     int overflow = 0;
     _next_d._ticks += (next - floor(next)) * TICKS_PER_SECOND;
     if (_next_d._ticks > TICKS_PER_SECOND) {
@@ -158,7 +160,39 @@ Pin::process() {
 
 void
 Pin::report() {
+    cerr << "ERROR, bad function call\n";
+    exit(-1);
+}
+
+void
+ExpPin::report() {
     cout << "Reporting for " << _name << "\n";
+    cout << "   Lambda: " << _length << "\n";
+    cout << "       Mu: " << _mu << "\n";
+    cout << "   Total Events: " << _history.total_evts << "\n";
+    cout << "  Missed Events: " << _history.missed_evts << "\n";
+    
+    cout << "--------------------------\n";
+}
+
+void
+DetPin::report() {
+    cout << "Reporting for " << _name << "\n";
+    cout << "   Signal High Length: " << _length << "\n";
+    cout << "                Ratio: " << _ratio << "\n";
+    cout << "                   Mu: " << _mu << "\n";
+    cout << "                   --\n";
+    cout << "         Total Events: " << _history.total_evts << "\n";
+    cout << "        Missed Events: " << _history.missed_evts << "\n";
+    
+    cout << "--------------------------\n";
+}
+
+void
+UniPin::report() {
+    cout << "Reporting for " << _name << "\n";
+    cout << "   Lambda: " << _length << "\n";
+    cout << "       Mu: " << _mu << "\n";
     cout << "   Total Events: " << _history.total_evts << "\n";
     cout << "  Missed Events: " << _history.missed_evts << "\n";
     
@@ -211,11 +245,14 @@ DetPin::parseConfiguration(string line) {
     stringstream ss(line);
 
     parseStart(ss);
-    ss.seekg(1, ios::cur);
+    if (ss.peek() == ',')
+        ss.seekg(1, ios::cur);
     ss >> _length;
-    ss.seekg(1, ios::cur);
+    if (ss.peek() == ',')
+        ss.seekg(1, ios::cur);
     ss >> _ratio;
-    ss.seekg(1, ios::cur);
+    if (ss.peek() == ',')
+        ss.seekg(1, ios::cur);
     ss >> _mu;
     
     _configured = true;
@@ -229,12 +266,14 @@ UniPin::parseConfiguration(string line) {
     stringstream ss(line);
 
     parseStart(ss);
-    ss.seekg(1, ios::cur);
+    if (ss.peek() == ',')
+        ss.seekg(1, ios::cur);
     ss >> _length;
-    ss.seekg(1, ios::cur);
-    ss >> _ratio;
-    ss.seekg(1, ios::cur);
+    if (ss.peek() == ',')
+        ss.seekg(1, ios::cur);
     ss >> _mu;
+    
+    _num = new RandNum(ST_UNI, _length);
     
     _configured = true;
     initializeTimers();
@@ -247,12 +286,14 @@ ExpPin::parseConfiguration(string line) {
     stringstream ss(line);
 
     parseStart(ss);
-    ss.seekg(1, ios::cur);
+    if (ss.peek() == ',')
+        ss.seekg(1, ios::cur);
     ss >> _length;
-    ss.seekg(1, ios::cur);
-    ss >> _ratio;
-    ss.seekg(1, ios::cur);
+    if (ss.peek() == ',')
+        ss.seekg(1, ios::cur);
     ss >> _mu;
+    
+    _num = new RandNum(ST_EXP, _length);
     
     _configured = true;
     initializeTimers();
@@ -260,3 +301,15 @@ ExpPin::parseConfiguration(string line) {
     return _name;
 }
 
+
+
+
+
+int main (int argc, char const *argv[])
+{
+    id a; 
+    a = 12;
+    a = @"2qwertyu";
+    a = [NSString  ]
+    return 0;
+}
