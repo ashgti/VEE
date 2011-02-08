@@ -13,29 +13,41 @@ all: staticlib test
 
 staticlib: $(LIB_FILE)
 
-samples: samples/polling_sensor/polling_sensor
-
-samples/polling_sensor/polling_sensor: $(LIB_FILE) samples/polling_sensor/student.o
-	$(CXX) $(CXXFLAGS) -v -o $@ $(LIB_FILE) samples/polling_sensor/student.o $(LD_FLAGS)
+sample: $(LIB_FILE) student.o
+	$(CXX) $(CXXFLAGS) -v -o $@ $(LIB_FILE) student.o $(LD_FLAGS)
 
 $(LIB_FILE) : $(OBJ_FILES)
 	$(AR) cvsrS $(LIB_FILE) $?
 	ranlib $(LIB_FILE)
 
-samples/polling_sensor/student.o: samples/polling_sensor/student.cc
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-test: $(LIB_FILE) samples
-	time samples/polling_sensor/polling_sensor t/samples/polling_sensor/simple.scn
+test: $(LIB_FILE) sample
+	time ./sample t/simple.scn
 
-t2: $(LIB_FILE) samples
-	time samples/polling_sensor/polling_sensor t/samples/polling_sensor/one.scn
+t2: $(LIB_FILE) sample
+	time ./sample t/one.scn
 
-t3: $(LIB_FILE) samples
-	time samples/polling_sensor/polling_sensor t/one.scn
+hw1: $(LIB_FILE)
+	mkdir -p ./homeworks/hw1
+	cp ./$(LIB_FILE) ./homeworks/hw1
+	cp templates/student.cc ./homeworks/hw1/lab1.cc
+	cp templates/Makefile ./homeworks/hw1
+	cp templates/t1.scn ./homeworks/hw1
+	cp templates/t2.scn ./homeworks/hw1
+	cp templates/t3.scn ./homeworks/hw1
+	cp templates/t4.scn ./homeworks/hw1
+	cp templates/t5.scn ./homeworks/hw1
+	cp templates/t6.scn ./homeworks/hw1
+	cp templates/t7.scn ./homeworks/hw1
+	cp templates/t8.scn ./homeworks/hw1
+	cp templates/t9.scn ./homeworks/hw1
+	cp templates/t10.scn ./homeworks/hw1
+	cp templates/t11.scn ./homeworks/hw1
+	cp templates/t12.scn ./homeworks/hw1
+	cp include/arduino_api.h ./homeworks/hw1
+	tar -C ./homeworks -czf hw1.tar.gz ./hw1
 
 clean: 
 	$(RM) $(OBJ_FILES) $(LIB_FILE)

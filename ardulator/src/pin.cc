@@ -166,18 +166,20 @@ Pin::report() {
 
 void
 ExpPin::report() {
-    cout << "Reporting for " << _name << "\n";
-    cout << "   Lambda: " << _length << "\n";
-    cout << "       Mu: " << _mu << "\n";
-    cout << "   Total Events: " << _history.total_evts << "\n";
-    cout << "  Missed Events: " << _history.missed_evts << "\n";
+    cout << "Reporting for: " << _name << "\n";
+    cout << "               Lambda: " << _length << "\n";
+    cout << "                   Mu: " << _mu << "\n";
+    cout << "                   --\n";
+    cout << "         Total Events: " << _history.total_evts << "\n";
+    cout << "        Missed Events: " << _history.missed_evts << "\n";
     
-    cout << "--------------------------\n";
+    cout << "--------------------------\n\n";
 }
 
 void
 DetPin::report() {
-    cout << "Reporting for " << _name << "\n";
+    cout << "Reporting for: " << _name << "\n";
+    cout << "--- used for testing ---\n";
     cout << "   Signal High Length: " << _length << "\n";
     cout << "                Ratio: " << _ratio << "\n";
     cout << "                   Mu: " << _mu << "\n";
@@ -185,18 +187,19 @@ DetPin::report() {
     cout << "         Total Events: " << _history.total_evts << "\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
     
-    cout << "--------------------------\n";
+    cout << "--------------------------\n\n";
 }
 
 void
 UniPin::report() {
-    cout << "Reporting for " << _name << "\n";
-    cout << "   Lambda: " << _length << "\n";
-    cout << "       Mu: " << _mu << "\n";
-    cout << "   Total Events: " << _history.total_evts << "\n";
-    cout << "  Missed Events: " << _history.missed_evts << "\n";
+    cout << "Reporting for: " << _name << "\n";
+    cout << "               Lambda: " << _length << "\n";
+    cout << "                   Mu: " << _mu << "\n";
+    cout << "                  --\n";
+    cout << "         Total Events: " << _history.total_evts << "\n";
+    cout << "        Missed Events: " << _history.missed_evts << "\n";
     
-    cout << "--------------------------\n";
+    cout << "--------------------------\n\n";
 }
 
 string
@@ -299,17 +302,4 @@ ExpPin::parseConfiguration(string line) {
     initializeTimers();
     
     return _name;
-}
-
-
-
-
-
-int main (int argc, char const *argv[])
-{
-    id a; 
-    a = 12;
-    a = @"2qwertyu";
-    a = [NSString  ]
-    return 0;
 }
