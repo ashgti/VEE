@@ -39,7 +39,7 @@ t/*.scn: $(LIB_FILE) sample
 .PHONY: hw1
 hw1: $(LIB_FILE)
 	mkdir -p ./homeworks/hw1
-	cp ./$(LIB_FILE) ./homeworks/hw1
+	cp ./*.a ./homeworks/hw1
 	cp templates/student.cc ./homeworks/hw1/lab1.cc
 	cp templates/Makefile ./homeworks/hw1
 	cp templates/t1.scn ./homeworks/hw1
