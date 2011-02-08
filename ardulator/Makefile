@@ -26,8 +26,17 @@ $(LIB_FILE) : $(OBJ_FILES)
 test: $(LIB_FILE) sample
 	time ./sample t/simple.scn
 
-t2: $(LIB_FILE) sample
+t1: $(LIB_FILE) sample
 	time ./sample t/one.scn
+
+t2: $(LIB_FILE) sample
+	time ./sample t/uni.scn
+
+%.scn: $(LIB_FILE) sample
+	@./sample $@
+
+t/*.scn: $(LIB_FILE) sample
+	@./sample $@
 
 hw1: $(LIB_FILE)
 	mkdir -p ./homeworks/hw1
