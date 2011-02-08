@@ -2,16 +2,19 @@
 #include <cstdlib>
 #include <cassert>
 #include <private_config.h>
+#include <iostream>
 
-static int seed_counter = 100;
+static long int seed_counter = 100;
 
 RandNum::RandNum(SignalType dis_type, double lambda, unsigned short seed) : _dis_type(dis_type), _lambda(lambda) {
     assert(lambda > 0);
-    _Xi[0] = _Xi[1] = 0;
-    if (seed == -1)
-        _Xi[2] = seed_counter++;
-    else
-        _Xi[2] = seed;
+    if (seed == 65535) {
+        _Xi[0] = _Xi[1] = _Xi[2] = seed_counter;
+        seed_counter += 72;
+    }
+    else {
+        _Xi[0] = _Xi[1] = _Xi[2] = seed;
+    }
     _range_start = lambda / 2;
     _range_end = _range_start + lambda;
 }

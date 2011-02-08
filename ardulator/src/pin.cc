@@ -16,6 +16,14 @@ Pin::Pin() {
     _history.avg_response_time = 0;
 }
 
+Pin::~Pin() {
+    if (_log.is_open()) {
+        _log << "\n\n";
+        _log.flush();
+        _log.close();
+    }
+}
+
 DetPin::DetPin() : Pin() {
 }
 
@@ -27,6 +35,17 @@ UniPin::UniPin() : Pin() {
 
 void 
 Pin::initializeTimers() {
+    string log_filename = "./logs/";
+    log_filename.append(_name);
+    log_filename.append(".log");
+    _log.exceptions(ifstream::failbit | ifstream::badbit);
+    try {
+        _log.open(log_filename.c_str(), ios::in | ios::out | ios::trunc);
+    }
+    catch (ifstream::failure e) {
+        cout << "File error for " << log_filename << " " << _log.fail() << " < " << _log.bad() << " \n";
+    }
+    
     if (_signal_type == ST_DET) {
         _state = LOW;
     }
@@ -38,10 +57,7 @@ Pin::setState(ardu_clock_t &t) {
         if (_state == HIGH) {
             if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
                     t._ticks > _next._ticks)) {
-                if (_caught_flag == false)
-                    _history.missed_evts += 1;
                 updateState(t, LOW);
-                _caught_flag = false;
             }
         }
         else {
@@ -56,11 +72,7 @@ Pin::setState(ardu_clock_t &t) {
         if (_state == HIGH) {
             if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
                     t._ticks > _next._ticks)) {
-                if (_caught_flag == false) {
-                    _history.missed_evts += 1;
-                }
                 updateState(t, LOW);
-                _caught_flag = false;
             }
         }
         else {
@@ -75,10 +87,7 @@ Pin::setState(ardu_clock_t &t) {
         if (_state == HIGH) {
             if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
                     t._ticks > _next._ticks)) {
-                if (_caught_flag == false)
-                    _history.missed_evts += 1;
                 updateState(t, LOW);
-                _caught_flag = false;
             }
         }
         else {
@@ -97,30 +106,22 @@ void
 Pin::finalize(ardu_clock_t &t) {
     if (_val_type == VT_SERIAL) {
         if (_state == HIGH) {
-            if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
-                    t._ticks > _next._ticks)) {
-                if (_caught_flag == false) {
-                    _history.missed_evts += 1;
-                }
+            if (_caught_flag == false) {
+                _history.missed_evts += 1;
             }
         }
     }
     else if (_val_type == VT_DIGITAL) {
         if (_state == HIGH) {
-            if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
-                    t._ticks > _next._ticks)) {
-                if (_caught_flag == false) {
-                    _history.missed_evts += 1;
-                }
+            if (_caught_flag == false) {
+                _history.missed_evts += 1;
             }
         }
     }
     else if (_val_type == VT_ANALOG) {
         if (_state == HIGH) {
-            if (t._seconds >= _next._seconds &&
-                    t._ticks > _next._ticks) {
-                if (_caught_flag == false)
-                    _history.missed_evts += 1;
+            if (_caught_flag == false) {
+                _history.missed_evts += 1;
             }
         }
     }
@@ -135,7 +136,9 @@ Pin::updateState(ardu_clock_t &t, int new_state) {
 void
 DetPin::updateState(ardu_clock_t &t, int new_state) {
     double next = _length * _ratio;
-
+    ardu_clock_t old = _next;
+    int old_state = _state;
+    
     int overflow = 0;
     _next._ticks += (next - floor(next)) * TICKS_PER_SECOND;
     if (_next._ticks > TICKS_PER_SECOND) {
@@ -148,41 +151,64 @@ DetPin::updateState(ardu_clock_t &t, int new_state) {
         ardu->_debug << "HIGH";
     else
         ardu->_debug << "LOW";
-    ardu->_debug  << " @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
+    ardu->_debug  << " @ " << old._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << old._ticks << "\n";
     ardu->_debug.flush();
     _state = new_state;
 }
 
 void
 UniPin::updateState(ardu_clock_t &t, int new_state) {
-    double next = 0;
-    if (new_state == HIGH) {
-        next = _num->next();
-    } 
-    else {
-        next = 0.1 * _length; 
-    }
-    
-    int overflow = 0;
-    _next._ticks += (next - floor(next)) * TICKS_PER_SECOND;
-    if (_next._ticks > TICKS_PER_SECOND) {
-        _next._ticks -= TICKS_PER_SECOND;
-        overflow = 1;
-    }
-    _next._seconds += floor(next) + overflow;
-    
-    ardu->_debug << "Signal: " << _name << " switched to ";
-    if (new_state == HIGH)
-        ardu->_debug << "HIGH";
-    else
-        ardu->_debug << "LOW";
-    ardu->_debug  << " @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
-    _state = new_state;
+    int count = 0;
+    do {
+        if (count > 1) cout << "yes maybe\n";
+        double next = 0;
+        if (new_state == HIGH) {
+            next = _num->next();
+        }
+        else {
+            next = (_mu * 0.01) * _length;
+        }
+        ardu_clock_t old = _next;
+        int old_state = _state;
+        int overflow = 0;
+        _next._ticks += (next - floor(next)) * TICKS_PER_SECOND;
+        if (_next._ticks > TICKS_PER_SECOND) {
+            _next._ticks -= TICKS_PER_SECOND;
+            overflow = 1;
+        }
+        _next._seconds += floor(next) + overflow;
+
+        ardu->_debug << "Signal: " << _name << " switched to ";
+        if (new_state == HIGH) {
+            ardu->_debug << "HIGH";
+        }
+        else {
+            ardu->_debug << "LOW";
+        }
+        ardu->_debug  << " @ " << old._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << old._ticks << "\n";
+        _state = new_state;
+        if (old_state == LOW && _state == HIGH) {
+            // FIRE RISING EVENT
+            _caught_flag = false;
+        }
+        if (old_state != _state) {
+            // FIRE CHANGED EVENT
+        }
+        if (old_state == HIGH && _state == LOW) {
+            // FIRE FALLING EVENT
+            if (_caught_flag == false) {
+                _history.missed_evts += 1;
+            }
+        }
+        count++;
+    } while (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
+                t._ticks > _next._ticks));
 }
 
 void
 ExpPin::updateState(ardu_clock_t &t, int new_state) {
     double next = 0;
+    ardu_clock_t old = _next;
     if (new_state == HIGH) 
         next = _num->next();
     else
@@ -196,7 +222,7 @@ ExpPin::updateState(ardu_clock_t &t, int new_state) {
     }
     
     _next._seconds += (int)next + overflow;
-    ardu->_debug << "Signal: " << _name << " switched to LOW @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
+    ardu->_debug << "Signal: " << _name << " switched to LOW @ " << old._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << old._ticks << "\n";
     _state = new_state;
 }
 
@@ -207,7 +233,7 @@ Pin::process() {
         _caught_flag = true;
     }
     else {
-        cerr << "Processing event that has been handled.\n";
+        ardu->_debug << "Processing event that has been handled. ";
     }
     
     ardu->_debug << "Processing: " << _name << "\n";
@@ -226,11 +252,22 @@ ExpPin::report() {
     cout << "Reporting for: " << _name << "\n";
     cout << "               Lambda: " << _length << "\n";
     cout << "                   Mu: " << _mu << "\n";
-    cout << "                   --\n";
+    cout << "                    --\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
     cout << "         Total Events: " << _history.missed_evts + _history.caught_evts << "\n";
     
     cout << "--------------------------\n\n";
+    cout.flush();
+    
+    _log << "Reporting for: " << _name << "\n";
+    _log << "               Lambda: " << _length << "\n";
+    _log << "                   Mu: " << _mu << "\n";
+    _log << "                    --\n";
+    _log << "        Missed Events: " << _history.missed_evts << "\n";
+    _log << "         Total Events: " << _history.missed_evts + _history.caught_evts << "\n";
+    
+    _log << "--------------------------\n\n";
+    _log.flush();
 }
 
 void
@@ -240,11 +277,24 @@ DetPin::report() {
     cout << "   Signal High Length: " << _length << "\n";
     cout << "                Ratio: " << _ratio << "\n";
     cout << "                   Mu: " << _mu << "\n";
-    cout << "                   --\n";
+    cout << "                    --\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
     cout << "         Total Events: " << _history.missed_evts + _history.caught_evts << "\n";
     
     cout << "--------------------------\n\n";
+    cout.flush();
+    
+    _log << "Reporting for: " << _name << "\n";
+    _log << "--- used for testing ---\n";
+    _log << "   Signal High Length: " << _length << "\n";
+    _log << "                Ratio: " << _ratio << "\n";
+    _log << "                   Mu: " << _mu << "\n";
+    _log << "                    --\n";
+    _log << "        Missed Events: " << _history.missed_evts << "\n";
+    _log << "         Total Events: " << _history.total_evts << "\n";
+
+    _log << "--------------------------\n\n";
+    _log.flush();
 }
 
 void
@@ -252,11 +302,22 @@ UniPin::report() {
     cout << "Reporting for: " << _name << "\n";
     cout << "               Lambda: " << _length << "\n";
     cout << "                   Mu: " << _mu << "\n";
-    cout << "                  --\n";
+    cout << "                   --\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
-    cout << "         Total Events: " << _history.total_evts + _history.caught_evts << "\n";
+    cout << "         Total Events: " << _history.total_evts << "\n";
     
     cout << "--------------------------\n\n";
+    cout.flush();
+    
+    _log << "Reporting for: " << _name << "\n";
+    _log << "               Lambda: " << _length << "\n";
+    _log << "                   Mu: " << _mu << "\n";
+    _log << "                   --\n";
+    _log << "        Missed Events: " << _history.missed_evts << "\n";
+    _log << "         Total Events: " << _history.total_evts << "\n";
+
+    _log << "--------------------------\n\n";
+    _log.flush();
 }
 
 string
@@ -268,11 +329,11 @@ void
 Pin::parseStart(stringstream &ss) {
     ValueType val_type;
     int initial_value = 0;
-    string name, string_val;
+    string name, tmp_name, string_val;
     ss.seekg(4, ios::cur);
-    ss >> name;
-    if (name.at(name.length() - 1) == ',') {
-        name = name.substr(0, name.length() - 1);
+    ss >> tmp_name;
+    if (tmp_name.length() > 1 && tmp_name.at(tmp_name.length() - 1) == ',') {
+        name = tmp_name.substr(0, tmp_name.length() - 1);
     }
     ss.seekg(1, ios::cur);
     if (ss.peek() == '"') {

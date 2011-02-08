@@ -60,10 +60,10 @@ class Pin {
     ardu_clock_t _next;
     ardu_clock_t _last_t;
     
+    fstream _log;
+    
     string _name;
-    
     double _mu;
-    
     double _length, _ratio;
     
     string _string_val;
@@ -74,6 +74,7 @@ class Pin {
     history_t _history;
     
     Pin();
+    ~Pin();
 
     int process();
     

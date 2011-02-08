@@ -6,6 +6,7 @@ OBJ_FILES := src/pin.o src/hardware_serial.o src/pin_commands.o src/private_conf
 SRC_FILES := src/pin.cc src/hardware_serial.cc src/pin_commands.cc src/private_config.cc src/timing.cc src/main.cc src/arduino.cc src/rand_num.cc $(EXT_FILES)
 LIB_FILE := libardunio-emulation.a
 
+.PHONY: all
 all: staticlib test
 
 staticlib: $(LIB_FILE)
@@ -35,6 +36,7 @@ t2: $(LIB_FILE) sample
 t/*.scn: $(LIB_FILE) sample
 	@./sample $@
 
+.PHONY: hw1
 hw1: $(LIB_FILE)
 	mkdir -p ./homeworks/hw1
 	cp ./$(LIB_FILE) ./homeworks/hw1

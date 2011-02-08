@@ -24,10 +24,10 @@
 #                       exp a, 1, 1.75, 90.0
 length: 200
 ---
-uni a, 1, 2, 30
-uni b, 1, 2, 30
-uni c, 1, 2, 30
-uni d, 1, 2, 30
-uni e, 1, 2, 30
-uni f, 1, 2, 30
+uni a, 1, 4, 30
+uni b, 1, 4, 30
+uni c, 1, 4, 30
+uni d, 1, 4, 30
+uni e, 1, 4, 30
+uni f, 1, 4, 30
 

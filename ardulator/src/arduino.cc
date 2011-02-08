@@ -4,6 +4,10 @@
 #include <sstream>
 #include <cassert>
 #include <iomanip>
+#include <cstdio>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "private_config.h"
 
 using namespace std;
@@ -28,8 +32,17 @@ Arduino::Arduino() {
     _log.exceptions ( ifstream::failbit | ifstream::badbit );
     _debug.exceptions ( ifstream::failbit | ifstream::badbit );
     
-    _log.open("dispatch.log", fstream::out | fstream::trunc);
-    _debug.open("debug.log",  fstream::out | fstream::trunc);
+    struct stat buffer;
+    int status = stat("./logs", &buffer);
+    
+    if (status != 0 && errno == ENOENT) {
+        if (mkdir("./logs", 0777)) {
+            perror("./logs");
+        }
+    }
+    
+    _log.open("./logs/dispatch.log", fstream::out | fstream::trunc);
+    _debug.open("./logs/debug.log",  fstream::out | fstream::trunc);
     cout << "Setting up the Arduino\n";
     
     _ticks = 0 ;
@@ -136,7 +149,9 @@ void
 Arduino::updatePinState() {
     // Report Changes in State
     map<int, Pin*>::iterator it;
+    int c = 0;
     for (it = _pins.begin(); it != _pins.end(); it++) {
+        c++;
         it->second->setState(_timer);
     }
     
