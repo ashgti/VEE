@@ -149,12 +149,13 @@ DetPin::updateState(ardu_clock_t &t, int new_state) {
         overflow = 1;
     }
     _next._seconds += floor(next) + overflow;
-    cout << "Signal: " << _name << " switched to ";
+    ardu->_debug << "Signal: " << _name << " switched to ";
     if (new_state == HIGH)
-        cout << "HIGH";
+        ardu->_debug << "HIGH";
     else
-        cout << "LOW";
-    cout  << " @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
+        ardu->_debug << "LOW";
+    ardu->_debug  << " @ " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
+    ardu->_debug.flush();
     _state = new_state;
 }
 
