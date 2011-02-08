@@ -11,6 +11,7 @@ using namespace std;
 
 void wait(double seconds);
 
+#define LOOP_CONST      15
 #define FIELD_WIDTH      5
 #define TICKS_PER_SECOND 10000
 #define TICKS_PER_MICRO_SECONDS 100
@@ -27,7 +28,7 @@ class RandNum {
     SignalType _dis_type;
     double _range_start, _range_end, _lambda;
 
-    RandNum(SignalType dis_type, double lambda, unsigned short seed = 100);
+    RandNum(SignalType dis_type, double lambda, unsigned short seed = -1);
     double next();
 };
 
@@ -76,7 +77,8 @@ class Pin {
 
     int process();
     
-    void setState(ardu_clock_t t);
+    void setState(ardu_clock_t &t);
+    void finalize(ardu_clock_t &t);
     void initializeTimers();
     
     void parseStart(stringstream &ss);
@@ -127,10 +129,13 @@ class Arduino {
                 _interupts;
 
     void   updatePinState();
+    void   finalizePinState();
     string timestamp();
   public:
     map<int, Pin*>
                 _pins;
+    vector<Pin*>
+                _unused_pins;
     map<string, intptr_t>
                 _mapping;
     fstream     _debug;

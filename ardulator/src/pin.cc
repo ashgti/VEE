@@ -97,6 +97,42 @@ Pin::setState(ardu_clock_t &t) {
 }
 
 void
+Pin::finalize(ardu_clock_t &t) {
+    if (_val_type == VT_SERIAL) {
+        if (_state == HIGH) {
+            if (t._seconds >= _next._seconds &&
+                    t._ticks > _next._ticks) {
+                if (_caught_flag == false) {
+                    _history.missed_evts += 1;
+                }
+                _caught_flag = false;
+            }
+        }
+    }
+    else if (_val_type == VT_DIGITAL) {
+        if (_state == HIGH) {
+            if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
+                    t._ticks > _next._ticks)) {
+                if (_caught_flag == false) {
+                    _history.missed_evts += 1;
+                }
+                _caught_flag = false;
+            }
+        }
+    }
+    else if (_val_type == VT_ANALOG) {
+        if (_state == HIGH) {
+            if (t._seconds >= _next._seconds &&
+                    t._ticks > _next._ticks) {
+                if (_caught_flag == false)
+                    _history.missed_evts += 1;
+                _caught_flag = false;
+            }
+        }
+    }
+}
+
+void
 Pin::updateState(ardu_clock_t &t, int new_state) {
     cout << "ERROR, bad function call\n";
     exit(-1);
@@ -196,8 +232,8 @@ ExpPin::report() {
     cout << "               Lambda: " << _length << "\n";
     cout << "                   Mu: " << _mu << "\n";
     cout << "                   --\n";
-    cout << "         Total Events: " << _history.total_evts << "\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
+    cout << "         Total Events: " << _history.total_evts << "\n";
     
     cout << "--------------------------\n\n";
 }
@@ -210,8 +246,8 @@ DetPin::report() {
     cout << "                Ratio: " << _ratio << "\n";
     cout << "                   Mu: " << _mu << "\n";
     cout << "                   --\n";
-    cout << "         Total Events: " << _history.total_evts << "\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
+    cout << "         Total Events: " << _history.total_evts << "\n";
     
     cout << "--------------------------\n\n";
 }
@@ -222,8 +258,8 @@ UniPin::report() {
     cout << "               Lambda: " << _length << "\n";
     cout << "                   Mu: " << _mu << "\n";
     cout << "                  --\n";
-    cout << "         Total Events: " << _history.total_evts << "\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
+    cout << "         Total Events: " << _history.total_evts << "\n";
     
     cout << "--------------------------\n\n";
 }

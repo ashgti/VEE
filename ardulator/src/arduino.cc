@@ -110,11 +110,13 @@ Arduino::runScenario() {
     
     print_clock("Scenario Length: ", _scenario_length);
     print_clock("Runtime Timer:", _timer);
+    updatePinState();
     while (!((_timer._seconds > _scenario_length._seconds) || (_timer._seconds == _scenario_length._seconds && _timer._ticks >= _scenario_length._ticks))) {
         loop();
-        addTicks(1);
+        addTicks(LOOP_CONST);
         updatePinState();
     }
+    finalizePinState();
     print_clock("Scenario Length: ", _scenario_length);
     print_clock("Runtime Timer:", _timer);
     
@@ -137,6 +139,25 @@ Arduino::updatePinState() {
     for (it = _pins.begin(); it != _pins.end(); it++) {
         it->second->setState(_timer);
     }
+    
+    vector<Pin*>::iterator vit;
+    for (vit = _unused_pins.begin(); vit != _unused_pins.end(); vit++) {
+        (*vit)->setState(_timer);
+    }
+}
+
+void
+Arduino::finalizePinState() {
+    // Report Changes in State
+    map<int, Pin*>::iterator it;
+    for (it = _pins.begin(); it != _pins.end(); it++) {
+        it->second->finalize(_timer);
+    }
+    
+    vector<Pin*>::iterator vit;
+    for (vit = _unused_pins.begin(); vit != _unused_pins.end(); vit++) {
+        (*vit)->finalize(_timer);
+    }   
 }
 
 /*
@@ -145,8 +166,9 @@ Arduino::updatePinState() {
  */
 int
 Arduino::getPin(uint8_t pin_id) {
-    if (_pins.find(pin_id) == _pins.end())
+    if (_pins.find(pin_id) == _pins.end()) {
         return LOW;
+    }
     else {
         if (_pins[pin_id]->_val_type == VT_SERIAL) {
             return LOW;
@@ -168,13 +190,17 @@ void
 Arduino::setPin(uint8_t pin_id, uint8_t val) {
     if (_pins[pin_id]->_state != val) {
         _pins[pin_id]->_state = val;
-        _pins[pin_id]->_flags &= 0x1;
-        cout << timestamp() << "\nUpdating value for: " << static_cast<int>(pin_id) << " " << static_cast<int>(val) << "\n";
     }
 }
 
 void
 Arduino::dispatchSignal(const char *signal_id) {
+    if (_mapping.find(signal_id) == _mapping.end()) {
+        return;
+    }
+    if (_pins.find(_mapping[signal_id]) == _pins.end()) {
+        return;
+    }
     int ticks = _pins[_mapping[signal_id]]->process();
     
     _timer._ticks += ticks;
@@ -185,6 +211,7 @@ Arduino::dispatchSignal(const char *signal_id) {
     
     updatePinState();
     _log << "Dispatching signal " << signal_id << " for " << _mapping[signal_id] << " a " << ticks << "\n";
+    _log.flush();
 }
 
 string
@@ -237,9 +264,14 @@ Arduino::registerSignal(string identifer, string line) {
         exit(-1);
     }
     name = p->parseConfiguration(line);
-    pin_id = _mapping[name];
-    if (p != NULL && pin_id != -1 && name != "") {
-        _pins[pin_id] = p;
+    if (_mapping.find(name) == _mapping.end()) {
+        _unused_pins.push_back(p);
+    }
+    else {
+        pin_id = _mapping[name];
+        if (p != NULL && pin_id != -1 && name != "") {
+            _pins[pin_id] = p;
+        }
     }
 }
 
@@ -260,6 +292,11 @@ Arduino::report() {
     
     for (it = _pins.begin(); it != _pins.end(); it++) {
         it->second->report();
+    }
+    
+    vector<Pin*>::iterator vit;
+    for (vit = _unused_pins.begin(); vit != _unused_pins.end(); vit++) {
+        (*vit)->report();
     }
 }
 
