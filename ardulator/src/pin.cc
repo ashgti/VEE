@@ -158,12 +158,18 @@ DetPin::updateState(ardu_clock_t &t, int new_state) {
 
 void
 UniPin::updateState(ardu_clock_t &t, int new_state) {
-    int count = 0;
     do {
-        if (count > 1) cout << "yes maybe\n";
         double next = 0;
         if (new_state == HIGH) {
             next = _num->next();
+            if ((next - (_mu * 0.01) * _length) < 0) {
+                // _history.missed_evts += 1;
+                // _history.total_evts += 1;
+                // _caught_flag = false;
+                continue;
+            }
+            next -= (_mu * 0.01) * _length;
+            if (next < 0) next = 0;
         }
         else {
             next = (_mu * 0.01) * _length;
@@ -200,7 +206,6 @@ UniPin::updateState(ardu_clock_t &t, int new_state) {
                 _history.missed_evts += 1;
             }
         }
-        count++;
     } while (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
                 t._ticks > _next._ticks));
 }
