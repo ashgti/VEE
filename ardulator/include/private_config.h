@@ -44,7 +44,7 @@ typedef struct history_t {
     double avg_response_time;
 } history_t;
 
-class Pin {
+class Signal {
   public:
     RandNum *_num;
     string _const_string;
@@ -73,8 +73,8 @@ class Pin {
 
     history_t _history;
     
-    Pin();
-    ~Pin();
+    Signal();
+    ~Signal();
 
     int process();
     
@@ -89,25 +89,25 @@ class Pin {
     virtual void report();
 };
 
-class DetPin : public Pin {
+class DetSignal : public Signal {
   public:
-    DetPin();
+    DetSignal();
     string parseConfiguration(string);
     void updateState(ardu_clock_t &t, int new_state);
     void report();
 };
 
-class UniPin : public Pin {
+class UniSignal : public Signal {
   public:
-    UniPin();
+    UniSignal();
     string parseConfiguration(string);
     void updateState(ardu_clock_t &t, int new_state);
     void report();
 };
 
-class ExpPin : public Pin {
+class ExpSignal : public Signal {
   public:
-    ExpPin();
+    ExpSignal();
     string parseConfiguration(string);
     void updateState(ardu_clock_t &t, int new_state);
     void report();
@@ -133,10 +133,10 @@ class Arduino {
     void   finalizePinState();
     string timestamp();
   public:
-    map<int, Pin*>
-                _pins;
-    vector<Pin*>
-                _unused_pins;
+    map<int, Signal*>
+                _signals;
+    vector<Signal*>
+                _unused_signals;
     map<string, intptr_t>
                 _mapping;
     fstream     _debug;

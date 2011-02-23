@@ -29,6 +29,9 @@
 #include <fstream>
 #include <stdint.h>
 #include <stdlib.h>
+#include <avr/io.h>
+#include <avr/config.h>
+#include "binary.h"
 
 #ifdef __cplusplus
 extern "C"{

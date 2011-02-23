@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Pin::Pin() {
+Signal::Signal() {
     _caught_flag = false;
     _history.missed_evts = 0;
     _history.total_evts = 0;
@@ -16,7 +16,7 @@ Pin::Pin() {
     _history.avg_response_time = 0;
 }
 
-Pin::~Pin() {
+Signal::~Signal() {
     if (_log.is_open()) {
         _log << "\n\n";
         _log.flush();
@@ -24,17 +24,17 @@ Pin::~Pin() {
     }
 }
 
-DetPin::DetPin() : Pin() {
+DetSignal::DetSignal() : Signal() {
 }
 
-ExpPin::ExpPin() : Pin() {
+ExpSignal::ExpSignal() : Signal() {
 }
 
-UniPin::UniPin() : Pin() {
+UniSignal::UniSignal() : Signal() {
 }
 
 void 
-Pin::initializeTimers() {
+Signal::initializeTimers() {
     string log_filename = "./logs/";
     log_filename.append(_name);
     log_filename.append(".log");
@@ -52,7 +52,7 @@ Pin::initializeTimers() {
 }
 
 void
-Pin::setState(ardu_clock_t &t) {
+Signal::setState(ardu_clock_t &t) {
     if (_val_type == VT_SERIAL) {
         if (_state == HIGH) {
             if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
@@ -103,7 +103,7 @@ Pin::setState(ardu_clock_t &t) {
 }
 
 void
-Pin::finalize(ardu_clock_t &t) {
+Signal::finalize(ardu_clock_t &t) {
     if (_val_type == VT_SERIAL) {
         if (_state == HIGH) {
             if (_caught_flag == false) {
@@ -128,13 +128,13 @@ Pin::finalize(ardu_clock_t &t) {
 }
 
 void
-Pin::updateState(ardu_clock_t &t, int new_state) {
+Signal::updateState(ardu_clock_t &t, int new_state) {
     cout << "ERROR, bad function call\n";
     exit(-1);
 }
 
 void
-DetPin::updateState(ardu_clock_t &t, int new_state) {
+DetSignal::updateState(ardu_clock_t &t, int new_state) {
     double next = _length * _ratio;
     ardu_clock_t old = _next;
     int old_state = _state;
@@ -157,7 +157,7 @@ DetPin::updateState(ardu_clock_t &t, int new_state) {
 }
 
 void
-UniPin::updateState(ardu_clock_t &t, int new_state) {
+UniSignal::updateState(ardu_clock_t &t, int new_state) {
     do {
         double next = 0;
         if (new_state == HIGH) {
@@ -211,7 +211,7 @@ UniPin::updateState(ardu_clock_t &t, int new_state) {
 }
 
 void
-ExpPin::updateState(ardu_clock_t &t, int new_state) {
+ExpSignal::updateState(ardu_clock_t &t, int new_state) {
     double next = 0;
     ardu_clock_t old = _next;
     if (new_state == HIGH) 
@@ -232,7 +232,7 @@ ExpPin::updateState(ardu_clock_t &t, int new_state) {
 }
 
 int
-Pin::process() {
+Signal::process() {
     if (_caught_flag == false && _state == HIGH) {
         _history.caught_evts += 1;
         _caught_flag = true;
@@ -247,13 +247,13 @@ Pin::process() {
 }
 
 void
-Pin::report() {
+Signal::report() {
     cerr << "ERROR, bad function call\n";
     exit(-1);
 }
 
 void
-ExpPin::report() {
+ExpSignal::report() {
     cout << "Reporting for: " << _name << "\n";
     cout << "               Lambda: " << _length << "\n";
     cout << "                   Mu: " << _mu << "\n";
@@ -276,7 +276,7 @@ ExpPin::report() {
 }
 
 void
-DetPin::report() {
+DetSignal::report() {
     cout << "Reporting for: " << _name << "\n";
     cout << "--- used for testing ---\n";
     cout << "   Signal High Length: " << _length << "\n";
@@ -303,7 +303,7 @@ DetPin::report() {
 }
 
 void
-UniPin::report() {
+UniSignal::report() {
     cout << "Reporting for: " << _name << "\n";
     cout << "               Lambda: " << _length << "\n";
     cout << "                   Mu: " << _mu << "\n";
@@ -326,12 +326,12 @@ UniPin::report() {
 }
 
 string
-Pin::parseConfiguration(string) {
+Signal::parseConfiguration(string) {
     throw "std::string Pin::parseConfiguration(std::string) needs to be overriden by a proper subclass";
 }
 
 void
-Pin::parseStart(stringstream &ss) {
+Signal::parseStart(stringstream &ss) {
     ValueType val_type;
     int initial_value = 0;
     string name, tmp_name, string_val;
@@ -367,7 +367,7 @@ Pin::parseStart(stringstream &ss) {
 }
 
 string
-DetPin::parseConfiguration(string line) {
+DetSignal::parseConfiguration(string line) {
     stringstream ss(line);
 
     parseStart(ss);
@@ -388,7 +388,7 @@ DetPin::parseConfiguration(string line) {
 }
 
 string
-UniPin::parseConfiguration(string line) {
+UniSignal::parseConfiguration(string line) {
     stringstream ss(line);
 
     parseStart(ss);
@@ -408,7 +408,7 @@ UniPin::parseConfiguration(string line) {
 }
 
 string
-ExpPin::parseConfiguration(string line) {
+ExpSignal::parseConfiguration(string line) {
     stringstream ss(line);
 
     parseStart(ss);

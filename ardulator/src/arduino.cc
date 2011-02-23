@@ -67,11 +67,11 @@ Arduino::~Arduino() {
 
 void
 Arduino::configurePin(uint8_t pin_id, uint8_t mode) {
-    map<int, Pin*>::iterator it;
-    it = _pins.find(pin_id);
+    map<int, Signal*>::iterator it;
+    it = _signals.find(pin_id);
     
-    if (it != _pins.end()) {
-        _pins[pin_id]->_mode = mode;
+    if (it != _signals.end()) {
+        _signals[pin_id]->_mode = mode;
         _debug << "Configuring Pin " << (int)pin_id << " to mode: " << (int)mode <<  "\n";
     }
     else {
@@ -148,15 +148,15 @@ Arduino::addTicks(uint64_t length) {
 void
 Arduino::updatePinState() {
     // Report Changes in State
-    map<int, Pin*>::iterator it;
+    map<int, Signal*>::iterator it;
     int c = 0;
-    for (it = _pins.begin(); it != _pins.end(); it++) {
+    for (it = _signals.begin(); it != _signals.end(); it++) {
         c++;
         it->second->setState(_timer);
     }
     
-    vector<Pin*>::iterator vit;
-    for (vit = _unused_pins.begin(); vit != _unused_pins.end(); vit++) {
+    vector<Signal*>::iterator vit;
+    for (vit = _unused_signals.begin(); vit != _unused_signals.end(); vit++) {
         (*vit)->setState(_timer);
     }
 }
@@ -164,13 +164,13 @@ Arduino::updatePinState() {
 void
 Arduino::finalizePinState() {
     // Report Changes in State
-    map<int, Pin*>::iterator it;
-    for (it = _pins.begin(); it != _pins.end(); it++) {
+    map<int, Signal*>::iterator it;
+    for (it = _signals.begin(); it != _signals.end(); it++) {
         it->second->finalize(_timer);
     }
     
-    vector<Pin*>::iterator vit;
-    for (vit = _unused_pins.begin(); vit != _unused_pins.end(); vit++) {
+    vector<Signal*>::iterator vit;
+    for (vit = _unused_signals.begin(); vit != _unused_signals.end(); vit++) {
         (*vit)->finalize(_timer);
     }   
 }
@@ -181,20 +181,20 @@ Arduino::finalizePinState() {
  */
 int
 Arduino::getPin(uint8_t pin_id) {
-    if (_pins.find(pin_id) == _pins.end()) {
+    if (_signals.find(pin_id) == _signals.end()) {
         return LOW;
     }
     else {
-        if (_pins[pin_id]->_val_type == VT_SERIAL) {
+        if (_signals[pin_id]->_val_type == VT_SERIAL) {
             return LOW;
         }
-        else if (_pins[pin_id]->_val_type == VT_DIGITAL) {
+        else if (_signals[pin_id]->_val_type == VT_DIGITAL) {
             addTicks(58);
-            return _pins[pin_id]->_state;
+            return _signals[pin_id]->_state;
         }
-        else if (_pins[pin_id]->_val_type == VT_ANALOG) {
+        else if (_signals[pin_id]->_val_type == VT_ANALOG) {
             addTicks(MS2T(100));
-            return _pins[pin_id]->_state;
+            return _signals[pin_id]->_state;
         }
         else 
             return LOW;
@@ -203,8 +203,8 @@ Arduino::getPin(uint8_t pin_id) {
 
 void
 Arduino::setPin(uint8_t pin_id, uint8_t val) {
-    if (_pins[pin_id]->_state != val) {
-        _pins[pin_id]->_state = val;
+    if (_signals[pin_id]->_state != val) {
+        _signals[pin_id]->_state = val;
     }
 }
 
