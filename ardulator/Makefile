@@ -57,6 +57,7 @@ hw1: $(LIB_FILE)
 	cp include/arduino_api.h ./homeworks/hw1
 	tar -C ./homeworks -czf hw1.tar.gz ./hw1
 
+.PHONY: clean
 clean: 
 	$(RM) $(OBJ_FILES) $(LIB_FILE)
 

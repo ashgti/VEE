@@ -1,6 +1,9 @@
-sei
-cli
-ISR
+void sei();
+void cli();
+void reti();
+
+#define _VECTOR(x)        x
+#define ISR()             #error "NYI"
 #define INT0_vect         _VECTOR(1)   /* External Interrupt Request 0 */
 #define INT1_vect         _VECTOR(2)   /* External Interrupt Request 1 */
 #define PCINT0_vect       _VECTOR(3)   /* Pin Change Interrupt Request 0 */
@@ -27,4 +30,3 @@ ISR
 #define TWI_vect          _VECTOR(24)  /* Two-wire Serial Interface */
 #define SPM_READY_vect    _VECTOR(25)  /* Store Program Memory Read */
 
-reti
