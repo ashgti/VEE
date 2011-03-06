@@ -1,9 +1,11 @@
+CC=clang
+CXX=clang++
 PERL=perl
 CFLAGS=-I./include -Wall -g -Wextra
 CXXFLAGS=$(CFLAGS)
 LD_FLAGS=-lm
-OBJ_FILES := src/pin.o src/hardware_serial.o src/pin_commands.o src/private_config.o src/timing.o src/main.o src/arduino.o src/rand_num.o $(EXT_OBJ_FILES)
-SRC_FILES := src/pin.cc src/hardware_serial.cc src/pin_commands.cc src/private_config.cc src/timing.cc src/main.cc src/arduino.cc src/rand_num.cc $(EXT_FILES)
+OBJ_FILES := src/pin.o src/hardware_serial.o src/pin_commands.o src/timing.o src/main.o src/arduino.o src/rand_num.o src/signal.o src/interrupt_commands.o $(EXT_OBJ_FILES)
+SRC_FILES := src/pin.cc src/hardware_serial.cc src/pin_commands.cc src/timing.cc src/main.cc src/arduino.cc src/rand_num.cc src/signal.cc src/interrupt_commands.cc $(EXT_FILES)
 LIB_FILE := libardunio-emulation.a
 
 .PHONY: all

@@ -8,11 +8,11 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "private_config.h"
+#include "arduino.h"
 
 using namespace std;
 
-void
+static void
 addTime(ardu_clock_t &t, int ticks) {
     t._ticks += ticks;
     while (t._ticks > TICKS_PER_SECOND) {
@@ -21,7 +21,7 @@ addTime(ardu_clock_t &t, int ticks) {
     }
 }
 
-void
+static void
 print_clock(string n, ardu_clock_t t){
     ardu->_debug << n << " " << t._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << t._ticks << "\n";
     
@@ -213,10 +213,10 @@ Arduino::dispatchSignal(const char *signal_id) {
     if (_mapping.find(signal_id) == _mapping.end()) {
         return;
     }
-    if (_pins.find(_mapping[signal_id]) == _pins.end()) {
+    if (_signals.find(_mapping[signal_id]) == _signals.end()) {
         return;
     }
-    int ticks = _pins[_mapping[signal_id]]->process();
+    int ticks = _signals[_mapping[signal_id]]->process();
     
     _timer._ticks += ticks;
     while (_timer._ticks > TICKS_PER_SECOND) {
@@ -262,17 +262,17 @@ Arduino::scanHeaderChunk(string identifier, string line) {
 
 void
 Arduino::registerSignal(string identifer, string line) {    
-    Pin *p = NULL;
+    Signal *p = NULL;
     int pin_id = -1;
     string name = "";
     if (identifer == "det") {
-        p = new DetPin();
+        p = new DetSignal();
     }
     else if (identifer == "uni") {
-        p = new UniPin();
+        p = new UniSignal();
     }
     else if (identifer == "exp") {
-        p = new ExpPin();
+        p = new ExpSignal();
     }
     else {
         cout << "Bad configuration line \"" << line << "\"\n";
@@ -280,12 +280,12 @@ Arduino::registerSignal(string identifer, string line) {
     }
     name = p->parseConfiguration(line);
     if (_mapping.find(name) == _mapping.end()) {
-        _unused_pins.push_back(p);
+        _unused_signals.push_back(p);
     }
     else {
         pin_id = _mapping[name];
         if (p != NULL && pin_id != -1 && name != "") {
-            _pins[pin_id] = p;
+            _signals[pin_id] = p;
         }
     }
 }
@@ -303,15 +303,28 @@ Arduino::addSerial(string signal_name, HardwareSerial *serial) {
 /* Reporting facilities */
 void
 Arduino::report() {
-    map<int, Pin*>::iterator it;
+    map<int, Signal*>::iterator it;
     
-    for (it = _pins.begin(); it != _pins.end(); it++) {
+    for (it = _signals.begin(); it != _signals.end(); it++) {
         it->second->report();
     }
     
-    vector<Pin*>::iterator vit;
-    for (vit = _unused_pins.begin(); vit != _unused_pins.end(); vit++) {
+    vector<Signal*>::iterator vit;
+    for (vit = _unused_signals.begin(); vit != _unused_signals.end(); vit++) {
         (*vit)->report();
     }
 }
 
+
+/* Interrupts */
+void
+Arduino::registerInterrupt(uint8_t pin_id, void (*fn)(void), uint8_t mode) {
+    cout << "Yo!" << endl;
+    
+    _interupts[pin_id] = make_pair(mode, fn);
+}
+
+void
+Arduino::dropInterrupt(uint8_t pin_id) {
+    cout << "Dropped int on " << pin_id << endl;
+}

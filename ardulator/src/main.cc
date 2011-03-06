@@ -4,7 +4,7 @@
 #include <fstream>
 #include <algorithm>
 #include <getopt.h>
-#include "private_config.h"
+#include "ardulator.h"
 
 
 using namespace std;

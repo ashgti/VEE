@@ -1,4 +1,4 @@
-#include "private_config.h"
+#include "ardulator.h"
 #include <fstream>
 #include <iostream>
 

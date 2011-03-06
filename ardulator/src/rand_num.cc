@@ -1,7 +1,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <cassert>
-#include <private_config.h>
+#include <ardulator.h>
 #include <iostream>
 #include <sys/time.h>
 

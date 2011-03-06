@@ -3,7 +3,7 @@
 #include <map>
 // #include <vector>
 #include <time.h>
-#include "private_config.h"
+#include "ardulator.h"
 
 using namespace std;
 

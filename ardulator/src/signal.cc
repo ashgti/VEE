@@ -4,7 +4,7 @@
 #include <sstream>
 #include <cassert>
 #include <iomanip>
-#include "private_config.h"
+#include "ardulator.h"
 
 using namespace std;
 

@@ -3,7 +3,13 @@ void cli();
 void reti();
 
 #define _VECTOR(x)        x
-#define ISR()             #error "NYI"
+
+#define ISR(vector, ...)         \
+    extern "C" void vector (void); \
+    Foo vector##foo(vector);              \
+    void vector (void)
+
+
 #define INT0_vect         _VECTOR(1)   /* External Interrupt Request 0 */
 #define INT1_vect         _VECTOR(2)   /* External Interrupt Request 1 */
 #define PCINT0_vect       _VECTOR(3)   /* Pin Change Interrupt Request 0 */
