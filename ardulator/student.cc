@@ -1,4 +1,5 @@
 #include "arduino.h"
+#include <iostream>
 
 void blink();
 
@@ -22,16 +23,22 @@ setup() {
         pinMode(i, INPUT);
     }
     
+    DDRD = 0b11111111;
     attachInterrupt(1, blink, CHANGE);
 }
 
 void
 blink() {
+    int val = PORTD;
     int_count++;
 }
 
 void
 loop() {
+    if (int_count > 0) {
+        std::cout << "Got an interrupt" << std::endl;
+        int_count = 0;
+    }
     for (int i = 0; i < 6; i++) {
         int reading = digitalRead(0);
         if (reading == HIGH && reg[i] == false) {
@@ -45,3 +52,4 @@ loop() {
         }
     }
 }
+

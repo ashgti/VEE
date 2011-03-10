@@ -1,4 +1,5 @@
 #include "ardulator.h"
+#include "arduino.h"
 #include <fstream>
 #include <iostream>
 

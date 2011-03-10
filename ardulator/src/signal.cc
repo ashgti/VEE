@@ -5,6 +5,7 @@
 #include <cassert>
 #include <iomanip>
 #include "ardulator.h"
+#include "arduino.h"
 
 using namespace std;
 
@@ -129,51 +130,10 @@ Signal::finalize(ardu_clock_t &t) {
 
 void
 Signal::updateState(ardu_clock_t &t, int new_state) {
-    cout << "ERROR, bad function call\n";
-    exit(-1);
-}
-
-void
-DetSignal::updateState(ardu_clock_t &t, int new_state) {
-    double next = _length * _ratio;
-    ardu_clock_t old = _next;
-    int old_state = _state;
-    
-    int overflow = 0;
-    _next._ticks += (next - floor(next)) * TICKS_PER_SECOND;
-    if (_next._ticks > TICKS_PER_SECOND) {
-        _next._ticks -= TICKS_PER_SECOND;
-        overflow = 1;
-    }
-    _next._seconds += floor(next) + overflow;
-    ardu->_debug << "Signal: " << _name << " switched to ";
-    if (new_state == HIGH)
-        ardu->_debug << "HIGH";
-    else
-        ardu->_debug << "LOW";
-    ardu->_debug  << " @ " << old._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << old._ticks << "\n";
-    ardu->_debug.flush();
-    _state = new_state;
-}
-
-void
-UniSignal::updateState(ardu_clock_t &t, int new_state) {
     do {
-        double next = 0;
-        if (new_state == HIGH) {
-            next = _num->next();
-            if ((next - (_mu * 0.01) * _length) < 0) {
-                // _history.missed_evts += 1;
-                // _history.total_evts += 1;
-                // _caught_flag = false;
-                continue;
-            }
-            next -= (_mu * 0.01) * _length;
-            if (next < 0) next = 0;
-        }
-        else {
-            next = (_mu * 0.01) * _length;
-        }
+        double next = calcNext(new_state);
+        if (next == 0)
+            continue;
         ardu_clock_t old = _next;
         int old_state = _state;
         int overflow = 0;
@@ -191,17 +151,39 @@ UniSignal::updateState(ardu_clock_t &t, int new_state) {
         else {
             ardu->_debug << "LOW";
         }
-        ardu->_debug  << " @ " << old._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << old._ticks << "\n";
+        ardu->_debug << " @ " << old._seconds << "." 
+                     << setw(FIELD_WIDTH) << setfill('0') << old._ticks << "\n";
         _state = new_state;
+        
+        map<int, std::pair<int, void (*)(void)> >::iterator map_iter = ardu->_interrupts.find(ardu->_mapping[_name]);
+        
+        // cout << "Name: " << _name << endl;
+        // cout << "Map found: " << ardu->_mapping[_name] << endl;
+        
+        if (_state == HIGH) {
+            // LOW EVENT
+            if (map_iter != ardu->_interrupts.end() && map_iter->second.first == LOW) {
+                map_iter->second.second();
+            }
+        }
         if (old_state == LOW && _state == HIGH) {
             // FIRE RISING EVENT
+            if (map_iter != ardu->_interrupts.end() && map_iter->second.first == RISING) {
+                map_iter->second.second();
+            }
             _caught_flag = false;
         }
         if (old_state != _state) {
             // FIRE CHANGED EVENT
+            if (map_iter != ardu->_interrupts.end() && map_iter->second.first == CHANGE) {
+                map_iter->second.second();
+            }
         }
         if (old_state == HIGH && _state == LOW) {
             // FIRE FALLING EVENT
+            if (map_iter != ardu->_interrupts.end() && map_iter->second.first == FALLING) {
+                map_iter->second.second();
+            }
             if (_caught_flag == false) {
                 _history.missed_evts += 1;
             }
@@ -210,25 +192,38 @@ UniSignal::updateState(ardu_clock_t &t, int new_state) {
                 t._ticks > _next._ticks));
 }
 
-void
-ExpSignal::updateState(ardu_clock_t &t, int new_state) {
-    double next = 0;
-    ardu_clock_t old = _next;
-    if (new_state == HIGH) 
-        next = _num->next();
-    else
-        next = (_mu * 0.01) * _length;
-    
-    int overflow = 0;
-    _next._ticks += (next - floor(next)) * TICKS_PER_SECOND;
-    if (_next._ticks > TICKS_PER_SECOND) {
-        _next._ticks -= TICKS_PER_SECOND;
-        overflow = 1;
+double
+Signal::calcNext(int new_state) {
+    cout << "ERROR, bad function call\n";
+    exit(-1);
+}
+
+double
+DetSignal::calcNext(int new_state) {
+    return _length * _ratio;
+}
+
+double
+UniSignal::calcNext(int new_state) {
+    if (new_state == HIGH) {
+        double next = _num->next();
+        next -= (_mu * 0.01) * _length;
+        if (next < 0)
+            return 0;
+        else
+            return next;
     }
-    
-    _next._seconds += (int)next + overflow;
-    ardu->_debug << "Signal: " << _name << " switched to LOW @ " << old._seconds << "." << setw(FIELD_WIDTH) << setfill('0') << old._ticks << "\n";
-    _state = new_state;
+    else {
+        return (_mu * 0.01) * _length;
+    }
+}
+
+double
+ExpSignal::calcNext(int new_state) {
+    if (new_state == HIGH) 
+        return _num->next();
+    else
+        return (_mu * 0.01) * _length;
 }
 
 int
@@ -247,13 +242,13 @@ Signal::process() {
 }
 
 void
-Signal::report() {
+Signal::report(bool) {
     cerr << "ERROR, bad function call\n";
     exit(-1);
 }
 
 void
-ExpSignal::report() {
+ExpSignal::report(bool) {
     cout << "Reporting for: " << _name << "\n";
     cout << "               Lambda: " << _length << "\n";
     cout << "                   Mu: " << _mu << "\n";
@@ -276,7 +271,7 @@ ExpSignal::report() {
 }
 
 void
-DetSignal::report() {
+DetSignal::report(bool) {
     cout << "Reporting for: " << _name << "\n";
     cout << "--- used for testing ---\n";
     cout << "   Signal High Length: " << _length << "\n";
@@ -303,7 +298,15 @@ DetSignal::report() {
 }
 
 void
-UniSignal::report() {
+UniSignal::report(bool used) {
+    if (used == false) {
+        cout << "Reporting for: " << _name << "\n";
+        cout << "              Not Used\n";
+        cout << "           Missed Events: " << _history.missed_evts << "\n";
+        cout << "            Total Events: " << _history.total_evts << "\n"; 
+        
+        return;
+    }
     cout << "Reporting for: " << _name << "\n";
     cout << "               Lambda: " << _length << "\n";
     cout << "                   Mu: " << _mu << "\n";

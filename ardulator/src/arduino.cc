@@ -8,6 +8,7 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "ardulator.h"
 #include "arduino.h"
 
 using namespace std;
@@ -152,6 +153,7 @@ Arduino::updatePinState() {
     int c = 0;
     for (it = _signals.begin(); it != _signals.end(); it++) {
         c++;
+        // cout << "Updating " << it->first << endl;
         it->second->setState(_timer);
     }
     
@@ -306,12 +308,12 @@ Arduino::report() {
     map<int, Signal*>::iterator it;
     
     for (it = _signals.begin(); it != _signals.end(); it++) {
-        it->second->report();
+        it->second->report(false);
     }
     
     vector<Signal*>::iterator vit;
     for (vit = _unused_signals.begin(); vit != _unused_signals.end(); vit++) {
-        (*vit)->report();
+        (*vit)->report(true);
     }
 }
 
@@ -319,9 +321,8 @@ Arduino::report() {
 /* Interrupts */
 void
 Arduino::registerInterrupt(uint8_t pin_id, void (*fn)(void), uint8_t mode) {
-    cout << "Yo!" << endl;
-    
-    _interupts[pin_id] = make_pair(mode, fn);
+    cout << "Yo!" << endl;    
+    _interrupts[pin_id] = make_pair(mode, fn);
 }
 
 void
