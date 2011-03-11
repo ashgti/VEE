@@ -1,0 +1,1291 @@
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning Header
+Scanning signals
+Scanning signals
+done parsing file
+Configuring Pin 0 to mode: 0
+Attempting to run the Scenario
+
+Scenario Length:  200.00000
+Runtime Timer: 0.00000
+Signal: a switched to HIGH @ 0.00073
+Signal: b switched to HIGH @ 0.00073
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 1.02846
+Signal: b switched to LOW @ 1.02846
+Signal: a switched to HIGH @ 1.04026
+Signal: b switched to HIGH @ 1.04026
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 4.03943
+Signal: b switched to LOW @ 4.03943
+Signal: a switched to HIGH @ 4.05269
+Signal: b switched to HIGH @ 4.05269
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 6.02328
+Signal: b switched to LOW @ 6.02328
+Signal: a switched to HIGH @ 6.02705
+Signal: b switched to HIGH @ 6.02705
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 9.00479
+Signal: b switched to LOW @ 9.00479
+Signal: a switched to HIGH @ 9.00783
+Signal: b switched to HIGH @ 9.00783
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 11.04271
+Signal: b switched to LOW @ 11.04271
+Signal: a switched to HIGH @ 11.05086
+Signal: b switched to HIGH @ 11.05086
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 13.04288
+Signal: b switched to LOW @ 13.04288
+Signal: a switched to HIGH @ 13.05760
+Signal: b switched to HIGH @ 13.05760
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 16.03534
+Signal: b switched to LOW @ 16.03534
+Signal: a switched to HIGH @ 16.05006
+Signal: b switched to HIGH @ 16.05006
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 19.02780
+Signal: b switched to LOW @ 19.02780
+Signal: a switched to HIGH @ 19.04325
+Signal: b switched to HIGH @ 19.04325
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 20.07098
+Signal: b switched to LOW @ 20.07098
+Signal: a switched to HIGH @ 20.08789
+Signal: b switched to HIGH @ 20.08789
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 23.08706
+Signal: b switched to LOW @ 23.08706
+Signal: a switched to HIGH @ 23.08791
+Signal: b switched to HIGH @ 23.08791
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 25.07993
+Signal: b switched to LOW @ 25.07993
+Signal: a switched to HIGH @ 25.09903
+Signal: b switched to HIGH @ 25.09903
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 27.00533
+Signal: b switched to LOW @ 27.00533
+Signal: a switched to HIGH @ 27.02297
+Signal: b switched to HIGH @ 27.02297
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 28.09356
+Signal: b switched to LOW @ 28.09356
+Signal: a switched to HIGH @ 28.09587
+Signal: b switched to HIGH @ 28.09587
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 30.06646
+Signal: b switched to LOW @ 30.06646
+Signal: a switched to HIGH @ 30.06877
+Signal: b switched to HIGH @ 30.06877
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 33.04651
+Signal: b switched to LOW @ 33.04651
+Signal: a switched to HIGH @ 33.05685
+Signal: b switched to HIGH @ 33.05685
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 34.08458
+Signal: b switched to LOW @ 34.08458
+Signal: a switched to HIGH @ 34.08543
+Signal: b switched to HIGH @ 34.08543
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 36.07745
+Signal: b switched to LOW @ 36.07745
+Signal: a switched to HIGH @ 36.08706
+Signal: b switched to HIGH @ 36.08706
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 39.00051
+Signal: b switched to LOW @ 39.00051
+Signal: a switched to HIGH @ 39.01815
+Signal: b switched to HIGH @ 39.01815
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 41.09674
+Signal: b switched to LOW @ 41.09674
+Signal: a switched to HIGH @ 42.01645
+Signal: b switched to HIGH @ 42.01645
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 43.02275
+Signal: b switched to LOW @ 43.02275
+Signal: a switched to HIGH @ 43.04258
+Signal: b switched to HIGH @ 43.04258
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 45.07746
+Signal: b switched to LOW @ 45.07746
+Signal: a switched to HIGH @ 45.07977
+Signal: b switched to HIGH @ 45.07977
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 48.07894
+Signal: b switched to LOW @ 48.07894
+Signal: a switched to HIGH @ 48.08709
+Signal: b switched to HIGH @ 48.08709
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 51.08626
+Signal: b switched to LOW @ 51.08626
+Signal: a switched to HIGH @ 51.08711
+Signal: b switched to HIGH @ 51.08711
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 54.06485
+Signal: b switched to LOW @ 54.06485
+Signal: a switched to HIGH @ 54.07738
+Signal: b switched to HIGH @ 54.07738
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 56.09083
+Signal: b switched to LOW @ 56.09083
+Signal: a switched to HIGH @ 57.00628
+Signal: b switched to HIGH @ 57.00628
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 60.00545
+Signal: b switched to LOW @ 60.00545
+Signal: a switched to HIGH @ 60.01141
+Signal: b switched to HIGH @ 60.01141
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 62.08915
+Signal: b switched to LOW @ 62.08915
+Signal: a switched to HIGH @ 63.00460
+Signal: b switched to HIGH @ 63.00460
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 64.07519
+Signal: b switched to LOW @ 64.07519
+Signal: a switched to HIGH @ 64.08991
+Signal: b switched to HIGH @ 64.08991
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 67.08908
+Signal: b switched to LOW @ 67.08908
+Signal: a switched to HIGH @ 68.00307
+Signal: b switched to HIGH @ 68.00307
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 70.08081
+Signal: b switched to LOW @ 70.08081
+Signal: a switched to HIGH @ 70.08166
+Signal: b switched to HIGH @ 70.08166
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 72.05225
+Signal: b switched to LOW @ 72.05225
+Signal: a switched to HIGH @ 72.06551
+Signal: b switched to HIGH @ 72.06551
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 73.09324
+Signal: b switched to LOW @ 73.09324
+Signal: a switched to HIGH @ 73.09409
+Signal: b switched to HIGH @ 73.09409
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 75.06468
+Signal: b switched to LOW @ 75.06468
+Signal: a switched to HIGH @ 75.06626
+Signal: b switched to HIGH @ 75.06626
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 77.03685
+Signal: b switched to LOW @ 77.03685
+Signal: a switched to HIGH @ 77.05303
+Signal: b switched to HIGH @ 77.05303
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 80.03077
+Signal: b switched to LOW @ 80.03077
+Signal: a switched to HIGH @ 80.04111
+Signal: b switched to HIGH @ 80.04111
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 81.04741
+Signal: b switched to LOW @ 81.04741
+Signal: a switched to HIGH @ 81.06505
+Signal: b switched to HIGH @ 81.06505
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 83.05707
+Signal: b switched to LOW @ 83.05707
+Signal: a switched to HIGH @ 83.06230
+Signal: b switched to HIGH @ 83.06230
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 85.03289
+Signal: b switched to LOW @ 85.03289
+Signal: a switched to HIGH @ 85.03885
+Signal: b switched to HIGH @ 85.03885
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 87.05230
+Signal: b switched to LOW @ 87.05230
+Signal: a switched to HIGH @ 87.06775
+Signal: b switched to HIGH @ 87.06775
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 90.06692
+Signal: b switched to LOW @ 90.06692
+Signal: a switched to HIGH @ 90.07142
+Signal: b switched to HIGH @ 90.07142
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 93.04916
+Signal: b switched to LOW @ 93.04916
+Signal: a switched to HIGH @ 93.05293
+Signal: b switched to HIGH @ 93.05293
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 95.06638
+Signal: b switched to LOW @ 95.06638
+Signal: a switched to HIGH @ 95.06869
+Signal: b switched to HIGH @ 95.06869
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 96.09642
+Signal: b switched to LOW @ 96.09642
+Signal: a switched to HIGH @ 96.09727
+Signal: b switched to HIGH @ 96.09727
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 98.08929
+Signal: b switched to LOW @ 98.08929
+Signal: a switched to HIGH @ 98.09525
+Signal: b switched to HIGH @ 98.09525
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 100.06584
+Signal: b switched to LOW @ 100.06584
+Signal: a switched to HIGH @ 100.06669
+Signal: b switched to HIGH @ 100.06669
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 102.05871
+Signal: b switched to LOW @ 102.05871
+Signal: a switched to HIGH @ 102.07854
+Signal: b switched to HIGH @ 102.07854
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 104.04913
+Signal: b switched to LOW @ 104.04913
+Signal: a switched to HIGH @ 104.05071
+Signal: b switched to HIGH @ 104.05071
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 106.02130
+Signal: b switched to LOW @ 106.02130
+Signal: a switched to HIGH @ 106.02726
+Signal: b switched to HIGH @ 106.02726
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 109.00500
+Signal: b switched to LOW @ 109.00500
+Signal: a switched to HIGH @ 109.00731
+Signal: b switched to HIGH @ 109.00731
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 110.07790
+Signal: b switched to LOW @ 110.07790
+Signal: a switched to HIGH @ 110.09116
+Signal: b switched to HIGH @ 110.09116
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 112.04032
+Signal: b switched to LOW @ 112.04032
+Signal: a switched to HIGH @ 112.05577
+Signal: b switched to HIGH @ 112.05577
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 113.08350
+Signal: b switched to LOW @ 113.08350
+Signal: a switched to HIGH @ 113.09749
+Signal: b switched to HIGH @ 113.09749
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 115.02522
+Signal: b switched to LOW @ 115.02522
+Signal: a switched to HIGH @ 115.03337
+Signal: b switched to HIGH @ 115.03337
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 116.08253
+Signal: b switched to LOW @ 116.08253
+Signal: a switched to HIGH @ 116.09579
+Signal: b switched to HIGH @ 116.09579
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 119.09496
+Signal: b switched to LOW @ 119.09496
+Signal: a switched to HIGH @ 120.01114
+Signal: b switched to HIGH @ 120.01114
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 122.02459
+Signal: b switched to LOW @ 122.02459
+Signal: a switched to HIGH @ 122.03055
+Signal: b switched to HIGH @ 122.03055
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 123.05828
+Signal: b switched to LOW @ 123.05828
+Signal: a switched to HIGH @ 123.07227
+Signal: b switched to HIGH @ 123.07227
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 125.04286
+Signal: b switched to LOW @ 125.04286
+Signal: a switched to HIGH @ 125.05466
+Signal: b switched to HIGH @ 125.05466
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 128.01097
+Signal: b switched to LOW @ 128.01097
+Signal: a switched to HIGH @ 128.01839
+Signal: b switched to HIGH @ 128.01839
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 130.03184
+Signal: b switched to LOW @ 130.03184
+Signal: a switched to HIGH @ 130.04583
+Signal: b switched to HIGH @ 130.04583
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 132.03785
+Signal: b switched to LOW @ 132.03785
+Signal: a switched to HIGH @ 132.05184
+Signal: b switched to HIGH @ 132.05184
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 134.08672
+Signal: b switched to LOW @ 134.08672
+Signal: a switched to HIGH @ 134.09560
+Signal: b switched to HIGH @ 134.09560
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 137.00905
+Signal: b switched to LOW @ 137.00905
+Signal: a switched to HIGH @ 137.02523
+Signal: b switched to HIGH @ 137.02523
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 139.03868
+Signal: b switched to LOW @ 139.03868
+Signal: a switched to HIGH @ 139.05705
+Signal: b switched to HIGH @ 139.05705
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 142.01336
+Signal: b switched to LOW @ 142.01336
+Signal: a switched to HIGH @ 142.02224
+Signal: b switched to HIGH @ 142.02224
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 145.02141
+Signal: b switched to LOW @ 145.02141
+Signal: a switched to HIGH @ 145.03759
+Signal: b switched to HIGH @ 145.03759
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 147.00818
+Signal: b switched to LOW @ 147.00818
+Signal: a switched to HIGH @ 147.00976
+Signal: b switched to HIGH @ 147.00976
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 149.06607
+Signal: b switched to LOW @ 149.06607
+Signal: a switched to HIGH @ 149.07641
+Signal: b switched to HIGH @ 149.07641
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 152.07558
+Signal: b switched to LOW @ 152.07558
+Signal: a switched to HIGH @ 152.07716
+Signal: b switched to HIGH @ 152.07716
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 153.08346
+Signal: b switched to LOW @ 153.08346
+Signal: a switched to HIGH @ 154.00256
+Signal: b switched to HIGH @ 154.00256
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 155.05172
+Signal: b switched to LOW @ 155.05172
+Signal: a switched to HIGH @ 155.05914
+Signal: b switched to HIGH @ 155.05914
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 157.05116
+Signal: b switched to LOW @ 157.05116
+Signal: a switched to HIGH @ 157.06150
+Signal: b switched to HIGH @ 157.06150
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 160.01781
+Signal: b switched to LOW @ 160.01781
+Signal: a switched to HIGH @ 160.03691
+Signal: b switched to HIGH @ 160.03691
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 163.01465
+Signal: b switched to LOW @ 163.01465
+Signal: a switched to HIGH @ 163.02426
+Signal: b switched to HIGH @ 163.02426
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 164.05199
+Signal: b switched to LOW @ 164.05199
+Signal: a switched to HIGH @ 164.06452
+Signal: b switched to HIGH @ 164.06452
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 167.06369
+Signal: b switched to LOW @ 167.06369
+Signal: a switched to HIGH @ 167.07695
+Signal: b switched to HIGH @ 167.07695
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 169.04754
+Signal: b switched to LOW @ 169.04754
+Signal: a switched to HIGH @ 169.04985
+Signal: b switched to HIGH @ 169.04985
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 171.04187
+Signal: b switched to LOW @ 171.04187
+Signal: a switched to HIGH @ 171.05148
+Signal: b switched to HIGH @ 171.05148
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 174.05065
+Signal: b switched to LOW @ 174.05065
+Signal: a switched to HIGH @ 174.06026
+Signal: b switched to HIGH @ 174.06026
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 177.01657
+Signal: b switched to LOW @ 177.01657
+Signal: a switched to HIGH @ 177.02472
+Signal: b switched to HIGH @ 177.02472
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 180.00246
+Signal: b switched to LOW @ 180.00246
+Signal: a switched to HIGH @ 180.01718
+Signal: b switched to HIGH @ 180.01718
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 181.08777
+Signal: b switched to LOW @ 181.08777
+Signal: a switched to HIGH @ 182.00322
+Signal: b switched to HIGH @ 182.00322
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 183.00952
+Signal: b switched to LOW @ 183.00952
+Signal: a switched to HIGH @ 183.02424
+Signal: b switched to HIGH @ 183.02424
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 184.09483
+Signal: b switched to LOW @ 184.09483
+Signal: a switched to HIGH @ 185.00809
+Signal: b switched to HIGH @ 185.00809
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 187.00011
+Signal: b switched to LOW @ 187.00011
+Signal: a switched to HIGH @ 187.00753
+Signal: b switched to HIGH @ 187.00753
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 190.00670
+Signal: b switched to LOW @ 190.00670
+Signal: a switched to HIGH @ 190.01412
+Signal: b switched to HIGH @ 190.01412
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 192.09186
+Signal: b switched to LOW @ 192.09186
+Signal: a switched to HIGH @ 192.09636
+Signal: b switched to HIGH @ 192.09636
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 194.04552
+Signal: b switched to LOW @ 194.04552
+Signal: a switched to HIGH @ 194.06462
+Signal: b switched to HIGH @ 194.06462
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 196.03521
+Signal: b switched to LOW @ 196.03521
+Signal: a switched to HIGH @ 196.03971
+Signal: b switched to HIGH @ 196.03971
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Signal: a switched to LOW @ 198.01030
+Signal: b switched to LOW @ 198.01030
+Signal: a switched to HIGH @ 198.02064
+Signal: b switched to HIGH @ 198.02064
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Processing: a
+Scenario Length:  200.00000
+Runtime Timer: 200.01351

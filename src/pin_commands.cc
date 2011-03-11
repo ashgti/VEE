@@ -5,17 +5,6 @@
 
 using namespace std;
 
-enum component_types { COMPONENT_PIN, COMPONENT_SERIAL };
-
-bool registered_model = false;
-
-void
-checkRegistered() throw(ArduException) {
-    if (registered_model == false) {
-        throw ArduException("regsiter arduino model with setModel.");
-    }
-}
-
 void
 registerPin(const char* signal_id, uint8_t pin_id) {
     ardu->addPin(string(signal_id), pin_id);
