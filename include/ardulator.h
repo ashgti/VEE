@@ -128,7 +128,7 @@ class Arduino {
     std::string timestamp();
   public:
     std::map<int, std::pair<int, void (*)(void)> >
-                _interrupts;
+                _interrupt_map;
     std::map<int, Signal*>
                 _signals;
     std::vector<Signal*>
@@ -139,6 +139,9 @@ class Arduino {
                 _debug;
     std::string*
                 _buffers[256];
+                
+    int  _wait_till;
+    bool _interrupts;
 
     Arduino();
     ~Arduino();
@@ -180,6 +183,9 @@ class ArduException : public std::exception {
 /* The instance of the arduino emulation */
 extern Arduino *ardu;
 
+class ProcessingSignal : public std::exception {
+};
+
 /* Digital Ports for accessing pin state */
 extern BitValue PINB;
 extern BitValue DDRB;
@@ -192,5 +198,9 @@ extern BitValue PORTC;
 extern BitValue PIND;
 extern BitValue DDRD;
 extern BitValue PORTD;
+
+void sei();
+void cli();
+
 
 #endif /* PRIVATE_CONFIG_H */

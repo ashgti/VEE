@@ -13,6 +13,8 @@
 
 using namespace std;
 
+ProcessingSignal p;
+
 static void
 addTime(ardu_clock_t &t, int ticks) {
     t._ticks += ticks;
@@ -29,7 +31,7 @@ print_clock(string n, ardu_clock_t t){
     ardu->_debug.flush();
 }
 
-Arduino::Arduino() {
+Arduino::Arduino() : _wait_till(0) {
     _log.exceptions ( ifstream::failbit | ifstream::badbit );
     _debug.exceptions ( ifstream::failbit | ifstream::badbit );
     
@@ -126,7 +128,15 @@ Arduino::runScenario() {
     print_clock("Runtime Timer:", _timer);
     updatePinState();
     while (!((_timer._seconds > _scenario_length._seconds) || (_timer._seconds == _scenario_length._seconds && _timer._ticks >= _scenario_length._ticks))) {
-        loop();
+        try {
+            if (!this->_wait_till)
+                loop();
+            else 
+                this->_wait_till--;
+        }
+        catch (ProcessingSignal &e) {
+            cout << "tee hee " << endl;
+        }
         addTicks(LOOP_CONST);
         updatePinState();
     }
@@ -220,15 +230,12 @@ Arduino::dispatchSignal(const char *signal_id) {
     }
     int ticks = _signals[_mapping[signal_id]]->process();
     
-    _timer._ticks += ticks;
-    while (_timer._ticks > TICKS_PER_SECOND) {
-        _timer._seconds += 1;
-        _timer._ticks -= TICKS_PER_SECOND;
-    }
-    
-    updatePinState();
+    _wait_till = ticks;
+
     _log << "Dispatching signal " << signal_id << " for " << _mapping[signal_id] << " a " << ticks << "\n";
     _log.flush();
+    
+    throw p;
 }
 
 string
@@ -308,12 +315,12 @@ Arduino::report() {
     map<int, Signal*>::iterator it;
     
     for (it = _signals.begin(); it != _signals.end(); it++) {
-        it->second->report(false);
+        it->second->report(true);
     }
     
     vector<Signal*>::iterator vit;
     for (vit = _unused_signals.begin(); vit != _unused_signals.end(); vit++) {
-        (*vit)->report(true);
+        (*vit)->report(false);
     }
 }
 
@@ -321,11 +328,11 @@ Arduino::report() {
 /* Interrupts */
 void
 Arduino::registerInterrupt(uint8_t pin_id, void (*fn)(void), uint8_t mode) {
-    cout << "Yo!" << endl;    
-    _interrupts[pin_id] = make_pair(mode, fn);
+    _interrupt_map[pin_id] = make_pair(mode, fn);
 }
 
 void
 Arduino::dropInterrupt(uint8_t pin_id) {
+    _interrupt_map.erase(pin_id);
     cout << "Dropped int on " << pin_id << endl;
 }

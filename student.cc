@@ -3,15 +3,15 @@
 
 void blink();
 
-bool reg[6] = {false};
+bool reg[4] = {false};
 
-const char* signals[6] = { "a", "b", "c", "d", "e", "f" };
+const char* signals[4] = { "a", "b", "c", "d" };
 
 uint32_t int_count = 0;
 
 void
 pinConfiguration() {
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 4; i++) {
         registerPin(signals[i], i);
     }
 }
@@ -19,7 +19,7 @@ pinConfiguration() {
 void
 setup() {
     Serial.begin(9600);
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 4; i++) {
         pinMode(i, INPUT);
     }
     
@@ -39,7 +39,7 @@ loop() {
         std::cout << "Got an interrupt" << std::endl;
         int_count = 0;
     }
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 4; i++) {
         int reading = digitalRead(0);
         if (reading == HIGH && reg[i] == false) {
             processSignal(signals[i]);
