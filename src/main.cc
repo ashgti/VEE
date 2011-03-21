@@ -10,7 +10,7 @@
 using namespace std;
 
 /* Globalally Used Values */
-Arduino *ardu = NULL;
+Ardulator *ardu = NULL;
 
 /* Special Pins that represent various assembly values */
 /* PORTD maps to Arduino digital pins 0 to 7
@@ -27,21 +27,19 @@ Arduino *ardu = NULL;
  *      PORTC - The Port C Data Register - read/write
  *      PINC - The Port C Input Pins Register - read only
  */
-BitValue PINB(true);
-BitValue DDRB;
+ 
+BitValue DDRB(0);
 BitValue PORTB;
 
-BitValue PINC(true);
 BitValue DDRC;
 BitValue PORTC;
 
-BitValue PIND(true);
 BitValue DDRD;
 BitValue PORTD;
 
 void
 setupArduino() {
-    ardu = new Arduino();
+    ardu = new Ardulator();
 }
 
 void

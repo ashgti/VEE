@@ -25,3 +25,5 @@ det b, 1, 3.5, 2.25, 4
 uni c, 1.5, 80.0 
 exp d, 1.5, 80.0
 det e, "c", 2, 2, 4
+int 0, abc
+int 1, de

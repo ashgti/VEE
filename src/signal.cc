@@ -163,6 +163,9 @@ Signal::updateState(ardu_clock_t &t, int new_state) {
         
         // cout << "Name: " << _name << endl;
         // cout << "Map found: " << ardu->_mapping[_name] << endl;
+        /* TODO: 
+             if pin has an interrupt associated with it, check it and call it here.
+         */
         if (_state == HIGH) {
             // LOW EVENT
             if (map_iter != ardu->_interrupt_map.end() && map_iter->second.first == LOW) {
@@ -298,25 +301,23 @@ DetSignal::report(bool used) {
     }
     
     cout << "Reporting for: " << _name << "\n";
-    cout << "--- used for testing ---\n";
     cout << "   Signal High Length: " << _length << "\n";
     cout << "                Ratio: " << _ratio << "\n";
     cout << "                   Mu: " << _mu << "\n";
     cout << "                    --\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
-    cout << "         Total Events: " << _history.missed_evts + _history.caught_evts << "\n";
+    cout << "         Total Events: " << _history.missed_evts + _history.caught_evts + _history.total_evts << "\n";
     
     cout << "--------------------------\n\n";
     cout.flush();
     
     _log << "Reporting for: " << _name << "\n";
-    _log << "--- used for testing ---\n";
     _log << "   Signal High Length: " << _length << "\n";
     _log << "                Ratio: " << _ratio << "\n";
     _log << "                   Mu: " << _mu << "\n";
     _log << "                    --\n";
     _log << "        Missed Events: " << _history.missed_evts << "\n";
-    _log << "         Total Events: " << _history.total_evts << "\n";
+    _log << "         Total Events: " << _history.missed_evts + _history.caught_evts + _history.total_evts << "\n";
 
     _log << "--------------------------\n\n";
     _log.flush();
@@ -456,3 +457,5 @@ ExpSignal::parseConfiguration(string line) {
     
     return _name;
 }
+
+

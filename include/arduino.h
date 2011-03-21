@@ -134,7 +134,6 @@ void loop(void);
 void pinConfiguration(void);
 
 void processSignal(const char* signal_id);
-
 void registerPin(const char* signal_id, uint8_t pin_id);
 
 #ifdef __cplusplus
@@ -218,7 +217,7 @@ class HardwareSerial : public Print
     using Print::write; // pull in write(str) and write(buf, size) from Print
 };
 
-void registerSerial(const char* signal_id, HardwareSerial *serial);
+void registerSerial(const char* signal_id, HardwareSerial &serial);
 
 extern HardwareSerial Serial;
 

@@ -31,7 +31,7 @@ print_clock(string n, ardu_clock_t t){
     ardu->_debug.flush();
 }
 
-Arduino::Arduino() : _wait_till(0) {
+Ardulator::Ardulator() : _wait_till(0) {
     _log.exceptions ( ifstream::failbit | ifstream::badbit );
     _debug.exceptions ( ifstream::failbit | ifstream::badbit );
     
@@ -46,7 +46,7 @@ Arduino::Arduino() : _wait_till(0) {
     
     _log.open("./logs/dispatch.log", fstream::out | fstream::trunc);
     _debug.open("./logs/debug.log",  fstream::out | fstream::trunc);
-    cout << "Setting up the Arduino\n";
+    cout << "Setting up the Ardulator\n";
     
     _ticks = 0 ;
     _total_ticks = 0;
@@ -55,7 +55,7 @@ Arduino::Arduino() : _wait_till(0) {
     _registered_identifers = "";
 }
 
-Arduino::~Arduino() {
+Ardulator::~Ardulator() {
     if (_log.is_open()) {
         _log << "\n\n";
         _log.flush();
@@ -69,7 +69,7 @@ Arduino::~Arduino() {
 }
 
 void
-Arduino::configurePin(uint8_t pin_id, uint8_t mode) {
+Ardulator::configurePin(uint8_t pin_id, uint8_t mode) {
     map<int, Signal*>::iterator it;
     it = _signals.find(pin_id);
     
@@ -83,7 +83,7 @@ Arduino::configurePin(uint8_t pin_id, uint8_t mode) {
 }
 
 bool 
-Arduino::addInputFile(char *name) {
+Ardulator::addInputFile(char *name) {
     ifstream ifile;
     bool header_parsed = false;
     
@@ -101,8 +101,8 @@ Arduino::addInputFile(char *name) {
         if (found != string::npos) {
             string word = line.substr(0, found);
             if (header_parsed) {
-                _debug << "Scanning signals\n";
-                registerSignal(word, line);
+                _debug << "Scanning Signal Configuration\n";
+                processConfiguration(word, line);
             }
             else {
                 _debug << "Scanning Header\n";
@@ -118,7 +118,7 @@ Arduino::addInputFile(char *name) {
 }
 
 void
-Arduino::runScenario() {
+Ardulator::runScenario() {
     _timer._seconds = 0;
     _timer._ticks   = 0;
     setup();
@@ -126,17 +126,12 @@ Arduino::runScenario() {
     
     print_clock("Scenario Length: ", _scenario_length);
     print_clock("Runtime Timer:", _timer);
+    
+    updatePinMaps();
+    
     updatePinState();
     while (!((_timer._seconds > _scenario_length._seconds) || (_timer._seconds == _scenario_length._seconds && _timer._ticks >= _scenario_length._ticks))) {
-        try {
-            if (!this->_wait_till)
-                loop();
-            else 
-                this->_wait_till--;
-        }
-        catch (ProcessingSignal &e) {
-            cout << "tee hee " << endl;
-        }
+        loop();
         addTicks(LOOP_CONST);
         updatePinState();
     }
@@ -147,8 +142,50 @@ Arduino::runScenario() {
     cout << "--------------------------\n";
 }
 
+
+/*
+TOOD: 
+for each pin
+    update pin port
+for each int
+    for each pin in int
+        tell pin which int to call
+*/
 void
-Arduino::addTicks(uint64_t length) {
+Ardulator::updatePinMaps() {
+    for (map<int, Signal*>::iterator it = _signals.begin();
+            it != _signals.end();
+            ++it) {
+        it->first
+        
+    }
+                _signals;
+    for (map<int, vector<string> >::iterator
+            it = _interrupt_connection.begin();
+            it != _interrupt_connection.end();
+            ++it) {
+        for (vector<string>::iterator vit = it->second.begin();
+                vit != it->second.end();
+                ++vit) {
+            Signal *sig = _signals[_mapping[*vit]];
+            if (it->first >= 0 || it->first < 8) {
+                sig->_bit_container = PORTD.getStateRef();
+            }
+            else if (it->first >= 8 || it->first < 14) {
+                sig->_bit_container = PORTB.getStateRef();
+            }
+            else if (it->first >= 16 || it->first < 22) {
+                sig->_bit_container = PORTC.getStateRef();
+            }
+            else {
+                throw "Error this pin is out of bounds!!";
+            }
+        }
+    }
+}
+
+void
+Ardulator::addTicks(uint64_t length) {
     _timer._ticks += length;
     if (_timer._ticks > TICKS_PER_SECOND) {
         _timer._seconds++;
@@ -157,7 +194,7 @@ Arduino::addTicks(uint64_t length) {
 }
 
 void
-Arduino::updatePinState() {
+Ardulator::updatePinState() {
     // Report Changes in State
     map<int, Signal*>::iterator it;
     int c = 0;
@@ -174,7 +211,7 @@ Arduino::updatePinState() {
 }
 
 void
-Arduino::finalizePinState() {
+Ardulator::finalizePinState() {
     // Report Changes in State
     map<int, Signal*>::iterator it;
     for (it = _signals.begin(); it != _signals.end(); it++) {
@@ -192,7 +229,7 @@ Arduino::finalizePinState() {
  * Digital Reads 58 cycles 
  */
 int
-Arduino::getPin(uint8_t pin_id) {
+Ardulator::getPin(uint8_t pin_id) {
     if (_signals.find(pin_id) == _signals.end()) {
         return LOW;
     }
@@ -214,14 +251,14 @@ Arduino::getPin(uint8_t pin_id) {
 }
 
 void
-Arduino::setPin(uint8_t pin_id, uint8_t val) {
+Ardulator::setPin(uint8_t pin_id, uint8_t val) {
     if (_signals[pin_id]->_state != val) {
         _signals[pin_id]->_state = val;
     }
 }
 
 void
-Arduino::dispatchSignal(const char *signal_id) {
+Ardulator::dispatchSignal(const char *signal_id) {
     if (_mapping.find(signal_id) == _mapping.end()) {
         return;
     }
@@ -231,22 +268,25 @@ Arduino::dispatchSignal(const char *signal_id) {
     int ticks = _signals[_mapping[signal_id]]->process();
     
     _wait_till = ticks;
-
     _log << "Dispatching signal " << signal_id << " for " << _mapping[signal_id] << " a " << ticks << "\n";
     _log.flush();
     
-    throw p;
+    while (_wait_till) {
+        _wait_till--;
+        addTicks(LOOP_CONST);
+        updatePinState();
+    }
 }
 
 string
-Arduino::timestamp() {
+Ardulator::timestamp() {
     ostringstream result(ostringstream::out);
     result << static_cast<int>(_timer._seconds) << "s " << static_cast<int>(_timer._ticks) << "t";
     return result.str();
 }
 
 void
-Arduino::scanHeaderChunk(string identifier, string line) {
+Ardulator::scanHeaderChunk(string identifier, string line) {
     if (identifier == "length:") {
         double run_time;
         istringstream is;
@@ -270,7 +310,7 @@ Arduino::scanHeaderChunk(string identifier, string line) {
 }
 
 void
-Arduino::registerSignal(string identifer, string line) {    
+Ardulator::processConfiguration(string identifer, string line) {
     Signal *p = NULL;
     int pin_id = -1;
     string name = "";
@@ -282,6 +322,26 @@ Arduino::registerSignal(string identifer, string line) {
     }
     else if (identifer == "exp") {
         p = new ExpSignal();
+    }
+    else if (identifer == "int") {
+        stringstream ss(line);
+        int int_id;
+        ss >> int_id;
+        if (ss.peek() == ',')
+            ss.seekg(1, ios::cur);
+        string signal_ids;
+        ss >> signal_ids;
+        vector<string> signal_map;
+        for (string::iterator it = signal_ids.begin(); 
+                 it != signal_ids.end(); 
+                 ++it) {
+            char tmp[2];
+            tmp[0] = *it;
+            signal_map.push_back(string(tmp));
+        }
+        
+        _interrupt_connection[int_id] = signal_map;
+        return;
     }
     else {
         cout << "Bad configuration line \"" << line << "\"\n";
@@ -300,18 +360,18 @@ Arduino::registerSignal(string identifer, string line) {
 }
 
 void
-Arduino::addPin(string signal_name, uint8_t pin_id) {
+Ardulator::addPin(string signal_name, uint8_t pin_id) {
     _mapping[signal_name] = pin_id;
 }
 
 void
-Arduino::addSerial(string signal_name, HardwareSerial *serial) {
-    _mapping[signal_name] = serial->pin();
+Ardulator::addSerial(string signal_name, HardwareSerial &serial) {
+    _mapping[signal_name] = serial.pin();
 }
 
 /* Reporting facilities */
 void
-Arduino::report() {
+Ardulator::report() {
     map<int, Signal*>::iterator it;
     
     for (it = _signals.begin(); it != _signals.end(); it++) {
@@ -327,12 +387,12 @@ Arduino::report() {
 
 /* Interrupts */
 void
-Arduino::registerInterrupt(uint8_t pin_id, void (*fn)(void), uint8_t mode) {
+Ardulator::registerInterrupt(uint8_t pin_id, void (*fn)(void), uint8_t mode) {
     _interrupt_map[pin_id] = make_pair(mode, fn);
 }
 
 void
-Arduino::dropInterrupt(uint8_t pin_id) {
+Ardulator::dropInterrupt(uint8_t pin_id) {
     _interrupt_map.erase(pin_id);
     cout << "Dropped int on " << pin_id << endl;
 }

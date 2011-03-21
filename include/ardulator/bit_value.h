@@ -1,15 +1,18 @@
 #ifndef ARDULATOR_BIT_VALUE_H
 #define ARDULATOR_BIT_VALUE_H
 #include <stdint.h>
+#include <cstdlib>
 
 class BitValue {
     bool    _ro;
-    uint8_t _state;
+    volatile uint8_t _state;
   public:
-    BitValue(bool readonly = false);
-    BitValue(int state, bool readonly = false);
+    BitValue();
+    BitValue(uint8_t ref, bool readonly = false);
     void updateState(int);
-    int getState();
+    int getState() const;
+    
+    volatile uint8_t* getStateRef();
     
     /* Operators */
     /* Basic Assignment */
@@ -23,7 +26,7 @@ class BitValue {
     BitValue& operator^=(const int &b);
     BitValue& operator|=(const int &b);
     BitValue& operator&=(const int &b);
-
+    
     /* Bitwise Operators */
     BitValue operator~() const;
     BitValue operator^(const int &b) const;

@@ -1,5 +1,8 @@
 #include "arduino.h"
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 void blink();
 
@@ -9,11 +12,14 @@ const char* signals[4] = { "a", "b", "c", "d" };
 
 uint32_t int_count = 0;
 
+HardwareSerial Serial2(20,21);
+
 void
 pinConfiguration() {
     for (int i = 0; i < 4; i++) {
         registerPin(signals[i], i);
     }
+    registerSerial("e", Serial2);
 }
 
 void
@@ -24,7 +30,7 @@ setup() {
     }
     
     DDRD = 0b11111111;
-    attachInterrupt(1, blink, CHANGE);
+    // attachInterrupt(1, blink, CHANGE);
 }
 
 void
@@ -42,13 +48,16 @@ loop() {
     for (int i = 0; i < 4; i++) {
         int reading = digitalRead(0);
         if (reading == HIGH && reg[i] == false) {
-            processSignal(signals[i]);
-            reg[i] = true; // Used to prevent the signal from being dispatched multiple times
+            if (string(signals[i]) == "b") {
+                cout << "Yes..." << endl;
+            }
+            // processSignal(signals[i]);
+            reg[i] = true; 
             Serial.print("dispatched ");
             Serial.println(signals[i]);
         }
         if (reading == LOW && reg[i] == true) {
-            reg[0] = false; // The signal has gone down, so reset the flag to allow it to be dispatched again
+            reg[0] = false; 
         }
     }
 }

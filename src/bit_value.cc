@@ -2,10 +2,8 @@
 #include <arduino.h>
 
 /* TODO: Add clock ticks */
-BitValue::BitValue(bool readonly) : _ro(readonly), _state(0) {
-}
-
-BitValue::BitValue(int s, bool readonly) : _ro(readonly), _state(s) {
+BitValue::BitValue() : _ro(false), _state(0) { }
+BitValue::BitValue(uint8_t ref, bool readonly) : _ro(readonly), _state(ref) {
 }
     
 void 
@@ -14,10 +12,15 @@ BitValue::updateState(int s) {
 }
     
 int
-BitValue::getState() {
+BitValue::getState() const {
     return _state;
 }
-    
+
+volatile uint8_t* 
+BitValue::getStateRef() {
+    return &_state;
+}
+
 BitValue& 
 BitValue::operator=(const int &b) {
     _state = b;    

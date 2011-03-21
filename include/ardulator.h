@@ -1,9 +1,10 @@
-#ifndef PRIVATE_CONFIG_H
-#define PRIVATE_CONFIG_H
+#ifndef ARDULATOR_CONFIG_H
+#define ARDULATOR_CONFIG_H
 #include <vector>
 #include <map>
 #include <fstream>
 #include <exception>
+#include <setjmp.h>
 #include "ardulator/bit_value.h"
 
 #define LOOP_CONST      15
@@ -39,94 +40,27 @@ typedef struct history_t {
     double avg_response_time;
 } history_t;
 
-class Signal {
-  public:
-    RandNum *_num;
-    std::string _const_string;
-    SignalType _signal_type;
-    ValueType _val_type;
-    bool _configured;
-    
-    uint32_t _state; /* Current state, could be 0 to 1024, or higher
-                      * depending on the accuracy of the A2D */
-    uint8_t  _flags;
-    uint8_t  _mode;  /* INPUT | OUTPUT mode */
-    
-    ardu_clock_t _next;
-    ardu_clock_t _last_t;
-    
-    std::fstream _log;
-    
-    std::string _name;
-    double _mu;
-    double _length, _ratio;
-    
-    std::string _string_val;
-    int _digital_val;
-    int _analog_value;
-    
-    bool _caught_flag;
+class Signal;
 
-    history_t _history;
-    
-    Signal();
-    ~Signal();
-
-    int process();
-    
-    void setState(ardu_clock_t &t);
-    void finalize(ardu_clock_t &t);
-    void initializeTimers();
-    void updateState(ardu_clock_t &t, int new_state);
-
-    void parseStart(std::stringstream &ss);
-    
-    virtual std::string parseConfiguration(std::string);
-    virtual double calcNext(int new_state);
-    virtual void report(bool);
-};
-
-class DetSignal : public Signal {
-  public:
-    DetSignal();
-    std::string parseConfiguration(std::string);
-    double calcNext(int new_state);
-    void report(bool);
-};
-
-class UniSignal : public Signal {
-  public:
-    UniSignal();
-    std::string parseConfiguration(std::string);
-    double calcNext(int new_state);
-    void report(bool);
-};
-
-class ExpSignal : public Signal {
-  public:
-    ExpSignal();
-    std::string parseConfiguration(std::string);
-    double calcNext(int new_state);
-    void report(bool);
-};
-
-class Arduino {
+class Ardulator {
   private:
-    std::fstream     _log;
-    bool        _flag;
-    int         _max_pins;
-    uint64_t    _ticks;
-    uint64_t    _total_ticks;
-    std::string      _registered_identifers;
-    ardu_clock_t 
-                _timer;
-    ardu_clock_t
-                _scenario_length;
+    std::fstream  _log;
+    bool          _flag;
+    int           _max_pins;
+    uint64_t      _ticks;
+    uint64_t      _total_ticks;
+    std::string   _registered_identifers;
+    ardu_clock_t  _timer;
+    ardu_clock_t  _scenario_length;
 
     void   updatePinState();
+    void   updatePinMaps();
     void   finalizePinState();
     std::string timestamp();
   public:
+      
+    std::map<int, std::vector<std::string> >  
+                _interrupt_connection;
     std::map<int, std::pair<int, void (*)(void)> >
                 _interrupt_map;
     std::map<int, Signal*>
@@ -143,16 +77,16 @@ class Arduino {
     int  _wait_till;
     bool _interrupts;
 
-    Arduino();
-    ~Arduino();
+    Ardulator();
+    ~Ardulator();
     void configurePin(uint8_t id, uint8_t mode);
     void addPin(std::string signal_id, uint8_t pin_id);
-    void addSerial(std::string signal_id, HardwareSerial *serial);
+    void addSerial(std::string signal_id, HardwareSerial &serial);
     bool addInputFile(char *name);
     void runScenario();
     // bool addEventHandler(std::string id, Evt* (*)(bool, string));
     void scanHeaderChunk(std::string id, std::string line);
-    void registerSignal(std::string id, std::string line);
+    void processConfiguration(std::string id, std::string line);
     void registerInterrupt(uint8_t pin_id, void (*)(void), uint8_t mode);
     void dropInterrupt(uint8_t pin_id);
     void setPin(uint8_t pin_id, uint8_t val);
@@ -181,7 +115,7 @@ class ArduException : public std::exception {
 
 /* Declare Variables used by the emulation program */
 /* The instance of the arduino emulation */
-extern Arduino *ardu;
+extern Ardulator *ardu;
 
 class ProcessingSignal : public std::exception {
 };
@@ -202,5 +136,6 @@ extern BitValue PORTD;
 void sei();
 void cli();
 
+#include "ardulator/signal.h"
 
-#endif /* PRIVATE_CONFIG_H */
+#endif /* ARDULATOR_CONFIG_H */
