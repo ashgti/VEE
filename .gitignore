@@ -1,6 +1,8 @@
 *.o
 *.a
 .AppleDouble
-site/log/*
+log/*
 .DS_Store
 ardulator/samples/polling_sensor/polling_sensor
+*.log
+sample
