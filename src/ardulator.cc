@@ -86,7 +86,6 @@ bool
 Ardulator::addInputFile(char *name) {
     ifstream ifile;
     bool header_parsed  = false;
-    bool signals_parsed = false;
     ifile.open(name, ifstream::in);
     
     while (ifile.good()) {
@@ -94,10 +93,6 @@ Ardulator::addInputFile(char *name) {
         getline(ifile, line);
         if (line.compare("---") == 0 && header_parsed == false) {
             header_parsed = true;
-            continue;
-        }
-        else if (line.compare("---") == 0 && signals_parsed == false) {
-            signals_parsed = true;
             continue;
         }
         size_t found = line.find(" ");
@@ -111,13 +106,9 @@ Ardulator::addInputFile(char *name) {
                 _debug << "Scanning Header\n";
                 scanHeaderChunk(word, line);
             }
-            else if (header_parsed && !signals_parsed) {
+            else {
                 _debug << "Scanning Signal Configuration\n";
                 processConfiguration(word, line);
-            }
-            else {
-                _debug << "Scanning Interrupts\n";
-                processInterruptConfiguration(word, line);
             }
         }
     }
@@ -328,34 +319,6 @@ Ardulator::processConfiguration(string identifer, string line) {
         if (p != NULL && pin_id != -1 && name != "") {
             _signals[pin_id] = p;
         }
-    }
-}
-
-void
-Ardulator::processInterruptConfiguration(string id, string line) {
-    if (id == "int") {
-        stringstream ss(line);
-        int int_id;
-        ss >> int_id;
-        if (ss.peek() == ',')
-            ss.seekg(1, ios::cur);
-        string signal_ids;
-        ss >> signal_ids;
-        vector<string> signal_map;
-        for (string::iterator it = signal_ids.begin(); 
-                 it != signal_ids.end(); 
-                 ++it) {
-            char tmp[2];
-            tmp[0] = *it;
-            signal_map.push_back(string(tmp));
-        }
-        
-        _interrupt_connection[int_id] = signal_map;
-        return;
-    }
-    else {
-        cout << "Bad configuration line \"" << line << "\"\n";
-        exit(-1);
     }
 }
 

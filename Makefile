@@ -59,6 +59,27 @@ hw1: $(LIB_FILE)
 	cp include/arduino_api.h ./homeworks/hw1
 	tar -C ./homeworks -czf hw1.tar.gz ./hw1
 
+.PHONY: hw2
+hw2: $(LIB_FILE)
+	mkdir -p ./homeworks/hw2
+	cp ./*.a ./homeworks/hw2
+	cp templates/student.cc ./homeworks/hw2/lab2.cc
+	cp templates/Makefile ./homeworks/hw2
+	cp templates/t1.scn ./homeworks/hw2
+	cp templates/t2.scn ./homeworks/hw2
+	cp templates/t3.scn ./homeworks/hw2
+	cp templates/t4.scn ./homeworks/hw2
+	cp templates/t5.scn ./homeworks/hw2
+	cp templates/t6.scn ./homeworks/hw2
+	cp templates/t7.scn ./homeworks/hw2
+	cp templates/t8.scn ./homeworks/hw2
+	cp templates/t9.scn ./homeworks/hw2
+	cp templates/t10.scn ./homeworks/hw2
+	cp templates/t11.scn ./homeworks/hw2
+	cp templates/t12.scn ./homeworks/hw2
+	cp -R include ./homeworks/hw2
+	tar -C ./homeworks -czf hw2.tar.gz ./hw2
+
 .PHONY: clean
 clean: 
 	$(RM) $(OBJ_FILES) $(LIB_FILE)

@@ -29,7 +29,6 @@ setup() {
         pinMode(i, INPUT);
     }
     
-    DDRD = 0b11111111;
     attachInterrupt(1, blink, CHANGE);
 }
 

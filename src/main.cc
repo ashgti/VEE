@@ -16,19 +16,16 @@ Ardulator *ardu = NULL;
 /* PORTD maps to Arduino digital pins 0 to 7
  *      DDRD - The Port D Data Direction Register - read/write
  *      PORTD - The Port D Data Register - read/write
- *      PIND - The Port D Input Pins Register - read only
  * PORTB maps to Arduino digital pins 8 to 13 The two high bits (6 & 7) 
  * map to the crystal pins and are not usable
  *      DDRB - The Port B Data Direction Register - read/write
  *      PORTB - The Port B Data Register - read/write
- *      PINB - The Port B Input Pins Register - read only
  * PORTC maps to Arduino analog pins 0 to 5. Pins 6 & 7 are only accessible on the Arduino Mini
  *      DDRC - The Port C Data Direction Register - read/write
  *      PORTC - The Port C Data Register - read/write
- *      PINC - The Port C Input Pins Register - read only
  */
  
-BitValue DDRB(0);
+BitValue DDRB;
 BitValue PORTB;
 
 BitValue DDRC;
