@@ -147,6 +147,16 @@ void registerPin(const char* signal_id, uint8_t pin_id);
 #ifdef __cplusplus
 extern "C" {
 #endif
+void sei();
+void cli();
+void reti();
+#ifdef __cplusplus
+} /* end extern "C" */
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 extern void setup();
 extern void loop();
 extern void pinConfiguration();

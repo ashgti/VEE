@@ -1,16 +1,6 @@
 #ifndef AVR_INTERRUPT_H_
 #define AVR_INTERRUPT_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-void sei();
-void cli();
-void reti();
-#ifdef __cplusplus
-} /* end extern "C" */
-#endif
-
 #define _VECTOR(x)        x
 
 #define ISR(vector, ...)         \
