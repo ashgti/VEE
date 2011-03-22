@@ -31,7 +31,7 @@ print_clock(string n, ardu_clock_t t){
     ardu->_debug.flush();
 }
 
-Ardulator::Ardulator() : _wait_till(0) {
+Ardulator::Ardulator() : _interrupts(false) {
     _log.exceptions ( ifstream::failbit | ifstream::badbit );
     _debug.exceptions ( ifstream::failbit | ifstream::badbit );
     
@@ -85,28 +85,39 @@ Ardulator::configurePin(uint8_t pin_id, uint8_t mode) {
 bool 
 Ardulator::addInputFile(char *name) {
     ifstream ifile;
-    bool header_parsed = false;
-    
+    bool header_parsed  = false;
+    bool signals_parsed = false;
     ifile.open(name, ifstream::in);
     
     while (ifile.good()) {
         string line;
         getline(ifile, line);
-        if (line.compare("---") == 0) {
+        if (line.compare("---") == 0 && header_parsed == false) {
             header_parsed = true;
+            continue;
+        }
+        else if (line.compare("---") == 0 && signals_parsed == false) {
+            signals_parsed = true;
             continue;
         }
         size_t found = line.find(" ");
         
         if (found != string::npos) {
             string word = line.substr(0, found);
-            if (header_parsed) {
+            if (word == "#") {
+                continue;
+            }
+            if (!header_parsed) {
+                _debug << "Scanning Header\n";
+                scanHeaderChunk(word, line);
+            }
+            else if (header_parsed && !signals_parsed) {
                 _debug << "Scanning Signal Configuration\n";
                 processConfiguration(word, line);
             }
             else {
-                _debug << "Scanning Header\n";
-                scanHeaderChunk(word, line);
+                _debug << "Scanning Interrupts\n";
+                processInterruptConfiguration(word, line);
             }
         }
     }
@@ -144,42 +155,26 @@ Ardulator::runScenario() {
 
 
 /*
-TOOD: 
-for each pin
-    update pin port
-for each int
-    for each pin in int
-        tell pin which int to call
-*/
+ */
 void
 Ardulator::updatePinMaps() {
     for (map<int, Signal*>::iterator it = _signals.begin();
             it != _signals.end();
             ++it) {
-        it->first
-        
-    }
-                _signals;
-    for (map<int, vector<string> >::iterator
-            it = _interrupt_connection.begin();
-            it != _interrupt_connection.end();
-            ++it) {
-        for (vector<string>::iterator vit = it->second.begin();
-                vit != it->second.end();
-                ++vit) {
-            Signal *sig = _signals[_mapping[*vit]];
-            if (it->first >= 0 || it->first < 8) {
-                sig->_bit_container = PORTD.getStateRef();
-            }
-            else if (it->first >= 8 || it->first < 14) {
-                sig->_bit_container = PORTB.getStateRef();
-            }
-            else if (it->first >= 16 || it->first < 22) {
-                sig->_bit_container = PORTC.getStateRef();
-            }
-            else {
-                throw "Error this pin is out of bounds!!";
-            }
+        if (it->first >= 0 || it->first < 8) {
+            it->second->_bit_mask = 1 << it->first;
+            it->second->_bit_container = PORTD.getStateRef();
+        }
+        else if (it->first >= 8 || it->first < 14) {
+            it->second->_bit_mask = 1 << (8 - it->first);
+            it->second->_bit_container = PORTB.getStateRef();
+        }
+        else if (it->first >= 16 || it->first < 22) {
+            it->second->_bit_mask = 1 << (16 - it->first);
+            it->second->_bit_container = PORTC.getStateRef();
+        }
+        else {
+            throw "Error this pin is out of bounds!!";
         }
     }
 }
@@ -266,8 +261,8 @@ Ardulator::dispatchSignal(const char *signal_id) {
         return;
     }
     int ticks = _signals[_mapping[signal_id]]->process();
-    
-    _wait_till = ticks;
+
+    int _wait_till = ticks;
     _log << "Dispatching signal " << signal_id << " for " << _mapping[signal_id] << " a " << ticks << "\n";
     _log.flush();
     
@@ -301,9 +296,6 @@ Ardulator::scanHeaderChunk(string identifier, string line) {
     else if (identifier == "identifiers:") {
         _registered_identifers = line.substr(identifier.length(), line.length() - identifier.length());
     }
-    else if (identifier == "#") {
-        // this is a comment, do nothing with this line
-    }
     else {
         cout << "Unrecognized header configuration name \"" << identifier << "\"\n";
     }
@@ -323,7 +315,25 @@ Ardulator::processConfiguration(string identifer, string line) {
     else if (identifer == "exp") {
         p = new ExpSignal();
     }
-    else if (identifer == "int") {
+    else {
+        cout << "Bad configuration line \"" << line << "\"\n";
+        exit(-1);
+    }
+    name = p->parseConfiguration(line);
+    if (_mapping.find(name) == _mapping.end()) {
+        _unused_signals.push_back(p);
+    }
+    else {
+        pin_id = _mapping[name];
+        if (p != NULL && pin_id != -1 && name != "") {
+            _signals[pin_id] = p;
+        }
+    }
+}
+
+void
+Ardulator::processInterruptConfiguration(string id, string line) {
+    if (id == "int") {
         stringstream ss(line);
         int int_id;
         ss >> int_id;
@@ -346,16 +356,6 @@ Ardulator::processConfiguration(string identifer, string line) {
     else {
         cout << "Bad configuration line \"" << line << "\"\n";
         exit(-1);
-    }
-    name = p->parseConfiguration(line);
-    if (_mapping.find(name) == _mapping.end()) {
-        _unused_signals.push_back(p);
-    }
-    else {
-        pin_id = _mapping[name];
-        if (p != NULL && pin_id != -1 && name != "") {
-            _signals[pin_id] = p;
-        }
     }
 }
 

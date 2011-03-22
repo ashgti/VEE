@@ -155,39 +155,34 @@ Signal::updateState(ardu_clock_t &t, int new_state) {
                      << setw(FIELD_WIDTH) << setfill('0') << old._ticks << "\n";
         _state = new_state;
         
-        if (ardu->_interrupts == false) {
-            continue;
-        }
+        *_bit_container = _bit_mask & 0xf;
         
         map<int, std::pair<int, void (*)(void)> >::iterator map_iter = ardu->_interrupt_map.find(ardu->_mapping[_name]);
         
         // cout << "Name: " << _name << endl;
         // cout << "Map found: " << ardu->_mapping[_name] << endl;
-        /* TODO: 
-             if pin has an interrupt associated with it, check it and call it here.
-         */
         if (_state == HIGH) {
             // LOW EVENT
-            if (map_iter != ardu->_interrupt_map.end() && map_iter->second.first == LOW) {
+            if (ardu->_interrupts == false && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == LOW) {
                 map_iter->second.second();
             }
         }
         if (old_state == LOW && _state == HIGH) {
             // FIRE RISING EVENT
-            if (map_iter != ardu->_interrupt_map.end() && map_iter->second.first == RISING) {
+            if (ardu->_interrupts == false && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == RISING) {
                 map_iter->second.second();
             }
             _caught_flag = false;
         }
         if (old_state != _state) {
             // FIRE CHANGED EVENT
-            if (map_iter != ardu->_interrupt_map.end() && map_iter->second.first == CHANGE) {
+            if (ardu->_interrupts == false && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == CHANGE) {
                 map_iter->second.second();
             }
         }
         if (old_state == HIGH && _state == LOW) {
             // FIRE FALLING EVENT
-            if (map_iter != ardu->_interrupt_map.end() && map_iter->second.first == FALLING) {
+            if (ardu->_interrupts == false && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == FALLING) {
                 map_iter->second.second();
             }
             if (_caught_flag == false) {

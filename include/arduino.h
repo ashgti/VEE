@@ -44,8 +44,10 @@ extern "C"{
 #define INPUT 0x0
 #define OUTPUT 0x1
 
+#ifndef __cplusplus
 #define true 0x1
 #define false 0x0
+#endif
 
 #define PI 3.1415926535897932384626433832795
 #define HALF_PI 1.5707963267948966192313216916398
@@ -66,6 +68,8 @@ extern "C"{
 #define INTERNAL 3
 #define DEFAULT 1
 #define EXTERNAL 0
+
+#define _BV(bit) (1 << (bit))
 
 // undefine stdlib's abs if encountered
 #ifdef abs

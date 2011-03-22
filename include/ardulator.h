@@ -74,7 +74,6 @@ class Ardulator {
     std::string*
                 _buffers[256];
                 
-    int  _wait_till;
     bool _interrupts;
 
     Ardulator();

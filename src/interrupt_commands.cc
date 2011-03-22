@@ -11,6 +11,7 @@ extern "C" {
 void
 attachInterrupt(uint8_t pin_id, void (*fn)(void), int mode) {
     ardu->registerInterrupt(pin_id, fn, mode);
+    sei();
 }
 
 void
