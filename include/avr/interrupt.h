@@ -1,6 +1,15 @@
+#ifndef AVR_INTERRUPT_H_
+#define AVR_INTERRUPT_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 void sei();
 void cli();
 void reti();
+#ifdef __cplusplus
+} /* end extern "C" */
+#endif
 
 #define _VECTOR(x)        x
 
@@ -36,3 +45,4 @@ void reti();
 #define TWI_vect          _VECTOR(24)  /* Two-wire Serial Interface */
 #define SPM_READY_vect    _VECTOR(25)  /* Store Program Memory Read */
 
+#endif /* AVR_INTERRUPT_H_ */

@@ -151,7 +151,7 @@ extern void setup();
 extern void loop();
 extern void pinConfiguration();
 #ifdef __cplusplus
-}
+} // extern "C"
 #endif
 
 #define DEC 10
