@@ -164,26 +164,26 @@ Signal::updateState(ardu_clock_t &t, int new_state) {
         // cout << "Map found: " << ardu->_mapping[_name] << endl;
         if (_state == HIGH) {
             // LOW EVENT
-            if (ardu->_interrupts == false && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == LOW) {
+            if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == LOW) {
                 map_iter->second.second();
             }
         }
         if (old_state == LOW && _state == HIGH) {
             // FIRE RISING EVENT
-            if (ardu->_interrupts == false && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == RISING) {
+            if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == RISING) {
                 map_iter->second.second();
             }
             _caught_flag = false;
         }
         if (old_state != _state) {
             // FIRE CHANGED EVENT
-            if (ardu->_interrupts == false && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == CHANGE) {
+            if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == CHANGE) {
                 map_iter->second.second();
             }
         }
         if (old_state == HIGH && _state == LOW) {
             // FIRE FALLING EVENT
-            if (ardu->_interrupts == false && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == FALLING) {
+            if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == FALLING) {
                 map_iter->second.second();
             }
             if (_caught_flag == false) {
@@ -288,10 +288,17 @@ DetSignal::report(bool used) {
     if (used == false) {
         cout << "Reporting for: " << _name << "\n";
         cout << "    -Not Used-\n";
-        cout << "           Missed Events: " << _history.missed_evts + _history.caught_evts + _history.total_evts << "\n";
-        cout << "            Total Events: " << _history.missed_evts + _history.caught_evts + _history.total_evts << "\n"; 
+        cout << "           Missed Events: " << _history.missed_evts + _history.caught_evts << "\n";
+        cout << "            Total Events: " << _history.missed_evts + _history.caught_evts << "\n"; 
         cout << "--------------------------\n\n";
         cout.flush();
+        
+        _log << "Reporting for: " << _name << "\n";
+        _log << "    -Not Used-\n";
+        _log << "           Missed Events: " << _history.missed_evts + _history.caught_evts << "\n";
+        _log << "            Total Events: " << _history.missed_evts + _history.caught_evts << "\n"; 
+        _log << "--------------------------\n\n";
+        _log.flush();
         
         return;
     }
@@ -302,7 +309,7 @@ DetSignal::report(bool used) {
     cout << "                   Mu: " << _mu << "\n";
     cout << "                    --\n";
     cout << "        Missed Events: " << _history.missed_evts << "\n";
-    cout << "         Total Events: " << _history.missed_evts + _history.caught_evts + _history.total_evts << "\n";
+    cout << "         Total Events: " << _history.missed_evts + _history.caught_evts << "\n";
     
     cout << "--------------------------\n\n";
     cout.flush();
@@ -313,7 +320,7 @@ DetSignal::report(bool used) {
     _log << "                   Mu: " << _mu << "\n";
     _log << "                    --\n";
     _log << "        Missed Events: " << _history.missed_evts << "\n";
-    _log << "         Total Events: " << _history.missed_evts + _history.caught_evts + _history.total_evts << "\n";
+    _log << "         Total Events: " << _history.missed_evts + _history.caught_evts << "\n";
 
     _log << "--------------------------\n\n";
     _log.flush();
