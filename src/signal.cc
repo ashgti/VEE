@@ -330,18 +330,28 @@ UniSignal::report(bool used) {
     if (used == false) {
         cout << "Reporting for: " << _name << "\n";
         cout << "    -Not Used-\n";
-        cout << "           Missed Events: " << _history.missed_evts << "\n";
+        cout << "           Missed Events: " << _history.total_evts << "\n";
         cout << "            Total Events: " << _history.total_evts << "\n"; 
         cout << "--------------------------\n\n";
         cout.flush();
         
         return;
     }
+    
+    int missed = 0;
+    
+    if (_history.caught_evts > _history.total_evts) 
+        missed = 0;
+    else if ((_history.total_evts - _history.caught_evts) < 0)
+        missed = _history.total_evts;
+    else 
+        missed = _history.total_evts - _history.caught_evts;
+    
     cout << "Reporting for: " << _name << "\n";
     cout << "               Lambda: " << _length << "\n";
     cout << "                   Mu: " << _mu << "\n";
     cout << "                   --\n";
-    cout << "        Missed Events: " << (_history.total_evts - _history.caught_evts) << "\n";
+    cout << "        Missed Events: " << missed << "\n";
     cout << "         Total Events: " << _history.total_evts << "\n";
     
     cout << "--------------------------\n\n";
@@ -351,7 +361,7 @@ UniSignal::report(bool used) {
     _log << "               Lambda: " << _length << "\n";
     _log << "                   Mu: " << _mu << "\n";
     _log << "                   --\n";
-    _log << "        Missed Events: " << (_history.total_evts - _history.caught_evts) << "\n";
+    _log << "        Missed Events: " << missed << "\n";
     _log << "         Total Events: " << _history.total_evts << "\n";
 
     _log << "--------------------------\n\n";
