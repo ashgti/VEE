@@ -64,7 +64,6 @@ Signal::setState(ardu_clock_t &t) {
         else {
             if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
                     t._ticks > _next._ticks)) {
-                _history.total_evts += 1;
                 updateState(t, HIGH);
             }
         }
@@ -79,7 +78,6 @@ Signal::setState(ardu_clock_t &t) {
         else {
             if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
                     t._ticks > _next._ticks)) {
-                _history.total_evts += 1;
                 updateState(t, HIGH);
             }
         }
@@ -94,7 +92,6 @@ Signal::setState(ardu_clock_t &t) {
         else {
             if (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
                     t._ticks > _next._ticks)) {
-                _history.total_evts += 1;
                 updateState(t, HIGH);
             }
         }
@@ -108,21 +105,21 @@ Signal::finalize(ardu_clock_t &t) {
     if (_val_type == VT_SERIAL) {
         if (_state == HIGH) {
             if (_caught_flag == false) {
-                _history.missed_evts += 1;
+                // _history.missed_evts += 1;
             }
         }
     }
     else if (_val_type == VT_DIGITAL) {
         if (_state == HIGH) {
             if (_caught_flag == false) {
-                _history.missed_evts += 1;
+                // _history.missed_evts += 1;
             }
         }
     }
     else if (_val_type == VT_ANALOG) {
         if (_state == HIGH) {
             if (_caught_flag == false) {
-                _history.missed_evts += 1;
+                // _history.missed_evts += 1;
             }
         }
     }
@@ -162,7 +159,7 @@ Signal::updateState(ardu_clock_t &t, int new_state) {
         
         // cout << "Name: " << _name << endl;
         // cout << "Map found: " << ardu->_mapping[_name] << endl;
-        if (_state == HIGH) {
+        if (_state == LOW) {
             // LOW EVENT
             if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == LOW) {
                 map_iter->second.second();
@@ -173,7 +170,8 @@ Signal::updateState(ardu_clock_t &t, int new_state) {
             if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == RISING) {
                 map_iter->second.second();
             }
-            _caught_flag = false;
+            _history.total_evts += 1;
+            // _caught_flag = false;
         }
         if (old_state != _state) {
             // FIRE CHANGED EVENT
@@ -186,9 +184,9 @@ Signal::updateState(ardu_clock_t &t, int new_state) {
             if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == FALLING) {
                 map_iter->second.second();
             }
-            if (_caught_flag == false) {
-                _history.missed_evts += 1;
-            }
+            // if (_caught_flag == false) {
+                // _history.missed_evts += 1;
+            // }
         }
     } while (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
                 t._ticks > _next._ticks));
@@ -230,13 +228,14 @@ ExpSignal::calcNext(int new_state) {
 
 int
 Signal::process() {
-    if (_caught_flag == false && _state == HIGH) {
+    // if (_caught_flag == false && _state == HIGH) {
+    // if (_caught_flag == false)
         _history.caught_evts += 1;
         _caught_flag = true;
-    }
-    else {
-        ardu->_debug << "Processing event that has been handled. ";
-    }
+    // }
+    // else {
+        // ardu->_debug << "Processing event that has been handled. ";
+    // }
     
     ardu->_debug << "Processing: " << _name << "\n";
     
@@ -342,7 +341,7 @@ UniSignal::report(bool used) {
     cout << "               Lambda: " << _length << "\n";
     cout << "                   Mu: " << _mu << "\n";
     cout << "                   --\n";
-    cout << "        Missed Events: " << ((_history.total_evts > _history.missed_evts) ? _history.missed_evts : _history.total_evts) << "\n";
+    cout << "        Missed Events: " << (_history.total_evts - _history.caught_evts) << "\n";
     cout << "         Total Events: " << _history.total_evts << "\n";
     
     cout << "--------------------------\n\n";
@@ -352,7 +351,7 @@ UniSignal::report(bool used) {
     _log << "               Lambda: " << _length << "\n";
     _log << "                   Mu: " << _mu << "\n";
     _log << "                   --\n";
-    _log << "        Missed Events: " << ((_history.total_evts > _history.missed_evts) ? _history.missed_evts : _history.total_evts) << "\n";
+    _log << "        Missed Events: " << (_history.total_evts - _history.caught_evts) << "\n";
     _log << "         Total Events: " << _history.total_evts << "\n";
 
     _log << "--------------------------\n\n";
