@@ -249,11 +249,13 @@ Ardulator::setPin(uint8_t pin_id, uint8_t val) {
 
 void
 Ardulator::dispatchSignal(const char *signal_id) {
+#ifdef NOISY_WARNINGS
     if (_inside_interrupt_handler) {
-        cout << "Error, processingSignal " << signal_id << " while within an interrupt"
+        _debug << "Error, processingSignal " << signal_id << " while within an interrupt"
              << " handler is not allowed." << endl;
-        exit(12);
+        // exit(12);
     }
+#endif /* end NOISY_WARNINGS */
     
     if (_mapping.find(signal_id) == _mapping.end()) {
         return;

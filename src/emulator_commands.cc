@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void 
+void
 processSignal(const char* signal_id) {
     ardu->dispatchSignal(signal_id);
 }
