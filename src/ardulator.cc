@@ -259,7 +259,7 @@ Ardulator::dispatchSignal(const char *signal_id) {
     
     while (_wait_till) {
         _wait_till--;
-        addTicks(LOOP_CONST);
+        addTicks(1);
         updatePinState();
     }
 }
