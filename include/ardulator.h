@@ -52,6 +52,7 @@ class Ardulator {
     std::string   _registered_identifers;
     ardu_clock_t  _timer;
     ardu_clock_t  _scenario_length;
+    bool          _inside_interrupt_handler;
 
     void   updatePinState();
     void   updatePinMaps();

@@ -53,6 +53,7 @@ Ardulator::Ardulator() : _interrupts(false) {
     _scenario_length._seconds = 0;
     _scenario_length._ticks = 0;
     _registered_identifers = "";
+    _inside_interrupt_handler = false;
 }
 
 Ardulator::~Ardulator() {
@@ -184,6 +185,7 @@ Ardulator::updatePinState() {
     // Report Changes in State
     map<int, Signal*>::iterator it;
     int c = 0;
+    _inside_interrupt_handler = true;
     for (it = _signals.begin(); it != _signals.end(); it++) {
         c++;
         // cout << "Updating " << it->first << endl;
@@ -194,6 +196,8 @@ Ardulator::updatePinState() {
     for (vit = _unused_signals.begin(); vit != _unused_signals.end(); vit++) {
         (*vit)->setState(_timer);
     }
+    
+    _inside_interrupt_handler = false;
 }
 
 void
@@ -245,6 +249,12 @@ Ardulator::setPin(uint8_t pin_id, uint8_t val) {
 
 void
 Ardulator::dispatchSignal(const char *signal_id) {
+    if (_inside_interrupt_handler) {
+        cout << "Error, processingSignal " << signal_id << " while within an interrupt"
+             << " handler is not allowed." << endl;
+        exit(12);
+    }
+    
     if (_mapping.find(signal_id) == _mapping.end()) {
         return;
     }
