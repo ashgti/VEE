@@ -1,5 +1,5 @@
-CC=clang
-CXX=clang++
+# CC=clang
+# CXX=clang++
 PERL=perl
 CFLAGS=-I./include -Wall -g -Wextra
 CXXFLAGS=$(CFLAGS)

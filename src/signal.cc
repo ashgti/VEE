@@ -153,7 +153,7 @@ Signal::updateState(ardu_clock_t &t, int new_state) {
         _state = new_state;
         
         if (_bit_container)
-            *_bit_container = _bit_mask & 0xf;
+            *_bit_container = _bit_mask & 0xffffffff;
         
         map<int, std::pair<int, void (*)(void)> >::iterator map_iter = ardu->_interrupt_map.find(ardu->_mapping[_name]);
         
