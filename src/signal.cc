@@ -4,6 +4,7 @@
 #include <sstream>
 #include <cassert>
 #include <iomanip>
+#include <queue>
 #include "ardulator.h"
 #include "arduino.h"
 
@@ -221,9 +222,13 @@ Signal::process() {
     ardu->_debug << "Processing: " << _name << "\n";
     // if (_name == "a")
         // cout << "Processing: " << _name << " at " << ardu->now() << endl;
-    _history.avg_response_time += ardu->now() - _dh.front();
-    _dh.pop();
-    return (_mu * 0.01) * _length * TICKS_PER_SECOND;
+    if (_dh.size()) {
+        _history.avg_response_time += ardu->now() - _dh.front();
+        _dh.pop();
+        return (_mu * 0.01) * _length * TICKS_PER_SECOND;
+    }
+    else
+        return 0;
 }
 
 void
