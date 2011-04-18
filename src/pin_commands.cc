@@ -28,4 +28,4 @@ analogRead(uint8_t pin_id) {
 void
 analogWrite(uint8_t pin_id, uint8_t value) {
     ardu->setPin(pin_id, value);
-}    
+}

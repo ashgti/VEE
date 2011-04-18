@@ -13,6 +13,9 @@
 
 using namespace std;
 
+class EmulatorFinished {
+} ef;
+
 ProcessingSignal p;
 
 static void
@@ -132,11 +135,20 @@ Ardulator::runScenario() {
     
     updatePinMaps();
     
-    updatePinState();
-    while (!((_timer._seconds > _scenario_length._seconds) || (_timer._seconds == _scenario_length._seconds && _timer._ticks >= _scenario_length._ticks))) {
-        loop();
-        addTicks(LOOP_CONST);
+    try {
         updatePinState();
+    }
+    catch (EmulatorFinished &e) {
+    }
+    while (1) {
+        try {
+            loop();
+            addTicks(LOOP_CONST);
+            updatePinState();
+        }
+        catch (EmulatorFinished &e) {
+            break;
+        }
     }
     finalizePinState();
     print_clock("Scenario Length: ", _scenario_length);
@@ -154,6 +166,7 @@ Ardulator::updatePinMaps() {
             it != _signals.end();
             ++it) {
         if (it->first >= 0 || it->first < 8) {
+            // cout << "Hi " << it->second->_name << it->first << " " << (1 << it->first) << endl;
             it->second->_bit_mask = 1 << it->first;
             it->second->_bit_container = PORTD.getStateRef();
         }
@@ -198,6 +211,12 @@ Ardulator::updatePinState() {
     }
     
     _inside_interrupt_handler = false;
+    
+    if ((_timer._seconds > _scenario_length._seconds) || (_timer._seconds == _scenario_length._seconds && _timer._ticks >= _scenario_length._ticks)) {
+        cout << "time: " << _timer._seconds << "." << _timer._ticks << endl;
+        cout << "scne: " << _scenario_length._seconds << "." << _scenario_length._ticks << endl;
+        throw ef;
+    }
 }
 
 void
@@ -211,7 +230,12 @@ Ardulator::finalizePinState() {
     vector<Signal*>::iterator vit;
     for (vit = _unused_signals.begin(); vit != _unused_signals.end(); vit++) {
         (*vit)->finalize(_timer);
-    }   
+    }
+}
+
+double
+Ardulator::now() {
+    return static_cast<double>(_timer._seconds) + (static_cast<double>(_timer._ticks) / static_cast<double>(TICKS_PER_FREQ));
 }
 
 /*
@@ -232,7 +256,7 @@ Ardulator::getPin(uint8_t pin_id) {
             return _signals[pin_id]->_state;
         }
         else if (_signals[pin_id]->_val_type == VT_ANALOG) {
-            addTicks(MS2T(100));
+            addTicks(MS2T(10));
             return _signals[pin_id]->_state;
         }
         else 

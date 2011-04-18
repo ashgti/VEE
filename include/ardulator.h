@@ -6,12 +6,10 @@
 #include <exception>
 #include <setjmp.h>
 #include "ardulator/bit_value.h"
+#include "avr/config.h"
 
-#define LOOP_CONST      15
-#define FIELD_WIDTH      5
-#define TICKS_PER_SECOND 10000
-#define TICKS_PER_MICRO_SECONDS 100
-#define MS2T(x) x * TICKS_PER_MICRO_SECONDS
+const unsigned int LOOP_CONST = 240;
+const unsigned int FIELD_WIDTH = 5;
 
 class HardwareSerial;
 
@@ -50,7 +48,6 @@ class Ardulator {
     uint64_t      _ticks;
     uint64_t      _total_ticks;
     std::string   _registered_identifers;
-    ardu_clock_t  _timer;
     ardu_clock_t  _scenario_length;
     bool          _inside_interrupt_handler;
 
@@ -59,7 +56,7 @@ class Ardulator {
     void   finalizePinState();
     std::string timestamp();
   public:
-      
+    ardu_clock_t  _timer;
     std::map<int, std::vector<std::string> >  
                 _interrupt_connection;
     std::map<int, std::pair<int, void (*)(void)> >
@@ -79,27 +76,28 @@ class Ardulator {
 
     Ardulator();
     ~Ardulator();
-    void configurePin(uint8_t id, uint8_t mode);
-    void addPin(std::string signal_id, uint8_t pin_id);
-    void addSerial(std::string signal_id, HardwareSerial &serial);
-    bool addInputFile(char *name);
-    void runScenario();
+    void   configurePin(uint8_t id, uint8_t mode);
+    void   addPin(std::string signal_id, uint8_t pin_id);
+    void   addSerial(std::string signal_id, HardwareSerial &serial);
+    bool   addInputFile(char *name);
+    void   runScenario();
+    void   scanHeaderChunk(std::string id, std::string line);
+    void   processConfiguration(std::string id, std::string line);
+    void   registerInterrupt(uint8_t pin_id, void (*)(void), uint8_t mode);
+    void   dropInterrupt(uint8_t pin_id);
+    void   setPin(uint8_t pin_id, uint8_t val);
+    int    getPin(uint8_t pin_id);
+    void   dispatchSignal(const char *name);
+    void   addTicks(uint64_t);
+    double now();
+    void   report();
+    void   log(int level, std::string msg);
+    void   debug(std::string msg = "");
+    void   warn(std::string msg = "");
+    void   error(std::string msg = "");
+    void   info(std::string msg = "");
+    void   critical(std::string msg = "");
     // bool addEventHandler(std::string id, Evt* (*)(bool, string));
-    void scanHeaderChunk(std::string id, std::string line);
-    void processConfiguration(std::string id, std::string line);
-    void registerInterrupt(uint8_t pin_id, void (*)(void), uint8_t mode);
-    void dropInterrupt(uint8_t pin_id);
-    void setPin(uint8_t pin_id, uint8_t val);
-    int  getPin(uint8_t pin_id);
-    void dispatchSignal(const char *name);
-    void addTicks(uint64_t);
-    void report();
-    void log(int level, std::string msg);
-    void debug(std::string msg = "");
-    void warn(std::string msg = "");
-    void error(std::string msg = "");
-    void info(std::string msg = "");
-    void critical(std::string msg = "");
 };
 
 class ArduException : public std::exception {

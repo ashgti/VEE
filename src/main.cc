@@ -75,6 +75,7 @@ int main(int argc, char** argv) {
     cout << "Done running the scenario\n";
     
     ardu->report();
+    // ::report();
     
     return 0;
 }

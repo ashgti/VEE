@@ -1,6 +1,7 @@
 #ifndef ARDULATOR_SIGNAL_H
 #define ARDULATOR_SIGNAL_H
 #include "ardulator.h"
+#include <queue>
 
 class Signal {
   public:
@@ -34,11 +35,14 @@ class Signal {
     bool _caught_flag;
 
     history_t _history;
+    std::queue<double> _dh;
+    
+    double _last_d;
     
     Signal();
     ~Signal();
 
-    int process();
+    virtual int process();
     
     void setState(ardu_clock_t &t);
     void finalize(ardu_clock_t &t);

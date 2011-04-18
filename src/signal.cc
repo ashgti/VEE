@@ -10,7 +10,6 @@
 using namespace std;
 
 Signal::Signal() {
-    _caught_flag = false;
     _history.missed_evts = 0;
     _history.total_evts = 0;
     _history.caught_evts = 0;
@@ -104,23 +103,14 @@ void
 Signal::finalize(ardu_clock_t &t) {
     if (_val_type == VT_SERIAL) {
         if (_state == HIGH) {
-            if (_caught_flag == false) {
-                // _history.missed_evts += 1;
-            }
         }
     }
     else if (_val_type == VT_DIGITAL) {
         if (_state == HIGH) {
-            if (_caught_flag == false) {
-                // _history.missed_evts += 1;
-            }
         }
     }
     else if (_val_type == VT_ANALOG) {
         if (_state == HIGH) {
-            if (_caught_flag == false) {
-                // _history.missed_evts += 1;
-            }
         }
     }
 }
@@ -156,9 +146,7 @@ Signal::updateState(ardu_clock_t &t, int new_state) {
             *_bit_container = _bit_mask & 0xffffffff;
         
         map<int, std::pair<int, void (*)(void)> >::iterator map_iter = ardu->_interrupt_map.find(ardu->_mapping[_name]);
-        
-        // cout << "Name: " << _name << endl;
-        // cout << "Map found: " << ardu->_mapping[_name] << endl;
+
         if (_state == LOW) {
             // LOW EVENT
             if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == LOW) {
@@ -171,7 +159,10 @@ Signal::updateState(ardu_clock_t &t, int new_state) {
                 map_iter->second.second();
             }
             _history.total_evts += 1;
-            // _caught_flag = false;
+            double ardu_now = ardu->now();
+            // if (_name == "a")
+                // cout << "adding time: " << ardu_now << " " << _name  << " " << _dh.size() << endl;
+            _dh.push(ardu_now);
         }
         if (old_state != _state) {
             // FIRE CHANGED EVENT
@@ -184,9 +175,7 @@ Signal::updateState(ardu_clock_t &t, int new_state) {
             if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == FALLING) {
                 map_iter->second.second();
             }
-            // if (_caught_flag == false) {
-                // _history.missed_evts += 1;
-            // }
+            // _dh.push(ardu_now)
         }
     } while (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
                 t._ticks > _next._ticks));
@@ -228,17 +217,12 @@ ExpSignal::calcNext(int new_state) {
 
 int
 Signal::process() {
-    // if (_caught_flag == false && _state == HIGH) {
-    // if (_caught_flag == false)
-        _history.caught_evts += 1;
-        _caught_flag = true;
-    // }
-    // else {
-        // ardu->_debug << "Processing event that has been handled. ";
-    // }
-    
+    _history.caught_evts += 1;
     ardu->_debug << "Processing: " << _name << "\n";
-    
+    // if (_name == "a")
+        // cout << "Processing: " << _name << " at " << ardu->now() << endl;
+    _history.avg_response_time += ardu->now() - _dh.front();
+    _dh.pop();
     return (_mu * 0.01) * _length * TICKS_PER_SECOND;
 }
 
@@ -353,7 +337,15 @@ UniSignal::report(bool used) {
     cout << "                   --\n";
     cout << "        Missed Events: " << missed << "\n";
     cout << "         Total Events: " << _history.total_evts << "\n";
-    
+    if ((_history.total_evts - missed) > 0) {
+    cout << "        Response Time: " << (_history.avg_response_time / (_history.total_evts - missed)) << "\n";
+    }
+    else if (_history.total_evts == missed) {
+    cout << "        Response Time: NaN (missed all events)\n"; 
+    }
+    else {
+    cout << "        Response Time: Unknown Due to calculation error\n";
+    }
     cout << "--------------------------\n\n";
     cout.flush();
     
@@ -469,5 +461,3 @@ ExpSignal::parseConfiguration(string line) {
     
     return _name;
 }
-
-

@@ -160,6 +160,7 @@ extern "C" {
 extern void setup();
 extern void loop();
 extern void pinConfiguration();
+extern void report();
 #ifdef __cplusplus
 } // extern "C"
 #endif

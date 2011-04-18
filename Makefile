@@ -1,7 +1,7 @@
 # CC=clang
 # CXX=clang++
 PERL=perl
-CFLAGS=-I./include -Wall -g -Wextra
+CFLAGS=-I./include -Wall -g -Wextra -O3
 CXXFLAGS=$(CFLAGS)
 LD_FLAGS=-lm
 OBJ_FILES := src/hardware_serial.o src/pin_commands.o src/time_commands.o src/main.o src/ardulator.o src/rand_num.o src/signal.o src/interrupt_commands.o src/bit_value.o src/emulator_commands.o $(EXT_OBJ_FILES)
@@ -24,7 +24,7 @@ $(LIB_FILE) : $(OBJ_FILES)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 test: $(LIB_FILE) sample
-	time ./sample t/simple.scn
+	time ./sample templates/t3.scn
 
 t1: $(LIB_FILE) sample
 	time ./sample t/one.scn
