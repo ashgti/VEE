@@ -287,14 +287,12 @@ Ardulator::dispatchSignal(const char *signal_id) {
     if (_signals.find(_mapping[signal_id]) == _signals.end()) {
         return;
     }
-    int ticks = _signals[_mapping[signal_id]]->process();
-
-    int _wait_till = ticks;
-    _log << "Dispatching signal " << signal_id << " for " << _mapping[signal_id] << " a " << ticks << "\n";
+    int wait_till = _signals[_mapping[signal_id]]->process();
+    _log << "Dispatching signal " << signal_id << " for " << _mapping[signal_id] << " a " << wait_till << "\n";
     _log.flush();
     
-    while (_wait_till) {
-        _wait_till--;
+    while (wait_till) {
+        wait_till--;
         addTicks(1);
         updatePinState();
     }

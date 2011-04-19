@@ -342,13 +342,13 @@ UniSignal::report(bool used) {
     cout << "        Missed Events: " << missed << "\n";
     cout << "         Total Events: " << _history.total_evts << "\n";
     if ((_history.total_evts - missed) > 0) {
-    cout << "        Response Time: " << (_history.avg_response_time / (_history.total_evts - missed)) << "\n";
+    cout << "      Turnaround Time: " << (_history.avg_response_time / (_history.total_evts - missed)) << "\n";
     }
     else if (_history.total_evts == missed) {
-    cout << "        Response Time: NaN (missed all events)\n"; 
+    cout << "      Turnaround Time: NaN (missed all events)\n"; 
     }
     else {
-    cout << "        Response Time: Unknown Due to calculation error (divide by zero)\n";
+    cout << "      Turnaround Time: Unknown Due to calculation error (divide by zero)\n";
     }
     cout << "--------------------------\n\n";
     cout.flush();
@@ -360,13 +360,13 @@ UniSignal::report(bool used) {
     _log << "        Missed Events: " << missed << "\n";
     _log << "         Total Events: " << _history.total_evts << "\n";
     if ((_history.total_evts - missed) > 0) {
-    _log << "        Response Time: " << (_history.avg_response_time / (_history.total_evts - missed)) << "\n";
+    _log << "      Turnaround Time: " << (_history.avg_response_time / (_history.total_evts - missed)) << "\n";
     }
     else if (_history.total_evts == missed) {
-    _log << "        Response Time: NaN (missed all events)\n"; 
+    _log << "      Turnaround Time: NaN (missed all events)\n"; 
     }
     else {
-    _log << "        Response Time: Unknown Due to calculation error (divide by zero)\n";
+    _log << "      Turnaround Time: Unknown Due to calculation error (divide by zero)\n";
     }
     _log << "--------------------------\n\n";
     _log.flush();
