@@ -80,6 +80,28 @@ hw2: $(LIB_FILE)
 	cp -R include ./homeworks/hw2
 	tar -C ./homeworks -czf hw2.tar.gz ./hw2
 
+
+.PHONY: hw3
+hw3: $(LIB_FILE)
+	mkdir -p ./homeworks/hw3
+	cp ./*.a ./homeworks/hw3
+	cp templates/student.cc ./homeworks/hw3/lab3.cc
+	cp templates/Makefile ./homeworks/hw3
+	cp templates/t1.scn ./homeworks/hw3
+	cp templates/t2.scn ./homeworks/hw3
+	cp templates/t3.scn ./homeworks/hw3
+	cp templates/t4.scn ./homeworks/hw3
+	cp templates/t5.scn ./homeworks/hw3
+	cp templates/t6.scn ./homeworks/hw3
+	cp templates/t7.scn ./homeworks/hw3
+	cp templates/t8.scn ./homeworks/hw3
+	cp templates/t9.scn ./homeworks/hw3
+	cp templates/t10.scn ./homeworks/hw3
+	cp templates/t11.scn ./homeworks/hw3
+	cp templates/t12.scn ./homeworks/hw3
+	cp -R include ./homeworks/hw3
+	tar -C ./homeworks -czf hw3.tar.gz ./hw3
+
 .PHONY: clean
 clean: 
 	$(RM) $(OBJ_FILES) $(LIB_FILE)

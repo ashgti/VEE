@@ -220,12 +220,11 @@ int
 Signal::process() {
     _history.caught_evts += 1;
     ardu->_debug << "Processing: " << _name << "\n";
-    // if (_name == "a")
-        // cout << "Processing: " << _name << " at " << ardu->now() << endl;
     if (_dh.size()) {
-        _history.avg_response_time += ardu->now() - _dh.front();
+        int ticks_to_process = (_mu * 0.01) * _length * TICKS_PER_SECOND;
+        _history.avg_response_time += ardu->now() - _dh.front() + static_cast<double>((_mu * 0.01) * _length);
         _dh.pop();
-        return (_mu * 0.01) * _length * TICKS_PER_SECOND;
+        return ticks_to_process;
     }
     else
         return 0;
@@ -349,7 +348,7 @@ UniSignal::report(bool used) {
     cout << "        Response Time: NaN (missed all events)\n"; 
     }
     else {
-    cout << "        Response Time: Unknown Due to calculation error\n";
+    cout << "        Response Time: Unknown Due to calculation error (divide by zero)\n";
     }
     cout << "--------------------------\n\n";
     cout.flush();
@@ -360,7 +359,15 @@ UniSignal::report(bool used) {
     _log << "                   --\n";
     _log << "        Missed Events: " << missed << "\n";
     _log << "         Total Events: " << _history.total_evts << "\n";
-
+    if ((_history.total_evts - missed) > 0) {
+    _log << "        Response Time: " << (_history.avg_response_time / (_history.total_evts - missed)) << "\n";
+    }
+    else if (_history.total_evts == missed) {
+    _log << "        Response Time: NaN (missed all events)\n"; 
+    }
+    else {
+    _log << "        Response Time: Unknown Due to calculation error (divide by zero)\n";
+    }
     _log << "--------------------------\n\n";
     _log.flush();
 }
