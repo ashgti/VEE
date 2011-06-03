@@ -3,18 +3,20 @@
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
    <title>{{ page.title }}</title>
-   <meta name="author" content="<%= @page.author %>" />
-   <!-- CodeRay syntax highlighting CSS -->
+   <meta name="author" content="John Harrison" />
    <link rel="stylesheet" href="/css/coderay.css" type="text/css" />
-   <!-- Homepage CSS -->
    <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
 </head>
 <body>
 
 <div class="site">
   <div class="title">
-    Tom Preston-Werner
+    <h1>{{ page.title }}</h1>
   </div>
+  
+    <div id='navigation'>
+        <a href="./index.html">Home</a> | <a href="./todo.html">TODO</a> | <a href="./design.html">Design Documentation</a>
+    </div>
   
   {{ content }}
 </div>
