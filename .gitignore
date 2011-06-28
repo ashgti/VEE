@@ -6,3 +6,6 @@ log/*
 ardulator/samples/polling_sensor/polling_sensor
 *.log
 sample
+build
+*.pyc
+*.pyo
