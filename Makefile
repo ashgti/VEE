@@ -1,119 +1,18 @@
-# CC=clang
-# CXX=clang++
-PERL=perl
-CFLAGS=-I./include -Wall -g -Wextra -O3
-CXXFLAGS=$(CFLAGS)
-LD_FLAGS=-lm
-OBJ_FILES := src/hardware_serial.o src/pin_commands.o src/time_commands.o src/main.o src/ardulator.o src/rand_num.o src/signal.o src/interrupt_commands.o src/bit_value.o src/emulator_commands.o $(EXT_OBJ_FILES)
-SRC_FILES := src/hardware_serial.cc src/pin_commands.cc src/time_commands.cc src/main.cc src/ardulator.cc src/rand_num.cc src/signal.cc src/interrupt_commands.cc src/bit_value.cc src/emulator_commands.cc $(EXT_FILES)
-LIB_FILE := libardunio-emulation.a
+all: build run_sample
 
-.PHONY: all
-all: staticlib test
+build:
+	@mkdir -p ./build
+	@mkdir -p ./bin
+	cd build && cmake ..
+	cd build && make
+.PHONY: build
 
-staticlib: $(LIB_FILE)
-
-sample: $(LIB_FILE) student.o
-	$(CXX) $(CXXFLAGS) -v -o $@ student.o $(LIB_FILE) $(LD_FLAGS)
-
-$(LIB_FILE) : $(OBJ_FILES)
-	$(AR) cvsrS $(LIB_FILE) $?
-	ranlib $(LIB_FILE)
-
-%.o: %.cc
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-test: $(LIB_FILE) sample
-	time ./sample templates/t3.scn
-
-t1: $(LIB_FILE) sample
-	time ./sample t/one.scn
-
-t2: $(LIB_FILE) sample
-	time ./sample t/uni.scn
-
-%.scn: $(LIB_FILE) sample
-	@./sample $@
-
-t/*.scn: $(LIB_FILE) sample
-	@./sample $@
-
-.PHONY: hw1
-hw1: $(LIB_FILE)
-	mkdir -p ./homeworks/hw1
-	cp ./*.a ./homeworks/hw1
-	cp templates/student.cc ./homeworks/hw1/lab1.cc
-	cp templates/Makefile ./homeworks/hw1
-	cp templates/t1.scn ./homeworks/hw1
-	cp templates/t2.scn ./homeworks/hw1
-	cp templates/t3.scn ./homeworks/hw1
-	cp templates/t4.scn ./homeworks/hw1
-	cp templates/t5.scn ./homeworks/hw1
-	cp templates/t6.scn ./homeworks/hw1
-	cp templates/t7.scn ./homeworks/hw1
-	cp templates/t8.scn ./homeworks/hw1
-	cp templates/t9.scn ./homeworks/hw1
-	cp templates/t10.scn ./homeworks/hw1
-	cp templates/t11.scn ./homeworks/hw1
-	cp templates/t12.scn ./homeworks/hw1
-	cp include/arduino_api.h ./homeworks/hw1
-	tar -C ./homeworks -czf hw1.tar.gz ./hw1
-
-.PHONY: hw2
-hw2: $(LIB_FILE)
-	mkdir -p ./homeworks/hw2
-	cp ./*.a ./homeworks/hw2
-	cp templates/student.cc ./homeworks/hw2/lab2.cc
-	cp templates/Makefile ./homeworks/hw2
-	cp templates/t1.scn ./homeworks/hw2
-	cp templates/t2.scn ./homeworks/hw2
-	cp templates/t3.scn ./homeworks/hw2
-	cp templates/t4.scn ./homeworks/hw2
-	cp templates/t5.scn ./homeworks/hw2
-	cp templates/t6.scn ./homeworks/hw2
-	cp templates/t7.scn ./homeworks/hw2
-	cp templates/t8.scn ./homeworks/hw2
-	cp templates/t9.scn ./homeworks/hw2
-	cp templates/t10.scn ./homeworks/hw2
-	cp templates/t11.scn ./homeworks/hw2
-	cp templates/t12.scn ./homeworks/hw2
-	cp -R include ./homeworks/hw2
-	tar -C ./homeworks -czf hw2.tar.gz ./hw2
+run_sample: build
+	@python stuff.py
 
 
-.PHONY: hw3
-hw3: $(LIB_FILE)
-	mkdir -p ./homeworks/hw3
-	cp ./*.a ./homeworks/hw3
-	cp templates/student.cc ./homeworks/hw3/lab3.cc
-	cp templates/Makefile ./homeworks/hw3
-	cp templates/t1.scn ./homeworks/hw3
-	cp templates/t2.scn ./homeworks/hw3
-	cp templates/t3.scn ./homeworks/hw3
-	cp templates/t4.scn ./homeworks/hw3
-	cp templates/t5.scn ./homeworks/hw3
-	cp templates/t6.scn ./homeworks/hw3
-	cp templates/t7.scn ./homeworks/hw3
-	cp templates/t8.scn ./homeworks/hw3
-	cp templates/t9.scn ./homeworks/hw3
-	cp templates/t10.scn ./homeworks/hw3
-	cp templates/t11.scn ./homeworks/hw3
-	cp templates/t12.scn ./homeworks/hw3
-	cp -R include ./homeworks/hw3
-	tar -C ./homeworks -czf hw3.tar.gz ./hw3
+clean:
+	cd build && make clean
 
-.PHONY: clean
-clean: 
-	$(RM) $(OBJ_FILES) $(LIB_FILE)
-
-help:
-	@echo ""
-	@echo "Arduino Emulator Project"
-	@echo ""
-	@echo "Commands:"
-	@echo "  test:          Tests the Arduino Emulator framework."
-	@echo "  staticlib:    Builds the link files."
-	@echo "  samples:       Builds student object files."
-	@echo "  clean:         Removes all old build files."
-	@echo "  help:          Prints this help message."
-	@echo ""
+wipe:
+	rm -rf build

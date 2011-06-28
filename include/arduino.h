@@ -161,8 +161,11 @@ extern void setup();
 extern void loop();
 extern void pinConfiguration();
 extern void report();
+extern int run();
+extern int initalize_simulator();
+extern int create_signal();
 #ifdef __cplusplus
-} // extern "C"
+} // end extern "C"
 #endif
 
 #define DEC 10
