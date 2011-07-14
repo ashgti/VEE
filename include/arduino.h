@@ -157,13 +157,15 @@ void reti();
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern void setup();
-extern void loop();
-extern void pinConfiguration();
-extern void report();
-extern int run();
-extern int initalize_simulator();
-extern int create_signal();
+extern void   setup();
+extern void   loop();
+extern void   pinConfiguration();
+extern void   report();
+extern double run(double length);
+extern char*  ardulator_errors();
+extern void   initalize_simulator();
+extern void   reset_simulator();
+extern bool   register_signal(int pin_id, int signal_count, int* signals);
 #ifdef __cplusplus
 } // end extern "C"
 #endif

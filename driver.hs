@@ -14,6 +14,6 @@ x :: Int -> Int
 x y = if y > 4 then y else z $ y + 2
 
 main = do
-    putStrLn $ show $ x 0
+    print (x 0)
     putStrLn "Done"
 

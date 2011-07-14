@@ -1,4 +1,4 @@
-all: build run_sample
+all: build run_py_sample
 
 build:
 	@mkdir -p ./build
@@ -7,9 +7,14 @@ build:
 	cd build && make
 .PHONY: build
 
-run_sample: build
-	@python stuff.py
+run_py_sample: build
+	@python driver.py
 
+run_hs_driver:
+	./driver
+
+hs_driver:
+	ghc --make driver.hs
 
 clean:
 	cd build && make clean

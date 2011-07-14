@@ -20,19 +20,17 @@ else( SUPPORTS_FPIC_FLAG )
   message(WARNING "-fPIC not supported.")
 endif()
 
-add_library(vee_base STATIC src/hardware_serial.cc
-                src/pin_commands.cc
-                src/time_commands.cc
-                src/env.cc
-                src/interface.cc
-                src/ardulator.cc
-                src/rand_num.cc
-                src/signal.cc
-                src/interrupt_commands.cc
-                src/bit_value.cc
-                src/emulator_commands.cc)
-
-add_library(vee SHARED student.cc)
-
-target_link_libraries(vee vee_base)
+add_library(vee SHARED src/hardware_serial.cc
+                       src/pin_commands.cc
+                       src/time_commands.cc
+                       src/env.cc
+                       src/ardulator.cc
+                       src/rand_num.cc
+                       src/signal.cc
+                       src/interrupt_commands.cc
+                       src/bit_value.cc
+                       src/interface.cc
+                       src/emulator_commands.cc
+                       src/interface.cc
+                       student.cc)
 

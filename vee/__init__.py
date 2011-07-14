@@ -1,7 +1,7 @@
 import signals
 
-from arduino import Arduino
+from ardulator import Ardulator
 
-__all__ = ['signals', 'Arduino']
+__all__ = ['signals', 'Ardulator']
 
 

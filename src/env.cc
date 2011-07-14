@@ -7,8 +7,6 @@
 #include "ardulator.h"
 #include "arduino.h"
 
-using namespace std;
-
 /* Globalally Used Values */
 Ardulator *ardu = NULL;
 
@@ -34,19 +32,6 @@ BitValue PORTC;
 BitValue DDRD;
 BitValue PORTD;
 
-void
-setupArduino() {
+void setupArduino() {
     ardu = new Ardulator();
-}
-
-void
-printHelpMenu(string name) {
-    cout << "Usage: " << name << " [options] [file ...]" << endl;
-    cout << "More usage information\n";
-}
-
-bool 
-testInputFile(char *name) {
-    ifstream ifile(name);
-    return ifile;
 }

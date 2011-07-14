@@ -131,6 +131,8 @@ extern BitValue PIND;
 extern BitValue DDRD;
 extern BitValue PORTD;
 
+void setupArduino();
+
 #include "ardulator/signal.h"
 
 #endif /* ARDULATOR_CONFIG_H */

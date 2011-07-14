@@ -13,6 +13,9 @@
 
 using namespace std;
 
+extern "C" void loop() __attribute__((weak));
+extern "C" void setup() __attribute__((weak));
+
 class EmulatorFinished {
 } ef;
 
