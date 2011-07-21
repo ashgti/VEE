@@ -4,11 +4,10 @@ def main():
     a = vee.Ardulator()
     a.length = 50.0
     
-    s = vee.signals.Determenistic(5)
+    a.signals.append(vee.signals.SquareWave(5, 2.0, 1.0))
     
     print a.run(25)
     print a.run()
-    print a.register_signals(5)
 
 if __name__ == '__main__':
     main()

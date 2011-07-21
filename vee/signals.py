@@ -1,11 +1,11 @@
-__all__ = ['Deterministic']
+__all__ = ['DDet', 'Signal', 'DigitalSignal', 'DDet', 'AnalogSignal']
 
 class Signal(object):
     def __init__(self, pin_id):
         self.pins = [pin_id]
         
     def validate_pin(self):
-        assert not hasattr(super(Signal, self), 'draw')
+        assert not hasattr(super(Signal, self), 'validate_pin')
 
 class DigitalSignal(Signal):
     def __init__(self, **kwargs):
@@ -14,13 +14,15 @@ class DigitalSignal(Signal):
     def validate_pin(self, pin_id):
         assert pin_id > 0 and pin_id < 14
 
-class DDet(Signal):
-    def __init__(self, high, low, **kwargs):
-        super(DDet, self).__init__(**kwargs)
+class SquareWave(Signal):
+    def __init__(self, pin_id, high, low, **kwargs):
+        super(SquareWave, self).__init__(pin_id, **kwargs)
+        self.high = high
+        self.low = low
 
 class AnalogSignal(Signal):
     def __init__(self):
-        super(AnalogSignal, self).__init(**kwargs)
+        super(AnalogSignal, self).__init__(**kwargs)
         
     def validate_pin(self, pin_id):
         assert 0 > pin_id > 5
