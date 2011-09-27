@@ -15,14 +15,6 @@ volatile uint32_t int_count = 0;
 HardwareSerial Serial2(20,21);
 
 void
-pinConfiguration() {
-    for (int i = 0; i < 4; i++) {
-        registerPin(signals[i], i);
-    }
-    registerSerial("e", Serial2);
-}
-
-void
 setup() {
     Serial.begin(9600);
     for (int i = 0; i < 4; i++) {

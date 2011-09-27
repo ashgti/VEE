@@ -10,6 +10,7 @@ using namespace std;
  */
 static int val = 0;
 static double runtime = 0;
+static bool initalized = false;
 
 extern void reset_simulator() {
     runtime = 0;
@@ -24,11 +25,26 @@ extern double run(double length) {
     return runtime;
 }
 
+/** 
+ * initalize_simulator setups the basic simulator, needs to be called
+ * at least once.
+ */
 extern void initalize_simulator() {
-    setupArduino();
+    if (!initalized) {
+        setupArduino();
+        initalized = true;
+    }
 }
 
-extern bool register_signal(int pin_id, int signal_count, int* signals) {
+/**
+ * Registers the pins to the current simulator.
+ *
+ * @param pin_id the pin's id for the current signals
+ * @param signal_count the number of signal changes
+ * @param signals the time at which the signal changes, all signals start
+ *        at 0 and go high afterwards. 
+ */
+extern bool register_signal(int pin_id, int signal_count, double* signals) {
     cout << "Registering signal...\n";
     cout << "Pin: " << pin_id << endl;
     cout << "Signal Count: " << signal_count << endl;

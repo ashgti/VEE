@@ -8,8 +8,7 @@
 #include "ardulator.h"
 #include "arduino.h"
 
-using namespace std;
-
+/*
 Signal::Signal() {
     _history.missed_evts = 0;
     _history.total_evts = 0;
@@ -18,6 +17,7 @@ Signal::Signal() {
 }
 
 Signal::~Signal() {
+    using
     if (_log.is_open()) {
         _log << "\n\n";
         _log.flush();
@@ -473,3 +473,5 @@ ExpSignal::parseConfiguration(string line) {
     
     return _name;
 }
+
+*/

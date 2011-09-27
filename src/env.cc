@@ -1,11 +1,11 @@
+#include "ardulator.h"
+#include "arduino.h"
 #include <cstdio>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <algorithm>
 #include <getopt.h>
-#include "ardulator.h"
-#include "arduino.h"
 
 /* Globalally Used Values */
 Ardulator *ardu = NULL;

@@ -1,5 +1,5 @@
 #include "ardulator/bit_value.h"
-#include <arduino.h>
+#include "arduino.h"
 
 /* TODO: Add clock ticks */
 BitValue::BitValue() : _ro(false), _state(0) { }

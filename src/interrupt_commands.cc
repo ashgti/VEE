@@ -22,13 +22,13 @@ detachInterrupt(uint8_t pin_id) {
 /* Enable Interrupts */
 void
 sei() {
-    ardu->_interrupts = true;
+    ardu->interrupts_ = true;
 }
 
 /* Disable Interrupts */
 void
 cli() {
-    ardu->_interrupts = false;
+    ardu->interrupts_ = false;
 }
 
 #ifdef __cplusplus

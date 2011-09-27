@@ -1,0 +1,34 @@
+Ardulator Python
+    length :: Double # time to finish
+    singals :: [Signals]
+
+
+Signal Python
+    pins :: [Int]
+    changes :: [Double] # Up , Down , Up ...
+    processing_id :: "String"
+    time_to_catch :: Double # a ratio
+    signal_history :: SignalHist
+
+SignalHist
+    missed :: Int
+    caught :: Int
+    total  :: Int
+
+Results
+    signals :: [SignalHist]
+    length :: Double
+    ran_for :: Double
+
+
+SignalHist 
+
+ArdulatorC++
+    reset :: IO ()
+    add_signal :: Signal
+    run :: length ->  Results
+    check :: signal_id -> Signal Hist
+
+    signal_list <- add_signal
+    
+

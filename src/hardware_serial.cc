@@ -183,7 +183,7 @@ HardwareSerial::~HardwareSerial() {
 }
 
 void HardwareSerial::begin(long b) {
-    ardu->_buffers[_rxen] = &_out_buff;
+    ardu->buffers_[_rxen] = &_out_buff;
     _baud = b;
     char filename[50];
     if (_rxen == 255 && _txen == 254) {

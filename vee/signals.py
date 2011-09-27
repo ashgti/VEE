@@ -1,3 +1,5 @@
+# Copyright (c) 2011 John Harrison
+
 __all__ = ['DDet', 'Signal', 'DigitalSignal', 'DDet', 'AnalogSignal']
 
 class Signal(object):

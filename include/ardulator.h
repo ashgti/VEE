@@ -13,77 +13,87 @@ const unsigned int FIELD_WIDTH = 5;
 
 class HardwareSerial;
 
-enum SignalType { ST_UNI, ST_DET, ST_EXP };
-enum ValueType { VT_DIGITAL = 1, VT_SERIAL = 2, VT_ANALOG = 3, VT_RAND_STRING = 4 };
-
-class RandNum {
-  public:
-    unsigned short _Xi[3];
-    SignalType _dis_type;
-    double _range_start, _range_end, _lambda;
-
-    RandNum(SignalType dis_type, double lambda, unsigned short seed = -1);
-    double next();
+enum ValueType {
+    VT_DIGITAL = 1,
+    VT_SERIAL = 2,
+    VT_ANALOG = 3,
+    VT_RAND_STRING = 4
 };
 
-typedef struct ardu_clock_t {
-    uint32_t _seconds;
-    uint32_t _ticks;
-} ardu_clock_t;
+struct ArdulatorClock {
+    uint32_t seconds_;
+    uint32_t ticks_;
+};
 
-typedef struct history_t {
-    int missed_evts;
-    int total_evts;
-    int caught_evts;
-    double avg_response_time;
-} history_t;
+struct History {
+    int missed_evts_;
+    int total_evts_;
+    int caught_evts_;
+    double avg_response_time_;
+};
 
-class Signal;
+struct PinConfig {
+    int id_[10];
+    bool mode_;
+    bool interrupt_;
+    bool pull_up_;
+};
+
+class Signal {
+    PinConfig* mapped_to_;
+    double *signal_changes_;
+    size_t  signal_changes_length_;
+};
 
 class Ardulator {
   private:
-    std::fstream  _log;
-    bool          _flag;
-    int           _max_pins;
-    uint64_t      _ticks;
-    uint64_t      _total_ticks;
-    std::string   _registered_identifers;
-    ardu_clock_t  _scenario_length;
-    bool          _inside_interrupt_handler;
+    std::fstream   log_;
+    bool           flag_;
+    int            max_pins_;
+    uint64_t       ticks_;
+    uint64_t       total_ticks_;
+    std::string    registered_identifers_;
+    ArdulatorClock scenario_length_;
+    bool           inside_interrupt_handler_;
 
     void   updatePinState();
     void   updatePinMaps();
     void   finalizePinState();
     std::string timestamp();
   public:
-    ardu_clock_t  _timer;
-    std::map<int, std::vector<std::string> >  
-                _interrupt_connection;
+    ArdulatorClock timer_;
+    std::map<int, std::vector<std::string> >
+                interrupt_connection_;
     std::map<int, std::pair<int, void (*)(void)> >
-                _interrupt_map;
-    std::map<int, Signal*>
-                _signals;
-    std::vector<Signal*>
-                _unused_signals;
-    std::map<std::string, intptr_t>
-                _mapping;
+                interrupt_map_;
+    // std::map<int, std::vector<double> >
+    //             signals_;
+    typedef std::map<int, PinConfig*> PinConfigs;
+    typedef PinConfigs::iterator PinConfigsIter;
+    PinConfigs pin_config_;
+
+    // std::map<std::string, intptr_t>
+    //             _mapping;
     std::fstream
-                _debug;
+                debug_;
     std::string*
-                _buffers[256];
-                
-    bool _interrupts;
+                buffers_[256];
+
+    bool interrupts_;
 
     Ardulator();
     ~Ardulator();
     void   configurePin(uint8_t id, uint8_t mode);
-    void   addPin(std::string signal_id, uint8_t pin_id);
-    void   addSerial(std::string signal_id, HardwareSerial &serial);
+    // void   addPin(std::string signal_id, uint8_t pin_id);
+    // void   addSerial(std::string signal_id, HardwareSerial &serial);
     bool   addInputFile(char *name);
     void   runScenario();
-    void   scanHeaderChunk(std::string id, std::string line);
-    void   processConfiguration(std::string id, std::string line);
-    void   registerInterrupt(uint8_t pin_id, void (*)(void), uint8_t mode);
+    void   registerSignalReference(Signal s);
+    // void   scanHeaderChunk(std::string id, std::string line);
+    // void   processConfiguration(std::string id, std::string line);
+    void   registerInterrupt(uint8_t pin_id,
+                             void (*)(void),
+                             uint8_t mode);
     void   dropInterrupt(uint8_t pin_id);
     void   setPin(uint8_t pin_id, uint8_t val);
     int    getPin(uint8_t pin_id);
@@ -115,7 +125,7 @@ class ArduException : public std::exception {
 /* The instance of the arduino emulation */
 extern Ardulator *ardu;
 
-class ProcessingSignal : public std::exception {
+class ProcessingSignalException : public std::exception {
 };
 
 /* Digital Ports for accessing pin state */
@@ -133,6 +143,5 @@ extern BitValue PORTD;
 
 void setupArduino();
 
-#include "ardulator/signal.h"
-
 #endif /* ARDULATOR_CONFIG_H */
+
