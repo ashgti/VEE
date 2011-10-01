@@ -13,16 +13,16 @@ static double runtime = 0;
 static bool initalized = false;
 
 extern void reset_simulator() {
-    runtime = 0;
+  runtime = 0;
 }
 
 extern void step() {
-    // TODO: implement step
+  // TODO: implement step
 }
 
 extern double run(double length) {
-    runtime += length;
-    return runtime;
+  runtime += length;
+  return runtime;
 }
 
 /** 
@@ -30,10 +30,10 @@ extern double run(double length) {
  * at least once.
  */
 extern void initalize_simulator() {
-    if (!initalized) {
-        setupArduino();
-        initalized = true;
-    }
+  if (!initalized) {
+    ardulator::setupArduino();
+    initalized = true;
+  }
 }
 
 /**
@@ -45,12 +45,12 @@ extern void initalize_simulator() {
  *        at 0 and go high afterwards. 
  */
 extern bool register_signal(int pin_id, int signal_count, double* signals) {
-    cout << "Registering signal...\n";
-    cout << "Pin: " << pin_id << endl;
-    cout << "Signal Count: " << signal_count << endl;
-    if (signal_count > 4) {
-        cout << "Signals... " << signals[signal_count - 3] << endl;
-    }
-    return true;
+  cout << "Registering signal...\n";
+  cout << "Pin: " << pin_id << endl;
+  cout << "Signal Count: " << signal_count << endl;
+  if (signal_count > 4) {
+    cout << "Signals... " << signals[signal_count - 3] << endl;
+  }
+  return true;
 }
 

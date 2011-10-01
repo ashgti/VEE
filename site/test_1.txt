@@ -1,8 +1,0 @@
-identifiers: ab
-legnth: 20.5
----
-# det signal, initial value, length, ratio, process
-# uni signal, initial value, a min, b max, a min / 2, process
-# exp signal, initial value, average, average/s, process
-det a, 1, 2, 2, 4
-det b, 1, 3, 2, 4

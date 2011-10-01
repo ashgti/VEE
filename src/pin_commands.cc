@@ -1,7 +1,11 @@
-#include "ardulator.h"
-#include "arduino.h"
+/* 
+ * Pin Commands
+ */
 #include <iostream>
 #include <string>
+
+#include "ardulator.h"
+#include "arduino.h"
 
 using namespace std;
 
@@ -29,3 +33,4 @@ void
 analogWrite(uint8_t pin_id, uint8_t value) {
     ardu->setPin(pin_id, value);
 }
+

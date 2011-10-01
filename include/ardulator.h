@@ -8,10 +8,12 @@
 #include "ardulator/bit_value.h"
 #include "avr/config.h"
 
+class HardwareSerial;
+
+namespace ardulator {
+
 const unsigned int LOOP_CONST = 240;
 const unsigned int FIELD_WIDTH = 5;
-
-class HardwareSerial;
 
 enum ValueType {
     VT_DIGITAL = 1,
@@ -44,6 +46,23 @@ class Signal {
     double *signal_changes_;
     size_t  signal_changes_length_;
 };
+
+enum SignalTypes {
+  T_NONE    =  0,
+  T_DIGITAL = (1<<0),
+  T_ANALOG  = (1<<1),
+  T_SERIAL  = (1<<2),
+  T_FN      = (1<<3)
+};
+
+typedef struct {
+  int type_id_;
+  union { 
+    void* current_val_;
+    void (*fn_)(double);
+  };
+  double change_at_;
+} SignalDetails;
 
 class Ardulator {
   private:
@@ -121,27 +140,29 @@ class ArduException : public std::exception {
     }
 };
 
-/* Declare Variables used by the emulation program */
-/* The instance of the arduino emulation */
-extern Ardulator *ardu;
-
 class ProcessingSignalException : public std::exception {
 };
 
-/* Digital Ports for accessing pin state */
-extern BitValue PINB;
-extern BitValue DDRB;
-extern BitValue PORTB;
-
-extern BitValue PINC;
-extern BitValue DDRC;
-extern BitValue PORTC;
-
-extern BitValue PIND;
-extern BitValue DDRD;
-extern BitValue PORTD;
-
 void setupArduino();
+
+} // end namespace ardulator
+
+/* Declare Variables used by the emulation program */
+/* The instance of the arduino emulation */
+extern ardulator::Ardulator *ardu;
+
+/* Digital Ports for accessing pin state */
+extern ardulator::BitValue PINB;
+extern ardulator::BitValue DDRB;
+extern ardulator::BitValue PORTB;
+
+extern ardulator::BitValue PINC;
+extern ardulator::BitValue DDRC;
+extern ardulator::BitValue PORTC;
+
+extern ardulator::BitValue PIND;
+extern ardulator::BitValue DDRD;
+extern ardulator::BitValue PORTD;
 
 #endif /* ARDULATOR_CONFIG_H */
 

@@ -1,6 +1,8 @@
 #include "ardulator/bit_value.h"
 #include "arduino.h"
 
+namespace ardulator {
+
 /* TODO: Add clock ticks */
 BitValue::BitValue() : _ro(false), _state(0) { }
 BitValue::BitValue(uint8_t ref, bool readonly) : _ro(readonly), _state(ref) {
@@ -114,3 +116,6 @@ BitValue::operator&(const BitValue &b) const {
 BitValue::operator int() {
     return _state;
 }
+
+} // END namespace ardulator
+

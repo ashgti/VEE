@@ -283,6 +283,7 @@
     </widget>
    </widget>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -296,42 +297,31 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNew_Sketch"/>
-    <addaction name="actionSave_Configuration"/>
-    <addaction name="actionOpen_in_View"/>
-    <addaction name="actionOpen_in_Scenario_Runner"/>
+    <addaction name="actionNew_Scenario"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionOpen_Scenario_Runner"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionNew_Sketch">
+  <action name="actionNew_Scenario">
    <property name="text">
-    <string>New Sketch</string>
+    <string>New Scenario</string>
    </property>
   </action>
-  <action name="actionBuild_All">
+  <action name="actionSave">
    <property name="text">
-    <string>Build All</string>
+    <string>Save</string>
    </property>
   </action>
-  <action name="actionRun">
+  <action name="actionOpen">
    <property name="text">
-    <string>Run</string>
+    <string>Open</string>
    </property>
   </action>
-  <action name="actionSave_Configuration">
+  <action name="actionOpen_Scenario_Runner">
    <property name="text">
-    <string>Save Configuration</string>
-   </property>
-  </action>
-  <action name="actionOpen_in_View">
-   <property name="text">
-    <string>Launch Scenario Runner</string>
-   </property>
-  </action>
-  <action name="actionOpen_in_Scenario_Runner">
-   <property name="text">
-    <string>Open in Scenario Runner</string>
+    <string>Open Scenario Runner</string>
    </property>
   </action>
  </widget>

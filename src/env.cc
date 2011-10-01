@@ -7,8 +7,16 @@
 #include <algorithm>
 #include <getopt.h>
 
+namespace ardulator {
+
+void setupArduino() {
+    ardu = new ardulator::Ardulator();
+}
+
+} // end namespace ardulator
+
 /* Globalally Used Values */
-Ardulator *ardu = NULL;
+ardulator::Ardulator *ardu = NULL;
 
 /* Special Pins that represent various assembly values */
 /* PORTD maps to Arduino digital pins 0 to 7
@@ -22,16 +30,12 @@ Ardulator *ardu = NULL;
  *      DDRC - The Port C Data Direction Register - read/write
  *      PORTC - The Port C Data Register - read/write
  */
- 
-BitValue DDRB;
-BitValue PORTB;
+ardulator::BitValue DDRB;
+ardulator::BitValue PORTB;
 
-BitValue DDRC;
-BitValue PORTC;
+ardulator::BitValue DDRC;
+ardulator::BitValue PORTC;
 
-BitValue DDRD;
-BitValue PORTD;
+ardulator::BitValue DDRD;
+ardulator::BitValue PORTD;
 
-void setupArduino() {
-    ardu = new Ardulator();
-}

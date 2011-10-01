@@ -1,15 +1,19 @@
-#include "ardulator.h"
-#include "arduino.h"
-#include <iostream>
+// vim: sw=2:sts=2:expandtab
+
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
 #include <cmath>
 #include <fstream>
 #include <sstream>
 #include <cassert>
 #include <iomanip>
 #include <cstdio>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+#include <iostream>
+
+#include "ardulator.h"
+#include "arduino.h"
 
 using ::std::string;
 using ::std::cout;
@@ -28,105 +32,106 @@ using ::std::make_pair;
 extern "C" void loop() __attribute__((weak));
 extern "C" void setup() __attribute__((weak));
 
+namespace ardulator {
+
 class EmulatorFinished {
 } ef;
 
 ProcessingSignalException p;
 
 static void print_clock(string n, ArdulatorClock t){
-    ardu->debug_ << n << " " << t.seconds_ << "." << setw(FIELD_WIDTH) << setfill('0') << t.ticks_ << "\n";
+  ardu->debug_ << n << " " << t.seconds_ << "." << setw(FIELD_WIDTH) << setfill('0') << t.ticks_ << "\n";
     
-    ardu->debug_.flush();
+  ardu->debug_.flush();
 }
 
 Ardulator::Ardulator() : interrupts_(false) {
-    log_.exceptions ( ifstream::failbit | ifstream::badbit );
-    debug_.exceptions ( ifstream::failbit | ifstream::badbit );
-    
-    struct stat buffer;
-    int status = stat("./logs", &buffer);
-    
-    if (status != 0 && errno == ENOENT) {
-        if (mkdir("./logs", 0777)) {
-            perror("./logs");
-        }
+  log_.exceptions ( ifstream::failbit | ifstream::badbit );
+  debug_.exceptions ( ifstream::failbit | ifstream::badbit );
+  
+  struct stat buffer;
+  int status = stat("./logs", &buffer);
+  
+  if (status != 0 && errno == ENOENT) {
+    if (mkdir("./logs", 0777)) {
+      perror("./logs");
     }
-    
-    log_.open("./logs/dispatch.log", fstream::out | fstream::trunc);
-    debug_.open("./logs/debug.log",  fstream::out | fstream::trunc);
-    puts("Setting up the Ardulator\n");
-    
-    ticks_ = 0 ;
-    total_ticks_ = 0;
-    scenario_length_.seconds_ = 0;
-    scenario_length_.ticks_ = 0;
-    registered_identifers_ = "";
-    inside_interrupt_handler_ = false;
+  }
+  
+  log_.open("./logs/dispatch.log", fstream::out | fstream::trunc);
+  debug_.open("./logs/debug.log",  fstream::out | fstream::trunc);
+  
+  ticks_ = 0 ;
+  total_ticks_ = 0;
+  scenario_length_.seconds_ = 0;
+  scenario_length_.ticks_ = 0;
+  registered_identifers_ = "";
+  inside_interrupt_handler_ = false;
 }
 
 Ardulator::~Ardulator() {
-    if (log_.is_open()) {
-        log_ << "\n\n";
-        log_.flush();
-        log_.close();
-    }
-    if (debug_.is_open()) {
-        debug_ << "\n\n";
-        debug_.flush();
-        debug_.close();
-    }
+  if (log_.is_open()) {
+    log_ << "\n\n";
+    log_.flush();
+    log_.close();
+  }
+  if (debug_.is_open()) {
+    debug_ << "\n\n";
+    debug_.flush();
+    debug_.close();
+  }
 
-    for (PinConfigsIter it = pin_config_.begin();
-         it != pin_config_.end();
-         it++) {
-        delete it->second;
-    }
+  for (PinConfigsIter it = pin_config_.begin();
+       it != pin_config_.end();
+       it++) {
+    delete it->second;
+  }
 }
 
 void Ardulator::configurePin(uint8_t pin_id, uint8_t mode) {
-    map<int, vector<double> >::iterator it;
-    it = _signals.find(pin_id);
-    
-    if (it != _signals.end()) {
-        pin_config_[pin_id]->mode_ = mode;
-        debug_ << "Configuring Pin " << (int)pin_id << " to mode: " 
-               << (int)mode <<  "\n";
-    } else {
-        debug_ << "Error, pin configured that is not registed\n";
-    }
+//     map<int, vector<double> >::iterator it;
+//     it = signals_.find(pin_id);
+// 
+//     if (it != signals_.end()) {
+//         pin_config_[pin_id]->mode_ = mode;
+//         debug_ << "Configuring Pin " << (int)pin_id << " to mode: " 
+//                << (int)mode <<  "\n";
+//     } else {
+//         debug_ << "Error, pin configured that is not registed\n";
+//     }
 }
 
 void Ardulator::runScenario() {
-    timer_.seconds_ = 0;
-    timer_.ticks_   = 0;
-    setup();
-    debug_ << "Attempting to run the Scenario\n\n";
-    
-    print_clock("Scenario Length: ", scenario_length_);
-    print_clock("Runtime Timer:", timer_);
-    
-    updatePinMaps();
-    
+  timer_.seconds_ = 0;
+  timer_.ticks_   = 0;
+  setup();
+  debug_ << "Attempting to run the Scenario\n\n";
+  
+  print_clock("Scenario Length: ", scenario_length_);
+  print_clock("Runtime Timer:", timer_);
+  
+  updatePinMaps();
+  
+  try {
+    updatePinState();
+  }
+  catch (EmulatorFinished &e) {
+  }
+  while (1) {
     try {
-        updatePinState();
+      loop();
+      addTicks(LOOP_CONST);
+      updatePinState();
     }
     catch (EmulatorFinished &e) {
+      break;
     }
-    while (1) {
-        try {
-            loop();
-            addTicks(LOOP_CONST);
-            updatePinState();
-        }
-        catch (EmulatorFinished &e) {
-            break;
-        }
-    }
-    finalizePinState();
-    print_clock("Scenario Length: ", scenario_length_);
-    print_clock("Runtime Timer:", timer_);
-    
-    cout << "--------------------------\n";
+  }
+  finalizePinState();
+  print_clock("Scenario Length: ", scenario_length_);
+  print_clock("Runtime Timer:", timer_);
+  
+  cout << "--------------------------\n";
 }
 
 
@@ -134,7 +139,7 @@ void Ardulator::runScenario() {
  * updatePinMaps is used to correct the pin/signals after the arduino
  * runs the pinConfiguration function.
  *
- * TODO(john): May not be needed anymore, this as been abstracted out to
+ * TODO(ash_gti): May not be needed anymore, this as been abstracted out to
  * the python code, but not sure.
  */
 void Ardulator::updatePinMaps() {
@@ -162,45 +167,49 @@ void Ardulator::updatePinMaps() {
  * addTicks is used to increment the interanl clock
  */
 void Ardulator::addTicks(uint64_t length) {
-    timer_.ticks_ += length;
-    if (timer_.ticks_ > TICKS_PER_SECOND) {
-        timer_.seconds_++;
-        timer_.ticks_ -= TICKS_PER_SECOND;
-    }
+  timer_.ticks_ += length;
+  if (timer_.ticks_ > TICKS_PER_SECOND) {
+    timer_.seconds_++;
+    timer_.ticks_ -= TICKS_PER_SECOND;
+  }
 }
 
+// TODO(ash_gti): Fix this function.
 void Ardulator::updatePinState() {
-    // Report Changes in State
-    map<int, vector<double> >::iterator it;
-    int c = 0;
-    _inside_interrupt_handler = true;
-    for (it = _signals.begin(); it != _signals.end(); it++) {
-        c++;
-        // cout << "Updating " << it->first << endl;
-        it->second->setState(timer_);
-    }
+  // Report Changes in State
+  map<int, vector<double> >::iterator it;
+  // int c = 0;
+  inside_interrupt_handler_ = true;
+  // for (it = _signals.begin(); it != _signals.end(); it++) {
+  //     c++;
+  //     // cout << "Updating " << it->first << endl;
+  //     it->second->setState(timer_);
+  // }
     
-    _inside_interrupt_handler = false;
+  inside_interrupt_handler_ = false;
     
-    if ((timer_.seconds_ > _scenario_length.seconds_) || (timer_.seconds_ == _scenario_length.seconds_ && timer_.ticks_ >= _scenario_length.ticks_)) {
-        cout << "time: " << timer_.seconds_ << "." << timer_.ticks_ << endl;
-        cout << "scne: " << _scenario_length.seconds_ << "." << _scenario_length.ticks_ << endl;
-        throw ef;
-    }
+  if ((timer_.seconds_ > scenario_length_.seconds_) ||
+        (timer_.seconds_ == scenario_length_.seconds_ &&
+         timer_.ticks_ >= scenario_length_.ticks_)) {
+    cout << "time: " << timer_.seconds_ << "." << timer_.ticks_ << endl;
+    cout << "scne: " << scenario_length_.seconds_ << "." 
+         << scenario_length_.ticks_ << endl;
+    throw ef;
+  }
 }
 
 void Ardulator::finalizePinState() {
-    // Report Changes in State
-    map<int, vector<double> >::iterator it;
-    for (it = _signals.begin(); it != _signals.end(); it++) {
-        it->second->finalize(timer_);
-    }
+  // Report Changes in State
+  map<int, vector<double> >::iterator it;
+  // for (it = _signals.begin(); it != _signals.end(); it++) {
+  //     it->second->finalize(timer_);
+  // }
 }
 
 double Ardulator::now() {
-    return static_cast<double>(timer_.seconds_) 
-        + (static_cast<double>(timer_.ticks_) 
-                / static_cast<double>(TICKS_PER_FREQ));
+  return static_cast<double>(timer_.seconds_) 
+      + (static_cast<double>(timer_.ticks_) 
+      /  static_cast<double>(TICKS_PER_FREQ));
 }
 
 /*
@@ -208,52 +217,52 @@ double Ardulator::now() {
  * Digital Reads 58 cycles 
  */
 int Ardulator::getPin(uint8_t pin_id) {
-    if (_signals.find(pin_id) == _signals.end()) {
-        return LOW;
-    } else {
-        if (_signals[pin_id]->_val_type == VT_SERIAL) {
-            return LOW;
-        } else if (_signals[pin_id]->_val_type == VT_DIGITAL) {
-            addTicks(58);
-            return _signals[pin_id]->_state;
-        } else if (_signals[pin_id]->_val_type == VT_ANALOG) {
-            addTicks(MS2T(10));
-            return _signals[pin_id]->_state;
-        } else {
-            return LOW;
-        }
-    }
+  // if (_signals.find(pin_id) == _signals.end()) {
+    return LOW;
+  // } else {
+  //         if (_signals[pin_id]->_val_type == VT_SERIAL) {
+  //             return LOW;
+  //         } else if (_signals[pin_id]->_val_type == VT_DIGITAL) {
+  //             addTicks(58);
+  //             return _signals[pin_id]->_state;
+  //         } else if (_signals[pin_id]->_val_type == VT_ANALOG) {
+  //             addTicks(MS2T(10));
+  //             return _signals[pin_id]->_state;
+  //         } else {
+  //             return LOW;
+  //         }
+  //     }
 }
 
 void Ardulator::setPin(uint8_t pin_id, uint8_t val) {
-    if (_signals[pin_id]->_state != val) {
-        _signals[pin_id]->_state = val;
-    }
+  // if (_signals[pin_id]->_state != val) {
+  //     _signals[pin_id]->_state = val;
+  // }
 }
 
 void Ardulator::dispatchSignal(const char *signal_id) {
 #ifdef NOISY_WARNINGS
-    if (_inside_interrupt_handler) {
-        debug_ << "Error, processingSignal " << signal_id << " while within an interrupt"
-             << " handler is not allowed." << endl;
-        // exit(12);
-    }
+  if (_inside_interrupt_handler) {
+    debug_ << "Error, processingSignal " << signal_id << " while within an interrupt"
+           << " handler is not allowed." << endl;
+    // exit(12);
+  }
 #endif /* end NOISY_WARNINGS */
     
-    if (_mapping.find(signal_id) == _mapping.end()) {
-        return;
-    }
-    if (_signals.find(_mapping[signal_id]) == _signals.end()) {
-        return;
-    }
-    int wait_till = _signals[_mapping[signal_id]]->process();
-    _log << "Dispatching signal " << signal_id << " for " << _mapping[signal_id] << " a " << wait_till << endl;
+    //if (mapping_.find(signal_id) == mapping_.end()) {
+    //    return;
+    //}
+    // if (_signals.find(_mapping[signal_id]) == _signals.end()) {
+    //     return;
+    // }
+    //int wait_till = signals_[_mapping[signal_id]]->process();
+    //_log << "Dispatching signal " << signal_id << " for " << _mapping[signal_id] << " a " << wait_till << endl;
     
-    while (wait_till) {
-        wait_till--;
-        addTicks(1);
-        updatePinState();
-    }
+    //while (wait_till) {
+    //    wait_till--;
+    //    addTicks(1);
+    //    updatePinState();
+    //}
 }
 
 string Ardulator::timestamp() {
@@ -262,26 +271,25 @@ string Ardulator::timestamp() {
     return result.str();
 }
 
-void Ardulator::addPin(string signal_name, uint8_t pin_id) {
-    _mapping[signal_name] = pin_id;
-}
+//void Ardulator::addPin(string signal_name, uint8_t pin_id) {
+//    _mapping[signal_name] = pin_id;
+//}
 
-void Ardulator::addSerial(string signal_name, HardwareSerial &serial) {
-    _mapping[signal_name] = serial.pin();
-}
+//void Ardulator::addSerial(string signal_name, HardwareSerial &serial) {
+//    _mapping[signal_name] = serial.pin();
+//}
 
 /* Reporting facilities */
 void Ardulator::report() {
-    map<int, Signal*>::iterator it;
+    //map<int, Signal*>::iterator it;
+    //for (it = signals_.begin(); it != signals_.end(); it++) {
+    //    it->second->report(true);
+    //}
     
-    for (it = _signals.begin(); it != _signals.end(); it++) {
-        it->second->report(true);
-    }
-    
-    vector<Signal*>::iterator vit;
-    for (vit = _unused_signals.begin(); vit != _unused_signals.end(); vit++) {
-        (*vit)->report(false);
-    }
+    //vector<Signal*>::iterator vit;
+    //for (vit = unused_signals_.begin(); vit != unused_signals_.end(); vit++) {
+    //    (*vit)->report(false);
+    //}
 }
 
 /**
@@ -293,7 +301,7 @@ void Ardulator::report() {
 void Ardulator::registerInterrupt(uint8_t pin_id, 
                                   void (*fn)(void), 
                                   uint8_t mode) {
-    _interrupt_map[pin_id] = make_pair(mode, fn);
+  interrupt_map_[pin_id] = make_pair(mode, fn);
 }
 
 /**
@@ -301,7 +309,9 @@ void Ardulator::registerInterrupt(uint8_t pin_id,
  * @param pin_id the interrupt to remove.
  */
 void Ardulator::dropInterrupt(uint8_t pin_id) {
-    _interrupt_map.erase(pin_id);
-    cout << "Dropped int on " << pin_id << endl;
+  interrupt_map_.erase(pin_id);
+  cout << "Dropped int on " << pin_id << endl;
 }
+
+} // END namespace ardulator
 

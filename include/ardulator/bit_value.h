@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <cstdlib>
 
+namespace ardulator {
+
 class BitValue {
     bool    _ro;
     volatile uint8_t _state;
@@ -39,5 +41,7 @@ class BitValue {
     /* Conversions */
     operator int();
 };
+
+} // end namespace ardulator
 
 #endif /* ARDULATOR_BIT_VALUE_H */

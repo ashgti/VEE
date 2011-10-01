@@ -7,14 +7,15 @@ Usage:
 
 from setuptools import setup
 
-APP = ['mainwindow.py']
+APP = ['src/vee-gui.py']
 DATA_FILES = []
 OPTIONS = {
     'argv_emulation': False,
     'optimize': 2,
     'compressed' : True,
-    'strip': True,
-    'frameworks': ['/usr/local/lib/QtCore.framework', '/usr/local/lib/QtGui.framework']
+    'iconfile' : './resources/processing.icns',
+    'strip': False,
+    # 'frameworks': ['/usr/local/lib/QtCore.framework', '/usr/local/lib/QtGui.framework']
 }
 
 setup(

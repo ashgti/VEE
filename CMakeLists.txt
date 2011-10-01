@@ -10,16 +10,6 @@ if(APPLE)
   message(STATUS "OS X detected, building universal binary.")
 endif(APPLE)
 
-include(CheckCXXCompilerFlag)
-check_cxx_compiler_flag("-fPIC" SUPPORTS_FPIC_FLAG)
-if( SUPPORTS_FPIC_FLAG )
-  message(STATUS "Building with -fPIC")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
-else( SUPPORTS_FPIC_FLAG )
-  message(WARNING "-fPIC not supported.")
-endif()
-
 add_library(vee SHARED src/hardware_serial.cc
                        src/pin_commands.cc
                        src/time_commands.cc
@@ -33,4 +23,5 @@ add_library(vee SHARED src/hardware_serial.cc
                        src/emulator_commands.cc
                        src/interface.cc
                        student.cc)
+
 

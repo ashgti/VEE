@@ -9,8 +9,9 @@ try:
 except ImportError as e:
     sys.path.insert(0, os.path.join(os.getcwd(), 'lib', 'python2.7','lib-dynload')) ## Added to fix dynlib bug
     from PySide import QtCore, QtGui
-from basic_ui import Ui_MainWindow as CWindow
-from results_ui import Ui_MainWindow as RWindow
+import vee
+from vee.configuration_ui import Ui_MainWindow as CWindow
+from vee.results_ui import Ui_MainWindow as RWindow
 
 class ResultsWindow(QtGui.QMainWindow):
     "A testing window, will run the simulation"
@@ -26,14 +27,15 @@ class MainWindow(QtGui.QMainWindow):
     "Main application window."
     list_changed = QtCore.Signal()
 
-    def __init__(self, ui, sc_window):
+    def __init__(self, ui, scenario_runner):
         "Initialize the Window, connects the UI components and initializes variables."
         QtGui.QMainWindow.__init__(self)
         self.ui = ui
         self.settings = {}
         self.pinData = None
 
-        self.sc = sc_window
+        self.scenario_runner = scenario_runner
+        self.scenario_runner.show()
 
         self.pinTypeReference = [["Disabled", self.hideAllForms],
                                  ["Exponential Digital", self.showExponential],
@@ -47,18 +49,21 @@ class MainWindow(QtGui.QMainWindow):
         self.connectComponents()
         self.ui.outputPinsList.setCurrentRow(0)
 
+    def saveConfiguration(self):
+        print self.settings
+
     def connectComponents(self):
         "Connects the various UI components to python functions."
         ui = self.ui
-        ui.exponential.hide()
         ui.outputPinsList.currentRowChanged\
                 .connect(self.onOutputPinsListSelect)
         ui.pinType.currentIndexChanged.connect(self.onPinSelection)
-        self.ui.actionOpen_in_Scenario_Runner.triggered.connect(self.runScenario)
+        self.ui.actionOpen_Scenario_Runner.triggered.connect(self.runScenario)
         self.setupPinType()
         self.hideAllForms()
 
     def runScenario(self):
+        print 'yup'
         self.ui.hide()
 
     def setupPinType(self):
@@ -89,7 +94,7 @@ class MainWindow(QtGui.QMainWindow):
         "Hides all the editable forms."
         self.ui.exponential.hide()
         self.ui.uniform.hide()
-        print self.pinData
+        # print self.pinData
         # if self.pindData and self.pinData['id']:
         #     self.pinData = None
         #     self
@@ -120,6 +125,7 @@ class MainWindow(QtGui.QMainWindow):
             print e
 
 if __name__ == '__main__':
+    print 'main'
     app = QtGui.QApplication(sys.argv)
     ui_configuration = CWindow()
     ui_scenario = RWindow()

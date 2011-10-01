@@ -1,12 +1,29 @@
 all: build run_py_sample
+.PHONY: all
 
 help:
-	@echo "Hi"
+	@echo "all: build run_py_sample"
+	@echo "app: Build an OS X .app for the GUI Components"
+	@ehco "build: Builds the C++ src"
+	@echo "clean: removes compile time code"
+	@echo "wipe: dist-clean"
+	@echo ""
+.PHONY: help
 
-app: docs/basic_ui.ui docs/results_ui.ui mainwindow.py
+%.ui: %.py
+	pyside-uic -o $@ $<
+
+src/vee/configuration_ui.py: resources/configuration_ui.ui
+	pyside-uic -o $@ $<
+
+src/vee/results_ui.py: resources/results_ui.ui
+	pyside-uic -o $@ $<
+
+gen: src/vee/configuration_ui.py src/vee/results_ui.py
+.PHONY: gen
+
+app: gen src/vee-gui.py
 	rm -rf dist/mainwindow.app
-	pyside-uic docs/basic_ui.ui -o basic_ui.py
-	pyside-uic docs/results_ui.ui -o results_ui.py
 	python setup.py py2app
 .PHONY: app
 
@@ -18,16 +35,20 @@ build:
 .PHONY: build
 
 run_py_sample: build
-	@python driver.py
+	@python src/vee-cmd.py
+.PHONY: run_py_sample
 
-run_hs_driver:
-	./driver
+clean_python:
+	find . -name "*.pyo" -delete
+	find . -name "*.pyc" -delete
+.PHONY: clean_python
 
-hs_driver:
-	ghc --make driver.hs
-
-clean:
+clean: clean_python
+	rm -rf dist/mainwindow.app
 	cd build && make clean
+.PHONY: clean
 
-wipe:
+wipe: clean
+	rm -rf dist
 	rm -rf build
+.PHONY: wipe

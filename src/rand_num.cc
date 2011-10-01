@@ -5,7 +5,7 @@
 #include <iostream>
 #include <sys/time.h>
 
-static long int seed_counter = 100;
+//static long int seed_counter = 100;
 
 // RandNum::RandNum(SignalType dis_type, double lambda, unsigned short seed) : _dis_type(dis_type), _lambda(lambda) {
 //     assert(lambda > 0);
