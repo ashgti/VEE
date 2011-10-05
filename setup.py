@@ -14,7 +14,8 @@ OPTIONS = {
     'optimize': 2,
     'compressed' : True,
     'iconfile' : './resources/processing.icns',
-    'strip': False,
+    'strip': True,
+    'excludes': 'wx',
     # 'frameworks': ['/usr/local/lib/QtCore.framework', '/usr/local/lib/QtGui.framework']
 }
 

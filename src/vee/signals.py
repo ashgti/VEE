@@ -1,6 +1,17 @@
 # Copyright (c) 2011 John Harrison
 
-__all__ = ['DDet', 'Signal', 'DigitalSignal', 'DDet', 'AnalogSignal']
+__all__ = ['validateSignalType', 'Signal', 'DigitalSignal',
+           'AnalogSignal', 'SquareWave']
+
+reference_types = ['disabled',
+    # Exponential Signals
+    'exp_digital', 'exp_analog', 'exp_serial',
+    # Uniform Signals
+    'uni_digital', 'uni_analog', 'uni_serial'
+    ]
+
+def validateSignalType(type_id):
+    return reference_types[type_id]
 
 class Signal(object):
     def __init__(self, pin_id):

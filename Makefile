@@ -16,10 +16,7 @@ help:
 src/vee/configuration_ui.py: resources/configuration_ui.ui
 	pyside-uic -o $@ $<
 
-src/vee/results_ui.py: resources/results_ui.ui
-	pyside-uic -o $@ $<
-
-gen: src/vee/configuration_ui.py src/vee/results_ui.py
+gen: src/vee/configuration_ui.py
 .PHONY: gen
 
 app: gen src/vee-gui.py

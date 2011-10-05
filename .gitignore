@@ -7,5 +7,7 @@ ardulator/samples/polling_sensor/polling_sensor
 *.log
 sample
 build
+dist
 *.pyc
 *.pyo
+*.swp
