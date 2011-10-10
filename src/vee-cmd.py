@@ -18,7 +18,8 @@ def main(options, args):
     print settings
     for pin_id in settings:
         print 'pinid:', pin_id
-        print 'type:', validateSignalType(settings[pin_id]['type'])
+        print settings[pin_id]['signalType']
+        print 'type:', settings[pin_id]['signalType']
     a = Ardulator()
     a.length = 50.0
     

@@ -11,3 +11,4 @@ dist
 *.pyc
 *.pyo
 *.swp
+*_ui.py

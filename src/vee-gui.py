@@ -3,7 +3,9 @@ MainWindow is the driver program for the GUI components of VEE.
 """
 
 import sys, os
+import os.path
 import pickle
+from subprocess import Popen, PIPE
 
 try:
     from PySide import QtCore, QtGui
@@ -13,10 +15,14 @@ except ImportError as e:
 import vee.ardulator as a
 from vee.configuration_ui import Ui_MainWindow as CWindow
 
+SRC_DIR = '/Users/john/Projects/VEE'
 
 class ApplicationRunner(object):
-    def __init__(self, src, dest):
-        self.output = None
+    "ApplicationRunner, an abstract way of running commands, such as make."
+    def __init__(self, dest):
+        print dest
+        self.scenario_main = dest
+        os.chdir(SRC_DIR)
 
     def make(self):
         """
@@ -25,13 +31,13 @@ class ApplicationRunner(object):
           2. Extract Files if compressed.
           3. Compile against students code.
         """
-        pass
+        print Popen(['make'], stdout=PIPE, stderr=PIPE).communicate()[0]
 
     def run(self):
         """
         Run the scenario with the current configuration files.
         """
-        pass
+        print Popen(['python', 'src/vee-cmd.py', 'abc'], stdout=PIPE, stderr=PIPE).communicate()[0]
 
     def results(self):
         """
@@ -49,17 +55,8 @@ class MainWindow(QtGui.QMainWindow):
     def __init__(self, ui):
         "Initialize the Window, connects the UI components and initializes variables."
         super(MainWindow, self).__init__()
-        # QtGui.QMainWindow.__init__(self)
         self.ui = ui
         self.settings = {}
-        self.pinTypeReference = [["Disabled", self.hideAllForms],
-                                 ["Exponential Digital", self.showExponential],
-                                 ["Exponential Analog", self.showExponential],
-                                 ["Exponential Serial Output", self.showExponential],
-                                 ["Uniform Digital", self.showUniform],
-                                 ["Uniform Analog", self.showUniform],
-                                 ["Uniform Serial Output", self.showUniform]]
-
         self.ui.setupUi(self)
         self.connectComponents()
         self.ui.outputPinsList.setCurrentRow(0)
@@ -72,51 +69,129 @@ class MainWindow(QtGui.QMainWindow):
         ui = self.ui
         ui.outputPinsList.currentRowChanged\
                 .connect(self.onOutputPinsListSelect)
-        # ui.pinType.currentIndexChanged.connect(self.onPinSelection)
 
         # Menu Actions
         ui.actionNew_Scenario.triggered.connect(self.resetData)
         ui.actionSave.triggered.connect(self.saveScenario)
+        ui.actionRun.triggered.connect(self.runScenario)
 
         # Add Validators
-        ui.uni_A.setValidator(QtGui.QDoubleValidator(0.0, float("inf"), 10, ui.uni_A))
-        ui.uni_A.textEdited.connect(self.updatePinConfiguration)
-        ui.uni_B.setValidator(QtGui.QDoubleValidator(0.0, float("inf"), 10, ui.uni_B))
-        ui.uni_B.textEdited.connect(self.updatePinConfiguration)
-        ui.uni_Duration.setValidator(QtGui.QDoubleValidator(0.0, float("inf"), 10, ui.uni_Duration))
-        ui.uni_Duration.textEdited.connect(self.updatePinConfiguration)
+        ui.uniA.setValidator(QtGui.QDoubleValidator(0.0, float("inf"), 10, ui.uniA))
+        ui.uniB.setValidator(QtGui.QDoubleValidator(0.0, float("inf"), 10, ui.uniB))
+        ui.uniDuration.setValidator(QtGui.QDoubleValidator(0.0, float("inf"), 10, ui.uniDuration))
 
-        ui.exp_Lambda.setValidator(QtGui.QDoubleValidator(0.0, float("inf"), 10, ui.exp_Lambda))
-        ui.exp_Lambda.textEdited.connect(self.updatePinConfiguration)
-        ui.exp_Duration.setValidator(QtGui.QDoubleValidator(0.0, float("inf"), 10, ui.exp_Duration))
-        ui.exp_Duration.textEdited.connect(self.updatePinConfiguration)
+        ui.expLambda.setValidator(QtGui.QDoubleValidator(0.0, float("inf"), 10, ui.expLambda))
+        ui.expDuration.setValidator(QtGui.QDoubleValidator(0.0, float("inf"), 10, ui.expDuration))
+
+        # Connect behaviors
+        ui.uniA.textEdited.connect(self.updatePinConfiguration)
+        ui.uniB.textEdited.connect(self.updatePinConfiguration)
+        ui.uniDuration.textEdited.connect(self.updatePinConfiguration)
+
+        ui.expLambda.textEdited.connect(self.updatePinConfiguration)
+        ui.expDuration.textEdited.connect(self.updatePinConfiguration)
+
+        ui.uniform.clicked.connect(self.updatePinConfiguration)
+        ui.exponential.clicked.connect(self.updatePinConfiguration)
+        ui.analog.clicked.connect(self.updatePinConfiguration)
+        ui.digital.clicked.connect(self.updatePinConfiguration)
+        ui.serial.clicked.connect(self.updatePinConfiguration)
+
+        ui.sineWave.clicked.connect(self.updatePinConfiguration)
+        ui.squareWave.clicked.connect(self.updatePinConfiguration)
+        ui.maxAnalogValue.textEdited.connect(self.updatePinConfiguration)
 
         # Button Behaviors
         ui.browserFiles.clicked.connect(self.browse)
 
-        self.setupPinType()
-        self.hideAllForms()
+        ui.pushRun.clicked.connect(self.runScenario)
+        
+        # A useful default. Should not exist in production.
+        if os.path.isfile("/Users/john/Projects/VEE/student.cc"):
+            self.ui.studentFiles.addItem("/Users/john/Projects/VEE/student.cc")
+
+        # Default Configurations
+        ui.expLambda.setEnabled(True)
+        ui.expDuration.setEnabled(True)
+        ui.uniA.setEnabled(False)
+        ui.uniB.setEnabled(False)
+        ui.uniDuration.setEnabled(False)
+        
+        ui.sineWave.setEnabled(False)
+        ui.squareWave.setEnabled(False)
+        ui.maxAnalogValue.setEnabled(False)
+        ui.serialLineEdit.setEnabled(False)
 
     def getCurrentPinId(self):
         """docstring for getCurrentPinId"""
         return self.ui.outputPinsList.currentRow()
 
+    def runScenario(self):
+        scenario_file = self.ui.studentFiles.currentItem()
+        print scenario_file.text()
+        a = ApplicationRunner(scenario_file.text())
+        a.make()
+        a.run()
+        print 'foobar'
+
     def updatePinConfiguration(self):
-        pass
-    #     num_index = self.ui.pinType.currentIndex()
-    #     pinData = { 'type' : num_index }
-    #     if 0 < num_index < 4:
-    #         pinData['exp_Lambda'] = self.ui.exp_Lambda.text()
-    #         pinData['exp_Duration'] = self.ui.exp_Duration.text()
-    #     elif 3 < num_index < 10:
-    #         pinData['uni_A'] = self.ui.uni_A.text()
-    #         pinData['uni_B'] = self.ui.uni_B.text()
-    #         pinData['uni_Duration'] = self.ui.uni_Duration.text()
-    #     else:
-    #         raise ConfigurationError("Unknown pin type.")
-    #     self.settings[self.getCurrentPinId()] = pinData
-    #     print self.settings
-    #     print pinData
+        "Update the configuration settings."
+        signal_type = ''
+        data_type = ''
+        pinData = { }
+
+        if self.ui.exponential.isChecked():
+            self.ui.uniA.setEnabled(False)
+            self.ui.uniB.setEnabled(False)
+            self.ui.uniDuration.setEnabled(False)
+            self.ui.expLambda.setEnabled(True)
+            self.ui.expDuration.setEnabled(True)
+            pinData['signalType'] = 'exp'
+            pinData['expLambda'] = self.ui.expLambda.text()
+            pinData['expDuration'] = self.ui.expDuration.text()
+        elif self.ui.uniform.isChecked():
+            self.ui.expLambda.setEnabled(False)
+            self.ui.expDuration.setEnabled(False)
+            self.ui.uniA.setEnabled(True)
+            self.ui.uniB.setEnabled(True)
+            self.ui.uniDuration.setEnabled(True)
+            pinData['signalType'] = 'uni'
+            pinData['uniA'] = self.ui.uniA.text()
+            pinData['uniB'] = self.ui.uniB.text()
+            pinData['uniDuration'] = self.ui.uniDuration.text()
+        else:
+            raise ConfigurationError("Unknown pin type.")
+
+        if self.ui.analog.isChecked():
+            pinData['dataType'] = 'analog'
+            pinData['maxAnalogValue'] = self.ui.maxAnalogValue.text()
+            if self.ui.sineWave.isChecked():
+                pinData['waveForm'] = 'sine'
+            elif self.ui.squareWave.isChecked():
+                pinData['waveForm'] = 'square'
+            self.ui.sineWave.setEnabled(True)
+            self.ui.squareWave.setEnabled(True)
+            self.ui.maxAnalogValue.setEnabled(True)
+            self.ui.serialLineEdit.setEnabled(False)
+        elif self.ui.digital.isChecked():
+            pinData['dataType'] = 'digital'
+            self.ui.sineWave.setEnabled(False)
+            self.ui.squareWave.setEnabled(False)
+            self.ui.maxAnalogValue.setEnabled(False)
+            self.ui.serialLineEdit.setEnabled(False)
+        elif self.ui.serial.isChecked():
+            self.ui.sineWave.setEnabled(False)
+            self.ui.squareWave.setEnabled(False)
+            self.ui.maxAnalogValue.setEnabled(False)
+            self.ui.serialLineEdit.setEnabled(True)
+            pinData['dataType'] = 'serial'
+            pinData['serialLineEdit'] = self.ui.serialLineEdit.text()
+        else:
+            raise ConfigurationError("Unknown pin type.")
+
+        self.settings[self.getCurrentPinId()] = pinData
+        print self.settings
+        print pinData
 
     def resetData(self):
         self.settings = {}
@@ -143,15 +218,14 @@ class MainWindow(QtGui.QMainWindow):
         print "Pickled", pickle.dumps(self.settings)
         (filename, _) = QtGui.QFileDialog.getSaveFileName(self)
         print 'filename:', filename
+        if not filename:
+            return
         if not filename.endswith('.cfg'):
             filename += '.cfg'
         
         print filename
         with open(filename, 'w+') as f:
             pickle.dump(self.settings, f)
-
-    def runScenario(self):
-        self.ui.hide()
 
     def saveFile(self, fileName):
         file = QtCore.QFile(fileName)
@@ -169,66 +243,69 @@ class MainWindow(QtGui.QMainWindow):
         self.statusBar().showMessage("File saved", 2000)
         return True
 
-    def setupPinType(self):
-        """Configure Pin Types"""
-        # for index, name in enumerate(self.pinTypeReference):
-        #     self.ui.pinType.insertItem(index,
-        #             QtGui.QApplication\
-        #                     .translate("MainWindow",
-        #                                name[0],
-        #                                None,
-        #                                QtGui.QApplication.UnicodeUTF8))
-
     @QtCore.Slot(int)
     def onOutputPinsListSelect(self, value):
         "Update the form to match the saved data."
+        self.ui.exponential.setChecked(False)
+        self.ui.expLambda.clear()
+        self.ui.expLambda.setEnabled(False)
+        self.ui.expDuration.clear()
+        self.ui.expDuration.setEnabled(False)
+        self.ui.uniA.clear()
+        self.ui.uniA.setEnabled(False)
+        self.ui.uniB.clear()
+        self.ui.uniB.setEnabled(False)
+        self.ui.uniDuration.clear()
+        self.ui.uniDuration.setEnabled(False)
+        
+        self.ui.digital.setChecked(False)
+        self.ui.maxAnalogValue.clear()
+        self.ui.serialLineEdit.clear()
+        
+        self.ui.sineWave.setEnabled(False)
+        self.ui.squareWave.setEnabled(False)
+        self.ui.maxAnalogValue.setEnabled(False)
+        self.ui.serialLineEdit.setEnabled(False)
+        
         if value in self.settings:
-            num_index = self.settings[value]['type']
-            self.ui.pinType.setCurrentIndex(self.settings[value]['type'])
-            if 0 < num_index < 4:
-                self.ui.exp_Lambda.setText(self.settings[value]['exp_Lambda'])
-                self.ui.exp_Duration.setText(self.settings[value]['exp_Duration'])
-            elif 3 < num_index < 10:
-                self.ui.uni_A.setText(self.settings[value]['uni_A'])
-                self.ui.uni_B.setText(self.settings[value]['uni_B'])
-                self.ui.uni_Duration.setText(self.settings[value]['uni_Duration'])
+            pinData = self.settings[value]
+            if pinData['signalType'] == 'exp':
+                self.ui.exponential.setChecked(True)
+                self.ui.expLambda.setEnabled(True)
+                self.ui.expLambda.setText(pinData['expLambda'])
+                self.ui.expDuration.setEnabled(True)
+                self.ui.expDuration.setText(pinData['expDuration'])
+            elif pinData['signalType'] == 'uni':
+                self.ui.uniform.setChecked(True)
+                self.ui.uniA.setEnabled(True)
+                self.ui.uniA.setText(pinData['uniA'])
+                self.ui.uniB.setEnabled(True)
+                self.ui.uniB.setText(pinData['uniB'])
+                self.ui.uniDuration.setEnabled(True)
+                self.ui.uniDuration.setText(pinData['uniDuration'])
             else:
-                raise ConfigurationError("Unknown pin type.")
-            self.hideAllForms()
-            self.pinTypeReference[num_index][1]()
+                self.ui.expLambda.setEnabled(True)
+                self.ui.expDuration.setEnabled(True)
+
+            if pinData['dataType'] == 'digital':
+                self.ui.digital.setChecked(True)
+            elif pinData['dataType'] == 'analog':
+                self.ui.sineWave.setEnabled(True)
+                self.ui.squareWave.setEnabled(True)
+                if pinData['waveForm'] == 'square':
+                    self.ui.squareWave.setChecked(True)
+                else:
+                    self.ui.sineWave.setChecked(True)
+                self.ui.maxAnalogValue.setEnabled(True)
+                self.ui.maxAnalogValue.setText(pinData['maxAnalogValue'])
+            elif pinData['dataType'] == 'serial':
+                self.ui.serialLineEdit.setEnabled(True)
+                self.ui.serialLineEdit.setText(pinData['serialLineEdit'])
+            else:
+                self.ui.digital.setChecked(True)
         else:
-            self.ui.pinType.setCurrentIndex(0)
-            self.ui.exp_Lambda.clear()
-            self.ui.exp_Duration.clear()
-            self.ui.uni_A.clear()
-            self.ui.uni_B.clear()
-            self.ui.uni_Duration.clear()
-
-    @QtCore.Slot(str)
-    def onPinSelection(self, index):
-        if index > 0:
-            self.ui.exp_Lambda.clear()
-            self.ui.exp_Duration.clear()
-            self.ui.uni_A.clear()
-            self.ui.uni_B.clear()
-            self.ui.uni_Duration.clear()
-        self.pinTypeReference[index][1]()
-
-    def hideAllForms(self):
-        "Hides all the editable forms."
-        # self.ui.exponential.disable()
-        # self.ui.uniform.disable()
-        pass
-
-    def showExponential(self):
-        "Shows the Exponential Configuration Settings."
-        self.hideAllForms()
-        # self.ui.exponential.enable()
-
-    def showUniform(self):
-        "Show the Uniform Configuration Settings"
-        self.hideAllForms()
-        # self.ui.uniform.enable()
+            self.ui.expLambda.setEnabled(True)
+            self.ui.expDuration.setEnabled(True)
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
