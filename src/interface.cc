@@ -5,6 +5,8 @@
 
 using namespace std;
 
+using ardulator::PinConfig;
+
 /* Runs the current simulation. Will return the number of simulated 
  * seconds the simulation ran for.
  */
@@ -12,6 +14,9 @@ static int val = 0;
 static double runtime = 0;
 static bool initalized = false;
 
+/**
+ * Reset the simulation.
+ */
 extern void reset_simulator() {
   runtime = 0;
 }
@@ -21,8 +26,9 @@ extern void step() {
 }
 
 extern double run(double length) {
-  runtime += length;
-  return runtime;
+  initalize_simulator();
+
+  return ardu->runScenario(length);
 }
 
 /** 
@@ -44,13 +50,23 @@ extern void initalize_simulator() {
  * @param signals the time at which the signal changes, all signals start
  *        at 0 and go high afterwards. 
  */
-extern bool register_signal(int pin_id, int signal_count, double* signals) {
+extern "C" bool register_signal(int pin_id, SignalImp* first) {
+  initalize_simulator();
+  
   cout << "Registering signal...\n";
   cout << "Pin: " << pin_id << endl;
-  cout << "Signal Count: " << signal_count << endl;
-  if (signal_count > 4) {
-    cout << "Signals... " << signals[signal_count - 3] << endl;
+  PinConfig* pin = new PinConfig();
+  pin->signal_.current_ = first;
+  pin->signal_.head_ = first;
+  ardu->pin_config_.insert(make_pair(pin_id, pin));
+  
+  SignalImp* p = first;
+  int c = 0;
+  while (p) {
+    c++;
+    p = p->next;
   }
+  
   return true;
 }
 

@@ -165,7 +165,7 @@ extern double run(double length);
 extern char*  ardulator_errors();
 extern void   initalize_simulator();
 extern void   reset_simulator();
-extern bool   register_signal(int pin_id, int signal_count, int* signals);
+extern bool   register_signal(int pin_id, SignalImp* head);
 #ifdef __cplusplus
 } // end extern "C"
 #endif

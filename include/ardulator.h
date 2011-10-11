@@ -10,15 +10,38 @@
 
 class HardwareSerial;
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+union ValueImp {
+  char* str;
+  uint8_t digital;
+  uint16_t analog;
+};
+
+struct SignalImp;
+struct SignalImp {
+  double tick;
+  double duration;
+  union ValueImp value;
+  uint32_t type;
+  struct SignalImp* next;
+};
+
+#ifdef __cplusplus
+}
+#endif
+
 namespace ardulator {
 
 const unsigned int LOOP_CONST = 240;
 const unsigned int FIELD_WIDTH = 5;
 
 enum ValueType {
-    VT_DIGITAL = 1,
-    VT_SERIAL = 2,
-    VT_ANALOG = 3,
+    VT_DIGITAL = 1 << 0,
+    VT_SERIAL = 1 << 1,
+    VT_ANALOG = 1 << 2,
     VT_RAND_STRING = 4
 };
 
@@ -34,41 +57,29 @@ struct History {
     double avg_response_time_;
 };
 
+// class Signal {
+//     PinConfig* mapped_to_;
+//     double *signal_changes_;
+//     size_t  signal_changes_length_;
+// };
+
 struct PinConfig {
-    int id_[10];
-    bool mode_;
-    bool interrupt_;
-    bool pull_up_;
+  int id_[10];
+  bool mode_;
+  bool interrupt_;
+  bool pull_up_;
+  struct {
+    SignalImp* head_;
+    SignalImp* current_;
+  } signal_;
 };
-
-class Signal {
-    PinConfig* mapped_to_;
-    double *signal_changes_;
-    size_t  signal_changes_length_;
-};
-
-enum SignalTypes {
-  T_NONE    =  0,
-  T_DIGITAL = (1<<0),
-  T_ANALOG  = (1<<1),
-  T_SERIAL  = (1<<2),
-  T_FN      = (1<<3)
-};
-
-typedef struct {
-  int type_id_;
-  union { 
-    void* current_val_;
-    void (*fn_)(double);
-  };
-  double change_at_;
-} SignalDetails;
 
 class Ardulator {
   private:
     std::fstream   log_;
     bool           flag_;
     int            max_pins_;
+    double         runtime_;
     uint64_t       ticks_;
     uint64_t       total_ticks_;
     std::string    registered_identifers_;
@@ -106,8 +117,7 @@ class Ardulator {
     // void   addPin(std::string signal_id, uint8_t pin_id);
     // void   addSerial(std::string signal_id, HardwareSerial &serial);
     bool   addInputFile(char *name);
-    void   runScenario();
-    void   registerSignalReference(Signal s);
+    double runScenario(double length);
     // void   scanHeaderChunk(std::string id, std::string line);
     // void   processConfiguration(std::string id, std::string line);
     void   registerInterrupt(uint8_t pin_id,

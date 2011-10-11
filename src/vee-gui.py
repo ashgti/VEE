@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 MainWindow is the driver program for the GUI components of VEE.
 """
@@ -12,7 +13,6 @@ try:
 except ImportError as e:
     sys.path.insert(0, os.path.join(os.getcwd(), 'lib', 'python2.7','lib-dynload')) ## Added to fix dynlib bug
     from PySide import QtCore, QtGui
-import vee.ardulator as a
 from vee.configuration_ui import Ui_MainWindow as CWindow
 
 SRC_DIR = '/Users/john/Projects/VEE'
@@ -136,8 +136,6 @@ class MainWindow(QtGui.QMainWindow):
 
     def updatePinConfiguration(self):
         "Update the configuration settings."
-        signal_type = ''
-        data_type = ''
         pinData = { }
 
         if self.ui.exponential.isChecked():
@@ -194,9 +192,11 @@ class MainWindow(QtGui.QMainWindow):
         print pinData
 
     def resetData(self):
+        "Resets the currently stored data."
         self.settings = {}
         
     def browse(self):
+        "Browers for listing emulation files."
         (filename, _) = QtGui.QFileDialog.getOpenFileName(self, "Find Files",
                 QtCore.QDir.currentPath())
 
@@ -213,6 +213,7 @@ class MainWindow(QtGui.QMainWindow):
 
 
     def saveScenario(self):
+        "Saves the settings"
         print 'Help'
         print "Saveing", self.settings
         print "Pickled", pickle.dumps(self.settings)
@@ -227,21 +228,21 @@ class MainWindow(QtGui.QMainWindow):
         with open(filename, 'w+') as f:
             pickle.dump(self.settings, f)
 
-    def saveFile(self, fileName):
-        file = QtCore.QFile(fileName)
-        if not file.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
-            QtGui.QMessageBox.warning(self, "Application",
-                    "Cannot write file %s:\n%s." % (fileName, file.errorString()))
-            return False
-
-        outf = QtCore.QTextStream(file)
-        QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
-        outf << self.textEdit.toPlainText()
-        QtGui.QApplication.restoreOverrideCursor()
-
-        self.setCurrentFile(fileName);
-        self.statusBar().showMessage("File saved", 2000)
-        return True
+    # def saveFile(self, fileName):
+    #     file = QtCore.QFile(fileName)
+    #     if not file.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
+    #         QtGui.QMessageBox.warning(self, "Application",
+    #                 "Cannot write file %s:\n%s." % (fileName, file.errorString()))
+    #         return False
+    # 
+    #     outf = QtCore.QTextStream(file)
+    #     QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+    #     outf << self.textEdit.toPlainText()
+    #     QtGui.QApplication.restoreOverrideCursor()
+    # 
+    #     self.setCurrentFile(fileName);
+    #     self.statusBar().showMessage("File saved", 2000)
+    #     return True
 
     @QtCore.Slot(int)
     def onOutputPinsListSelect(self, value):
@@ -313,3 +314,4 @@ if __name__ == '__main__':
     main_window = MainWindow(ui_configuration)
     main_window.show()
     sys.exit(app.exec_())
+

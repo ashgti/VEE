@@ -11,22 +11,19 @@ parser.add_option("-q", "--quiet",
                   help="don't print status messages to stdout")
 
 def main(options, args):
-    print options
-    print args
-    with open(args[0], 'r') as f:
-        settings = load(f)
-    print settings
-    for pin_id in settings:
-        print 'pinid:', pin_id
-        print settings[pin_id]['signalType']
-        print 'type:', settings[pin_id]['signalType']
-    a = Ardulator()
-    a.length = 50.0
-    
-    a.signals.append(SquareWave(5, 2.0, 1.0))
-    
-    print a.run(25)
-    print a.run()
+    if len(args) > 0:
+        with open(args[0], 'r') as f:
+            settings = load(f)
+        print settings
+        signals = {pin_id: generate_signal(settings[pin_id]) for pin_id in settings}
+        print signals
+        a = Ardulator(100, signals)
+        # a.length = 50.0
+        # a.signals = signals
+        print a.run(25)
+        print a.run()
+    else:
+        print "Please pass the program a configuration file."
 
 if __name__ == '__main__':
     (options, args) = parser.parse_args()

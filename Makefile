@@ -1,4 +1,7 @@
-all: build run_py_sample
+VEE_TARGET=student.cc
+PYSIDE_UIC=/usr/local/bin/pyside-uic
+
+all: build
 .PHONY: all
 
 help:
@@ -11,10 +14,10 @@ help:
 .PHONY: help
 
 %.ui: %.py
-	pyside-uic -o $@ $<
+	$(PYSIDE_UIC) -o $@ $<
 
 src/vee/configuration_ui.py: resources/configuration_ui.ui
-	pyside-uic -o $@ $<
+	$(PYSIDE_UIC) -o $@ $<
 
 gen: src/vee/configuration_ui.py
 .PHONY: gen
@@ -25,15 +28,20 @@ app: gen src/vee-gui.py
 .PHONY: app
 
 build:
+	@echo $(CURDIR)
 	@mkdir -p ./build
 	@mkdir -p ./bin
-	cd build && cmake ..
+	cd build && cmake .. -DVEE_SRC_FILE=$(VEE_TARGET)
 	cd build && make
 .PHONY: build
 
 run_py_sample: build
-	@python src/vee-cmd.py
+	@python src/vee-cmd.py test/test.cfg
 .PHONY: run_py_sample
+
+run_py_gui: gen
+	python src/vee-gui.py
+.PHONY: run_py_gui
 
 clean_python:
 	find . -name "*.pyo" -delete

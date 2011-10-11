@@ -22,16 +22,35 @@ else:
 if not veelib:
     raise ImportError("Could not load the libvee library. Please check your installation.")
 
+# Data Structures
+class ValueImp(Union):
+    _fields_ = [("str", c_char_p),
+                ("digital", c_uint8),
+                ("analog", c_uint16)]
+
+class SignalImp(Structure):
+    pass
+    # doing this because this is an incomplete type.
+
+SignalImp._fields_ = [("tick", c_double),
+                      ("duration", c_double),
+                      ("value", ValueImp),
+                      ("type", c_uint32),
+                      ("next", POINTER(SignalImp))]
+
 # Interface prototypes
+
+# extern double run(double length)
 run = veelib.run
 run.restype = c_double
 run.argstypes = [c_double]
 
-#register_signal = veelib.register_signal
-#register_signal.restype = c_bool
-#register_signal.argstypes = [c_int, c_int, POINTER(c_int)]
+# extern void initalize_simulator()
 
-REGISTER_CALLBACK_FUNC = CFUNCTYPE(None, c_int, c_int)
+# extern bool register_signal(int pin_id, SignalImp* first)
+register_signal = veelib.register_signal
+register_signal.restype = c_bool
+register_signal.argstypes = [c_int, POINTER(SignalImp)]
 
 class Ardulator(object):
     """
@@ -41,16 +60,18 @@ class Ardulator(object):
     in future versions of the code, but currently its a limitation of the
     emulator.
     """
-    def __init__(self):
+    def __init__(self, runtime = 100.0, signals = []):
         """Initalization of the emulator."""
-        self.length = 0
+        self.length = runtime
         self.current_time = 0
-        self.signals = []
+        self.signals = signals
         self.failures = 0
-        self._pins = []
+        self._data = {}
+        self._signals_generate = False
 
     def run(self, length=None):
         global veelib
+        self._generate_signal_data()
         if length == None:
             if self.length - self.current_time < 0:
                 return self.current_time
@@ -61,9 +82,32 @@ class Ardulator(object):
             self.current_time = run(c_double(length))
             return self.current_time
 
-    def add_signal(self, signal):
-        self.signals.append[signal]
-
-    def _validate_signals(self, signal):
-        assert set(self._pins).isdisjoint(sgianl.pins)
-
+    def _generate_signal_data(self):
+        "Generates the C interfacing data from signals."
+        if self._signals_generate:
+            return
+        else:
+            print 'generating...'
+        for s in self.signals:
+            rate = self.signals[s].rate
+            value = self.signals[s].value
+            dv = ValueImp()
+            dv.digital = c_uint8(1)
+            data = SignalImp(0.0, float(rate.duration), dv, value.type_id, None)
+            orig_data = data
+            runtime = 0
+            while runtime < self.length:
+                next_in = float(self.signals[s].rate.next())
+                runtime += next_in
+                
+                rate = self.signals[s].rate
+                value = self.signals[s].value
+                dv = ValueImp()
+                dv.digital = c_uint8(1)
+                next_data = SignalImp(runtime, float(rate.duration), dv, value.type_id, None)
+                data.next = pointer(next_data)
+                data = next_data
+            self._data[s] = orig_data
+        self._signals_generate = True
+        for x in self._data:
+            register_signal(x, pointer(self._data[x]))

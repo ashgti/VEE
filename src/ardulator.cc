@@ -101,7 +101,9 @@ void Ardulator::configurePin(uint8_t pin_id, uint8_t mode) {
 //     }
 }
 
-void Ardulator::runScenario() {
+double Ardulator::runScenario(double length) {
+  cout << "Running for: " << length << endl;
+  runtime_ = 0.0;
   timer_.seconds_ = 0;
   timer_.ticks_   = 0;
   setup();
@@ -117,7 +119,7 @@ void Ardulator::runScenario() {
   }
   catch (EmulatorFinished &e) {
   }
-  while (1) {
+  while (runtime_ < length) {
     try {
       loop();
       addTicks(LOOP_CONST);
@@ -132,6 +134,10 @@ void Ardulator::runScenario() {
   print_clock("Runtime Timer:", timer_);
   
   cout << "--------------------------\n";
+  
+  cout << "Runtime: " << runtime_ << endl;
+  
+  return runtime_;
 }
 
 
@@ -172,6 +178,8 @@ void Ardulator::addTicks(uint64_t length) {
     timer_.seconds_++;
     timer_.ticks_ -= TICKS_PER_SECOND;
   }
+  
+  runtime_ = timer_.seconds_ + (timer_.ticks_ / TICKS_PER_SECOND);
 }
 
 // TODO(ash_gti): Fix this function.

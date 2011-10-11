@@ -18,7 +18,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -494,17 +494,16 @@
     <addaction name="actionStop"/>
     <addaction name="actionPause"/>
    </widget>
-   <widget class="QMenu" name="menuView">
+   <widget class="QMenu" name="menuWindow">
     <property name="title">
-     <string>View</string>
+     <string>Window</string>
     </property>
-    <addaction name="actionConfiguration"/>
-    <addaction name="actionClass_Info"/>
-    <addaction name="actionScenario_Viewer"/>
+    <addaction name="actionSC_View"/>
+    <addaction name="actionConfig_View"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuScenario_Control"/>
-   <addaction name="menuView"/>
+   <addaction name="menuWindow"/>
   </widget>
   <action name="actionNew_Scenario">
    <property name="text">
@@ -538,30 +537,6 @@
     <string>Ctrl+R</string>
    </property>
   </action>
-  <action name="actionConfiguration">
-   <property name="text">
-    <string>Configuration</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+1</string>
-   </property>
-  </action>
-  <action name="actionClass_Info">
-   <property name="text">
-    <string>Class Info</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+2</string>
-   </property>
-  </action>
-  <action name="actionScenario_Viewer">
-   <property name="text">
-    <string>Scenario Viewer</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+3</string>
-   </property>
-  </action>
   <action name="actionStop">
    <property name="text">
     <string>Stop</string>
@@ -573,6 +548,22 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionSC_View">
+   <property name="text">
+    <string>Scenario View</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
+  </action>
+  <action name="actionConfig_View">
+   <property name="text">
+    <string>Scenario &amp;Configuration</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
    </property>
   </action>
  </widget>
