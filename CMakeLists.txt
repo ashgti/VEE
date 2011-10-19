@@ -17,8 +17,7 @@ add_library(vee SHARED src/hardware_serial.cc
                        src/time_commands.cc
                        src/env.cc
                        src/ardulator.cc
-                       src/rand_num.cc
-                       src/signal.cc
+                       src/pin_config.cc
                        src/interrupt_commands.cc
                        src/bit_value.cc
                        src/interface.cc

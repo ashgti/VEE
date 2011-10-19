@@ -1,13 +1,27 @@
 VEE_TARGET=student.cc
 PYSIDE_UIC=/usr/local/bin/pyside-uic
 
+DOXYGEN = doxygen
+
 all: build
 .PHONY: all
+
+docs: docs/doxygen.cfg
+	$(DOXYGEN) docs/doxygen.cfg
+.PHONY: docs
+
+docs/doxygen.cfg: docs/Doxyfile.cfg.in
+	cat $< | sed \
+	  -e 's/@abs_top_srcdir@/./g' \
+	  -e 's/@DOT@/dot/g' \
+	  -e 's/@PACKAGE_VERSION@/mainline/' \
+	  -e 's/@abs_top_builddir@/./g' > $@
 
 help:
 	@echo "all: build run_py_sample"
 	@echo "app: Build an OS X .app for the GUI Components"
 	@ehco "build: Builds the C++ src"
+	@echo "docs: Builds the documentation for the C/C++ and Python Code."
 	@echo "clean: removes compile time code"
 	@echo "wipe: dist-clean"
 	@echo ""
@@ -35,13 +49,13 @@ build:
 	cd build && make
 .PHONY: build
 
-run_py_sample: build
-	@python src/vee-cmd.py test/test.cfg
-.PHONY: run_py_sample
+sample: build
+	@nice python src/vee-cmd.py test/test.cfg
+.PHONY: sample
 
-run_py_gui: gen
+gui: gen
 	python src/vee-gui.py
-.PHONY: run_py_gui
+.PHONY: gui
 
 clean_python:
 	find . -name "*.pyo" -delete

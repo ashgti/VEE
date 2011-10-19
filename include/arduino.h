@@ -30,7 +30,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 // #include <avr/io.h>
-#include <avr/config.h>
+// #include <avr/config.h>
 #include "binary.h"
 #include "ardulator.h"
 
@@ -165,7 +165,7 @@ extern double run(double length);
 extern char*  ardulator_errors();
 extern void   initalize_simulator();
 extern void   reset_simulator();
-extern bool   register_signal(int pin_id, SignalImp* head);
+extern bool   register_signal(SignalImp* head);
 #ifdef __cplusplus
 } // end extern "C"
 #endif
@@ -176,55 +176,53 @@ extern bool   register_signal(int pin_id, SignalImp* head);
 #define BIN 2
 #define BYTE 0
 
-class Print
-{
-  private:
-    void printNumber(unsigned long, uint8_t);
-    void printFloat(double, uint8_t);
-  public:
-    virtual void write(uint8_t) = 0;
-    virtual void write(const char *str);
-    virtual void write(const uint8_t *buffer, size_t size);
+class Print {
+ private:
+  void printNumber(unsigned long, uint8_t);
+  void printFloat(double, uint8_t);
+ public:
+  virtual void write(uint8_t) = 0;
+  virtual void write(const char *str);
+  virtual void write(const uint8_t *buffer, size_t size);
 
-    void print(const char[]);
-    void print(const std::string &s);
-    void print(char, int = BYTE);
-    void print(unsigned char, int = BYTE);
-    void print(int, int = DEC);
-    void print(unsigned int, int = DEC);
-    void print(long, int = DEC);
-    void print(unsigned long, int = DEC);
-    void print(double, int = 2);
+  void print(const char[]);
+  void print(const std::string &s);
+  void print(char, int = BYTE);
+  void print(unsigned char, int = BYTE);
+  void print(int, int = DEC);
+  void print(unsigned int, int = DEC);
+  void print(long, int = DEC);
+  void print(unsigned long, int = DEC);
+  void print(double, int = 2);
 
-    void println(const char[]);
-    void println(const std::string &s);
-    void println(char, int = BYTE);
-    void println(unsigned char, int = BYTE);
-    void println(int, int = DEC);
-    void println(unsigned int, int = DEC);
-    void println(long, int = DEC);
-    void println(unsigned long, int = DEC);
-    void println(double, int = 2);
-    void println(void);
+  void println(const char[]);
+  void println(const std::string &s);
+  void println(char, int = BYTE);
+  void println(unsigned char, int = BYTE);
+  void println(int, int = DEC);
+  void println(unsigned int, int = DEC);
+  void println(long, int = DEC);
+  void println(unsigned long, int = DEC);
+  void println(double, int = 2);
+  void println(void);
 };
 
 struct ring_buffer;
 
-class HardwareSerial : public Print
-{
-  private:
-    uint8_t _rxen;
-    uint8_t _txen;
-    uint32_t _baud;
-    
-    std::string _in_buff;
-    std::string _out_buff;
-    
-    uint8_t _rb_head;
-    uint8_t _rb_tail;
-    
-    std::fstream _ofile;
-  public:
+class HardwareSerial : public Print {
+ private:
+  uint8_t _rxen;
+  uint8_t _txen;
+  uint32_t _baud;
+
+  std::string _in_buff;
+  std::string _out_buff;
+
+  uint8_t _rb_head;
+  uint8_t _rb_tail;
+
+  std::fstream _ofile;
+ public:
     HardwareSerial(int rxPin, int txPin);
     ~HardwareSerial();
     void begin(long);

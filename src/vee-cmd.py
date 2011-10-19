@@ -16,10 +16,9 @@ def main(options, args):
             settings = load(f)
         print settings
         signals = {pin_id: generate_signal(settings[pin_id]) for pin_id in settings}
-        print signals
-        a = Ardulator(100, signals)
-        # a.length = 50.0
-        # a.signals = signals
+        a = Ardulator(100.0, signals)
+        # a.length = 50.0 # Another way of setting the secnario length
+        # a.signals = signals # Updating the signals
         print a.run(25)
         print a.run()
     else:

@@ -67,7 +67,7 @@ class MainWindow(QtGui.QMainWindow):
     def connectComponents(self):
         "Connects the various UI components to python functions."
         ui = self.ui
-        ui.outputPinsList.currentRowChanged\
+        ui.outputPinsList.currentItemChanged\
                 .connect(self.onOutputPinsListSelect)
 
         # Menu Actions
@@ -104,6 +104,7 @@ class MainWindow(QtGui.QMainWindow):
         # Button Behaviors
         ui.browserFiles.clicked.connect(self.browse)
 
+        ui.addSignal.clicked.connect(self.addSignal)
         ui.pushRun.clicked.connect(self.runScenario)
         
         # A useful default. Should not exist in production.
@@ -116,15 +117,28 @@ class MainWindow(QtGui.QMainWindow):
         ui.uniA.setEnabled(False)
         ui.uniB.setEnabled(False)
         ui.uniDuration.setEnabled(False)
-        
+
         ui.sineWave.setEnabled(False)
         ui.squareWave.setEnabled(False)
         ui.maxAnalogValue.setEnabled(False)
         ui.serialLineEdit.setEnabled(False)
 
-    def getCurrentPinId(self):
-        """docstring for getCurrentPinId"""
-        return self.ui.outputPinsList.currentRow()
+    def addSignal(self):
+        """Add a signal to the list of signals."""
+        name = self.ui.signalName.text()
+        if name:
+            self.ui.outputPinsList.addItem(name)
+            self.ui.signalName.clear()
+        else:
+            return
+
+    def getCurrentSignalId(self):
+        """Get the name of the current Signal"""
+        current = self.ui.outputPinsList.currentItem()
+        if current:
+            return current.text()
+        else:
+            None
 
     def runScenario(self):
         scenario_file = self.ui.studentFiles.currentItem()
@@ -137,6 +151,9 @@ class MainWindow(QtGui.QMainWindow):
     def updatePinConfiguration(self):
         "Update the configuration settings."
         pinData = { }
+
+        if self.getCurrentSignalId() == None:
+            return
 
         if self.ui.exponential.isChecked():
             self.ui.uniA.setEnabled(False)
@@ -187,7 +204,7 @@ class MainWindow(QtGui.QMainWindow):
         else:
             raise ConfigurationError("Unknown pin type.")
 
-        self.settings[self.getCurrentPinId()] = pinData
+        self.settings[self.getCurrentSignalId()] = pinData
         print self.settings
         print pinData
 
@@ -245,7 +262,7 @@ class MainWindow(QtGui.QMainWindow):
     #     return True
 
     @QtCore.Slot(int)
-    def onOutputPinsListSelect(self, value):
+    def onOutputPinsListSelect(self, value, previous_value):
         "Update the form to match the saved data."
         self.ui.exponential.setChecked(False)
         self.ui.expLambda.clear()
@@ -268,8 +285,10 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.maxAnalogValue.setEnabled(False)
         self.ui.serialLineEdit.setEnabled(False)
         
-        if value in self.settings:
-            pinData = self.settings[value]
+        print value.text()
+        
+        if value.text() in self.settings:
+            pinData = self.settings[value.text()]
             if pinData['signalType'] == 'exp':
                 self.ui.exponential.setChecked(True)
                 self.ui.expLambda.setEnabled(True)

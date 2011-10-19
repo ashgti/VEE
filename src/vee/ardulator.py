@@ -36,6 +36,7 @@ SignalImp._fields_ = [("tick", c_double),
                       ("duration", c_double),
                       ("value", ValueImp),
                       ("type", c_uint32),
+                      ("name", c_char_p),
                       ("next", POINTER(SignalImp))]
 
 # Interface prototypes
@@ -50,7 +51,7 @@ run.argstypes = [c_double]
 # extern bool register_signal(int pin_id, SignalImp* first)
 register_signal = veelib.register_signal
 register_signal.restype = c_bool
-register_signal.argstypes = [c_int, POINTER(SignalImp)]
+register_signal.argstypes = [POINTER(SignalImp)]
 
 class Ardulator(object):
     """
@@ -70,6 +71,10 @@ class Ardulator(object):
         self._signals_generate = False
 
     def run(self, length=None):
+        """
+        Do NOT change self.signals after you call run, it will not regenerate
+        the signals.
+        """
         global veelib
         self._generate_signal_data()
         if length == None:
@@ -93,21 +98,21 @@ class Ardulator(object):
             value = self.signals[s].value
             dv = ValueImp()
             dv.digital = c_uint8(1)
-            data = SignalImp(0.0, float(rate.duration), dv, value.type_id, None)
+            data = SignalImp(0.0, float(rate.duration), dv, value.type_id, s, None)
             orig_data = data
             runtime = 0
             while runtime < self.length:
                 next_in = float(self.signals[s].rate.next())
                 runtime += next_in
-                
+
                 rate = self.signals[s].rate
                 value = self.signals[s].value
                 dv = ValueImp()
                 dv.digital = c_uint8(1)
-                next_data = SignalImp(runtime, float(rate.duration), dv, value.type_id, None)
+                next_data = SignalImp(runtime, float(rate.duration), dv, value.type_id, "AB", None)
                 data.next = pointer(next_data)
                 data = next_data
             self._data[s] = orig_data
         self._signals_generate = True
         for x in self._data:
-            register_signal(x, pointer(self._data[x]))
+            register_signal(pointer(self._data[x]))

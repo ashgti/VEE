@@ -26,6 +26,7 @@ struct SignalImp {
   double duration;
   union ValueImp value;
   uint32_t type;
+  const char *name;
   struct SignalImp* next;
 };
 
@@ -46,38 +47,48 @@ enum ValueType {
 };
 
 struct ArdulatorClock {
-    uint32_t seconds_;
-    uint32_t ticks_;
+  ArdulatorClock(uint32_t seconds, uint32_t ticks) :
+      seconds_(seconds), ticks_(ticks) { };
+  uint32_t seconds_;
+  uint32_t ticks_;
 };
 
 struct History {
-    int missed_evts_;
-    int total_evts_;
-    int caught_evts_;
-    double avg_response_time_;
+  int missed_evts_;
+  int total_evts_;
+  int caught_evts_;
+  double avg_response_time_;
 };
 
-// class Signal {
-//     PinConfig* mapped_to_;
-//     double *signal_changes_;
-//     size_t  signal_changes_length_;
-// };
+struct SignalContainer {
+  SignalImp* head_;
+  SignalImp* current_;
+};
 
 struct PinConfig {
-  int id_[10];
+  /* Constructor */
+  PinConfig();
+  
+  int id_[15];
   bool mode_;
   bool interrupt_;
   bool pull_up_;
-  struct {
-    SignalImp* head_;
-    SignalImp* current_;
-  } signal_;
+  uint8_t state_;
+  uint8_t bit_mask_;
+  volatile uint8_t *bit_container_;
+
+  History pin_history_;
+
+  SignalContainer signal_;
+
+  void setState(ArdulatorClock &t);
+  void initializeTimers();
+  void updateState(ArdulatorClock &t, int new_state);
 };
 
 class Ardulator {
   private:
     std::fstream   log_;
-    bool           flag_;
     int            max_pins_;
     double         runtime_;
     uint64_t       ticks_;
@@ -85,45 +96,48 @@ class Ardulator {
     std::string    registered_identifers_;
     ArdulatorClock scenario_length_;
     bool           inside_interrupt_handler_;
+    bool           prepared_;
 
+    void   prepareScenario();
     void   updatePinState();
     void   updatePinMaps();
     void   finalizePinState();
     std::string timestamp();
   public:
     ArdulatorClock timer_;
-    std::map<int, std::vector<std::string> >
-                interrupt_connection_;
-    std::map<int, std::pair<int, void (*)(void)> >
-                interrupt_map_;
-    // std::map<int, std::vector<double> >
-    //             signals_;
-    typedef std::map<int, PinConfig*> PinConfigs;
-    typedef PinConfigs::iterator PinConfigsIter;
-    PinConfigs pin_config_;
 
-    // std::map<std::string, intptr_t>
-    //             _mapping;
-    std::fstream
-                debug_;
-    std::string*
-                buffers_[256];
+    typedef std::map<int, std::pair<int, void (*)(void)> > InterruptMap;
+    typedef InterruptMap::iterator InterruptIterator;
+    InterruptMap  interrupt_map_;
+
+    typedef std::map<int, PinConfig*> PinConfigs;
+    typedef PinConfigs::iterator PinConfigIterator;
+    PinConfigs    pin_config_;
+
+    typedef std::map<std::string, PinConfig*> UnusedPinConfigs;
+    typedef UnusedPinConfigs::iterator UnusedPinConfigIterator;
+    UnusedPinConfigs unused_pin_config_;
+
+    typedef std::map<std::string, int> SingalNameMap;
+    typedef SingalNameMap::iterator SingalNameMapIterator;
+    SingalNameMap signal_names_;
+
+    std::fstream  debug_;
+    std::string*  buffers_[256];
 
     bool interrupts_;
 
     Ardulator();
     ~Ardulator();
     void   configurePin(uint8_t id, uint8_t mode);
-    // void   addPin(std::string signal_id, uint8_t pin_id);
-    // void   addSerial(std::string signal_id, HardwareSerial &serial);
     bool   addInputFile(char *name);
     double runScenario(double length);
-    // void   scanHeaderChunk(std::string id, std::string line);
-    // void   processConfiguration(std::string id, std::string line);
     void   registerInterrupt(uint8_t pin_id,
                              void (*)(void),
                              uint8_t mode);
     void   dropInterrupt(uint8_t pin_id);
+    void   addPin(std::string signal_name, uint8_t pin_id);
+    void   addSerial(std::string signal_name, HardwareSerial &serial);
     void   setPin(uint8_t pin_id, uint8_t val);
     int    getPin(uint8_t pin_id);
     void   dispatchSignal(const char *name);
@@ -136,7 +150,6 @@ class Ardulator {
     void   error(std::string msg = "");
     void   info(std::string msg = "");
     void   critical(std::string msg = "");
-    // bool addEventHandler(std::string id, Evt* (*)(bool, string));
 };
 
 class ArduException : public std::exception {
@@ -175,4 +188,3 @@ extern ardulator::BitValue DDRD;
 extern ardulator::BitValue PORTD;
 
 #endif /* ARDULATOR_CONFIG_H */
-
