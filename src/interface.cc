@@ -1,5 +1,7 @@
+// Copyright John Harrison, 2011
+
 #include <cstdlib>
-#include <iostream>
+
 #include "arduino.h"
 #include "ardulator.h"
 
@@ -53,19 +55,12 @@ extern void initalize_simulator() {
 extern "C" bool register_signal(SignalImp* first) {
   initalize_simulator();
 
-  cout << "Registering signal...\n";
-  cout << "Signal ID: " << first->name << endl;
+  puts("Registering signal...\n");
+  printf("Signal ID: %s\n", first->name);
   PinConfig* pin = new PinConfig();
   pin->signal_.current_ = first;
   pin->signal_.head_ = first;
   ardu->unused_pin_config_.insert(make_pair(std::string(first->name), pin));
-
-  SignalImp* p = first;
-  int c = 0;
-  while (p) {
-    c++;
-    p = p->next;
-  }
 
   return true;
 }

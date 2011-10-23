@@ -1,5 +1,7 @@
 VEE_TARGET=student.cc
 PYSIDE_UIC=/usr/local/bin/pyside-uic
+CC=clang
+CXX=clang++
 
 DOXYGEN = doxygen
 

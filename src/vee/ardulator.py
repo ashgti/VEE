@@ -1,3 +1,4 @@
+# Copyright John Harrison, 2011
 """
 Ardulator Interfaces
 
@@ -8,6 +9,7 @@ __author__ = "John Harrison <ash.gti@gmail.com>"
 __all__ = ['Arduino']
 
 import os
+import sys
 from ctypes import *
 from ctypes.util import find_library
 
@@ -96,20 +98,22 @@ class Ardulator(object):
         for s in self.signals:
             rate = self.signals[s].rate
             value = self.signals[s].value
+
+            print rate
+            print value
+
             dv = ValueImp()
             dv.digital = c_uint8(1)
             data = SignalImp(0.0, float(rate.duration), dv, value.type_id, s, None)
             orig_data = data
             runtime = 0
             while runtime < self.length:
-                next_in = float(self.signals[s].rate.next())
+                next_in = float(rate.next())
                 runtime += next_in
 
-                rate = self.signals[s].rate
-                value = self.signals[s].value
                 dv = ValueImp()
-                dv.digital = c_uint8(1)
-                next_data = SignalImp(runtime, float(rate.duration), dv, value.type_id, "AB", None)
+                dv.digital = c_uint8(value.next_value())
+                next_data = SignalImp(runtime, float(rate.duration), dv, value.type_id, s, None)
                 data.next = pointer(next_data)
                 data = next_data
             self._data[s] = orig_data

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# Copyright John Harrison, 2011
 """
 MainWindow is the driver program for the GUI components of VEE.
 """
@@ -37,7 +38,7 @@ class ApplicationRunner(object):
         """
         Run the scenario with the current configuration files.
         """
-        print Popen(['python', 'src/vee-cmd.py', 'abc'], stdout=PIPE, stderr=PIPE).communicate()[0]
+        print Popen(['python', 'src/vee-cmd.py', 'llll'], stdout=PIPE, stderr=PIPE).communicate()[0]
 
     def results(self):
         """
@@ -61,9 +62,6 @@ class MainWindow(QtGui.QMainWindow):
         self.connectComponents()
         self.ui.outputPinsList.setCurrentRow(0)
 
-    def saveConfiguration(self):
-        print self.settings
-
     def connectComponents(self):
         "Connects the various UI components to python functions."
         ui = self.ui
@@ -74,6 +72,7 @@ class MainWindow(QtGui.QMainWindow):
         ui.actionNew_Scenario.triggered.connect(self.resetData)
         ui.actionSave.triggered.connect(self.saveScenario)
         ui.actionRun.triggered.connect(self.runScenario)
+        ui.actionOpen.triggered.connect(self.openScenario)
 
         # Add Validators
         ui.uniA.setValidator(QtGui.QDoubleValidator(0.0, float("inf"), 10, ui.uniA))
@@ -100,13 +99,14 @@ class MainWindow(QtGui.QMainWindow):
         ui.sineWave.clicked.connect(self.updatePinConfiguration)
         ui.squareWave.clicked.connect(self.updatePinConfiguration)
         ui.maxAnalogValue.textEdited.connect(self.updatePinConfiguration)
+        ui.serialLineEdit.textEdited.connect(self.updatePinConfiguration)
 
         # Button Behaviors
         ui.browserFiles.clicked.connect(self.browse)
 
         ui.addSignal.clicked.connect(self.addSignal)
         ui.pushRun.clicked.connect(self.runScenario)
-        
+
         # A useful default. Should not exist in production.
         if os.path.isfile("/Users/john/Projects/VEE/student.cc"):
             self.ui.studentFiles.addItem("/Users/john/Projects/VEE/student.cc")
@@ -205,19 +205,15 @@ class MainWindow(QtGui.QMainWindow):
             raise ConfigurationError("Unknown pin type.")
 
         self.settings[self.getCurrentSignalId()] = pinData
-        print self.settings
-        print pinData
 
     def resetData(self):
         "Resets the currently stored data."
         self.settings = {}
-        
+
     def browse(self):
         "Browers for listing emulation files."
         (filename, _) = QtGui.QFileDialog.getOpenFileName(self, "Find Files",
                 QtCore.QDir.currentPath())
-
-        print filename
 
         if filename:
             if not self.ui.studentFiles.findItems(filename, QtCore.Qt.MatchExactly):
@@ -229,9 +225,20 @@ class MainWindow(QtGui.QMainWindow):
             self.ui.studentFiles.setCurrentIndex(index)
 
 
+    def openScenario(self):
+        """
+        Open a given scenario's configuration.
+        """
+        fileName, _ = QtGui.QFileDialog.getOpenFileName(self, "Open File",
+            QtCore.QDir.currentPath())
+        if fileName:
+            with open(fileName, 'r') as f:
+                self.settings = pickle.load(f)
+                for x in self.settings:
+                    self.ui.outputPinsList.addItem(x)
+
     def saveScenario(self):
         "Saves the settings"
-        print 'Help'
         print "Saveing", self.settings
         print "Pickled", pickle.dumps(self.settings)
         (filename, _) = QtGui.QFileDialog.getSaveFileName(self)
@@ -240,26 +247,10 @@ class MainWindow(QtGui.QMainWindow):
             return
         if not filename.endswith('.cfg'):
             filename += '.cfg'
-        
+
         print filename
         with open(filename, 'w+') as f:
             pickle.dump(self.settings, f)
-
-    # def saveFile(self, fileName):
-    #     file = QtCore.QFile(fileName)
-    #     if not file.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
-    #         QtGui.QMessageBox.warning(self, "Application",
-    #                 "Cannot write file %s:\n%s." % (fileName, file.errorString()))
-    #         return False
-    # 
-    #     outf = QtCore.QTextStream(file)
-    #     QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
-    #     outf << self.textEdit.toPlainText()
-    #     QtGui.QApplication.restoreOverrideCursor()
-    # 
-    #     self.setCurrentFile(fileName);
-    #     self.statusBar().showMessage("File saved", 2000)
-    #     return True
 
     @QtCore.Slot(int)
     def onOutputPinsListSelect(self, value, previous_value):
@@ -275,18 +266,16 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.uniB.setEnabled(False)
         self.ui.uniDuration.clear()
         self.ui.uniDuration.setEnabled(False)
-        
+
         self.ui.digital.setChecked(False)
         self.ui.maxAnalogValue.clear()
         self.ui.serialLineEdit.clear()
-        
+
         self.ui.sineWave.setEnabled(False)
         self.ui.squareWave.setEnabled(False)
         self.ui.maxAnalogValue.setEnabled(False)
         self.ui.serialLineEdit.setEnabled(False)
-        
-        print value.text()
-        
+
         if value.text() in self.settings:
             pinData = self.settings[value.text()]
             if pinData['signalType'] == 'exp':
@@ -310,6 +299,7 @@ class MainWindow(QtGui.QMainWindow):
             if pinData['dataType'] == 'digital':
                 self.ui.digital.setChecked(True)
             elif pinData['dataType'] == 'analog':
+                self.ui.analog.setChecked(True)
                 self.ui.sineWave.setEnabled(True)
                 self.ui.squareWave.setEnabled(True)
                 if pinData['waveForm'] == 'square':
@@ -319,6 +309,7 @@ class MainWindow(QtGui.QMainWindow):
                 self.ui.maxAnalogValue.setEnabled(True)
                 self.ui.maxAnalogValue.setText(pinData['maxAnalogValue'])
             elif pinData['dataType'] == 'serial':
+                self.ui.serial.setChecked(True)
                 self.ui.serialLineEdit.setEnabled(True)
                 self.ui.serialLineEdit.setText(pinData['serialLineEdit'])
             else:

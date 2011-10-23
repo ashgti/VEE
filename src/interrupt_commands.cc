@@ -1,8 +1,6 @@
-#include "arduino.h"
-#include <iostream>
-#include <string>
+// Copyright John Harrison, 2011
 
-using namespace std;
+#include "arduino.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,15 +20,16 @@ detachInterrupt(uint8_t pin_id) {
 /* Enable Interrupts */
 void
 sei() {
-    ardu->interrupts_ = true;
+    ardu->interrupts_enabled_ = true;
 }
 
 /* Disable Interrupts */
 void
 cli() {
-    ardu->interrupts_ = false;
+    ardu->interrupts_enabled_ = false;
 }
 
 #ifdef __cplusplus
 } /* end excern "C" */
 #endif
+

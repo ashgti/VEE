@@ -1,7 +1,12 @@
-# Copyright (c) 2011 John Harrison
+# Copyright John Harrison, 2011
 
 __all__ = [ 'Exp', 'Uni', 'Digital', 'Analog', 'Serial',
             'SineWave', 'SquareWave', 'generate_signal']
+
+
+DIGITAL_ID = 1 << 0
+SERIAL_ID = 1 << 1
+ANALOG_ID = 1 << 2
 
 def generate_signal(pin_data):
     print pin_data
@@ -25,9 +30,6 @@ class Signal(object):
         self.rate = rate
         self.value = value
 
-    def validate_pin(self):
-        assert not hasattr(super(Signal, self), 'validate_pin')
-
 class Exp(object):
     def __init__(self, l, duration):
         self.l = l
@@ -42,15 +44,14 @@ class Uni(object):
         self.b = b
         self.duration = duration
 
-# class Data(object):
-#     def __init__(self, pin_id):
-#         self.pins = [pin_id]
+    def next(self):
+        return 1
 
 class Digital(object):
     def __init__(self, **kwargs):
         super(Digital, self).__init__(**kwargs)
         self._last_value = 0
-        self.type_id = 1 << 0
+        self.type_id = DIGITAL_ID
 
     def next_value(self):
         self._last_value += 1
@@ -59,7 +60,7 @@ class Digital(object):
 class Serial(object):
     def __init__(self, string, **kwargs):
         self._next_value = string
-        self.type_id = 1 << 1
+        self.type_id = SERIAL_ID
 
     def next_value(self):
         return self._next_value
@@ -67,7 +68,7 @@ class Serial(object):
 class Analog(object):
     def __init__(self, **kwargs):
         super(Analog, self).__init__(**kwargs)
-        self.type_id = 1 << 2
+        self.type_id = ANALOG_ID
 
     def next_value(self, pin_id):
         assert 0 > pin_id > 5

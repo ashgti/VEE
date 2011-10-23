@@ -1,3 +1,5 @@
+// Copyright John Harrison, 2011
+
 /* 
  * Pin Commands
  */

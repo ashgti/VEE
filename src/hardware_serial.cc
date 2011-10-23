@@ -1,9 +1,11 @@
+// Copyright John Harrison, 2011
+
+#include <string>
+
 #include "ardulator.h"
 #include "arduino.h"
-#include <fstream>
-#include <iostream>
 
-using namespace std;
+using ::std::string;
 
 int pin_register[8];
 
@@ -178,8 +180,8 @@ HardwareSerial::HardwareSerial(int rx, int tx) : _rxen(rx), _txen(tx), _rb_head(
 }
 
 HardwareSerial::~HardwareSerial() {
-    if (_ofile.is_open())
-        _ofile.close();
+    if (_ofile != NULL)
+        fclose(_ofile);
 }
 
 void HardwareSerial::begin(long b) {
@@ -187,21 +189,21 @@ void HardwareSerial::begin(long b) {
     _baud = b;
     char filename[50];
     if (_rxen == 255 && _txen == 254) {
-        _ofile.open("serial.default.output.txt", fstream::out | fstream::trunc);
+        _ofile = fopen("serial.default.output.txt", "w+");
     }
     else {
         sprintf(filename, "serial.%d.%d.output.txt", _rxen, _txen);
-        _ofile.open(filename, fstream::out | fstream::trunc);
+        _ofile = fopen(filename, "w+");
     }
 }
 
-uint8_t HardwareSerial::pin() {
+uint8_t HardwareSerial::pin() const {
     return _rxen;
 }
 
 void HardwareSerial::end() {
-    if (_ofile.is_open())
-        _ofile.close();
+    if (_ofile != NULL)
+        fclose(_ofile);
 }
 
 uint8_t HardwareSerial::available(void) {
@@ -215,11 +217,11 @@ int HardwareSerial::read(void) {
 }
 
 void HardwareSerial::flush(void) {
-    
+  fflush(_ofile);
 }
 
 void HardwareSerial::write(uint8_t c) {
-    _ofile << (char)c;
-    
-    ardu->addTicks(5);
+  fprintf(_ofile, "%c", static_cast<char>(c));
+
+  ardu->addTicks(5);
 }

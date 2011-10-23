@@ -1,32 +1,21 @@
-// vim: sw=2:sts=2:expandtab
+// Copyright John Harrison, 2011
 
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
 #include <cmath>
-#include <fstream>
-#include <sstream>
 #include <cassert>
 #include <iomanip>
 #include <cstdio>
-#include <iostream>
 
 #include "ardulator.h"
 #include "arduino.h"
 
 using ::std::string;
-using ::std::cout;
-using ::std::cerr;
-using ::std::endl;
-using ::std::setw;
-using ::std::setfill;
-using ::std::ifstream;
-using ::std::fstream;
 using ::std::map;
 using ::std::vector;
-using ::std::istringstream;
-using ::std::ostringstream;
+using ::std::fprintf;
 using ::std::make_pair;
 
 extern "C" void loop() __attribute__((weak));
@@ -34,23 +23,21 @@ extern "C" void setup() __attribute__((weak));
 
 namespace ardulator {
 
+using ::ardulator::containers::Clock;
+
 class EmulatorFinished {
 } ef;
 
 ProcessingSignalException p;
 
-static void print_clock(string n, ArdulatorClock t){
-  ardu->debug_ << n << " " << t.seconds_ << "." << setw(FIELD_WIDTH)
-               << setfill('0') << t.ticks_ << std::endl;
+void print_clock(FILE *file, string n, Clock t) {
+  fprintf(file, "%s %d.%05d\n", n.c_str(), t.seconds_, t.ticks_);
 }
 
 Ardulator::Ardulator() : runtime_(0.0), ticks_(0), total_ticks_(0),
                          registered_identifers_(""), scenario_length_(0, 0),
                          inside_interrupt_handler_(false), prepared_(false),
-                         timer_(0, 0), interrupts_(false) {
-  log_.exceptions ( ifstream::failbit | ifstream::badbit );
-  debug_.exceptions ( ifstream::failbit | ifstream::badbit );
-
+                         timer_(0, 0), interrupts_enabled_(false) {
   struct stat buffer;
   int status = stat("./logs", &buffer);
 
@@ -60,27 +47,19 @@ Ardulator::Ardulator() : runtime_(0.0), ticks_(0), total_ticks_(0),
     }
   }
 
-  log_.open("./logs/dispatch.log", fstream::out | fstream::trunc);
-  debug_.open("./logs/debug.log",  fstream::out | fstream::trunc);
+  log_ = fopen("./logs/dispatch.log", "w+");
+  debug_ = fopen("./logs/debug.log",  "w+");
 }
 
 Ardulator::~Ardulator() {
-  if (log_.is_open()) {
-    log_ << "\n\n";
-    log_.flush();
-    log_.close();
+  if (log_ != NULL) {
+    fprintf(log_, "\n\n");
+    fclose(log_);
   }
-  if (debug_.is_open()) {
-    debug_ << "\n\n";
-    debug_.flush();
-    debug_.close();
+  if (debug_ != NULL) {
+    fprintf(debug_, "\n\n");
+    fclose(debug_);
   }
-
-  // for (PinConfigIterator it = pin_config_.begin();
-  //      it != pin_config_.end();
-  //      it++) {
-  //   delete it->second;
-  // }
 }
 
 void Ardulator::configurePin(uint8_t pin_id, uint8_t mode) {
@@ -88,13 +67,15 @@ void Ardulator::configurePin(uint8_t pin_id, uint8_t mode) {
 
   if (it != pin_config_.end()) {
     pin_config_[pin_id]->mode_ = mode;
-    debug_ << "Configuring Pin " << (int)pin_id << " to mode: "
-           << (int)mode <<  "\n";
+    fprintf(debug_, "Configuring Pin %d to mode: %d\n", pin_id, mode);
   } else {
-    debug_ << "Error, pin configured that is not registed\n";
+    fprintf(debug_, "Error, pin configured that is not registed\n");
   }
 }
 
+/**
+ * 
+ */
 void Ardulator::prepareScenario() {
   if (prepared_) {
     return;
@@ -112,23 +93,26 @@ void Ardulator::prepareScenario() {
   }
 }
 
+/**
+ * Run the scenario for a given amount of time.
+ */
 double Ardulator::runScenario(double length) {
   prepareScenario();
 
-  scenario_length_.seconds_ = (int)length;
+  scenario_length_.seconds_ = static_cast<int>(length);
   scenario_length_.ticks_ = (length - floor(length)) * TICKS_PER_SECOND;
 
-  cout << "Running for: " << length << endl;
+  printf("Running for: %lf\n", length);
 
-  debug_ << "Attempting to run the Scenario\n\n";
+  fprintf(debug_, "Attempting to run the Scenario\n\n");
 
-  print_clock("Scenario Length: ", scenario_length_);
-  print_clock("Runtime Timer:", timer_);
+  print_clock(debug_, "Scenario Length: ", scenario_length_);
+  print_clock(debug_, "Runtime Timer:", timer_);
 
   try {
     updatePinState();
   }
-  catch (EmulatorFinished &e) {
+  catch(const EmulatorFinished &e) {
   }
   while (runtime_ < length) {
     try {
@@ -136,17 +120,16 @@ double Ardulator::runScenario(double length) {
       addTicks(LOOP_CONST);
       updatePinState();
     }
-    catch (EmulatorFinished &e) {
+    catch(const EmulatorFinished &e) {
       break;
     }
   }
   finalizePinState();
-  print_clock("Scenario Length: ", scenario_length_);
-  print_clock("Runtime Timer:", timer_);
+  print_clock(debug_, "Scenario Length: ", scenario_length_);
+  print_clock(debug_, "Runtime Timer:", timer_);
 
-  cout << "--------------------------\n";
-
-  cout << "Runtime: " << runtime_ << endl;
+  printf("--------------------------\n");
+  printf("Runtime: %lf\n", runtime_);
 
   return runtime_;
 }
@@ -165,7 +148,9 @@ void Ardulator::addTicks(uint64_t length) {
   runtime_ = timer_.seconds_ + (timer_.ticks_ / TICKS_PER_SECOND);
 }
 
-
+/**
+ * Update the pins so they are connected to the various memory registers.
+ */
 void Ardulator::updatePinMaps() {
   for (PinConfigIterator it = pin_config_.begin();
        it != pin_config_.end();
@@ -173,93 +158,17 @@ void Ardulator::updatePinMaps() {
     if (it->first >= 0 || it->first < 8) {
       it->second->bit_mask_ = 1 << it->first;
       it->second->bit_container_ = PORTD.getStateRef();
-    }
-    else if (it->first >= 8 || it->first < 14) {
+    } else if (it->first >= 8 || it->first < 14) {
       it->second->bit_mask_ = 1 << (8 - it->first);
       it->second->bit_container_ = PORTB.getStateRef();
-    }
-    else if (it->first >= 16 || it->first < 22) {
+    } else if (it->first >= 16 || it->first < 22) {
       it->second->bit_mask_ = 1 << (16 - it->first);
       it->second->bit_container_ = PORTC.getStateRef();
-    }
-    else {
+    } else {
       throw "Error this pin is out of bounds.";
     }
   }
 }
-
-// TODO(ashgti): Fixup this function. Needs to dispatch interrupts.
-inline
-void
-dispatching_interrupt(// ardu_clock_t &t, int new_state) {
-  ) {
-  do {
-    double next = calcNext(new_state);
-    if (next == 0)
-      continue;
-    ardu_clock_t old = _next;
-    int old_state = _state;
-    int overflow = 0;
-    _next._ticks += (next - floor(next)) * TICKS_PER_SECOND;
-    if (_next._ticks > TICKS_PER_SECOND) {
-      _next._ticks -= TICKS_PER_SECOND;
-      overflow = 1;
-    }
-    _next._seconds += floor(next) + overflow;
-
-    ardu->_debug << "Signal: " << _name << " switched to ";
-    if (new_state == HIGH) {
-      ardu->_debug << "HIGH";
-    }
-    else {
-      ardu->_debug << "LOW";
-    }
-    ardu->_debug << " @ " << old._seconds << "." 
-                 << setw(FIELD_WIDTH) << setfill('0') << old._ticks << "\n";
-    _state = new_state;
-    
-    if (_bit_container)
-      *_bit_container = _bit_mask & 0xf;
-    
-    map<int, std::pair<int, void (*)(void)> >::iterator map_iter = ardu->_interrupt_map.find(ardu->_mapping[_name]);
-    
-    // cout << "Name: " << _name << endl;
-    // cout << "Map found: " << ardu->_mapping[_name] << endl;
-    if (_state == LOW) {
-      // LOW EVENT
-      if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == LOW) {
-        map_iter->second.second();
-      }
-    }
-    if (old_state == LOW && _state == HIGH) {
-      // FIRE RISING EVENT
-      if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == RISING) {
-        map_iter->second.second();
-      }
-      _history.total_evts += 1;
-      // _caught_flag = false;
-    }
-    if (old_state != _state) {
-      // FIRE CHANGED EVENT
-      if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == CHANGE) {
-        map_iter->second.second();
-      }
-    }
-    if (old_state == HIGH && _state == LOW) {
-      // FIRE FALLING EVENT
-      if (ardu->_interrupts == true && map_iter != ardu->_interrupt_map.end() && map_iter->second.first == FALLING) {
-          map_iter->second.second();
-      }
-      // if (_caught_flag == false) {
-          // _history.missed_evts += 1;
-      // }
-    }
-  } while (t._seconds > _next._seconds || (t._seconds == _next._seconds &&
-              t._ticks > _next._ticks));
-}
-
-
-
 
 // TODO(ash_gti): Fix this function.
 /**
@@ -268,57 +177,37 @@ dispatching_interrupt(// ardu_clock_t &t, int new_state) {
  */
 void Ardulator::updatePinState() {
   // Report Changes in State
-  size_t c = 0;
+  // TODO(ashgti): Handle interrupts.
   inside_interrupt_handler_ = true;
 
   PinConfigIterator it;
-  for (it = pin_config_.begin(); it != pin_config_.end(); it++) {
-    PinConfig *pin = it->second;
-    c++;
-    if (runtime_ > pin->signal_.current_->tick) {
-      pin->signal_.current_ = pin->signal_.current_->next;
-    }
-  }
-
-  // printf("Updating the pins: %zu\n", c);
-
-  for (it = pin_config_.begin(); it != pin_config_.end(); it++) {
-    c++;
-    // cout << "Updating " << it->first << endl;
+  for (it = pin_config_.begin();
+       it != pin_config_.end();
+       it++) {
     it->second->setState(timer_);
   }
-  
-  vector<Signal*>::iterator vit;
-  for (vit = _unused_signals.begin(); vit != _unused_signals.end(); vit++) {
-      (*vit)->setState(_timer);
+
+  UnusedPinConfigIterator vit;
+  for (vit = unused_pin_config_.begin();
+       vit != unused_pin_config_.end();
+       vit++) {
+    vit->second->setState(timer_);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   inside_interrupt_handler_ = false;
 
   if ((timer_.seconds_ > scenario_length_.seconds_) ||
         (timer_.seconds_ == scenario_length_.seconds_ &&
          timer_.ticks_ >= scenario_length_.ticks_)) {
-    cout << "time: " << timer_.seconds_ << "." << timer_.ticks_ << endl;
-    cout << "scenario: " << scenario_length_.seconds_ << "."
-         << scenario_length_.ticks_ << endl;
+    print_clock(stdout, "Scenario Length: ", scenario_length_);
+    print_clock(stdout, "Runtime Timer:", timer_);
     throw ef;
   }
 }
 
+/**
+ * For each pin, finalize the state of the pin.
+ */
 void Ardulator::finalizePinState() {
   // Report Changes in State
   PinConfigIterator it;
@@ -327,13 +216,17 @@ void Ardulator::finalizePinState() {
   }
 }
 
+/**
+ * Returns current time as a double instead of the internal time structure
+ * format.
+ */
 double Ardulator::now() {
-  return static_cast<double>(timer_.seconds_)
-      + (static_cast<double>(timer_.ticks_)
-      /  static_cast<double>(TICKS_PER_FREQ));
+  return timer_.now();
 }
 
-/*
+/**
+ * Get the value of a given pin and increment the clock based off the kind of
+ * access.
  * Analog Reads take 100 ms
  * Digital Reads 58 cycles
  */
@@ -364,8 +257,10 @@ void Ardulator::setPin(uint8_t pin_id, uint8_t val) {
 void Ardulator::dispatchSignal(const char *signal_id) {
 #ifdef NOISY_WARNINGS
   if (_inside_interrupt_handler) {
-    debug_ << "Error, processingSignal " << signal_id << " while within an interrupt"
-           << " handler is not allowed." << endl;
+    fprintf(debug_,
+            "Error, processingSignal %d while within an interrupt handler is "
+            "not allowed.\n",
+            signal_id);
     exit(1);
   }
 #endif /* end NOISY_WARNINGS */
@@ -376,13 +271,16 @@ void Ardulator::dispatchSignal(const char *signal_id) {
     return;
   }
 
-  double processing_time = pin_config_[signal_names_[signal_id]]->signal_.current_->duration;
+  size_t id = signal_names_[signal_id];
+  double processing_time = pin_config_[id]->signal_.current_->duration;
   int wait_till = 0;
 
   wait_till = static_cast<int>(processing_time * TICKS_PER_SECOND);
 
-  log_ << "Dispatching signal " << signal_id << " for " << signal_names_[signal_id]
-       << " a " << wait_till << endl;
+  fprintf(log_, "Dispatching signal %s for %d a %d\n",
+                signal_id,
+                signal_names_[signal_id],
+                wait_till);
 
   while (wait_till) {
      wait_till--;
@@ -392,17 +290,18 @@ void Ardulator::dispatchSignal(const char *signal_id) {
 }
 
 string Ardulator::timestamp() {
-  ostringstream result(ostringstream::out);
-  result << static_cast<int>(timer_.seconds_) << "s " << static_cast<int>(timer_.ticks_) << "t";
-  return result.str();
+  char result[100];
+  snprintf(result, 100, "%ds %dt", timer_.seconds_, timer_.ticks_);
+  return string(result);
 }
 
 void Ardulator::addPin(string signal_name, uint8_t pin_id) {
-  printf("Adding pin %s\n", signal_name.c_str());
+  printf("Adding pin %s %d\n", signal_name.c_str(), pin_id);
   UnusedPinConfigIterator it = unused_pin_config_.find(signal_name);
 
   if (it != unused_pin_config_.end()) {
     printf("Moving pointer\n");
+    it->second->pid_ = pin_id;
     pin_config_[pin_id] = it->second;
     unused_pin_config_.erase(it);
   }
@@ -410,7 +309,7 @@ void Ardulator::addPin(string signal_name, uint8_t pin_id) {
   signal_names_[signal_name] = pin_id;
 }
 
-void Ardulator::addSerial(string signal_name, HardwareSerial &serial) {
+void Ardulator::addSerial(string signal_name, const HardwareSerial &serial) {
   signal_names_[signal_name] = serial.pin();
 }
 
@@ -423,7 +322,9 @@ void Ardulator::report() {
 
   // vector<Signal*>::iterator vit;
   UnusedPinConfigIterator vit;
-  for (vit = unused_pin_config_.begin(); vit != unused_pin_config_.end(); vit++) {
+  for (vit = unused_pin_config_.begin();
+       vit != unused_pin_config_.end();
+       vit++) {
     // (*vit)->report(false);
   }
 }
@@ -437,7 +338,9 @@ void Ardulator::report() {
 void Ardulator::registerInterrupt(uint8_t pin_id,
                                   void (*fn)(void),
                                   uint8_t mode) {
-  interrupt_map_[pin_id] = make_pair(mode, fn);
+  printf("Registering interrupt %d\n", pin_id);
+  interrupts_[pin_id] = make_pair(mode, fn);
+  pin_config_[pin_id]->interrupt_ = true;
 }
 
 /**
@@ -445,9 +348,11 @@ void Ardulator::registerInterrupt(uint8_t pin_id,
  * @param pin_id the interrupt to remove.
  */
 void Ardulator::dropInterrupt(uint8_t pin_id) {
-  interrupt_map_.erase(pin_id);
-  cout << "Dropped int on " << pin_id << endl;
+  interrupts_.erase(pin_id);
+  pin_config_[pin_id]->interrupt_ = false;
+  printf("Dropped int on %d\n", pin_id);
 }
 
-} // END namespace ardulator
+}  // END namespace ardulator
 
+// vim: sw=2:sts=2:expandtab

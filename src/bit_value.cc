@@ -1,121 +1,128 @@
+// Copyright John Harrison, 2011
+
+/**
+ * 
+ */
+
 #include "ardulator/bit_value.h"
 #include "arduino.h"
 
 namespace ardulator {
+namespace containers {
 
 /* TODO: Add clock ticks */
-BitValue::BitValue() : _ro(false), _state(0) { }
-BitValue::BitValue(uint8_t ref, bool readonly) : _ro(readonly), _state(ref) {
-}
-    
-void 
-BitValue::updateState(int s) {
-    _state = s;
-}
-    
-int
-BitValue::getState() const {
-    return _state;
+BitValue::BitValue() : ro_(false), state_(0) { }
+BitValue::BitValue(uint8_t ref, bool readonly) : ro_(readonly), state_(ref) {
 }
 
-volatile uint8_t* 
-BitValue::getStateRef() {
-    return &_state;
+void
+BitValue::updateState(uint8_t s) {
+    state_ = s;
 }
 
-BitValue& 
+uint8_t
+BitValue::state() const {
+    return state_;
+}
+
+volatile uint8_t* BitValue::getStateRef() {
+    return &state_;
+}
+
+BitValue&
 BitValue::operator=(const int &b) {
-    _state = b;    
+    state_ = b;
     return *this;
 }
-        
+
 BitValue
 BitValue::operator^(const int &b) const {
-    return BitValue(_state ^ b);
+    return BitValue(state_ ^ b);
 }
 
 BitValue
 BitValue::operator|(const int &b) const {
-    return BitValue(_state | b);
+    return BitValue(state_ | b);
 }
 
 BitValue
 BitValue::operator&(const int &b) const {
-    return BitValue(_state & b);
+    return BitValue(state_ & b);
 }
 
-BitValue& 
+BitValue&
 BitValue::operator^=(const int &b) {
-    if (!_ro)
-        _state ^= b;
+    if (!ro_)
+        state_ ^= b;
     return *this;
 }
 
-BitValue& 
+BitValue&
 BitValue::operator|=(const int &b) {
-    if (!_ro)
-        _state |= b;
+    if (!ro_)
+        state_ |= b;
     return *this;
 }
 
-BitValue& 
+BitValue&
 BitValue::operator&=(const int &b) {
-    if (!_ro)
-        _state &= b;
+    if (!ro_)
+        state_ &= b;
     return *this;
 }
 
-BitValue& 
+BitValue&
 BitValue::operator^=(const BitValue &b) {
-    if (!_ro)
-        _state ^= const_cast<BitValue&>(b).getState();
+    if (!ro_)
+        state_ ^= const_cast<BitValue&>(b).state();
     return *this;
 }
 
-BitValue& 
+BitValue&
 BitValue::operator|=(const BitValue &b) {
-    if (!_ro)
-        _state |= const_cast<BitValue&>(b).getState();
+    if (!ro_)
+        state_ |= const_cast<BitValue&>(b).state();
     return *this;
 }
 
-BitValue& 
+BitValue&
 BitValue::operator&=(const BitValue &b) {
-    if (!_ro)
-        _state &= const_cast<BitValue&>(b).getState();
+    if (!ro_)
+        state_ &= const_cast<BitValue&>(b).state();
     return *this;
 }
 
-BitValue& 
+BitValue&
 BitValue::operator=(const BitValue &b) {
-    if (!_ro)
-        _state = const_cast<BitValue&>(b).getState();    
+    if (!ro_)
+        state_ = const_cast<BitValue&>(b).state();
     return *this;
 }
 
 BitValue
 BitValue::operator ~() const {
-    return BitValue(~_state);
+    return BitValue(~state_);
 }
-        
+
 BitValue
 BitValue::operator^(const BitValue &b) const {
-    return BitValue(_state ^ const_cast<BitValue&>(b).getState());
+    return BitValue(state_ ^ const_cast<BitValue&>(b).state());
 }
 
 BitValue
 BitValue::operator|(const BitValue &b) const {
-    return BitValue(_state | const_cast<BitValue&>(b).getState());
+    return BitValue(state_ | const_cast<BitValue&>(b).state());
 }
 
 BitValue
 BitValue::operator&(const BitValue &b) const {
-    return BitValue(_state & const_cast<BitValue&>(b).getState());
+    return BitValue(state_ & const_cast<BitValue&>(b).state());
 }
 
 BitValue::operator int() {
-    return _state;
+    return state_;
 }
 
-} // END namespace ardulator
+}  // end namespace containers
+}  // end namespace ardulator
 

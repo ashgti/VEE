@@ -1,3 +1,5 @@
+# Copyright John Harrison, 2011
+
 import numpy as np
 from matplotlib import use
 use('AGG')

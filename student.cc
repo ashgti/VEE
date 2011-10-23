@@ -1,6 +1,9 @@
-#include "arduino.h"
+// Copyright John Harrison, 2011
+
 #include <iostream>
 #include <string>
+
+#include "arduino.h"
 
 using namespace std;
 
@@ -32,7 +35,8 @@ void setup() {
 }
 
 void blink() {
-  int val = PORTD & _BV(1);
+  // std::cout << "bv: " << _BV(1) << std::endl;
+  int val = (PORTD & _BV(1)) ? 1 : 0;
   std::cout << "val: " << val << std::endl;
   int_count++;
   PORTB |= _BV(5);
@@ -40,26 +44,21 @@ void blink() {
 
 void loop() {
   if (int_count > 0) {
-    std::cout << "Student File: Got an interrupt" << std::endl;
     int_count = 0;
   }
   if (PORTB & _BV(5)) {
-    std::cout << "Student File: Yes it worked " << std::endl;
     PORTB = 0;
   }
   for (int i = 0; i < 4; i++) {
-    int reading = digitalRead(0);
+    int reading = digitalRead(i);
     if (reading == HIGH && reg[i] == false) {
-      if (string(signals[i]) == "b") {
-          cout << "Stduent File: Yes..." << endl;
-      }
-      // processSignal(signals[i]);
+      processSignal(signals[i]);
       reg[i] = true; 
       Serial.print("dispatched ");
       Serial.println(signals[i]);
     }
     if (reading == LOW && reg[i] == true) {
-      reg[0] = false; 
+      reg[i] = false;
     }
   }
   // std::cout << "End loop..." << std::endl;

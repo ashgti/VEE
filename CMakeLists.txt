@@ -1,9 +1,9 @@
 cmake_minimum_required (VERSION 2.6)
 project (VEE)
 
-include_directories ("${PROJECT_SOURCE_DIR}/include")
+include_directories ("${PROJECT_SOURCE_DIR}" "${PROJECT_SOURCE_DIR}/include")
 
-add_definitions(-g -Wall -W -Wno-unused-parameter -Wwrite-strings -pedantic -Wno-long-long)
+add_definitions(-O3 -g -Wall -W -Wno-unused-parameter -Wwrite-strings -pedantic -Wno-long-long)
 
 if(APPLE)
   set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")

@@ -1,11 +1,14 @@
-#include "ardulator.h"
-#include "arduino.h"
+// Copyright John Harrison, 2011
+
+#include <getopt.h>
+
 #include <cstdio>
 #include <string>
-#include <iostream>
-#include <fstream>
 #include <algorithm>
-#include <getopt.h>
+
+#include "ardulator.h"
+#include "arduino.h"
+
 
 namespace ardulator {
 
@@ -13,7 +16,7 @@ void setupArduino() {
     ardu = new ardulator::Ardulator();
 }
 
-} // end namespace ardulator
+}  // end namespace ardulator
 
 /* Globalally Used Values */
 ardulator::Ardulator *ardu = NULL;
@@ -30,12 +33,12 @@ ardulator::Ardulator *ardu = NULL;
  *      DDRC - The Port C Data Direction Register - read/write
  *      PORTC - The Port C Data Register - read/write
  */
-ardulator::BitValue DDRB;
-ardulator::BitValue PORTB;
+ardulator::containers::BitValue DDRB;
+ardulator::containers::BitValue PORTB;
 
-ardulator::BitValue DDRC;
-ardulator::BitValue PORTC;
+ardulator::containers::BitValue DDRC;
+ardulator::containers::BitValue PORTC;
 
-ardulator::BitValue DDRD;
-ardulator::BitValue PORTD;
+ardulator::containers::BitValue DDRD;
+ardulator::containers::BitValue PORTD;
 

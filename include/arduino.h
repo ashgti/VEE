@@ -22,20 +22,20 @@
   $Id: wiring.h 804 2009-12-18 16:05:52Z dmellis $
 */
 
-#ifndef ARDUINO_API_H
-#define ARDUINO_API_H
+#ifndef INCLUDE_ARDUINO_H_
+#define INCLUDE_ARDUINO_H_
 
-#include <string>
-#include <fstream>
 #include <stdint.h>
 #include <stdlib.h>
-// #include <avr/io.h>
-// #include <avr/config.h>
+#include <avr/config.h>
+
+#include <string>
+
 #include "binary.h"
 #include "ardulator.h"
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
 
 #define HIGH 0x1
@@ -76,11 +76,12 @@ extern "C"{
 #undef abs
 #endif
 
-#define min(a,b) ((a)<(b)?(a):(b))
-#define max(a,b) ((a)>(b)?(a):(b))
-#define abs(x) ((x)>0?(x):-(x))
-#define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
-#define round(x)     ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
+#define min(a, b) ((a) < (b)?(a):(b))
+#define max(a, b) ((a) > (b)?(a):(b))
+#define abs(x) ((x) > 0?(x):-(x))
+#define constrain(amt, low, high) ((amt) < (low)?(low):((amt) > (high)? \
+                                   (high):(amt)))
+#define round(x)     ((x) >= 0 ? (long)((x) + 0.5):(long)((x) - 0.5))
 #define radians(deg) ((deg)*DEG_TO_RAD)
 #define degrees(rad) ((rad)*RAD_TO_DEG)
 #define sq(x) ((x)*(x))
@@ -88,9 +89,9 @@ extern "C"{
 #define interrupts() sei()
 #define noInterrupts() cli()
 
-#define clockCyclesPerMicrosecond() ( F_CPU / 1000000L )
-#define clockCyclesToMicroseconds(a) ( (a) / clockCyclesPerMicrosecond() )
-#define microsecondsToClockCycles(a) ( (a) * clockCyclesPerMicrosecond() )
+#define clockCyclesPerMicrosecond() (F_CPU / 1000000L)
+#define clockCyclesToMicroseconds(a) ((a) / clockCyclesPerMicrosecond())
+#define microsecondsToClockCycles(a) ((a) * clockCyclesPerMicrosecond())
 
 #define lowByte(w) ((uint8_t) ((w) & 0xff))
 #define highByte(w) ((uint8_t) ((w) >> 8))
@@ -98,7 +99,8 @@ extern "C"{
 #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
-#define bitWrite(value, bit, bitvalue) (bitvalue ? bitSet(value, bit) : bitClear(value, bit))
+#define bitWrite(value, bit, bitvalue) (bitvalue ? bitSet(value, bit) \
+                                                 : bitClear(value, bit))
 
 typedef unsigned int word;
 
@@ -141,7 +143,7 @@ void processSignal(const char* signal_id);
 void registerPin(const char* signal_id, uint8_t pin_id);
 
 #ifdef __cplusplus
-} // extern "C"
+}  // extern "C"
 #endif
 
 #ifdef __cplusplus
@@ -167,7 +169,7 @@ extern void   initalize_simulator();
 extern void   reset_simulator();
 extern bool   register_signal(SignalImp* head);
 #ifdef __cplusplus
-} // end extern "C"
+}  // end extern "C"
 #endif
 
 #define DEC 10
@@ -176,10 +178,11 @@ extern bool   register_signal(SignalImp* head);
 #define BIN 2
 #define BYTE 0
 
-class Print {
+virtual class Print {
  private:
   void printNumber(unsigned long, uint8_t);
   void printFloat(double, uint8_t);
+
  public:
   virtual void write(uint8_t) = 0;
   virtual void write(const char *str);
@@ -221,7 +224,7 @@ class HardwareSerial : public Print {
   uint8_t _rb_head;
   uint8_t _rb_tail;
 
-  std::fstream _ofile;
+  FILE* _ofile;
  public:
     HardwareSerial(int rxPin, int txPin);
     ~HardwareSerial();
@@ -231,12 +234,12 @@ class HardwareSerial : public Print {
     int read(void);
     void flush(void);
     virtual void write(uint8_t);
-    uint8_t pin();
-    using Print::write; // pull in write(str) and write(buf, size) from Print
+    uint8_t pin() const;
+    using Print::write;  // pull in write(str) and write(buf, size) from Print
 };
 
-void registerSerial(const char* signal_id, HardwareSerial &serial);
+void registerSerial(const char* signal_id, const HardwareSerial &serial);
 
 extern HardwareSerial Serial;
 
-#endif /* ARDUINO_API_H */
+#endif  // INCLUDE_ARDUINO_H_

@@ -1,12 +1,14 @@
-#ifndef AVR_INTERRUPT_H_
-#define AVR_INTERRUPT_H_
+// Copyright John Harrison, 2011
+
+#ifndef INCLUDE_AVR_INTERRUPT_H_
+#define INCLUDE_AVR_INTERRUPT_H_
 
 #define _VECTOR(x)        x
 
 #define ISR(vector, ...)         \
-    extern "C" void vector (void); \
-    Foo vector##foo(vector);              \
-    void vector (void)
+    extern "C" void vector(void); \
+    Foo vector##foo(vector);        \
+    void vector(void)
 
 
 #define INT0_vect         _VECTOR(1)   /* External Interrupt Request 0 */
@@ -20,7 +22,7 @@
 #define TIMER2_OVF_vect   _VECTOR(9)   /* Timer/Counter2 Overflow */
 #define TIMER1_CAPT_vect  _VECTOR(10)  /* Timer/Counter1 Capture Event */
 #define TIMER1_COMPA_vect _VECTOR(11)  /* Timer/Counter1 Compare Match A */
-#define TIMER1_COMPB_vect _VECTOR(12)  /* Timer/Counter1 Compare Match B */ 
+#define TIMER1_COMPB_vect _VECTOR(12)  /* Timer/Counter1 Compare Match B */
 #define TIMER1_OVF_vect   _VECTOR(13)  /* Timer/Counter1 Overflow */
 #define TIMER0_COMPA_vect _VECTOR(14)  /* TimerCounter0 Compare Match A */
 #define TIMER0_COMPB_vect _VECTOR(15)  /* TimerCounter0 Compare Match B */
@@ -35,4 +37,4 @@
 #define TWI_vect          _VECTOR(24)  /* Two-wire Serial Interface */
 #define SPM_READY_vect    _VECTOR(25)  /* Store Program Memory Read */
 
-#endif /* AVR_INTERRUPT_H_ */
+#endif  // INCLUDE_AVR_INTERRUPT_H_

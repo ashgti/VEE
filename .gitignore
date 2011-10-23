@@ -12,3 +12,6 @@ dist
 *.pyo
 *.swp
 *_ui.py
+docs/doxygen/*
+serial.default.output.txt
+docs/doxygen.cfg

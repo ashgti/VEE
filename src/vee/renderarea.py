@@ -1,3 +1,5 @@
+# Copyright John Harrison, 2011
+
 import sys
 from math import pi, degrees
 from PySide import QtCore, QtGui
