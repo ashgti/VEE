@@ -98,7 +98,7 @@ double Ardulator::runScenario(double length) {
   scenario_length_.seconds_ = static_cast<int>(length);
   scenario_length_.ticks_ = (length - floor(length)) * TICKS_PER_SECOND;
 
-  printf("Running for: %lf\n", length);
+  printf("Running for: %f\n", length);
 
   fprintf(debug_, "Attempting to run the Scenario\n\n");
 
@@ -125,7 +125,7 @@ double Ardulator::runScenario(double length) {
   fprintf(debug_, "Runtime Timer: %s\n", timer_.str().c_str());
 
   printf("--------------------------\n");
-  printf("Runtime: %lf\n", runtime_);
+  printf("Runtime: %f\n", runtime_);
 
   return runtime_;
 }

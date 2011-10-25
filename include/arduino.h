@@ -204,7 +204,7 @@ void registerSerial(const char* signal_id, const HardwareSerial &serial);
 #define BIN 2
 #define BYTE 0
 
-virtual class Print {
+class Print {
  private:
   void printNumber(unsigned long, uint8_t);
   void printFloat(double, uint8_t);
