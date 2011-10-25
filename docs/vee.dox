@@ -1,0 +1,21 @@
+/*!
+\mainpage
+
+\author John Harrison <ash.gti@gmail.com>
+
+The <b>V</b>irtual <b>E</b>mulated <b>E</b>nvironment or \b VEE is an
+emulation system for learning about embedded systems and embedded system
+related problems.
+
+This is primarily a teaching tool, but could be used as a test platform for
+some Arduino Code.
+
+The VEE system targets the \b Atmega328p processor for the Arduino
+development enviorment. \b VEE implements some of the hardware details of
+the \b Atmega328p as well as most of the \b Arduino API's that sit on top of
+the Atmega processors.
+
+\see vee-gui.py
+\see vee-cmd.py
+
+ */

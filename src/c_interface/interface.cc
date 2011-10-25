@@ -16,15 +16,12 @@ using std::string;
 static double runtime = 0;
 static bool initalized = false;
 
-/**
- * Reset the simulation.
- */
 extern void reset_simulator() {
   runtime = 0;
 }
 
 extern void step() {
-  // TODO: implement step
+  /// \todo Implement step. To step through an execution of the emulation.
 }
 
 extern double run(double length) {
@@ -33,10 +30,6 @@ extern double run(double length) {
   return ardu->runScenario(length);
 }
 
-/**
- * initalize_simulator setups the basic simulator, needs to be called
- * at least once.
- */
 extern void initalize_simulator() {
   if (!initalized) {
     ardulator::setupArduino();
@@ -44,15 +37,7 @@ extern void initalize_simulator() {
   }
 }
 
-/**
- * Registers the pins to the current simulator.
- *
- * @param pin_id the pin's id for the current signals
- * @param signal_count the number of signal changes
- * @param signals the time at which the signal changes, all signals start
- *        at 0 and go high afterwards.
- */
-extern "C" bool register_signal(SignalImp* first) {
+extern bool register_signal(SignalImp* first) {
   initalize_simulator();
 
   puts("Registering signal...\n");

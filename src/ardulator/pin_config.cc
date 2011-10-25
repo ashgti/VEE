@@ -33,16 +33,9 @@ void PinConfig::setState(const Clock &t) {
   }
 }
 
-// TODO(ashgti): Fixup this function. Needs to dispatch interrupts.
+/// \todo Fixup this function. Needs to dispatch interrupts.
 void PinConfig::dispatchingInterrupt(const SignalImp &prev, const SignalImp &next) {
   fprintf(ardu->debug_, "Signal: %d switched.", pid_);
-  // if (new_state == HIGH) {
-  //   fprintf(ardu->debug_, "HIGH");
-  // } else {
-  //   fprintf(ardu->debug_, "LOW");
-  // }
-  // print_clock(ardu->debug_, " @ ",
-  // _state = new_state;
   Ardulator::InterruptIterator int_iter;
 
   if (ardu->interrupts_enabled_ == true &&

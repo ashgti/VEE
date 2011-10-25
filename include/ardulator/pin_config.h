@@ -5,7 +5,9 @@
 
 #include <stdint.h>
 
-#include "ardulator/containers.h"
+#include "ardulator/containers/history.h"
+#include "ardulator/containers/signals.h"
+#include "ardulator/containers/clock.h"
 
 namespace ardulator {
 

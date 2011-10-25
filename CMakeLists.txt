@@ -12,17 +12,16 @@ endif(APPLE)
 
 set(VEE_SRC_FILE "student.cc" CACHE STRING "Target src code")
 
-add_library(vee SHARED src/hardware_serial.cc
+add_library(vee SHARED src/ardulator.cc
+                       src/ardulator/pin_config.cc
+                       src/ardulator/hardware_serial.cc
+                       src/ardulator/containers/bit_value.cc
+                       src/c_interface/env.cc
+                       src/c_interface/interface.cc
                        src/pin_commands.cc
                        src/time_commands.cc
-                       src/env.cc
-                       src/ardulator.cc
-                       src/pin_config.cc
                        src/interrupt_commands.cc
-                       src/bit_value.cc
-                       src/interface.cc
                        src/emulator_commands.cc
-                       src/interface.cc
                        ${VEE_SRC_FILE})
 
 

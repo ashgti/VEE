@@ -11,8 +11,8 @@ int pin_register[8];
 
 HardwareSerial Serial(-1, -2);
 
-void Print::printNumber(unsigned long n, uint8_t base) {    
-    unsigned char buf[8 * sizeof(long)]; // Assumes 8-bit chars. 
+void Print::printNumber(unsigned long n, uint8_t base) {
+    unsigned char buf[8 * sizeof(long)]; // Assumes 8-bit chars.
     unsigned long i = 0;
 
     if (n == 0) {

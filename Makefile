@@ -10,13 +10,16 @@ all: build
 
 docs: docs/doxygen.cfg
 	$(DOXYGEN) docs/doxygen.cfg
+ifeq ($(UNAME),Darwin)
+	@open docs/doxygen/html/index.html
+endif
 .PHONY: docs
 
 docs/doxygen.cfg: docs/Doxyfile.cfg.in
 	cat $< | sed \
 	  -e 's/@abs_top_srcdir@/./g' \
 	  -e 's/@DOT@/dot/g' \
-	  -e 's/@PACKAGE_VERSION@/mainline/' \
+	  -e 's/@PACKAGE_VERSION@/HEAD/' \
 	  -e 's/@abs_top_builddir@/./g' > $@
 
 help:
@@ -26,6 +29,7 @@ help:
 	@echo "docs: Builds the documentation for the C/C++ and Python Code."
 	@echo "clean: removes compile time code"
 	@echo "wipe: dist-clean"
+	@echo "zip: Create a zip of the current work, for distribution."
 	@echo ""
 .PHONY: help
 
@@ -34,6 +38,11 @@ help:
 
 src/vee/configuration_ui.py: resources/configuration_ui.ui
 	$(PYSIDE_UIC) -o $@ $<
+
+zip:
+	@echo "Creating a zip out of the current directory."
+	@tar -czvf vee-contents.tar.gz `find CMakeLists.txt Makefile include src -type f`
+.PHONY: zip
 
 gen: src/vee/configuration_ui.py
 .PHONY: gen

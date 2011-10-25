@@ -8,8 +8,10 @@
 #include <utility>
 #include <string>
 
-#include "ardulator/bit_value.h"
-#include "ardulator/containers.h"
+#include "ardulator/containers/bit_value.h"
+#include "ardulator/containers/clock.h"
+#include "ardulator/containers/history.h"
+#include "ardulator/containers/signals.h"
 #include "ardulator/pin_config.h"
 #include "avr/config.h"
 
@@ -17,13 +19,13 @@ class HardwareSerial;
 
 namespace ardulator {
 
-using ardulator::containers::Clock;
-using std::string;
+using ::ardulator::containers::Clock;
+using ::std::string;
+using ::std::map;
 
-const unsigned int LOOP_CONST = 240;
-const unsigned int FIELD_WIDTH = 5;
-
-void print_clock(FILE *file, string n, Clock t);
+const unsigned int LOOP_CONST = 240; //!< A setting for the amount a single
+                                     //!< loop of the user code costs in terms
+                                     //!< of clock ticks.
 
 class Ardulator {
  private:

@@ -7,6 +7,7 @@ MainWindow is the driver program for the GUI components of VEE.
 import sys, os
 import os.path
 import pickle
+import tempfile
 from subprocess import Popen, PIPE
 
 try:
@@ -38,7 +39,7 @@ class ApplicationRunner(object):
         """
         Run the scenario with the current configuration files.
         """
-        print Popen(['python', 'src/vee-cmd.py', 'llll'], stdout=PIPE, stderr=PIPE).communicate()[0]
+        print Popen(['python', './src/vee-cmd.py', ], stdout=PIPE, stderr=PIPE).communicate()[0]
 
     def results(self):
         """
@@ -144,8 +145,12 @@ class MainWindow(QtGui.QMainWindow):
         scenario_file = self.ui.studentFiles.currentItem()
         print scenario_file.text()
         a = ApplicationRunner(scenario_file.text())
-        a.make()
-        a.run()
+        tmp_file = tempfile.NamedTemporaryFile()
+        self._saveAs(tmp_file)
+        print tmp_file.name
+        r = a.make()
+        print r
+        r = a.run()
         print 'foobar'
 
     def updatePinConfiguration(self):
@@ -250,7 +255,11 @@ class MainWindow(QtGui.QMainWindow):
 
         print filename
         with open(filename, 'w+') as f:
-            pickle.dump(self.settings, f)
+            self._saveAs(f)
+
+    def _saveAs(self, filename):
+        "Save the settings to a specified file."
+        pickle.dump(self.settings, filename)
 
     @QtCore.Slot(int)
     def onOutputPinsListSelect(self, value, previous_value):

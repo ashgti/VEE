@@ -26,7 +26,7 @@ DOXYFILE_ENCODING      = UTF-8
 # identify the project. Note that if you do not use Doxywizard you need
 # to put quotes around the project name if it contains spaces.
 
-PROJECT_NAME           = Virtual Embedded Enviorment
+PROJECT_NAME           = "Virtual Embedded Enviorment"
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number.
 # This could be handy for archiving the generated documentation or
@@ -409,7 +409,7 @@ CASE_SENSE_NAMES       = NO
 # will show members with their full class and namespace scopes in the
 # documentation. If set to YES the scope will be hidden.
 
-HIDE_SCOPE_NAMES       = NO
+HIDE_SCOPE_NAMES       = YES
 
 # If the SHOW_INCLUDE_FILES tag is set to YES (the default) then Doxygen
 # will put a list of the files that are included by a file in the documentation
@@ -532,7 +532,7 @@ SHOW_DIRECTORIES       = NO
 # This will remove the Files entry from the Quick Index and from the
 # Folder Tree View (if specified). The default is YES.
 
-SHOW_FILES             = NO
+SHOW_FILES             = YES
 
 # Set the SHOW_NAMESPACES tag to NO to disable the generation of the
 # Namespaces page.
@@ -630,10 +630,15 @@ WARN_LOGFILE           =
 # with spaces.
 
 INPUT                  = @abs_top_srcdir@/include/ardulator \
+                         @abs_top_srcdir@/include/ardulator/containers \
                          @abs_top_srcdir@/include/avr \
                          @abs_top_srcdir@/include \
+                         @abs_top_srcdir@/src/ardulator \
+                         @abs_top_srcdir@/src/ardulator/containers \
+                         @abs_top_srcdir@/src/c_interface \
                          @abs_top_srcdir@/src/vee \
-                         @abs_top_srcdir@/src
+                         @abs_top_srcdir@/src \
+                         @abs_top_srcdir@/docs/vee.dox
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is

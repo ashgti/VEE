@@ -30,10 +30,6 @@ class EmulatorFinished {
 
 ProcessingSignalException p;
 
-void print_clock(FILE *file, string n, Clock t) {
-  fprintf(file, "%s %d.%05d\n", n.c_str(), t.seconds_, t.ticks_);
-}
-
 Ardulator::Ardulator() : runtime_(0.0), ticks_(0), total_ticks_(0),
                          registered_identifers_(""), scenario_length_(0, 0),
                          inside_interrupt_handler_(false), prepared_(false),
@@ -106,8 +102,8 @@ double Ardulator::runScenario(double length) {
 
   fprintf(debug_, "Attempting to run the Scenario\n\n");
 
-  print_clock(debug_, "Scenario Length: ", scenario_length_);
-  print_clock(debug_, "Runtime Timer:", timer_);
+  fprintf(debug_, "Scenario Length: %s\n", scenario_length_.str().c_str());
+  fprintf(debug_, "Runtime Timer: %s\n", timer_.str().c_str());
 
   try {
     updatePinState();
@@ -125,8 +121,8 @@ double Ardulator::runScenario(double length) {
     }
   }
   finalizePinState();
-  print_clock(debug_, "Scenario Length: ", scenario_length_);
-  print_clock(debug_, "Runtime Timer:", timer_);
+  fprintf(debug_, "Scenario Length: %s\n", scenario_length_.str().c_str());
+  fprintf(debug_, "Runtime Timer: %s\n", timer_.str().c_str());
 
   printf("--------------------------\n");
   printf("Runtime: %lf\n", runtime_);
@@ -170,14 +166,11 @@ void Ardulator::updatePinMaps() {
   }
 }
 
-// TODO(ash_gti): Fix this function.
 /**
- * Ardulator::updatePinState() 
- *    Updates the state of each pin in the internal pin registery.
- */
+ * Updates the state of each pin in the internal pin registery.
+**/
 void Ardulator::updatePinState() {
   // Report Changes in State
-  // TODO(ashgti): Handle interrupts.
   inside_interrupt_handler_ = true;
 
   PinConfigIterator it;
@@ -199,8 +192,8 @@ void Ardulator::updatePinState() {
   if ((timer_.seconds_ > scenario_length_.seconds_) ||
         (timer_.seconds_ == scenario_length_.seconds_ &&
          timer_.ticks_ >= scenario_length_.ticks_)) {
-    print_clock(stdout, "Scenario Length: ", scenario_length_);
-    print_clock(stdout, "Runtime Timer:", timer_);
+    fprintf(stdout, "Scenario Length: %s\n", scenario_length_.str().c_str());
+    fprintf(stdout, "Runtime Timer: %s\n", timer_.str().c_str());
     throw ef;
   }
 }

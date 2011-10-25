@@ -25,6 +25,15 @@
 #ifndef INCLUDE_ARDUINO_H_
 #define INCLUDE_ARDUINO_H_
 
+/**
+ * @file arduino.h
+ * @brief The main interface to the emulation system.
+ * 
+ * To interface to the emulator with roughly the same API you would use in
+ * normal Arduino code, include this file and link against the static library
+ * provided by VEE.
+**/
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <avr/config.h>
@@ -135,13 +144,6 @@ void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, byte val);
 void attachInterrupt(uint8_t, void (*)(void), int mode);
 void detachInterrupt(uint8_t);
 
-void setup(void);
-void loop(void);
-void pinConfiguration(void);
-
-void processSignal(const char* signal_id);
-void registerPin(const char* signal_id, uint8_t pin_id);
-
 #ifdef __cplusplus
 }  // extern "C"
 #endif
@@ -163,11 +165,35 @@ extern void   setup();
 extern void   loop();
 extern void   pinConfiguration();
 extern void   report();
+
+/**
+ * @fn double run(double length)
+ * Run the emulation for a given amount of time and return the time the
+ * simulation ran for.
+ * @param length How long to run the simulation for.
+**/
 extern double run(double length);
-extern char*  ardulator_errors();
+
+/**
+ * Initialize the simulation.
+**/
 extern void   initalize_simulator();
+
+/**
+ * Reset the state of the simulation.
+**/
 extern void   reset_simulator();
+
+/**
+ * Register a signal used by the simulation.
+ * @param head A linked list of signals.
+**/
 extern bool   register_signal(SignalImp* head);
+
+void processSignal(const char* signal_id);
+void registerPin(const char* signal_id, uint8_t pin_id);
+void registerSerial(const char* signal_id, const HardwareSerial &serial);
+
 #ifdef __cplusplus
 }  // end extern "C"
 #endif
@@ -237,8 +263,6 @@ class HardwareSerial : public Print {
     uint8_t pin() const;
     using Print::write;  // pull in write(str) and write(buf, size) from Print
 };
-
-void registerSerial(const char* signal_id, const HardwareSerial &serial);
 
 extern HardwareSerial Serial;
 

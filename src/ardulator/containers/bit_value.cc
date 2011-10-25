@@ -1,17 +1,13 @@
 // Copyright John Harrison, 2011
 
-/**
- * 
- */
-
-#include "ardulator/bit_value.h"
-#include "arduino.h"
+#include "ardulator/containers/bit_value.h"
 
 namespace ardulator {
 namespace containers {
 
-/* TODO: Add clock ticks */
-BitValue::BitValue() : ro_(false), state_(0) { }
+/// \todo Add clock ticks
+BitValue::BitValue() : ro_(false), state_(0) {
+}
 BitValue::BitValue(uint8_t ref, bool readonly) : ro_(readonly), state_(ref) {
 }
 
