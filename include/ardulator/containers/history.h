@@ -6,15 +6,7 @@
 namespace ardulator {
 namespace containers {
 
-/**
- * Records the history of a signal.
- */
-struct History {
-  int missed_evts_;   //!< The total number missed events.
-  int total_evts_;    //!< The total number of events.
-  int caught_evts_;   //!< The total number of events handled.
-  double avg_response_time_; //!< The average response time to handle an event.
-};
+
 
 }  // end namesapce containers
 }  // end namespace ardulator

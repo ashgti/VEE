@@ -26,9 +26,11 @@ namespace ardulator {
 using ::ardulator::containers::Clock;
 
 class EmulatorFinished {
-} ef;
+};
 
-ProcessingSignalException p;
+static EmulatorFinished ef;
+
+static ProcessingSignalException p;
 
 Ardulator::Ardulator() : runtime_(0.0), ticks_(0), total_ticks_(0),
                          registered_identifers_(""), scenario_length_(0, 0),
@@ -233,7 +235,7 @@ int Ardulator::getPin(uint8_t pin_id) {
       addTicks(58);
       return pin_config_[pin_id]->signal_.current_->value.digital;
     } else if (pin_config_[pin_id]->signal_.current_->type == VT_ANALOG) {
-      addTicks(MS2T(10));
+      addTicks(MS2T(100));
       return pin_config_[pin_id]->signal_.current_->value.analog;
     } else {
       return LOW;

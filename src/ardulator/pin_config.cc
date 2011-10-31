@@ -51,17 +51,17 @@ void PinConfig::dispatchingInterrupt(const SignalImp &prev, const SignalImp &nex
       if (int_iter->second.first == RISING) {
         int_iter->second.second();
       }
-      // _history.total_evts += 1;
-      // _caught_flag = false;
+      pin_history_.total_evts_ += 1;
+      caught_flag_ = false;
     }
     if (prev.value.digital == HIGH && next.value.digital == LOW) {
       // FIRE FALLING EVENT
       if (int_iter->second.first == FALLING) {
         int_iter->second.second();
       }
-      // if (_caught_flag == false) {
-          // _history.missed_evts += 1;
-      // }
+      if (caught_flag_ == false) {
+          pin_history_.missed_evts_ += 1;
+      }
     }
     if (prev.value.digital != next.value.digital) {
       // FIRE CHANGED EVENT

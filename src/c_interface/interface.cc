@@ -1,4 +1,9 @@
 // Copyright John Harrison, 2011
+/**
+ * If you upddate any file in here, make sure the definitions in
+ * vee/ardulator.py are still correct.
+ * \see vee/ardulator.py
+**/
 
 #include <cstdlib>
 
@@ -16,28 +21,43 @@ using std::string;
 static double runtime = 0;
 static bool initalized = false;
 
-extern void reset_simulator() {
+extern "C" void reset_simulator() {
   runtime = 0;
 }
 
-extern void step() {
+extern "C" void step() {
   /// \todo Implement step. To step through an execution of the emulation.
 }
 
-extern double run(double length) {
+extern "C" double run(double length) {
   initalize_simulator();
 
   return ardu->runScenario(length);
 }
 
-extern void initalize_simulator() {
+extern "C" void initalize_simulator() {
   if (!initalized) {
     ardulator::setupArduino();
     initalized = true;
   }
 }
 
-extern bool register_signal(SignalImp* first) {
+extern "C" History* retrieve_history(SignalImp* signal) {
+  for (UnusedPinConfigIterator it = ardu->unused_pin_config_.begin();
+       it != ardu->unused_pin_config_.end();
+       it++) {
+    if (it->name_ == signal_->name)
+      return id;
+  }
+
+  for (PinConfigIterator it = ardu->pin_config_.begin();
+       it != ardu->pin_config_.end();
+       it++) {
+    a = ;
+  }
+}
+
+extern "C" bool register_signal(SignalImp* first) {
   initalize_simulator();
 
   puts("Registering signal...\n");

@@ -1,4 +1,4 @@
-/*!
+/**
 \mainpage
 
 \author John Harrison <ash.gti@gmail.com>
@@ -15,7 +15,93 @@ development enviorment. \b VEE implements some of the hardware details of
 the \b Atmega328p as well as most of the \b Arduino API's that sit on top of
 the Atmega processors.
 
+\dot
+digraph arch {
+        size="6,6";
+        node [color=lightblue2, style=filled];
+        "Python High Level Functions" -> "Python Ctypes Interface";
+        "Python Ctypes Interface" -> "Library C Interface\n(C ABI Compatible)";
+        "Other Language High Level Control" -> "Other Language Interface";
+        "Other Language Interface" -> "Library C Interface\n(C ABI Compatible)";
+        "Library C Interface\n(C ABI Compatible)" -> "Ardulator Emulation";
+        "Ardulator Emulation" -> "Arduino Interfaces";
+        "Arduino Interfaces" -> "Arduino Code";
+        "Arduino Code" -> "Arduino Interfaces" [label="Emulation Reports"];
+}
+\enddot
+
+<b>Subsections:</b>
+
+\li \subpage Page_Introduction - Introduction and Overview
+
+\section arduino_api Arduino API
+
+<b> Atmel AVR Atmega328p Hardware Abstractions </b>
+
+Select hardware details have been abstracted, such as the clock, and some of the direct pin ports.
+Event Scheduler
+Events.
+
+<b> Configuration Control API </b>
+
+description of the architecture, i.e the different elements of the architectures
+Break the architecture in different elements and dedicate one chapter per element
+
+<b> Teacher Configuration GUI </b>
+
+One chapter should be dedicated to the interface for the instructor (this chapter will contain the document or the manual user from an instructor point)
+
+<b>Student Results GUI</b>
+
+One chapter should be dedicated to the interface for the students (this chapter will contain the document or the manual user from a student point)
+
+\section Architecture
+
+Overall
+
+Emulator
+
+Hardware
+
+Teachers Guide
+
+Description of Signals:
+
+
+<b> Student Guide </b>
+
+Students must implement the following:
+
+\li \link pinConfiguration \endlink \copybrief pinConfiguration
+\li \link setup \endlink \copybrief setup
+\li \link loop \endlink \copybrief loop
+
+Students have access to:
+
+\li \link registerPin \endlink \copybrief registerPin
+\li \link registerSerial \endlink \copybrief registerSerial
+\li \link digitalRead \endlink \copybrief digitalRead
+\li \link digitalWrite \endlink \copybrief digitalWrite
+\li \link analogRead \endlink \copybrief analogRead
+\li \link analogWrite \endlink \copybrief analogWrite
+\li DDRx Ports \see DDRB DDRC DDRD
+\li PORTx Ports \see PORTB PORTC PORTD
+
+\li HardwareSerial \copybrief HardwareSerial
+\li HardwareSerial::begin \copybrief HardwareSerial::begin
+\li HardwareSerial::available \copybrief HardwareSerial::available
+\li HardwareSerial::read \copybrief HardwareSerial::read
+\li HardwareSerial::write \copybrief HardwareSerial::write
+\li HardwareSerial::print \copybrief HardwareSerial::print
+\li HardwareSerial::println \copybrief HardwareSerial::println
+
+Students must map a given signal to a pin on the hardware board. For example, the signal “A” could be mapped to pin 4 using the registerPin() function.
+
+<b> General Purpose Guide </b>
+
+<b> Scripting Guide </b>
+
 \see vee-gui.py
 \see vee-cmd.py
 
- */
+**/

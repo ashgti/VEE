@@ -14,13 +14,13 @@ namespace containers {
 
 /**
  * A clock object. Used to keep track of time internal to the emulator.
- * @see TICKS_PER_SECOND
+ * \see TICKS_PER_SECOND
  */
 struct Clock {
   /**
    * Takes the number of seconds and the number of ticks.
-   * @param seconds the numer of seconds.
-   * @param ticks the number of ticks.
+   * \param seconds the numer of seconds.
+   * \param ticks the number of ticks.
   **/
   Clock(uint32_t seconds, uint32_t ticks) :
       seconds_(seconds), ticks_(ticks) { }
@@ -41,8 +41,7 @@ struct Clock {
   **/
   std::string str() const {
     char buffer[1024] = {0};
-    if (snprintf(buffer, 1024, "%d.%05d", seconds_, ticks_) != 0)
-      throw ;
+    snprintf(buffer, 1024, "%d.%05d", seconds_, ticks_);
     return std::string(buffer);
   }
 };

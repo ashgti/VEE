@@ -18,7 +18,7 @@ void Print::printNumber(unsigned long n, uint8_t base) {
     if (n == 0) {
       print('0');
       return;
-    } 
+    }
 
     while (n > 0) {
       buf[i++] = n % base;
@@ -53,7 +53,7 @@ void Print::printFloat(double number, uint8_t digits) {
 
     // Print the decimal point, but only if there are digits beyond
     if (digits > 0)
-      print("."); 
+      print(".");
 
     // Extract digits from the remainder one at a time
     while (digits-- > 0)
@@ -61,7 +61,7 @@ void Print::printFloat(double number, uint8_t digits) {
       remainder *= 10.0;
       int toPrint = int(remainder);
       print(toPrint);
-      remainder -= toPrint; 
+      remainder -= toPrint;
     }
 }
 
@@ -128,7 +128,7 @@ void Print::print(double n, int digits) {
 
 void Print::println(void) {
   print('\r');
-  print('\n');  
+  print('\n');
 }
 
 void Print::println(const std::string &s) {
@@ -176,44 +176,44 @@ void Print::println(double n, int digits) {
   println();
 }
 
-HardwareSerial::HardwareSerial(int rx, int tx) : _rxen(rx), _txen(tx), _rb_head(0), _rb_tail(0) {
+HardwareSerial::HardwareSerial(int rx, int tx) : _rxen(rx), _txen(tx) {
 }
 
 HardwareSerial::~HardwareSerial() {
-    if (_ofile != NULL)
-        fclose(_ofile);
+  if (_ofile != NULL)
+    fclose(_ofile);
 }
 
 void HardwareSerial::begin(long b) {
-    ardu->buffers_[_rxen] = &_out_buff;
-    _baud = b;
-    char filename[50];
-    if (_rxen == 255 && _txen == 254) {
-        _ofile = fopen("serial.default.output.txt", "w+");
-    }
-    else {
-        sprintf(filename, "serial.%d.%d.output.txt", _rxen, _txen);
-        _ofile = fopen(filename, "w+");
-    }
+  ardu->buffers_[_rxen] = &_out_buff;
+  _baud = b;
+  char filename[50];
+  if (_rxen == 255 && _txen == 254) {
+    _ofile = fopen("serial.default.output.txt", "w+");
+  }
+  else {
+    sprintf(filename, "serial.%d.%d.output.txt", _rxen, _txen);
+    _ofile = fopen(filename, "w+");
+  }
 }
 
 uint8_t HardwareSerial::pin() const {
-    return _rxen;
+  return _rxen;
 }
 
 void HardwareSerial::end() {
-    if (_ofile != NULL)
-        fclose(_ofile);
+  if (_ofile != NULL)
+    fclose(_ofile);
 }
 
 uint8_t HardwareSerial::available(void) {
-    return _out_buff.length();
+  return _out_buff.length();
 }
 
 int HardwareSerial::read(void) {
-    int r = _out_buff[0];
-    _out_buff = _out_buff.substr(1, _out_buff.length());
-    return r;
+  int r = _out_buff[0];
+  _out_buff = _out_buff.substr(1, _out_buff.length());
+  return r;
 }
 
 void HardwareSerial::flush(void) {

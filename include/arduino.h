@@ -120,12 +120,24 @@ typedef uint8_t byte;
 
 void init(void);
 
-void pinMode(uint8_t, uint8_t);
-void digitalWrite(uint8_t, uint8_t);
-int digitalRead(uint8_t);
-int analogRead(uint8_t);
+/** Set the direction of a pin,
+ *  
+**/
+void pinMode(uint8_t pin_id, uint8_t mode);
+
+void digitalWrite(uint8_t pin_id, uint8_t val);
+
+/** Read a value off a given digital port.
+ *  \return Either HIGH or LOW.
+ *  \param pin_id The pin you want to check.
+**/
+int digitalRead(uint8_t pin_id);
+
+/** 
+**/
+int analogRead(uint8_t pin_id);
 void analogReference(uint8_t mode);
-void analogWrite(uint8_t, int);
+void analogWrite(uint8_t pin_id, int val);
 
 void beginSerial(long);
 void serialWrite(unsigned char);
@@ -238,30 +250,65 @@ class Print {
 
 struct ring_buffer;
 
+/** \brief Hardware Serial represents the a basic hardware RS-232 Serial port.
+ *  
+ *  In practice, the only hardware serial port is contained on a special set of
+ *  pins that the hardware supports. This class will work with any set of pins
+ *  you pass it, so this is a specific divergence from the actual hardware
+ *  implementation.
+**/
 class HardwareSerial : public Print {
  private:
-  uint8_t _rxen;
-  uint8_t _txen;
-  uint32_t _baud;
+  uint8_t _rxen; //!< RX Pin
+  uint8_t _txen; //!< TX Pin
+  uint32_t _baud; //!< Current baud rate
 
-  std::string _in_buff;
-  std::string _out_buff;
+  std::string _in_buff; //!< Internal input buffer. On the Atmel Atmega328p
+                        //!< this buffer is limited to 64 characters
+  std::string _out_buff; //!< Internal output buffer. On the Atmel Atmega328p
+                         //!< this buffer is limited to 64 characters
 
-  uint8_t _rb_head;
-  uint8_t _rb_tail;
+  FILE* _ofile;  //!< The file the serial port is mapped to
 
-  FILE* _ofile;
  public:
-    HardwareSerial(int rxPin, int txPin);
-    ~HardwareSerial();
-    void begin(long);
-    void end();
-    uint8_t available(void);
-    int read(void);
-    void flush(void);
-    virtual void write(uint8_t);
-    uint8_t pin() const;
-    using Print::write;  // pull in write(str) and write(buf, size) from Print
+
+  /** Creates a serial object, we pretend that any 2 pins will work.
+   *  \param rxPin receiver line
+   *  \param txPin transmit line
+  **/
+  HardwareSerial(int rxPin, int txPin);
+
+  /** Closes any open files and flushes the buffers **/
+  ~HardwareSerial();
+
+  /** Set the baud rate of the serial port. 
+   *  Valid rates are: 300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400,
+   *  57600, 115200.
+  **/
+  void begin(long);
+
+  /** Closes the serial port. **/
+  void end();
+
+  /** Returns the number of characters in input buffer. **/
+  uint8_t available();
+
+  /** Return 1 character from the input buffer and removes that character from
+   *  the buffer.
+  **/
+  int read(void);
+
+  /** Flushes the input and output buffers **/
+  void flush(void);
+
+  /** Write a single character to the output buffer. **/
+  virtual void write(uint8_t);
+
+  /** Returns the rxPin **/
+  uint8_t pin() const;
+
+  /** pull in write(str) and write(buf, size) from Print **/
+  using Print::write;
 };
 
 extern HardwareSerial Serial;
