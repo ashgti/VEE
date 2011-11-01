@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node7" href="$config_8h.html" title="avr/config.h" alt="" coords="904,304,995,331"/>
+<area shape="rect" id="node13" href="$ardulator_8h.html" title="ardulator.h" alt="" coords="541,80,627,107"/>
+<area shape="rect" id="node24" href="$bit__value_8h.html" title="ardulator/containers/bit_value.h" alt="" coords="672,155,880,181"/>
+<area shape="rect" id="node29" href="$clock_8h.html" title="ardulator/containers/clock.h" alt="" coords="70,229,255,256"/>
+<area shape="rect" id="node34" href="$history_8h.html" title="ardulator/containers/history.h" alt="" coords="331,229,524,256"/>
+<area shape="rect" id="node36" href="$signals_8h.html" title="ardulator/containers/signals.h" alt="" coords="549,229,744,256"/>
+<area shape="rect" id="node41" href="$pin__config_8h.html" title="ardulator/pin_config.h" alt="" coords="395,155,545,181"/>
+<area shape="rect" id="node38" href="$cdefs_8h.html" title="ardulator/cdefs.h" alt="" coords="586,304,707,331"/>
+</map>

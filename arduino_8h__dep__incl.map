@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$hardware__serial_8cc.html" title="src/ardulator/hardware_serial.cc" alt="" coords="5,80,216,107"/>
+<area shape="rect" id="node5" href="$pin__config_8cc.html" title="src/ardulator/pin_config.cc" alt="" coords="241,80,417,107"/>
+<area shape="rect" id="node7" href="$env_8cc.html" title="src/c_interface/env.cc" alt="" coords="442,80,592,107"/>
+<area shape="rect" id="node9" href="$interface_8cc.html" title="src/c_interface/interface.cc" alt="" coords="617,80,796,107"/>
+<area shape="rect" id="node11" href="$ardulator_8cc.html" title="src/ardulator.cc" alt="" coords="821,80,933,107"/>
+<area shape="rect" id="node13" href="$emulator__commands_8cc.html" title="src/emulator_commands.cc" alt="" coords="958,80,1143,107"/>
+<area shape="rect" id="node15" href="$interrupt__commands_8cc.html" title="src/interrupt_commands.cc" alt="" coords="1167,80,1349,107"/>
+<area shape="rect" id="node17" href="$pin__commands_8cc.html" title="src/pin_commands.cc" alt="" coords="1374,80,1524,107"/>
+</map>

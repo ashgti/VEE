@@ -1,0 +1,15 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$clock_8h.html" title="include/ardulator/containers/clock.h" alt="" coords="639,80,869,107"/>
+<area shape="rect" id="node7" href="$ardulator_8h.html" title="include/ardulator.h" alt="" coords="799,229,931,256"/>
+<area shape="rect" id="node9" href="$arduino_8h.html" title="The main interface to the emulation system." alt="" coords="585,304,708,331"/>
+<area shape="rect" id="node5" href="$pin__config_8h.html" title="include/ardulator/pin_config.h" alt="" coords="631,155,827,181"/>
+<area shape="rect" id="node13" href="$pin__config_8cc.html" title="src/ardulator/pin_config.cc" alt="" coords="5,379,181,405"/>
+<area shape="rect" id="node11" href="$hardware__serial_8cc.html" title="src/ardulator/hardware_serial.cc" alt="" coords="762,379,973,405"/>
+<area shape="rect" id="node15" href="$env_8cc.html" title="src/c_interface/env.cc" alt="" coords="381,379,531,405"/>
+<area shape="rect" id="node17" href="$interface_8cc.html" title="src/c_interface/interface.cc" alt="" coords="998,379,1177,405"/>
+<area shape="rect" id="node19" href="$ardulator_8cc.html" title="src/ardulator.cc" alt="" coords="1202,379,1315,405"/>
+<area shape="rect" id="node21" href="$emulator__commands_8cc.html" title="src/emulator_commands.cc" alt="" coords="1339,379,1524,405"/>
+<area shape="rect" id="node25" href="$pin__commands_8cc.html" title="src/pin_commands.cc" alt="" coords="206,379,356,405"/>
+<area shape="rect" id="node33" href="$time__commands_8cc.html" title="src/time_commands.cc" alt="" coords="733,304,891,331"/>
+<area shape="rect" id="node23" href="$interrupt__commands_8cc.html" title="src/interrupt_commands.cc" alt="" coords="555,379,737,405"/>
+</map>

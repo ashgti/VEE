@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$class_print.html" title="Printing utilities, requires the implementation of the Print::write function to work." alt="" coords="6,5,55,32"/>
+<area shape="rect" id="node3" href="$class_hardware_serial.html" title="Hardware Serial represents the a basic hardware RS&#45;232 Serial port." alt="" coords="105,5,218,32"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$arduino_8h.html" title="The main interface to the emulation system." alt="" coords="730,80,853,107"/>
+<area shape="rect" id="node5" href="$hardware__serial_8cc.html" title="src/ardulator/hardware_serial.cc" alt="" coords="5,155,216,181"/>
+<area shape="rect" id="node7" href="$pin__config_8cc.html" title="src/ardulator/pin_config.cc" alt="" coords="241,155,417,181"/>
+<area shape="rect" id="node9" href="$env_8cc.html" title="src/c_interface/env.cc" alt="" coords="442,155,592,181"/>
+<area shape="rect" id="node11" href="$interface_8cc.html" title="src/c_interface/interface.cc" alt="" coords="617,155,796,181"/>
+<area shape="rect" id="node13" href="$ardulator_8cc.html" title="src/ardulator.cc" alt="" coords="821,155,933,181"/>
+<area shape="rect" id="node15" href="$emulator__commands_8cc.html" title="src/emulator_commands.cc" alt="" coords="958,155,1143,181"/>
+<area shape="rect" id="node17" href="$interrupt__commands_8cc.html" title="src/interrupt_commands.cc" alt="" coords="1167,155,1349,181"/>
+<area shape="rect" id="node19" href="$pin__commands_8cc.html" title="src/pin_commands.cc" alt="" coords="1374,155,1524,181"/>
+</map>

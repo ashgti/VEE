@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node9" href="$pin__config_8h.html" title="ardulator/pin_config.h" alt="" coords="363,229,513,256"/>
+<area shape="rect" id="node27" href="$arduino_8h.html" title="The main interface to the emulation system." alt="" coords="641,80,719,107"/>
+<area shape="rect" id="node13" href="$history_8h.html" title="ardulator/containers/history.h" alt="" coords="538,304,731,331"/>
+<area shape="rect" id="node15" href="$signals_8h.html" title="ardulator/containers/signals.h" alt="" coords="113,304,308,331"/>
+<area shape="rect" id="node20" href="$clock_8h.html" title="ardulator/containers/clock.h" alt="" coords="819,304,1004,331"/>
+<area shape="rect" id="node17" href="$cdefs_8h.html" title="ardulator/cdefs.h" alt="" coords="246,379,367,405"/>
+<area shape="rect" id="node25" href="$config_8h.html" title="avr/config.h" alt="" coords="1224,379,1315,405"/>
+<area shape="rect" id="node36" href="$ardulator_8h.html" title="ardulator.h" alt="" coords="739,155,824,181"/>
+<area shape="rect" id="node47" href="$bit__value_8h.html" title="ardulator/containers/bit_value.h" alt="" coords="1024,229,1232,256"/>
+</map>

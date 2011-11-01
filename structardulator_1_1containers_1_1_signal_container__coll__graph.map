@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$struct_signal_imp.html" title="Represents a single signal value." alt="" coords="103,5,184,32"/>
+<area shape="rect" id="node5" href="$union_value_imp.html" title="Represents all of the potential values of a signal." alt="" coords="150,109,228,136"/>
+</map>
