@@ -5,6 +5,8 @@ CXX=clang++
 
 DOXYGEN = doxygen
 
+PWD := $(shell pwd)
+
 all: build
 .PHONY: all
 
@@ -17,7 +19,7 @@ endif
 
 docs/doxygen.cfg: docs/Doxyfile.cfg.in
 	cat $< | sed \
-	  -e 's/@abs_top_srcdir@/./g' \
+	  -e 's:@abs_top_srcdir@:$(PWD):g' \
 	  -e 's/@DOT@/dot/g' \
 	  -e 's/@PACKAGE_VERSION@/HEAD/' \
 	  -e 's/@abs_top_builddir@/./g' > $@
@@ -52,6 +54,11 @@ app: gen src/vee-gui.py
 	python setup.py py2app
 .PHONY: app
 
+# dynamic_library: build/libvee.a student.cc
+# 	$(CXX) -v -c -o build/student.o -O3 -g -Wall -W -Wno-unused-parameter -Wwrite-strings -pedantic -Wno-long-long student.cc -I./include
+# 	$(CXX) -v -o build/libvee.so build/student.o -L./build -lvee
+# .PHONY: dynamic_library
+
 build:
 	@echo $(CURDIR)
 	@mkdir -p ./build
@@ -60,7 +67,7 @@ build:
 	cd build && make
 .PHONY: build
 
-sample: build
+sample: build test/test.cfg
 	@nice python src/vee-cmd.py test/test.cfg
 .PHONY: sample
 
@@ -75,6 +82,9 @@ clean_python:
 
 clean: clean_python
 	rm -rf dist/mainwindow.app
+	rm -f build/student.o
+	rm -f build/libvee.a
+	rm -f build/libvee.so
 	cd build && make clean
 .PHONY: clean
 

@@ -120,41 +120,58 @@ typedef uint8_t byte;
 
 void init(void);
 
-/** Set the direction of a pin,
- *  
-**/
+/** Set the direction of a pin
+ *  \param pin_id The pin id
+ *  \param mode The direction of the digital pin.
+ */
 void pinMode(uint8_t pin_id, uint8_t mode);
 
+/** Write to a pin a given value.
+ *  \param pin_id the pin to write to
+ *  \param val the value to write, should be HIGH or LOW
+ */
 void digitalWrite(uint8_t pin_id, uint8_t val);
 
 /** Read a value off a given digital port.
  *  \return Either HIGH or LOW.
  *  \param pin_id The pin you want to check.
-**/
+ */
 int digitalRead(uint8_t pin_id);
 
-/** 
-**/
 int analogRead(uint8_t pin_id);
 void analogReference(uint8_t mode);
 void analogWrite(uint8_t pin_id, int val);
 
-void beginSerial(long);
-void serialWrite(unsigned char);
-int serialAvailable(void);
-int serialRead(void);
-void serialFlush(void);
-
+/** Returns the number of milli seconds since the Arduino started running.
+ *  \returns Milliseconds
+ */
 unsigned long millis(void);
+
+/** Returns the number of micro seconds since the Arduino started running.
+ *  \return Microseconds
+ */
 unsigned long micros(void);
-void delay(unsigned long);
+
+/** Delays the program execution for a given amount of milliseconds.
+ *  \param ms Duration of the pause.
+ */
+void delay(unsigned long ms);
 void delayMicroseconds(unsigned int us);
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
 
 void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, byte val);
 
-void attachInterrupt(uint8_t, void (*)(void), int mode);
-void detachInterrupt(uint8_t);
+/** Attaches an interrupt to a given pin.
+ *  \param pid The pin number of the interrupt.
+ *  \param fn The callback function for the interrupt
+ *  \param mode The callback conditions.
+ */
+void attachInterrupt(uint8_t pid, void (*fn)(void), int mode);
+
+/** Removes an interrupt from a given pin.
+ *  \param pid The pin number for the interrupt.
+ */
+void detachInterrupt(uint8_t pid);
 
 #ifdef __cplusplus
 }  // extern "C"
@@ -163,8 +180,15 @@ void detachInterrupt(uint8_t);
 #ifdef __cplusplus
 extern "C" {
 #endif
+/** Enable interrupts **/
 void sei();
+
+/** Disable interrupts **/
 void cli();
+
+/** Returns from an interrupt routine, enabling global interrupts. This
+ * should be the last command executed before leaving an ISR.
+ */
 void reti();
 #ifdef __cplusplus
 } /* end extern "C" */
@@ -173,37 +197,81 @@ void reti();
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern void   setup();
-extern void   loop();
+
+/** 
+ * \fn void setup()
+ * \b Important Must be implemented for the Arduino code to work.
+ * This is a standard Arduino function. This function is only run once.
+ */
+extern void   setup() __attribute__((weak));
+
+/**
+ * \fn void loop()
+ * \b Important Must be implemented for the Arduino code to work.
+ * This is a standard Arduino function. This function is run multiple times.
+ */
+extern void   loop() __attribute__((weak));
+
+/**
+ * \fn void pinConfiguration()
+ * \b Important Must be implemented in the target Arduino Code.
+ * This function maps the signals of the scenario to specific pins for the
+ * duration of the scenario.
+ * \see registerPin
+ * \see registerSerial
+ */
 extern void   pinConfiguration();
+
+/**
+ * Finalizes all of the registered Signal pins.
+ */
 extern void   report();
 
 /**
- * @fn double run(double length)
+ * \fn double run(double length)
  * Run the emulation for a given amount of time and return the time the
  * simulation ran for.
- * @param length How long to run the simulation for.
-**/
+ * \param length How long to run the simulation for.
+ */
 extern double run(double length);
 
 /**
  * Initialize the simulation.
-**/
+ */
 extern void   initalize_simulator();
 
 /**
  * Reset the state of the simulation.
-**/
+ */
 extern void   reset_simulator();
 
 /**
  * Register a signal used by the simulation.
- * @param head A linked list of signals.
-**/
+ * \param head A linked list of signals.
+ */
 extern bool   register_signal(SignalImp* head);
 
+/**
+ * processSignal represents busy work that a processor will do when dispatching
+ * a signal.
+ * The purpose of this function is to consume CPU cycles since it can be 
+ * difficult to represent busy work without a much more targeted approach.
+ * \param signal_id The signal you want to process.
+ */
 void processSignal(const char* signal_id);
+/**
+ * Map a pin to a signal.
+ * \param signal_id The signal you want to map
+ * \param pin_id The pin the signal should be connected to
+ */
 void registerPin(const char* signal_id, uint8_t pin_id);
+/**
+ * Map a signal to a serial port.
+ * This function cheats a bit. It does not check if the hardware actually
+ * support Serial communication.
+ * \param signal_id The signal you want to map
+ * \param serial The serial port you want to connect to
+ */
 void registerSerial(const char* signal_id, const HardwareSerial &serial);
 
 #ifdef __cplusplus
@@ -216,6 +284,10 @@ void registerSerial(const char* signal_id, const HardwareSerial &serial);
 #define BIN 2
 #define BYTE 0
 
+/**
+ * Printing utilities, requires the implementation of the Print::write function
+ * to work.
+ */
 class Print {
  private:
   void printNumber(unsigned long, uint8_t);
@@ -256,26 +328,26 @@ struct ring_buffer;
  *  pins that the hardware supports. This class will work with any set of pins
  *  you pass it, so this is a specific divergence from the actual hardware
  *  implementation.
-**/
+ */
 class HardwareSerial : public Print {
  private:
-  uint8_t _rxen; //!< RX Pin
-  uint8_t _txen; //!< TX Pin
-  uint32_t _baud; //!< Current baud rate
+  uint8_t rxen_; //!< RX Pin
+  uint8_t txen_; //!< TX Pin
+  uint32_t baud_; //!< Current baud rate
 
-  std::string _in_buff; //!< Internal input buffer. On the Atmel Atmega328p
+  std::string in_buff_; //!< Internal input buffer. On the Atmel Atmega328p
                         //!< this buffer is limited to 64 characters
-  std::string _out_buff; //!< Internal output buffer. On the Atmel Atmega328p
+  std::string out_buff_; //!< Internal output buffer. On the Atmel Atmega328p
                          //!< this buffer is limited to 64 characters
 
-  FILE* _ofile;  //!< The file the serial port is mapped to
+  FILE* ofile_;  //!< The file the serial port is mapped to
 
  public:
 
   /** Creates a serial object, we pretend that any 2 pins will work.
    *  \param rxPin receiver line
    *  \param txPin transmit line
-  **/
+   */
   HardwareSerial(int rxPin, int txPin);
 
   /** Closes any open files and flushes the buffers **/
@@ -284,7 +356,7 @@ class HardwareSerial : public Print {
   /** Set the baud rate of the serial port. 
    *  Valid rates are: 300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400,
    *  57600, 115200.
-  **/
+   */
   void begin(long);
 
   /** Closes the serial port. **/
@@ -295,7 +367,7 @@ class HardwareSerial : public Print {
 
   /** Return 1 character from the input buffer and removes that character from
    *  the buffer.
-  **/
+   */
   int read(void);
 
   /** Flushes the input and output buffers **/

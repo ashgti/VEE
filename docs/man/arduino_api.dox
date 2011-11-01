@@ -1,0 +1,35 @@
+/** \file
+ *
+ *  This file contains special DoxyGen information for the generation of the main page and other special
+ *  documentation pages. It is not a project source file.
+**/
+
+/**
+\page Page_ArduinoAPI Arduino API and Control Interface
+
+\section ArduinoAPI Arduino API
+
+The Arduino is software platform that can be built on top of various Atmel AVR
+processors. The current implementation is based off the Arduino platform
+targeting the Atmel AVR Atmega328p processor. The Atmega328p platform was
+selected because it is an affordable and commonly used in various Arduino 
+devices. If the students want to try to apply their work to a real embedded
+system it should be as simple as recompiling and uploading the code onto the
+Arduino. The firmware for an Arduino is written in the C/C++ programming
+language. This software API abstracts away many of the implementation details
+of the hardware. The main strategy of the emulator is not to emulate the
+individual hardware components directly, but to implement the Arduino API.
+
+\section HardwareAbstraction Atmel AVR Atmega328p Hardware Abstractions
+
+The Arduino API abstracts aware a number of implementation details. For 
+instance, interrupts have been greatly simplified as well as other simple
+operations like reading from a UART. However, there are some hardware details
+that can help students learn more about 
+
+\section ConfigurationAPI Configuration Control API
+
+description of the architecture, i.e the different elements of the architectures
+Break the architecture in different elements and dedicate one chapter per element
+
+**/

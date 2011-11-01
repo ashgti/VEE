@@ -1,0 +1,44 @@
+/** \file
+ *
+ *  This file contains special DoxyGen information for the generation of the
+ *  main page and other special documentation pages. It is not a project 
+ *  source file.
+**/
+
+/**
+\page Page_AboutTheProject About the Project
+
+\section Purpose Purpose
+
+An embedded system is any controlling system embedded on a device that provides
+some function or service. There are many difficulties involved with using and 
+designing embedded software. Programmers need to be more strictly aware of
+various hardware related restrictions of the embedded system. Teaching 
+principle design considerations to software engineers can be difficult.
+
+This tool is designed to help provide an experience as close as possible to the
+actual hardware of the Arduino, but runs entirely in software. This means it
+is easier to distribute, debug and students do not have to purchase any
+hardware to try out their code.
+
+\section DesignGoals Design Goals
+
+One of the prominent design goals of this project is the ability to create a 
+wide variety of device configurations and scenarios that require different
+software architectures approaches to accomplish each task. The software should
+be testable and capable of simulating high stress enviorments.
+
+To summarize:
+
+\li Challenges the students
+\li Illustrates key concepts and issues
+\li Is easy and convenient for the instructor to produce devices and scenarios
+    without having to write one line of code.
+\li Is low cost and expandable.
+
+In the event a student would want to actually purchase an Arduino, or it
+becomes a class requirement to have a project where the students are required
+to implement code on a physical device, the Arduino line of embedded systems
+is fairly cheap and straight forward for students to work with.
+
+**/

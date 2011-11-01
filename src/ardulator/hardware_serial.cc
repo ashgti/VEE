@@ -176,52 +176,53 @@ void Print::println(double n, int digits) {
   println();
 }
 
-HardwareSerial::HardwareSerial(int rx, int tx) : _rxen(rx), _txen(tx) {
+HardwareSerial::HardwareSerial(int rx, int tx) : rxen_(rx), txen_(tx) {
 }
 
 HardwareSerial::~HardwareSerial() {
-  if (_ofile != NULL)
-    fclose(_ofile);
+  if (ofile_ != NULL)
+    fclose(ofile_);
 }
 
 void HardwareSerial::begin(long b) {
-  ardu->buffers_[_rxen] = &_out_buff;
-  _baud = b;
+  ardu->buffers_[rxen_] = &out_buff_;
+  baud_ = b;
   char filename[50];
-  if (_rxen == 255 && _txen == 254) {
-    _ofile = fopen("serial.default.output.txt", "w+");
+  if (rxen_ == 255 && txen_ == 254) {
+    ofile_ = fopen("serial.default.output.txt", "w+");
   }
   else {
-    sprintf(filename, "serial.%d.%d.output.txt", _rxen, _txen);
-    _ofile = fopen(filename, "w+");
+    sprintf(filename, "serial.%d.%d.output.txt", rxen_, txen_);
+    ofile_ = fopen(filename, "w+");
   }
 }
 
 uint8_t HardwareSerial::pin() const {
-  return _rxen;
+  return rxen_;
 }
 
 void HardwareSerial::end() {
-  if (_ofile != NULL)
-    fclose(_ofile);
+  if (ofile_ != NULL)
+    fclose(ofile_);
 }
 
 uint8_t HardwareSerial::available(void) {
-  return _out_buff.length();
+  return out_buff_.length();
 }
 
 int HardwareSerial::read(void) {
-  int r = _out_buff[0];
-  _out_buff = _out_buff.substr(1, _out_buff.length());
+  int r = out_buff_[0];
+  out_buff_ = out_buff_.substr(1, out_buff_.length());
   return r;
 }
 
 void HardwareSerial::flush(void) {
-  fflush(_ofile);
+  fflush(ofile_);
 }
 
 void HardwareSerial::write(uint8_t c) {
-  fprintf(_ofile, "%c", static_cast<char>(c));
+  fprintf(ofile_, "%c", static_cast<char>(c));
 
   ardu->addTicks(5);
 }
+

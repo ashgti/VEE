@@ -1,0 +1,123 @@
+/** \file
+ *
+ *  This file contains special DoxyGen information for the generation of the main page and other special
+ *  documentation pages. It is not a project source file.
+**/
+
+/**
+\page Page_StudentGuide Student Guide
+
+\section Requirements Requirements
+
+For a given project, the student should receive at least the following:
+
+\li A clear objective the firmware should accomplish
+\li A configuration file provided by the professor
+\li The software libraries bundled as an Library Archive or the source files
+    to allow them to compile the code into a single library.
+
+\section ExampleCode Example Code
+
+Students need to implement pinConfiguration, setup and loop in order for their
+code to function properly. Here is a very primitive example of registering a
+single signal to a pin.
+
+\code
+void pinConfiguration() {
+  registerPin("a", 1); // Registers Signal "a" to pin 1.
+}
+\endcode
+
+Once the pin is registered, it functions like a normal pin in the Arduino.
+Here is an example of configuring the pin to INPUT mode.
+
+\code
+void setup() {
+  pinMode(1, INPUT); // Configure the pin as an input line.
+}
+\endcode
+
+Finally, we can build the loop operation where we read a digital pin and
+dispatch a signal if the pin is HIGH.
+
+\code
+void loop() {
+  if (digitalRead(1) == HIGH) {
+    processSignal("a"); // Dispatch a busy wait as a result of the pin going high.
+  }
+}
+\endcode
+
+The end result would look like this:
+
+\code
+void pinConfiguration() {
+  registerPin("a", 1); // Registers Signal "a" to pin 1.
+}
+
+void setup() {
+  pinMode(1, INPUT); // Configure the pin as an input line.
+}
+
+void loop() {
+  if (digitalRead(1) == HIGH) {
+    processSignal("a"); // Dispatch a busy wait as a result of the pin going high.
+  }
+}
+\endcode
+
+\section CommandlineOptions Commandline Options
+
+Use \c --help to have a complete list of all of the command line otions.
+
+\code
+Usage: vee-cmd.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -f FILE, --file=FILE  write output to fileself
+  -q, --quiet           don't print status messages to stdout
+  -r RUNTIME, --runtime=RUNTIME
+                        runtime length of the scenario
+  -g, --graph           graph output of signals, requires matplotlib
+\endcode
+
+The commandline comes with the option \c --graph which will try to graph the
+signal output.
+
+\image html graph_output.png
+\image latex graph_output.eps "Signal Graph" width=7cm
+
+\see vee-cmd.py
+
+\section ImplementationDetails Implementation Details
+
+Students must implement the following:
+
+\li \link pinConfiguration \endlink \copybrief pinConfiguration
+\li \link setup \endlink \copybrief setup
+\li \link loop \endlink \copybrief loop
+
+The following API's are available, check arduino.h for a more complete list.
+
+\li \link registerPin \endlink \copybrief registerPin
+\li \link registerSerial \endlink \copybrief registerSerial
+\li \link digitalRead \endlink \copybrief digitalRead
+\li \link digitalWrite \endlink \copybrief digitalWrite
+\li \link analogRead \endlink \copybrief analogRead
+\li \link analogWrite \endlink \copybrief analogWrite
+\li DDRx Ports \see DDRB DDRC DDRD
+\li PORTx Ports \see PORTB PORTC PORTD
+
+\li HardwareSerial \copybrief HardwareSerial
+\li HardwareSerial::begin \copybrief HardwareSerial::begin
+\li HardwareSerial::available \copybrief HardwareSerial::available
+\li HardwareSerial::read \copybrief HardwareSerial::read
+\li HardwareSerial::write \copybrief HardwareSerial::write
+\li HardwareSerial::print \copybrief HardwareSerial::print
+\li HardwareSerial::println \copybrief HardwareSerial::println
+
+Students must map a given signal to a pin on the hardware board. For example, 
+the signal "A" could be mapped to pin 4 using the registerPin() function.
+
+**/

@@ -3,11 +3,13 @@
 __all__ = [ 'Exp', 'Uni', 'Digital', 'Analog', 'Serial',
             'SineWave', 'SquareWave', 'generate_signal']
 
-
 DIGITAL_ID = 1 << 0
 SERIAL_ID = 1 << 1
 ANALOG_ID = 1 << 2
+CALLBACK_ID = 1 << 3
+OTHER_ID = 1 << 4
 
+## Generates a signal from a configuration hash.
 def generate_signal(pin_data):
     print pin_data
 
@@ -25,11 +27,15 @@ def generate_signal(pin_data):
 
     return Signal(rate, value)
 
+## \class Signal
+#  Represents a basic signal.
 class Signal(object):
     def __init__(self, rate, value):
         self.rate = rate
         self.value = value
 
+## \class Exp
+#  Represents an Exponential Distribution on a signal.
 class Exp(object):
     def __init__(self, l, duration):
         self.l = l
@@ -38,6 +44,8 @@ class Exp(object):
     def next(self):
         return self.l
 
+## \class Uni
+#  Represents a Uniform Distribution on a signal.
 class Uni(object):
     def __init__(self, a, b, duration):
         self.a = a
@@ -47,6 +55,8 @@ class Uni(object):
     def next(self):
         return 1
 
+## \class Digital
+#  Represents a Digital Signal value.
 class Digital(object):
     def __init__(self, **kwargs):
         super(Digital, self).__init__(**kwargs)
@@ -57,6 +67,8 @@ class Digital(object):
         self._last_value += 1
         return self._last_value % 2
 
+## \class Serial
+#  Represents a serial signal value.
 class Serial(object):
     def __init__(self, string, **kwargs):
         self._next_value = string
@@ -65,6 +77,8 @@ class Serial(object):
     def next_value(self):
         return self._next_value
 
+## \class Analog
+#  Represents an analog signal value
 class Analog(object):
     def __init__(self, **kwargs):
         super(Analog, self).__init__(**kwargs)
@@ -81,6 +95,3 @@ class SquareWave(object):
     def __int__(self, **kwargs):
         super(SquareWave, self).__init__(**kwargs)
 
-class Composite(object):
-    def __init__(self, pins):
-        self.pins = pins

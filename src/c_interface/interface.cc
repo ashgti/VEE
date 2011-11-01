@@ -5,8 +5,6 @@
  * \see vee/ardulator.py
 **/
 
-#include <cstdlib>
-
 #include "arduino.h"
 #include "ardulator.h"
 
@@ -39,21 +37,6 @@ extern "C" void initalize_simulator() {
   if (!initalized) {
     ardulator::setupArduino();
     initalized = true;
-  }
-}
-
-extern "C" History* retrieve_history(SignalImp* signal) {
-  for (UnusedPinConfigIterator it = ardu->unused_pin_config_.begin();
-       it != ardu->unused_pin_config_.end();
-       it++) {
-    if (it->name_ == signal_->name)
-      return id;
-  }
-
-  for (PinConfigIterator it = ardu->pin_config_.begin();
-       it != ardu->pin_config_.end();
-       it++) {
-    a = ;
   }
 }
 

@@ -1,0 +1,57 @@
+/** \file
+ *
+ *  This file contains special DoxyGen information for the generation of the main page and other special
+ *  documentation pages. It is not a project source file.
+**/
+
+/**
+\page Page_Architecture Architecture
+
+\section Overall Architecture Overview
+
+There are three main components of the emulator. The Arduino Code, the Emulator
+Runtime and the python controller code. The Arduino Code is designed to 
+represent code that could be running on an embedded processor, for example
+the Atmega328p.
+
+\section Emulator Emulator
+
+The emulator relates control from the Arduino Code to the state of the various
+signals connected to the emulator. The Arduino Code must connect the signals
+to various pins by implementing the \link pinConfiguration \endlink function.
+Afterwards the emulator calls the \link setup \endlink function which should
+configure the state of various initialization operations like the \link pinMode
+\endlink function. Next the emulator will run a single call to the \link loop
+\endlink operation. Between calls to the \link loop \endlink operation.
+
+\section SignalDescription Description of Signals
+
+A signal represents various values that a pin could hold. Currently, there are
+three types of signals: Analog, Digital and Serial. Signals can also register
+a callback to implement a more dynamic value.
+
+\section DataFlow Data Flow
+
+\dot
+digraph data_flow {
+  size="6,6";
+  node [color=lightblue2, style=filled];
+  "Python Control Code" -> "C Interface";
+  "C Interface" -> "Ardulator Instance";
+  "Ardulator Instance" -> "Emulator Runtime";
+  "Emulator Runtime" -> "Setup";
+  "Emulator Runtime" -> "Loop";
+  "Loop" -> "System Calls";
+  "Loop" -> "Emulator Runtime Update";
+  "System Calls" -> "Emulator Runtime";
+  "Emulator Runtime Update" -> "Emulator Runtime";
+  "Emulator Runtime" -> "Status Reports";
+  "Status Reports" -> "Python Control Code";
+}
+\enddot
+
+The emulator is controlled and configured with python links to a C API. The
+python code registers various signals as well as controls the runtime length
+of the emulation.
+
+**/

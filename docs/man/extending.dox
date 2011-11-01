@@ -1,0 +1,17 @@
+/** \file
+ *
+ *  This file contains special DoxyGen information for the generation of the main page and other special
+ *  documentation pages. It is not a project source file.
+**/
+
+/**
+
+\page Page_Extending Extending the Emulation
+
+\todo Write about extending the emulation
+
+Extending the Emulation is a multi-step process.
+
+
+
+**/

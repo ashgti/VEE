@@ -27,26 +27,36 @@ const unsigned int LOOP_CONST = 240; //!< A setting for the amount a single
                                      //!< loop of the user code costs in terms
                                      //!< of clock ticks.
 
+/**
+ * Main instance of the emulator. Controls the state of the pins connected.
+ * Calls the control code.
+ * \see setup
+ * \see loop
+ * \see pinConfiguraiton
+ */
 class Ardulator {
  private:
-  FILE         *log_;
-  int           max_pins_;
-  double        runtime_;
-  uint64_t      ticks_;
-  uint64_t      total_ticks_;
+  FILE         *log_;  //!< Log file for all events that happen in the scenario
+  int           max_pins_; 
+  double        runtime_; //!< The total runtime as a double to make comparisions easier
   std::string   registered_identifers_;
-  Clock         scenario_length_;
-  bool          inside_interrupt_handler_;
-  bool          prepared_;
+  Clock         scenario_length_; //!< The total amount of time the scenario should run
+  bool          inside_interrupt_handler_; //!< A guard to prevent interrupts
+                                           //!< from happening inside an interrupt
+                                           //!< handler.
+  bool          prepared_; //!< A gaurd for initalizing the scenario
 
+  /** Initialize the scenario. This is only run once **/
   void        prepareScenario();
+
+  /** **/
   void        updatePinState();
   void        updatePinMaps();
   void        finalizePinState();
   std::string timestamp();
 
  public:
-  Clock timer_;
+  Clock timer_; //!< Current time of the simulation
 
   typedef std::map<int, std::pair<int, void (*)(void)> > InterruptMap;
   typedef InterruptMap::iterator InterruptIterator;
@@ -64,10 +74,10 @@ class Ardulator {
   typedef SingalNameMap::iterator SingalNameMapIterator;
   SingalNameMap signal_names_;
 
-  FILE         *debug_;
-  std::string*  buffers_[256]; // For hardware serial ports
+  FILE         *debug_;  //!< Debug log file
+  std::string*  buffers_[256]; //!< Hardware serial ports buffers
 
-  bool interrupts_enabled_; // Can interrupts occure?
+  bool interrupts_enabled_; //!< Controlls the ability to dispatch interrupts
 
   Ardulator();
   ~Ardulator();
@@ -80,6 +90,13 @@ class Ardulator {
   void   addPin(std::string signal_name, uint8_t pin_id);
   void   addSerial(std::string signal_name, const HardwareSerial &serial);
   void   setPin(uint8_t pin_id, uint8_t val);
+
+  /**
+   * Get the value of a given pin and increment the clock based off the kind of
+   * access.
+   * Analog Reads take 100 ms
+   * Digital Reads 58 cycles
+  **/
   int    getPin(uint8_t pin_id);
   void   dispatchSignal(const char *name);
   void   addTicks(uint64_t);

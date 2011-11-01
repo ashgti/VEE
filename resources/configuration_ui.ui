@@ -242,7 +242,7 @@
                 </item>
                </layout>
               </item>
-              <item row="4" column="0">
+              <item row="6" column="0">
                <spacer name="verticalSpacer">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
@@ -286,6 +286,37 @@
                 </item>
                 <item row="2" column="1">
                  <widget class="QLineEdit" name="uniDuration"/>
+                </item>
+               </layout>
+              </item>
+              <item row="4" column="0">
+               <widget class="QRadioButton" name="radioButton">
+                <property name="text">
+                 <string>Deterministic</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <layout class="QFormLayout" name="formLayout">
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="lineEdit"/>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_3">
+                  <property name="text">
+                   <string>Interval</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="lineEdit_2"/>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_4">
+                  <property name="text">
+                   <string>Duration</string>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -385,6 +416,48 @@
               </item>
              </layout>
             </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="title">
+           <string>Input</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QListWidget" name="inputPinsList"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Signal Name</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="inputSignalName"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="addInputSignal">
+             <property name="text">
+              <string>Add Signal</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>

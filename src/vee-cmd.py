@@ -1,19 +1,25 @@
 # Copyright John Harrison, 2011
 
+## vee-cmd represents the commandline interface to the vee runtime.
+#  This program has a few options requires a configuration file to be passed
+#  when you start the program.
+
 from optparse import OptionParser
 from pickle import load
 from vee.signals import *
-from vee.ardulator import Ardulator
+from vee.ardulator import PyArdulator
 
 parser = OptionParser()
 parser.add_option("-f", "--file", dest="filename",
                   help="write output to fileself", metavar="FILE")
 parser.add_option("-q", "--quiet",
-                  action="store_false", dest="verbose", default=True,
+                  action="store_false", dest="verbose", default=False,
                   help="don't print status messages to stdout")
 parser.add_option("-r", "--runtime", dest="runtime", default=100.0,
                   help="runtime length of the scenario")
-
+parser.add_option("-g", "--graph",
+                  action="store_false", dest="graph", default=False,
+                  help="graph output of signals, requires matplotlib")
 
 def main(options, args):
     if len(args) > 0:
@@ -21,7 +27,8 @@ def main(options, args):
             settings = load(f)
         print settings
         signals = {pin_id: generate_signal(settings[pin_id]) for pin_id in settings}
-        a = Ardulator(options.runtime, signals)
+        print "signals:", signals
+        a = PyArdulator(options.runtime, signals)
         # a.length = 50.0 # Another way of setting the secnario length
         # a.signals = signals # Updating the signals
         print a.run()

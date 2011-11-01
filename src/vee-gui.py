@@ -19,8 +19,9 @@ from vee.configuration_ui import Ui_MainWindow as CWindow
 
 SRC_DIR = '/Users/john/Projects/VEE'
 
+## ApplicationRunner, an abstract way of running commands, such as make.
 class ApplicationRunner(object):
-    "ApplicationRunner, an abstract way of running commands, such as make."
+    ## Initialize the ApplicationRunner
     def __init__(self, dest):
         print dest
         self.scenario_main = dest
@@ -33,13 +34,19 @@ class ApplicationRunner(object):
           2. Extract Files if compressed.
           3. Compile against students code.
         """
-        print Popen(['make'], stdout=PIPE, stderr=PIPE).communicate()[0]
+        os.chdir(SRC_DIR)
+        os.system('make')
+        # while make.poll() == False:
+        #     print make.communicate()[0]
 
     def run(self):
         """
         Run the scenario with the current configuration files.
         """
-        print Popen(['python', './src/vee-cmd.py', ], stdout=PIPE, stderr=PIPE).communicate()[0]
+        os.chdir(SRC_DIR)
+        os.system('python ./src/vee-cmd.py /Users/john/Projects/VEE/test/test.cfg')
+        # while run.poll() == False:
+        #     print run.communicate()[0]
 
     def results(self):
         """
@@ -151,7 +158,7 @@ class MainWindow(QtGui.QMainWindow):
         r = a.make()
         print r
         r = a.run()
-        print 'foobar'
+        print r
 
     def updatePinConfiguration(self):
         "Update the configuration settings."
@@ -239,6 +246,7 @@ class MainWindow(QtGui.QMainWindow):
         if fileName:
             with open(fileName, 'r') as f:
                 self.settings = pickle.load(f)
+                self.ui.outputPinsList.clear()
                 for x in self.settings:
                     self.ui.outputPinsList.addItem(x)
 

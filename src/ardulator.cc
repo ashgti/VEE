@@ -18,8 +18,8 @@ using ::std::vector;
 using ::std::fprintf;
 using ::std::make_pair;
 
-extern "C" void loop() __attribute__((weak));
-extern "C" void setup() __attribute__((weak));
+// extern "C" void loop() __attribute__((weak));
+// extern "C" void setup() __attribute__((weak));
 
 namespace ardulator {
 
@@ -32,8 +32,8 @@ static EmulatorFinished ef;
 
 static ProcessingSignalException p;
 
-Ardulator::Ardulator() : runtime_(0.0), ticks_(0), total_ticks_(0),
-                         registered_identifers_(""), scenario_length_(0, 0),
+Ardulator::Ardulator() : runtime_(0.0), registered_identifers_(""),
+                         scenario_length_(0, 0),
                          inside_interrupt_handler_(false), prepared_(false),
                          timer_(0, 0), interrupts_enabled_(false) {
   struct stat buffer;

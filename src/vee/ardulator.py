@@ -25,37 +25,43 @@ if not veelib:
     raise ImportError("Could not load the libvee library. Please check your installation.")
 
 # Data Structures
-class ValueImp(Union):
-    _fields_ = [("str", c_char_p),
-                ("digital", c_uint8),
-                ("analog", c_uint16)]
 
-class SignalImp(Structure):
+
+## \class PySignalImp
+#  Python Implementation of the Signal Data structure.
+#  \see SignalImp
+class PySignalImp(Structure):
     pass
     # doing this because this is an incomplete type.
 
-SignalImp._fields_ = [("tick", c_double),
-                      ("duration", c_double),
-                      ("value", ValueImp),
-                      ("type", c_uint32),
-                      ("name", c_char_p),
-                      ("next", POINTER(SignalImp))]
+
+SiganlCallback = CFUNCTYPE(None, c_double, POINTER(PySignalImp))
+
+## Python implementation of the ValueImp.
+#  \see ValueImp
+class PyValueImp(Union):
+    _fields_ = [("str", c_char_p),
+                ("digital", c_uint8),
+                ("analog", c_uint16),
+                ]
+
+PySignalImp._fields_ = [("tick", c_double),
+                        ("duration", c_double),
+                        ("value", PyValueImp),
+                        ("type", c_uint32),
+                        ("name", c_char_p),
+                        ("next", POINTER(PySignalImp))]
 
 # Interface prototypes
-
-# extern double run(double length)
 run = veelib.run
 run.restype = c_double
 run.argstypes = [c_double]
 
-# extern void initalize_simulator()
-
-# extern bool register_signal(int pin_id, SignalImp* first)
 register_signal = veelib.register_signal
 register_signal.restype = c_bool
-register_signal.argstypes = [POINTER(SignalImp)]
+register_signal.argstypes = [POINTER(PySignalImp)]
 
-class Ardulator(object):
+class PyArdulator(object):
     """
     This represents an instance of the Ardulator Emulator. Currently because
     of the way the emulator calls the functions in the students code you can
@@ -99,8 +105,8 @@ class Ardulator(object):
             rate = self.signals[s].rate
             value = self.signals[s].value
 
-            print rate
-            print value
+            print 'rate:', rate
+            print 'value:', value
 
             dv = ValueImp()
             dv.digital = c_uint8(1)
