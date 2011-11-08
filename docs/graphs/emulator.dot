@@ -1,0 +1,5 @@
+digraph example {
+  node [ shape = box ];
+  a -> b [ label="Testing", pos="e,100,30 s,100,-30 55,0" ];
+  b -> a [ label="Again", pos="e,-100,30 s,-100,-30 -55,0" ];
+}

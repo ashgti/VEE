@@ -1,0 +1,17 @@
+msc {
+  # hscale = "2";
+
+  a [label="Python Code"], b [label="Ardulator Instance"], c [label="Ardulator Runtime"];
+
+  a->b [ label="Scenario Configuration" ];
+  b->c [ label="Prepare Scenario" ];
+  c=>c [ label="setup()" ];
+  c=>c [ label="loop()" ];
+  ...;
+  c=>>a [ label="Signal Callbacks" ];
+  a>>c [ label="Signal Update" ];
+  c=>c [ label="loop()" ];
+  ...;
+  c>>a [ label="Scenario Results" ];
+}
+

@@ -2,6 +2,9 @@
 
 #ifndef INCLUDE_ARDULATOR_H_
 #define INCLUDE_ARDULATOR_H_
+
+#include <pthread.h>
+
 #include <vector>
 #include <map>
 #include <exception>
@@ -36,43 +39,48 @@ const unsigned int LOOP_CONST = 240; //!< A setting for the amount a single
  */
 class Ardulator {
  private:
-  FILE         *log_;  //!< Log file for all events that happen in the scenario
-  int           max_pins_; 
-  double        runtime_; //!< The total runtime as a double to make comparisions easier
-  std::string   registered_identifers_;
-  Clock         scenario_length_; //!< The total amount of time the scenario should run
-  bool          inside_interrupt_handler_; //!< A guard to prevent interrupts
-                                           //!< from happening inside an interrupt
-                                           //!< handler.
-  bool          prepared_; //!< A gaurd for initalizing the scenario
+  FILE           *log_;  //!< Log file for all events that happen in the
+                         //!< scenario
+  double          runtime_; //!< The total runtime as a double to make
+                            //!< comparisions easier
+  std::string     registered_identifers_;
+  Clock           scenario_length_; //!< The total amount of time the scenario should run
+  bool            inside_interrupt_handler_; //!< A guard to prevent interrupts
+                                             //!< from happening inside an
+                                             //!< interrupt handler.
+  bool            prepared_; //!< A gaurd for initalizing the scenario
 
   /** Initialize the scenario. This is only run once **/
-  void        prepareScenario();
+  void            prepareScenario();
 
-  /** **/
-  void        updatePinState();
-  void        updatePinMaps();
-  void        finalizePinState();
-  std::string timestamp();
+  /** Updates pins, checks if we need to fire interrupt. **/
+  void            updatePinState();
+  /** Constructs a mapping of pins to signal names, useful reference. **/
+  void            updatePinMaps();
+  /** Finalize the state of the pins after the scenario is finished. **/
+  void            finalizePinState();
+  std::string     timestamp();
 
  public:
   Clock timer_; //!< Current time of the simulation
 
   typedef std::map<int, std::pair<int, void (*)(void)> > InterruptMap;
   typedef InterruptMap::iterator InterruptIterator;
-  InterruptMap  interrupts_;
+  InterruptMap  interrupts_; //!< A list of interrupts, matching the pin and
+                             //!< type to a function callback.
 
   typedef std::map<int, PinConfig*> PinConfigs;
   typedef PinConfigs::iterator PinConfigIterator;
-  PinConfigs    pin_config_;
+  PinConfigs    pin_config_; //!< A map of pins to their respective PinConfigs
 
   typedef std::map<std::string, PinConfig*> UnusedPinConfigs;
   typedef UnusedPinConfigs::iterator UnusedPinConfigIterator;
-  UnusedPinConfigs unused_pin_config_;
+  UnusedPinConfigs unused_pin_config_; //!< A list of unused pins.
 
   typedef std::map<std::string, int> SingalNameMap;
   typedef SingalNameMap::iterator SingalNameMapIterator;
-  SingalNameMap signal_names_;
+  SingalNameMap signal_names_; //!< A map to connect a signal name to a given
+                               //!< pin.
 
   FILE         *debug_;  //!< Debug log file
   std::string*  buffers_[256]; //!< Hardware serial ports buffers
@@ -81,7 +89,14 @@ class Ardulator {
 
   Ardulator();
   ~Ardulator();
+  
   void   configurePin(uint8_t id, uint8_t mode);
+
+  /**
+   * \callgraph
+   * Run the scenario for a given length.
+   * \returns the exact amount of time the scenario ran for
+   */
   double runScenario(double length);
   void   registerInterrupt(uint8_t pin_id,
                            void (*)(void),
@@ -94,7 +109,7 @@ class Ardulator {
   /**
    * Get the value of a given pin and increment the clock based off the kind of
    * access.
-   * Analog Reads take 100 ms
+   * Analog Reads take 100 s
    * Digital Reads 58 cycles
   **/
   int    getPin(uint8_t pin_id);

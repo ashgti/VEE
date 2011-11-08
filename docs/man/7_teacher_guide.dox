@@ -1,0 +1,114 @@
+/** \file
+ *
+ *  This file contains special DoxyGen information for the generation of the main page and other special
+ *  documentation pages. It is not a project source file.
+**/
+
+/**
+\page Page_TeacherGuide Teachers Guide
+
+\section ConfigurationGUI Configuration GUI
+
+A basic configuration GUI is available for generation test scenarios.
+
+To begin, simply open the vee-gui.py file. This require
+<a href="http://www.python.org/">Python</a> with 
+<a href="http://www.pyside.org/">PySide</a>. After opening vee-gui.py you
+should see a window that looks like the following.
+
+\image html configuration.png "Configuration Window"
+\image latex configuration.eps "Configuration Window" width=10cm
+
+This is the basic configuration UI. There are three primary parts of a
+configuration. The Output Pins list shows a list of pins that are configured
+as output of the system, mapping to input. The IO of the scenario is configured
+using the GUI. The user of the scenario would then connect a signal to an
+individual pin. The IO systems purpose is to map a signal to the scenario
+while still allowing a student to configure the position and purpose of that
+signal for their specific scenario.
+Refer to the \ref Page_Architecture section for more information on the way the
+emulator is arranged.
+
+\section AddingSignals How to add a Signal to a Scenario
+
+To add a signal to a scenario, begin by opening the GUI and changing to the
+Configuration view. On the left of the GUI there is a list of currently
+available signals. Fill in the 'Signal Name' input box and press the
+'Add Signal' button below to register a new signal.
+
+\image html output_signals.png "Output Signals List"
+\image latex output_signals.eps "Output Signals List"
+
+Selecting any signal in the list of Output Signals will result update the
+'Signal Configuration' section with its current settings. Modifying any of
+these values will update the signal.
+
+Lets consider configuring an Analog Signal with an Exponential Distribution
+for the phase of the signal. Select the signal you wish to configure in the
+'Output Signals' list. Then, click the 'Exponential' radio box in the 'Signal
+Intervals' panel. This will enable the Lambda and Duration boxes which are
+the parameters to the Exponential Distribution. Putting a value of 2 (s) in the
+input box named Lambda will result in an exponential phase with a lambda of 2.
+The Exponential Distribution follows the Cumulative Exponential Distribution
+Formula. 
+
+\latexonly
+\begin{figure}
+\begin{equation*}
+F(x;\lambda) = \begin{cases}
+1-e^{-\lambda x}, & \quad x \ge 0, \\
+0,                & \quad x < 0.
+\end{cases}
+\end{equation*}
+\caption{Exponential Distribution Formula}
+\end{figure}
+\endlatexonly
+
+\image html exponential_distribution.png "Exponential Distribution Formula"
+
+Once you have selected a 'Signal Interval' you can now select a 'Signal Value'.
+The 'Signal Value' represents the type of value the signal will contain. Some
+common examples are digital values or analog values. A signal can contain
+composite information, such as serial data which is composed of an input signal
+and an output signal. Digital signals are square waves that bounce between 0.0V
+and 5.0V. Analog values can form a square wave, which is functionally the same
+as a digital signal with a smaller or large analog value, or a sine wave where
+the value grows over time.
+
+\image html signal_configuration.png "Signal Configurations"
+\image latex signal_configuration.eps "Signal Configurations"
+
+To continue with our example of an analog signal with an exponential
+distribution for the phase click the 'Analog' radio box in the 'Signal Values'
+panel. Next click on 'Sine Wave', this sill cause the signal to make a curve
+instead of a square value. Next enter a value in the 'Max Value', for example
+the value 3.4V will cause the analog signals max analog value to be 3.4V,
+instead of the normal 5V. If you were to run this kind of wave and graph the
+analog values over time, the result would look as follows:
+
+\image html analog_sine_wave.png "Analog Sine Wave Sample"
+\image latex analog_sine_wave.png "Analog Sine Wave Sample"
+
+The random duration of the phase is generated with an exponential random
+number. The flat peaks are the duration the pin stays high. If you do not want
+the analog value to peak, simply set the duration to 0.
+
+\section RunningAScenario Running a Scenario
+
+One a scenario has been properly configured for the current assignment it is
+possible to run the scenario against a given set of code. Switching to the
+'Scenario View' tab of the GUI application will display a list of loaded
+emulator programs, a build log on the lower left side panel and a graph of
+the input and output signals of the scenario. Pressing the 'Run' button will
+cause the system to attempt to build the students code and run the current
+configuration against their software. Any errors in the build process will
+prevent the code from actually running the scenario and instead print out the
+compiler error messages to the window. 
+
+\image html scenario_runner.png "Scenario Runner"
+\image latex scenario_runner.eps "Scenario Runner" width=7cm
+
+\see vee-gui.py
+\see vee-cmd.py
+
+**/

@@ -5,7 +5,6 @@
 namespace ardulator {
 namespace containers {
 
-/// \todo Add clock ticks
 BitValue::BitValue() : ro_(false), state_(0) {
 }
 BitValue::BitValue(uint8_t ref, bool readonly) : ro_(readonly), state_(ref) {
@@ -27,6 +26,7 @@ volatile uint8_t* BitValue::getStateRef() {
 
 BitValue&
 BitValue::operator=(const int &b) {
+    /* Potential spot to increase the clock */
     state_ = b;
     return *this;
 }
@@ -48,6 +48,7 @@ BitValue::operator&(const int &b) const {
 
 BitValue&
 BitValue::operator^=(const int &b) {
+    /* Potential spot to increase the clock */
     if (!ro_)
         state_ ^= b;
     return *this;
@@ -55,6 +56,7 @@ BitValue::operator^=(const int &b) {
 
 BitValue&
 BitValue::operator|=(const int &b) {
+    /* Potential spot to increase the clock */
     if (!ro_)
         state_ |= b;
     return *this;
@@ -62,6 +64,7 @@ BitValue::operator|=(const int &b) {
 
 BitValue&
 BitValue::operator&=(const int &b) {
+    /* Potential spot to increase the clock */
     if (!ro_)
         state_ &= b;
     return *this;
@@ -69,6 +72,7 @@ BitValue::operator&=(const int &b) {
 
 BitValue&
 BitValue::operator^=(const BitValue &b) {
+    /* Potential spot to increase the clock */
     if (!ro_)
         state_ ^= const_cast<BitValue&>(b).state();
     return *this;
@@ -76,6 +80,7 @@ BitValue::operator^=(const BitValue &b) {
 
 BitValue&
 BitValue::operator|=(const BitValue &b) {
+    /* Potential spot to increase the clock */
     if (!ro_)
         state_ |= const_cast<BitValue&>(b).state();
     return *this;
@@ -83,6 +88,7 @@ BitValue::operator|=(const BitValue &b) {
 
 BitValue&
 BitValue::operator&=(const BitValue &b) {
+    /* Potential spot to increase the clock */
     if (!ro_)
         state_ &= const_cast<BitValue&>(b).state();
     return *this;
@@ -90,6 +96,7 @@ BitValue::operator&=(const BitValue &b) {
 
 BitValue&
 BitValue::operator=(const BitValue &b) {
+    /* Potential spot to increase the clock */
     if (!ro_)
         state_ = const_cast<BitValue&>(b).state();
     return *this;

@@ -37,6 +37,8 @@ union ValueImp {
   ValueCallback cb;
 };
 
+
+
 /**
  * Represents a single signal value.
  */
@@ -47,16 +49,7 @@ struct SignalImp {
   ValueType type; //!< The type of value
   const char *name; //!< The name of the signal
   struct SignalImp* next; //!< Pointer to the next signal
-};
-
-/**
- * Records the history of a signal.
- */
-struct History {
-  int missed_evts_;   //!< The total number missed events.
-  int total_evts_;    //!< The total number of events.
-  int caught_evts_;   //!< The total number of events handled.
-  double avg_response_time_; //!< The average response time to handle an event.
+  struct HistoryImp* hist;
 };
 
 #ifdef __cplusplus

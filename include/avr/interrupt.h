@@ -10,7 +10,7 @@
     Foo vector##foo(vector);        \
     void vector(void)
 
-
+/* TODO Implement some of the useful interrupts */
 #define INT0_vect         _VECTOR(1)   /* External Interrupt Request 0 */
 #define INT1_vect         _VECTOR(2)   /* External Interrupt Request 1 */
 #define PCINT0_vect       _VECTOR(3)   /* Pin Change Interrupt Request 0 */
@@ -38,3 +38,4 @@
 #define SPM_READY_vect    _VECTOR(25)  /* Store Program Memory Read */
 
 #endif  // INCLUDE_AVR_INTERRUPT_H_
+

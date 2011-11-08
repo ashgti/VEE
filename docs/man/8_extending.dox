@@ -1,0 +1,41 @@
+/** \file
+ *  This file contains special DoxyGen information for the generation of the 
+ *  main page and other special documentation pages. It is not a project source
+ *  file.
+**/
+
+/**
+
+\page Page_Extending Extending the Emulation
+
+\section Extending Extending the Emulation Runtime
+
+The current implementation of the Ardulator has a modular design that can
+easily be extended in the future. Currently, with which you access the emulator
+runtime is completely independent of the runtime system. To design a new
+interface to mimic a platform other than the Arduino API could be done by
+simply re-implementing the API interfaces.
+
+The core emulator runtime was designed to be thread safe as well. Students
+are capable of threading using OS level threading capabilities to emulate a
+threaded embedded system.
+
+\section FutureDevelopment Future Development
+
+The emulator currently supports and recognizes digital, analog and serial
+communication. These components can be combined and arranged to form a wide
+variety of other devices, such as an external non-volatile storage component
+or a LCD character display.
+
+Composite devices, such as a LCD screen that is composed of a number of
+digital signals grouped into a single device, would be an ideal area for
+future development.
+
+Another area that could improve the development experience for the students
+would be to invest in adapting the Processing IDE to the emulator. The Arduino
+framework is based off the Wiring IDE, which is an Open Source project to
+develop an easy to use IDE for embedded system development. The similarities
+between the Arduino API's and the VEE system would make this a straight forward
+process for future development.
+
+**/

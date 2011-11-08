@@ -1,7 +1,8 @@
 /** \file
  *
- *  This file contains special DoxyGen information for the generation of the main page and other special
- *  documentation pages. It is not a project source file.
+ *  This file contains special DoxyGen information for the generation of the
+ *  main page and other special documentation pages. It is not a project source
+ *  file.
 **/
 
 /**
@@ -32,26 +33,28 @@ a callback to implement a more dynamic value.
 
 \section DataFlow Data Flow
 
-\dot
-digraph data_flow {
-  size="6,6";
-  node [color=lightblue2, style=filled];
-  "Python Control Code" -> "C Interface";
-  "C Interface" -> "Ardulator Instance";
-  "Ardulator Instance" -> "Emulator Runtime";
-  "Emulator Runtime" -> "Setup";
-  "Emulator Runtime" -> "Loop";
-  "Loop" -> "System Calls";
-  "Loop" -> "Emulator Runtime Update";
-  "System Calls" -> "Emulator Runtime";
-  "Emulator Runtime Update" -> "Emulator Runtime";
-  "Emulator Runtime" -> "Status Reports";
-  "Status Reports" -> "Python Control Code";
-}
-\enddot
+\msc
+  # hscale = "2";
+
+  a [label="Python Code"], b [label="Ardulator Instance"], c [label="Ardulator Runtime"];
+
+  a->b [ label="Scenario Configuration", URL="\ref PyArdulator.run" ];
+  b->c [ label="Prepare and Run Scenario", URL="\ref ardulator::Ardulator::runScenario()" ];
+  c=>c [ label="setup()", URL="\ref setup()" ];
+  c=>c [ label="loop()", URL="\ref loop()" ];
+  ...;
+  c=>>a [ label="Signal Callbacks" ];
+  a>>c [ label="Signal Update" ];
+  c=>c [ label="loop()", URL="\ref loop()" ];
+  ...;
+  c>>a [ label="Scenario Results" ];
+\endmsc
 
 The emulator is controlled and configured with python links to a C API. The
 python code registers various signals as well as controls the runtime length
 of the emulation.
+
+\image html emulator_io.png "Emulator IO"
+\image latex emulator_io.eps "Emulator IO" width=7cm
 
 **/

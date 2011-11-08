@@ -22,6 +22,9 @@ parser.add_option("-g", "--graph",
                   help="graph output of signals, requires matplotlib")
 
 def main(options, args):
+    """
+    Runs the commandline interface to VEE, takes a configuration file as a parameter.
+    """
     if len(args) > 0:
         with open(args[0], 'r') as f:
             settings = load(f)
@@ -31,7 +34,7 @@ def main(options, args):
         a = PyArdulator(options.runtime, signals)
         # a.length = 50.0 # Another way of setting the secnario length
         # a.signals = signals # Updating the signals
-        print a.run()
+        print a.run_scenario()
         print 'Total runtime:', a.length
     else:
         print "Please pass the program a configuration file."

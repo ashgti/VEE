@@ -26,7 +26,7 @@ hardware to try out their code.
 One of the prominent design goals of this project is the ability to create a 
 wide variety of device configurations and scenarios that require different
 software architectures approaches to accomplish each task. The software should
-be testable and capable of simulating high stress enviorments.
+be testable and capable of simulating high stress environments.
 
 To summarize:
 

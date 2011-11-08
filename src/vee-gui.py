@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # Copyright John Harrison, 2011
-"""
-MainWindow is the driver program for the GUI components of VEE.
-"""
+##
+#  MainWindow is the driver program for the GUI components of VEE.
 
 import sys, os
 import os.path
@@ -27,6 +26,7 @@ class ApplicationRunner(object):
         self.scenario_main = dest
         os.chdir(SRC_DIR)
 
+    ## Build the students work.
     def make(self):
         """
         Operations:
@@ -39,6 +39,7 @@ class ApplicationRunner(object):
         # while make.poll() == False:
         #     print make.communicate()[0]
 
+    ## Run the student's program with a given scenario
     def run(self):
         """
         Run the scenario with the current configuration files.
@@ -57,8 +58,8 @@ class ApplicationRunner(object):
 class ConfigurationError(ValueError):
     pass
 
+## Main application window.
 class MainWindow(QtGui.QMainWindow):
-    "Main application window."
     list_changed = QtCore.Signal()
 
     def __init__(self, ui):

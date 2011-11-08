@@ -22,14 +22,22 @@ individual hardware components directly, but to implement the Arduino API.
 
 \section HardwareAbstraction Atmel AVR Atmega328p Hardware Abstractions
 
-The Arduino API abstracts aware a number of implementation details. For 
-instance, interrupts have been greatly simplified as well as other simple
-operations like reading from a UART. However, there are some hardware details
-that can help students learn more about 
+The Arduino API abstracts a number of hardware details from the end user.
+For instance, interrupts have been greatly simplified as well as other simple
+operations like reading from an UART.
+However, the Arduino API does not mask all hardware details from the developer.
+These hardware details can help teach students about embedded system
+constraints. The primary hardware abstractions the emulator still implements
+are the PORTx and DDRx registers. In the Atmega328p, the PORTx data registers
+hold the value of memory mapped IO pins, for doing digital reads and writes.
+The DDRx registers are used to control the direction of the pin, whether the
+pin is an input pin or an output pin.
 
-\section ConfigurationAPI Configuration Control API
+\section PythonControlAPI Python Control API Configuration
 
-description of the architecture, i.e the different elements of the architectures
-Break the architecture in different elements and dedicate one chapter per element
+The python control API interfaces between the python runtime and the C runtime
+interface to the Ardulator. The interfaces expose mechanisms for adding signals
+to the runtime scenario as well as starting and stopping the scenario. The
+python
 
 **/

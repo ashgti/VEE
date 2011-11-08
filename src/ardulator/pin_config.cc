@@ -33,7 +33,6 @@ void PinConfig::setState(const Clock &t) {
   }
 }
 
-/// \todo Fixup this function. Needs to dispatch interrupts.
 void PinConfig::dispatchingInterrupt(const SignalImp &prev, const SignalImp &next) {
   fprintf(ardu->debug_, "Signal: %d switched.", pid_);
   Ardulator::InterruptIterator int_iter;
@@ -51,7 +50,7 @@ void PinConfig::dispatchingInterrupt(const SignalImp &prev, const SignalImp &nex
       if (int_iter->second.first == RISING) {
         int_iter->second.second();
       }
-      pin_history_.total_evts_ += 1;
+      // pin_history_.total_evts_ += 1;
       caught_flag_ = false;
     }
     if (prev.value.digital == HIGH && next.value.digital == LOW) {
@@ -60,7 +59,8 @@ void PinConfig::dispatchingInterrupt(const SignalImp &prev, const SignalImp &nex
         int_iter->second.second();
       }
       if (caught_flag_ == false) {
-          pin_history_.missed_evts_ += 1;
+        // \todo get this history recording done right.
+        // signals_->current->history pin_history_.missed_evts_ += 1;
       }
     }
     if (prev.value.digital != next.value.digital) {

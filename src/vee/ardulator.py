@@ -45,6 +45,13 @@ class PyValueImp(Union):
                 ("analog", c_uint16),
                 ]
 
+## Python Implmenetaiton of the History Data Structure.
+class PyHistoryImp(Structure):
+    _fields_ = [("missed_evts", c_int),
+                ("total_evts", c_int),
+                ("caught_evts", c_int),
+                ("avg_response_time", c_double)]
+
 PySignalImp._fields_ = [("tick", c_double),
                         ("duration", c_double),
                         ("value", PyValueImp),
@@ -53,36 +60,44 @@ PySignalImp._fields_ = [("tick", c_double),
                         ("next", POINTER(PySignalImp))]
 
 # Interface prototypes
+## Run command, from C.
 run = veelib.run
 run.restype = c_double
 run.argstypes = [c_double]
 
+## register_signal command, from C.
 register_signal = veelib.register_signal
 register_signal.restype = c_bool
 register_signal.argstypes = [POINTER(PySignalImp)]
 
+
+## This represents an instance of the Ardulator Emulator. Currently because
+#  of the way the emulator calls the functions in the students code you can
+#  only have 1 instances of the Ardulator class. This could be worked around
+#  in future versions of the code, but currently its a limitation of the
+#  emulator.
 class PyArdulator(object):
-    """
-    This represents an instance of the Ardulator Emulator. Currently because
-    of the way the emulator calls the functions in the students code you can
-    only have 1 instances of the Ardulator class. This could be worked around
-    in future versions of the code, but currently its a limitation of the
-    emulator.
-    """
+    ## Initalization of the emulator.
     def __init__(self, runtime = 100.0, signals = []):
-        """Initalization of the emulator."""
+        ## The estimated runtime length.
         self.length = runtime
+
+        ## The current time, this is useful for when you step through your
+        #  program.
         self.current_time = 0
+
+        ## The set of all signals for this scenario
         self.signals = signals
-        self.failures = 0
+
+        ## Reference for internal purpose of the data from the config file.
         self._data = {}
+
+        ## A check to see if the signals have ben generated from the config.
         self._signals_generate = False
 
-    def run(self, length=None):
-        """
-        Do NOT change self.signals after you call run, it will not regenerate
-        the signals.
-        """
+    ## Do NOT change self.signals after you call run, it will not regenerate
+    #  the signals.
+    def run_secnario(self, length=None):
         global veelib
         self._generate_signal_data()
         if length == None:
@@ -95,8 +110,8 @@ class PyArdulator(object):
             self.current_time = run(c_double(length))
             return self.current_time
 
+    ## Generates the C interfacing data from signals.
     def _generate_signal_data(self):
-        "Generates the C interfacing data from signals."
         if self._signals_generate:
             return
         else:
@@ -126,3 +141,4 @@ class PyArdulator(object):
         self._signals_generate = True
         for x in self._data:
             register_signal(pointer(self._data[x]))
+

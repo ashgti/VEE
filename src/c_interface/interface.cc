@@ -23,10 +23,6 @@ extern "C" void reset_simulator() {
   runtime = 0;
 }
 
-extern "C" void step() {
-  /// \todo Implement step. To step through an execution of the emulation.
-}
-
 extern "C" double run(double length) {
   initalize_simulator();
 

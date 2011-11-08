@@ -2,7 +2,7 @@
 
 import numpy as np
 from matplotlib import use
-use('AGG')
+# use('AGG')
 from matplotlib.transforms import Bbox
 from matplotlib.path import Path
 from matplotlib.patches import Rectangle
@@ -56,3 +56,29 @@ class Plot(QtGui.QWidget):
                               QtGui.QImage.Format_ARGB32)
         qImage = qImage.scaled(self.width(), self.height())
         self.imageLabel.setPixmap(QtGui.QPixmap.fromImage(qImage))
+
+## Generate a square wave.
+def generate_range(start, stop, step=1.0, square=True):
+    r = []
+    st = start
+    while st < stop:
+        if st % 2 == 0:
+            r.append((st, 1.0))
+            r.append((st, 0.0))
+        else:
+            r.append((st, 0.0))
+            r.append((st, 1.0))
+        st += step
+    return r
+
+if __name__ == '__main__':
+    a = generate_range(1, 10)
+
+    (xs, ys) = zip(*a)
+
+    xlim(-0.5, 10.5)
+    ylim(-0.5, 1.5)
+
+    plot(xs, ys, label="Blink")
+
+    show()

@@ -1,32 +1,27 @@
 /**
 \mainpage Virtual Embedded Enviorment
 
-\author John Harrison <ash.gti@gmail.com>
+\author John Harrison <harrij3@auburn.edu>
 
 The <b>V</b>irtual <b>E</b>mulated <b>E</b>nvironment or \b VEE is an
 emulation system for learning about embedded systems and embedded system
 related problems.
 
+\section Abstract Abstract
+
 This is primarily a teaching tool, but could be used as a test platform for
 some Arduino Code.
 
-The VEE system targets the \b Atmega328p processor for the Arduino
-development enviorment. \b VEE implements some of the hardware details of
-the \b Atmega328p as well as most of the \b Arduino API's that sit on top of
-the Atmega processors.
-
-The emulator has four major components. The Arduino API, the  Atmega328p 
-Hardware Abstractions, Interrupt Dispatcher and a python interface for
-controlling the system.
-
-<b>Subsections:</b>
+\b Subsections:
 
 \li \subpage Page_AboutTheProject - About the Project
+\li \subpage Page_Comparison      - Comparison of various approaches
 \li \subpage Page_Architecture    - Architecture
 \li \subpage Page_ArduinoAPI      - Arduino API and Control Interface
 \li \subpage Page_StudentGuide    - Student Guide
 \li \subpage Page_TeacherGuide    - Teachers Guide
 \li \subpage Page_Extending       - Extending the Emulator
+\li \subpage Page_Conclusion      - Conclusion
 
 \see ardulator::Ardulator
 \see vee-gui.py

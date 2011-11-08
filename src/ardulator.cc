@@ -8,6 +8,7 @@
 #include <cassert>
 #include <iomanip>
 #include <cstdio>
+#include <stdexcept>
 
 #include "ardulator.h"
 #include "arduino.h"
@@ -28,9 +29,14 @@ using ::ardulator::containers::Clock;
 class EmulatorFinished {
 };
 
+/** Initialize static variables */
+
 static EmulatorFinished ef;
 
 static ProcessingSignalException p;
+
+/** Thead lock to make the emulator thread safe */
+static pthread_mutex_t thread_lock = PTHREAD_MUTEX_INITIALIZER;
 
 Ardulator::Ardulator() : runtime_(0.0), registered_identifers_(""),
                          scenario_length_(0, 0),
@@ -72,7 +78,8 @@ void Ardulator::configurePin(uint8_t pin_id, uint8_t mode) {
 }
 
 /**
- * 
+ * Prepares the scenario, initializing any variables required for the rest of
+ * the simulation.
  */
 void Ardulator::prepareScenario() {
   if (prepared_) {
@@ -137,6 +144,7 @@ double Ardulator::runScenario(double length) {
  * runtime of the emulation.
  */
 void Ardulator::addTicks(uint64_t length) {
+  pthread_mutex_lock(&thread_lock);
   timer_.ticks_ += length;
   if (timer_.ticks_ > TICKS_PER_SECOND) {
     timer_.seconds_++;
@@ -144,6 +152,7 @@ void Ardulator::addTicks(uint64_t length) {
   }
 
   runtime_ = timer_.seconds_ + (timer_.ticks_ / TICKS_PER_SECOND);
+  pthread_mutex_unlock(&thread_lock);
 }
 
 /**
@@ -163,7 +172,7 @@ void Ardulator::updatePinMaps() {
       it->second->bit_mask_ = 1 << (16 - it->first);
       it->second->bit_container_ = PORTC.getStateRef();
     } else {
-      throw "Error this pin is out of bounds.";
+      throw std::overflow_error("Error this pin is out of bounds");
     }
   }
 }
@@ -226,6 +235,7 @@ double Ardulator::now() {
  * Digital Reads 58 cycles
  */
 int Ardulator::getPin(uint8_t pin_id) {
+  pthread_mutex_lock(&thread_lock);
   if (pin_config_.find(pin_id) == pin_config_.end()) {
     return LOW;
   } else {
@@ -241,12 +251,15 @@ int Ardulator::getPin(uint8_t pin_id) {
       return LOW;
     }
   }
+  pthread_mutex_unlock(&thread_lock);
 }
 
 void Ardulator::setPin(uint8_t pin_id, uint8_t val) {
+  pthread_mutex_lock(&thread_lock);
   if (pin_config_[pin_id]->state_ != val) {
     pin_config_[pin_id]->state_ = val;
   }
+  pthread_mutex_unlock(&thread_lock);
 }
 
 void Ardulator::dispatchSignal(const char *signal_id) {
@@ -266,9 +279,11 @@ void Ardulator::dispatchSignal(const char *signal_id) {
     return;
   }
 
+  pthread_mutex_lock(&thread_lock);
   size_t id = signal_names_[signal_id];
   double processing_time = pin_config_[id]->signal_.current_->duration;
   int wait_till = 0;
+  pthread_mutex_unlock(&thread_lock);
 
   wait_till = static_cast<int>(processing_time * TICKS_PER_SECOND);
 
@@ -291,6 +306,7 @@ string Ardulator::timestamp() {
 }
 
 void Ardulator::addPin(string signal_name, uint8_t pin_id) {
+  pthread_mutex_lock(&thread_lock);
   printf("Adding pin %s %d\n", signal_name.c_str(), pin_id);
   UnusedPinConfigIterator it = unused_pin_config_.find(signal_name);
 
@@ -302,10 +318,13 @@ void Ardulator::addPin(string signal_name, uint8_t pin_id) {
   }
 
   signal_names_[signal_name] = pin_id;
+  pthread_mutex_unlock(&thread_lock);
 }
 
 void Ardulator::addSerial(string signal_name, const HardwareSerial &serial) {
+  pthread_mutex_lock(&thread_lock);
   signal_names_[signal_name] = serial.pin();
+  pthread_mutex_unlock(&thread_lock);
 }
 
 /* Reporting facilities */
@@ -333,9 +352,11 @@ void Ardulator::report() {
 void Ardulator::registerInterrupt(uint8_t pin_id,
                                   void (*fn)(void),
                                   uint8_t mode) {
+  pthread_mutex_lock(&thread_lock);
   printf("Registering interrupt %d\n", pin_id);
   interrupts_[pin_id] = make_pair(mode, fn);
   pin_config_[pin_id]->interrupt_ = true;
+  pthread_mutex_unlock(&thread_lock);
 }
 
 /**
@@ -343,9 +364,11 @@ void Ardulator::registerInterrupt(uint8_t pin_id,
  * @param pin_id the interrupt to remove.
  */
 void Ardulator::dropInterrupt(uint8_t pin_id) {
+  pthread_mutex_lock(&thread_lock);
   interrupts_.erase(pin_id);
   pin_config_[pin_id]->interrupt_ = false;
   printf("Dropped int on %d\n", pin_id);
+  pthread_mutex_unlock(&thread_lock);
 }
 
 }  // END namespace ardulator

@@ -34,10 +34,10 @@ struct PinConfig {
   uint8_t bit_mask_;   //!< The bit mask for the memory register this pin
                        //!< belongs to.
 
-  volatile uint8_t *bit_container_; //!< 
+  volatile uint8_t *bit_container_; //!< A pointer to the location of the
+                                    //!< memory address for PORTs.
 
-  History pin_history_;    //!< 
-  SignalContainer signal_; //!<
+  SignalContainer signal_; //!< A signal associated with the pin.
 
   /**
    * Set the pin state, if the time has passed the current pins expiration
