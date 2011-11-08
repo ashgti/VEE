@@ -9,16 +9,17 @@
 
 \section ArduinoAPI Arduino API
 
-The Arduino is software platform that can be built on top of various Atmel AVR
-processors. The current implementation is based off the Arduino platform
-targeting the Atmel AVR Atmega328p processor. The Atmega328p platform was
-selected because it is an affordable and commonly used in various Arduino 
-devices. If the students want to try to apply their work to a real embedded
-system it should be as simple as recompiling and uploading the code onto the
-Arduino. The firmware for an Arduino is written in the C/C++ programming
-language. This software API abstracts away many of the implementation details
-of the hardware. The main strategy of the emulator is not to emulate the
-individual hardware components directly, but to implement the Arduino API.
+The Arduino is a software platform that can be built on top of various Atmel
+AVR processors. The emulator is based off of the Arduino platform targeting the
+Atmel AVR Atmega328p processor. The Atmega328p platform was selected because it
+is a commonly processor used in multiple Arduino devices. If a student
+want to try to apply their work to a real embedded system it should be possible
+to transfer their code to the Arduino by recompiling it to target that platform
+and not have to make any other changes to the code. The firmware for
+an Arduino is written in the C/C++ programming language. This software API
+abstracts away many of the implementation details of the hardware. The main
+strategy of the emulator is not to emulate the individual hardware components
+directly, but to implement the Arduino API.
 
 \section HardwareAbstraction Atmel AVR Atmega328p Hardware Abstractions
 

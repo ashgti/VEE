@@ -11,8 +11,8 @@
 
 For a given project, the student should receive at least the following:
 
-\li A clear objective the firmware should accomplish
-\li A configuration file provided by the professor
+\li A clear objective of what the firmware should accomplish.
+\li A configuration file provided by the professor.
 \li The software libraries bundled as an Library Archive or the source files
     to allow them to compile the code into a single library.
 
@@ -20,7 +20,7 @@ For a given project, the student should receive at least the following:
 
 Students need to implement pinConfiguration, setup and loop in order for their
 code to function properly. Here is a very primitive example of registering a
-single signal to a pin.
+single signal to a pin:
 
 \code
 void pinConfiguration() {

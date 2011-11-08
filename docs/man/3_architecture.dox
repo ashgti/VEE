@@ -10,9 +10,9 @@
 
 \section Overall Architecture Overview
 
-There are three main components of the emulator. The Arduino Code, the Emulator
-Runtime and the python controller code. The Arduino Code is designed to 
-represent code that could be running on an embedded processor, for example
+There are three main components of the emulator: the Arduino API Code, the
+Emulator Runtime and the python controller code. The Arduino Code is designed
+to represent code that could be running on an embedded processor, for example
 the Atmega328p.
 
 \section Emulator Emulator
@@ -20,10 +20,21 @@ the Atmega328p.
 The emulator relates control from the Arduino Code to the state of the various
 signals connected to the emulator. The Arduino Code must connect the signals
 to various pins by implementing the \link pinConfiguration \endlink function.
-Afterwards the emulator calls the \link setup \endlink function which should
-configure the state of various initialization operations like the \link pinMode
-\endlink function. Next the emulator will run a single call to the \link loop
-\endlink operation. Between calls to the \link loop \endlink operation.
+Once the emulator starts the scenario the \link setup \endlink function
+is called one time, multiple calls to the \link
+ardulator::Ardulator::runScenario \endlink function will not re-initialize the
+scenario. The \link setup \endlink function should configure the any pins and
+map any signals needed by the runtime. Afterwards, the emulator will make
+repeated calls to the \link loop \endlink operation until the internal clock
+has passed the stopping point for the runtime.
+
+\image html emulator_io.png "Emulator IO"
+\image latex emulator_io.eps "Emulator IO" width=7cm
+
+The emulator is arranged to be controlled from a configuration file or script.
+Controller scripts configure the scenario runtime signals and returns output
+from the runtime. Output from the emulator runtime is recorded and reported
+back to the students after each run of the system.
 
 \section SignalDescription Description of Signals
 
@@ -32,6 +43,11 @@ three types of signals: Analog, Digital and Serial. Signals can also register
 a callback to implement a more dynamic value.
 
 \section DataFlow Data Flow
+
+This following message sequence chart shows the basic flow of control of the
+emulator system. The emulator is controlled and configured with python links to
+a C API. The python code registers various signals as well as controls the 
+runtime length of the emulation.
 
 \msc
   # hscale = "2";
@@ -49,12 +65,5 @@ a callback to implement a more dynamic value.
   ...;
   c>>a [ label="Scenario Results" ];
 \endmsc
-
-The emulator is controlled and configured with python links to a C API. The
-python code registers various signals as well as controls the runtime length
-of the emulation.
-
-\image html emulator_io.png "Emulator IO"
-\image latex emulator_io.eps "Emulator IO" width=7cm
 
 **/

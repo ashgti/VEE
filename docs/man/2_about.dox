@@ -6,35 +6,44 @@
 **/
 
 /**
-\page Page_AboutTheProject About the Project
+\page Page_AboutTheProject Project Motivation and Design Goals
 
-\section Purpose Purpose
+\section MotivationAndPurpose Motivation and Purpose
 
-An embedded system is any controlling system embedded on a device that provides
-some function or service. There are many difficulties involved with using and 
-designing embedded software. Programmers need to be more strictly aware of
-various hardware related restrictions of the embedded system. Teaching 
-principle design considerations to software engineers can be difficult.
+An embedded systems is any controlling software system on a device that provides
+some function or service. There are many difficulties involved with designing and 
+running software on an embedded software. Programmers need to be aware of
+various hardware related restrictions of the embedded system in addition to
+traditional programming concerns. Teaching principle design considerations to
+software engineers can be difficult on pre-existing hardware and most emulators
+of embedded systems.
 
-This tool is designed to help provide an experience as close as possible to the
-actual hardware of the Arduino, but runs entirely in software. This means it
-is easier to distribute, debug and students do not have to purchase any
-hardware to try out their code.
+The VEE Project is designed to create a tool to help provide a real world
+experience while still allowing the instructor to teach the principle concepts
+behind embedded software design. The VEE Project was designed to emulate the
+Arduino API's in software. The resulting code can be run on any platform with
+the appropriate libraries and should allow students to easily distribute, debug
+and students do not have to purchase any hardware.
 
 \section DesignGoals Design Goals
 
-One of the prominent design goals of this project is the ability to create a 
-wide variety of device configurations and scenarios that require different
-software architectures approaches to accomplish each task. The software should
-be testable and capable of simulating high stress environments.
+The major design goals of this project is the ability to create a wide variety
+of device configurations and scenarios that require different software
+architectures approaches to accomplish each task. The software should be
+testable and capable of simulating high stress environments. The system
+should be modular and extendable such that future additions, like new
+peripheral devices, can easily be added. The software architectures
+available to students should not be limited by the implementation, thus
+a multi-threaded system should be considered to allow the students the maximum
+amount of flexibility with their design and implementation.
 
 To summarize:
 
-\li Challenges the students
-\li Illustrates key concepts and issues
-\li Is easy and convenient for the instructor to produce devices and scenarios
-    without having to write one line of code.
-\li Is low cost and expandable.
+\li Must challenge the students abilities to write efficient code.
+\li Illustrates key concepts and issues with embedded systems.
+\li Convenient for the instructor to produce devices and scenarios with
+    minimal overhead for the instructor.
+\li Low cost or no cost and extendable.
 
 In the event a student would want to actually purchase an Arduino, or it
 becomes a class requirement to have a project where the students are required

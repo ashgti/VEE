@@ -1,0 +1,34 @@
+/** \file
+ *
+ *  This file contains special DoxyGen information for the generation of the main page and other special
+ *  documentation pages. It is not a project source file.
+**/
+
+/**
+
+\page Page_Conclusion Conclusions
+
+\section Conclusions Conclusions
+
+The VEE system is designed to be extendable and testable. It can produce
+test cases for students that can stress their applications in terms of
+scheduling and show students some of the limitations of embedded systems.
+VEE has a GUI for designing use cases and running student's code for validation
+purposes. The runtime can be scripted in python for more advanced emulation
+behavior and for automated testing.
+
+The original objective of the VEE project was to design a system that met the
+following requirements:
+
+\li Must challenge the students abilities to write efficient code.
+\li Illustrates key concepts and issues with embedded systems.
+\li Convenient for the instructor to produce devices and scenarios with
+    minimal overhead for the instructor.
+\li Low cost or no cost and extendable.
+
+The system provided is capable of all of these objectives. With the emulator
+runtime being closely related to the Arduino API it gives students experience
+with a real embedded system and the ability to transition to an actual Arduino
+with relative ease.
+
+**/

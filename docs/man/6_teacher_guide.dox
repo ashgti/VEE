@@ -11,10 +11,10 @@
 
 A basic configuration GUI is available for generation test scenarios.
 
-To begin, simply open the vee-gui.py file. This require
+To begin, simply open the vee-gui.py file. The GUI requires
 <a href="http://www.python.org/">Python</a> with 
 <a href="http://www.pyside.org/">PySide</a>. After opening vee-gui.py you
-should see a window that looks like the following.
+should see a window that looks like the follow:
 
 \image html configuration.png "Configuration Window"
 \image latex configuration.eps "Configuration Window" width=10cm
@@ -37,7 +37,7 @@ available signals. Fill in the 'Signal Name' input box and press the
 'Add Signal' button below to register a new signal.
 
 \image html output_signals.png "Output Signals List"
-\image latex output_signals.eps "Output Signals List"
+\image latex output_signals.eps "Output Signals List" width=3cm
 
 Selecting any signal in the list of Output Signals will result update the
 'Signal Configuration' section with its current settings. Modifying any of
@@ -76,18 +76,18 @@ as a digital signal with a smaller or large analog value, or a sine wave where
 the value grows over time.
 
 \image html signal_configuration.png "Signal Configurations"
-\image latex signal_configuration.eps "Signal Configurations"
+\image latex signal_configuration.eps "Signal Configurations" width=7cm
 
 To continue with our example of an analog signal with an exponential
-distribution for the phase click the 'Analog' radio box in the 'Signal Values'
-panel. Next click on 'Sine Wave', this sill cause the signal to make a curve
-instead of a square value. Next enter a value in the 'Max Value', for example
-the value 3.4V will cause the analog signals max analog value to be 3.4V,
+distribution for the phase, click the 'Analog' radio box in the 'Signal Values'
+panel. Next click on 'Sine Wave'. This will cause the signal to make a curve
+instead of a square value. Then enter a value in the 'Max Value'; for example
+the value 3.4V will cause the analog signals maximum analog value to be 3.4V,
 instead of the normal 5V. If you were to run this kind of wave and graph the
 analog values over time, the result would look as follows:
 
 \image html analog_sine_wave.png "Analog Sine Wave Sample"
-\image latex analog_sine_wave.png "Analog Sine Wave Sample"
+\image latex analog_sine_wave.png "Analog Sine Wave Sample" width=10cm
 
 The random duration of the phase is generated with an exponential random
 number. The flat peaks are the duration the pin stays high. If you do not want
@@ -95,18 +95,27 @@ the analog value to peak, simply set the duration to 0.
 
 \section RunningAScenario Running a Scenario
 
-One a scenario has been properly configured for the current assignment it is
+Once a scenario has been properly configured for the current assignment, it is
 possible to run the scenario against a given set of code. Switching to the
 'Scenario View' tab of the GUI application will display a list of loaded
 emulator programs, a build log on the lower left side panel and a graph of
 the input and output signals of the scenario. Pressing the 'Run' button will
-cause the system to attempt to build the students code and run the current
+cause the system to attempt to build the student's code and run the current
 configuration against their software. Any errors in the build process will
 prevent the code from actually running the scenario and instead print out the
 compiler error messages to the window. 
 
 \image html scenario_runner.png "Scenario Runner"
 \image latex scenario_runner.eps "Scenario Runner" width=7cm
+
+\section CustomizingRuntime Customizing the Runtime
+
+Using the python API, you can design a scenario that does not need the GUI to
+be configured. The python API is available to give a user further control over
+the scenario runtime and customize the interactions of various signals with
+callback operations. Using the \ref ValueCallback as the signal value it is
+possible to create a callback to the python runtime for generating signals
+that require feedback from the emulator runtime.
 
 \see vee-gui.py
 \see vee-cmd.py

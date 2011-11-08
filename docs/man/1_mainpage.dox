@@ -3,25 +3,25 @@
 
 \author John Harrison <harrij3@auburn.edu>
 
-The <b>V</b>irtual <b>E</b>mulated <b>E</b>nvironment or \b VEE is an
-emulation system for learning about embedded systems and embedded system
-related problems.
-
 \section Abstract Abstract
 
-This is primarily a teaching tool, but could be used as a test platform for
-some Arduino Code.
+The <b>V</b>irtual <b>E</b>mulated <b>E</b>nvironment or \b VEE is a tool for
+teaching embedded systems. The emulator can model various embedded system 
+behaviors while providing a framework to teach embedded system design to 
+computer science students without having to buy a hardware platform. Using the
+VEE system, a teacher can design numerous test cases to stress students code
+in challenging ways. The emulator system can also be used to analyze students
+code for timing considerations and memory usage.
 
-\b Subsections:
+\b Table of Contents:
 
-\li \subpage Page_AboutTheProject - About the Project
-\li \subpage Page_Comparison      - Comparison of various approaches
+\li \subpage Page_AboutTheProject - Reasons for the project
 \li \subpage Page_Architecture    - Architecture
 \li \subpage Page_ArduinoAPI      - Arduino API and Control Interface
 \li \subpage Page_StudentGuide    - Student Guide
 \li \subpage Page_TeacherGuide    - Teachers Guide
 \li \subpage Page_Extending       - Extending the Emulator
-\li \subpage Page_Conclusion      - Conclusion
+\li \subpage Page_Conclusion      - Conclusions
 
 \see ardulator::Ardulator
 \see vee-gui.py
