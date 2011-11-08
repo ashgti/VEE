@@ -2,15 +2,13 @@ var NAVTREE =
 [
   [ "Virtual Embedded Enviorment", "index.html", [
     [ "Virtual Embedded Enviorment", "index.html", [
-      [ "About the Project", "_page__about_the_project.html", null ],
-      [ "Architecture", "_page__architecture.html", null ],
-      [ "Arduino API and Control Interface", "_page__arduino_a_p_i.html", null ],
-      [ "Student Guide", "_page__student_guide.html", null ],
-      [ "Teachers Guide", "_page__teacher_guide.html", null ],
-      [ "Extending the Emulation", "_page__extending.html", null ]
-    ] ],
-    [ "Related Pages", "pages.html", [
-      [ "Todo List", "todo.html", null ]
+      [ "Project Motivation and Design Goals", "page__about_the_project.html", null ],
+      [ "Architecture", "page__architecture.html", null ],
+      [ "Arduino API and Control Interface", "page__arduino_a_p_i.html", null ],
+      [ "Student Guide", "page__student_guide.html", null ],
+      [ "Teachers Guide", "page__teacher_guide.html", null ],
+      [ "Extending the Emulation", "page__extending.html", null ],
+      [ "Conclusions", "page__conclusion.html", null ]
     ] ],
     [ "Data Structures", "annotated.html", [
       [ "Analog", "classvee_1_1signals_1_1_analog.html", null ],
@@ -24,12 +22,12 @@ var NAVTREE =
       [ "EmulatorFinished", "classardulator_1_1_emulator_finished.html", null ],
       [ "Exp", "classvee_1_1signals_1_1_exp.html", null ],
       [ "HardwareSerial", "class_hardware_serial.html", null ],
-      [ "History", "struct_history.html", null ],
       [ "MainWindow", "classvee-gui_1_1_main_window.html", null ],
       [ "PinConfig", "structardulator_1_1_pin_config.html", null ],
       [ "Print", "class_print.html", null ],
       [ "ProcessingSignalException", "classardulator_1_1_processing_signal_exception.html", null ],
       [ "PyArdulator", "classvee_1_1ardulator_1_1_py_ardulator.html", null ],
+      [ "PyHistoryImp", "classvee_1_1ardulator_1_1_py_history_imp.html", null ],
       [ "PySignalImp", "classvee_1_1ardulator_1_1_py_signal_imp.html", null ],
       [ "PyValueImp", "classvee_1_1ardulator_1_1_py_value_imp.html", null ],
       [ "Serial", "classvee_1_1signals_1_1_serial.html", null ],
@@ -53,7 +51,6 @@ var NAVTREE =
       [ "Digital", "classvee_1_1signals_1_1_digital.html", null ],
       [ "EmulatorFinished", "classardulator_1_1_emulator_finished.html", null ],
       [ "Exp", "classvee_1_1signals_1_1_exp.html", null ],
-      [ "History", "struct_history.html", null ],
       [ "MainWindow", "classvee-gui_1_1_main_window.html", null ],
       [ "PinConfig", "structardulator_1_1_pin_config.html", null ],
       [ "Print", "class_print.html", [
@@ -61,6 +58,7 @@ var NAVTREE =
       ] ],
       [ "ProcessingSignalException", "classardulator_1_1_processing_signal_exception.html", null ],
       [ "PyArdulator", "classvee_1_1ardulator_1_1_py_ardulator.html", null ],
+      [ "PyHistoryImp", "classvee_1_1ardulator_1_1_py_history_imp.html", null ],
       [ "PySignalImp", "classvee_1_1ardulator_1_1_py_signal_imp.html", null ],
       [ "PyValueImp", "classvee_1_1ardulator_1_1_py_value_imp.html", null ],
       [ "Serial", "classvee_1_1signals_1_1_serial.html", null ],
@@ -95,10 +93,12 @@ var NAVTREE =
       [ "include/ardulator/containers/signals.h", "signals_8h.html", null ],
       [ "include/avr/config.h", "config_8h.html", null ],
       [ "include/avr/interrupt.h", "interrupt_8h.html", null ],
+      [ "include/avr/sleep.h", "sleep_8h.html", null ],
       [ "src/ardulator.cc", "ardulator_8cc.html", null ],
       [ "src/emulator_commands.cc", "emulator__commands_8cc.html", null ],
       [ "src/interrupt_commands.cc", "interrupt__commands_8cc.html", null ],
       [ "src/pin_commands.cc", "pin__commands_8cc.html", null ],
+      [ "src/power_commands.cc", "power__commands_8cc.html", null ],
       [ "src/time_commands.cc", "time__commands_8cc.html", null ],
       [ "src/vee-cmd.py", "vee-cmd_8py.html", null ],
       [ "src/vee-gui.py", "vee-gui_8py.html", null ],
@@ -107,7 +107,7 @@ var NAVTREE =
       [ "src/ardulator/containers/bit_value.cc", "bit__value_8cc.html", null ],
       [ "src/c_interface/env.cc", "env_8cc.html", null ],
       [ "src/c_interface/interface.cc", "interface_8cc.html", null ],
-      [ "src/vee/__init__.py", "____init_____8py.html", null ],
+      [ "src/vee/__init__.py", "init_____8py.html", null ],
       [ "src/vee/ardulator.py", "ardulator_8py.html", null ],
       [ "src/vee/signals.py", "signals_8py.html", null ]
     ] ],

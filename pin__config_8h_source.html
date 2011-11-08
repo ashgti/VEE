@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -109,7 +108,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00009"></a>00009 <span class="preprocessor">#include &quot;<a class="code" href="signals_8h.html">ardulator/containers/signals.h</a>&quot;</span>
 <a name="l00010"></a>00010 <span class="preprocessor">#include &quot;<a class="code" href="clock_8h.html">ardulator/containers/clock.h</a>&quot;</span>
 <a name="l00011"></a>00011 
-<a name="l00012"></a><a class="code" href="namespaceardulator.html">00012</a> <span class="keyword">namespace </span>ardulator {
+<a name="l00012"></a>00012 <span class="keyword">namespace </span>ardulator {
 <a name="l00013"></a>00013 
 <a name="l00014"></a>00014 using ::ardulator::containers::SignalContainer;
 <a name="l00015"></a>00015 using ::ardulator::containers::Clock;
@@ -127,10 +126,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00034"></a><a class="code" href="structardulator_1_1_pin_config.html#a2b2dd321615f36a1ee93be14f35c47f9">00034</a>   uint8_t <a class="code" href="structardulator_1_1_pin_config.html#a2b2dd321615f36a1ee93be14f35c47f9" title="The bit mask for the memory register this pin belongs to.">bit_mask_</a>;   
 <a name="l00035"></a>00035 
 <a name="l00036"></a>00036 
-<a name="l00037"></a><a class="code" href="structardulator_1_1_pin_config.html#a3da4aa05f5167a148b73e1b7e8c4502c">00037</a>   <span class="keyword">volatile</span> uint8_t *<a class="code" href="structardulator_1_1_pin_config.html#a3da4aa05f5167a148b73e1b7e8c4502c">bit_container_</a>; 
+<a name="l00037"></a><a class="code" href="structardulator_1_1_pin_config.html#a3da4aa05f5167a148b73e1b7e8c4502c">00037</a>   <span class="keyword">volatile</span> uint8_t *<a class="code" href="structardulator_1_1_pin_config.html#a3da4aa05f5167a148b73e1b7e8c4502c" title="A pointer to the location of the memory address for PORTs.">bit_container_</a>; 
 <a name="l00038"></a>00038 
-<a name="l00039"></a><a class="code" href="structardulator_1_1_pin_config.html#a1f7da62e2bae8dfc06bed221aa65fd4f">00039</a>   <a class="code" href="struct_history.html" title="Records the history of a signal.">History</a> <a class="code" href="structardulator_1_1_pin_config.html#a1f7da62e2bae8dfc06bed221aa65fd4f">pin_history_</a>;    
-<a name="l00040"></a><a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">00040</a>   SignalContainer <a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">signal_</a>; 
+<a name="l00039"></a>00039 
+<a name="l00040"></a><a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">00040</a>   SignalContainer <a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c" title="A signal associated with the pin.">signal_</a>; 
 <a name="l00041"></a>00041 
 <a name="l00047"></a>00047   <span class="keywordtype">void</span> <a class="code" href="structardulator_1_1_pin_config.html#ab84cbfb62ceae1b01d27cb34b6f593cd" title="Set the pin state, if the time has passed the current pins expiration then update the current signal...">setState</a>(<span class="keyword">const</span> Clock &amp;t);
 <a name="l00048"></a>00048   
@@ -160,7 +159,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:11 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:54:56 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

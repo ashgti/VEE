@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -104,16 +103,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00004"></a>00004 <span class="preprocessor"></span><span class="preprocessor">#define INCLUDE_AVR_CONFIG_H_</span>
 <a name="l00005"></a>00005 <span class="preprocessor"></span>
 <a name="l00006"></a><a class="code" href="config_8h.html#af8aec3e1b32625746de6027cee696234">00006</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#af8aec3e1b32625746de6027cee696234">F_CPU</a> = 16000000;
-<a name="l00007"></a><a class="code" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">00007</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a> = (<a class="code" href="config_8h.html#af8aec3e1b32625746de6027cee696234">F_CPU</a> / 2);
-<a name="l00008"></a><a class="code" href="config_8h.html#a18c2a0adc83f66f0508c4aa03fba145b">00008</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#a18c2a0adc83f66f0508c4aa03fba145b">TICKS_PER_MICRO_SECOND</a> = 1000;
-<a name="l00009"></a><a class="code" href="config_8h.html#aab90b926c4ae73234fd33a1dcbb566c7">00009</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#aab90b926c4ae73234fd33a1dcbb566c7">TICKS_PER_MILLI_SECOND</a> = 1000000;
-<a name="l00010"></a><a class="code" href="config_8h.html#a20a7185974e71ed92ab0ee31fc6244f7">00010</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#a20a7185974e71ed92ab0ee31fc6244f7">TICKS_PER_SECOND</a> = <a class="code" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a>;
+<a name="l00007"></a>00007 
+<a name="l00008"></a><a class="code" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">00008</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a> = (<a class="code" href="config_8h.html#af8aec3e1b32625746de6027cee696234">F_CPU</a> / 2);
+<a name="l00009"></a>00009 
+<a name="l00010"></a><a class="code" href="config_8h.html#a18c2a0adc83f66f0508c4aa03fba145b">00010</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#a18c2a0adc83f66f0508c4aa03fba145b">TICKS_PER_MICRO_SECOND</a> = (1 / 1000000) * <a class="code" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a>;
 <a name="l00011"></a>00011 
-<a name="l00012"></a><a class="code" href="config_8h.html#a082385d26c1f2339206e6135779e94a2">00012</a> <span class="keyword">inline</span> uint32_t <a class="code" href="config_8h.html#a082385d26c1f2339206e6135779e94a2">MS2T</a>(uint32_t x) {
-<a name="l00013"></a>00013     <span class="keywordflow">return</span> x * <a class="code" href="config_8h.html#a18c2a0adc83f66f0508c4aa03fba145b">TICKS_PER_MICRO_SECOND</a>;
-<a name="l00014"></a>00014 }
-<a name="l00015"></a>00015 
-<a name="l00016"></a>00016 <span class="preprocessor">#endif  // INCLUDE_AVR_CONFIG_H_</span>
+<a name="l00013"></a><a class="code" href="config_8h.html#aab90b926c4ae73234fd33a1dcbb566c7">00013</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#aab90b926c4ae73234fd33a1dcbb566c7" title="Ticks per cycle.">TICKS_PER_MILLI_SECOND</a> = (1 / 1000) * <a class="code" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a>;
+<a name="l00014"></a>00014 
+<a name="l00015"></a><a class="code" href="config_8h.html#a20a7185974e71ed92ab0ee31fc6244f7">00015</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#a20a7185974e71ed92ab0ee31fc6244f7">TICKS_PER_SECOND</a> = <a class="code" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a>;
+<a name="l00016"></a>00016 
+<a name="l00017"></a><a class="code" href="config_8h.html#a414922a00823759568215f7f4cf23911">00017</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#a414922a00823759568215f7f4cf23911">DIGITAL_READ_TIME</a> = 58;
+<a name="l00018"></a>00018 
+<a name="l00019"></a><a class="code" href="config_8h.html#a7b126ffe54294c1f08669cfd1526688c">00019</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#a7b126ffe54294c1f08669cfd1526688c">A2D_PRESCALE</a> = 128;
+<a name="l00020"></a><a class="code" href="config_8h.html#a4f90f3fa6887385654bec9f998c5b355">00020</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#a4f90f3fa6887385654bec9f998c5b355">A2D_CLOCK_COUNT</a> = 13;
+<a name="l00021"></a><a class="code" href="config_8h.html#ab12d981550c73252a92c58dfa81414fc">00021</a> <span class="keyword">const</span> uint32_t <a class="code" href="config_8h.html#ab12d981550c73252a92c58dfa81414fc">A2D_RATE</a> = (<a class="code" href="config_8h.html#af8aec3e1b32625746de6027cee696234">F_CPU</a> / <a class="code" href="config_8h.html#a7b126ffe54294c1f08669cfd1526688c">A2D_PRESCALE</a>) / <a class="code" href="config_8h.html#a4f90f3fa6887385654bec9f998c5b355">A2D_CLOCK_COUNT</a>;
+<a name="l00022"></a>00022 
+<a name="l00023"></a><a class="code" href="config_8h.html#a082385d26c1f2339206e6135779e94a2">00023</a> <span class="keyword">inline</span> uint32_t <a class="code" href="config_8h.html#a082385d26c1f2339206e6135779e94a2">MS2T</a>(uint32_t x) {
+<a name="l00024"></a>00024     <span class="keywordflow">return</span> x * <a class="code" href="config_8h.html#a18c2a0adc83f66f0508c4aa03fba145b">TICKS_PER_MICRO_SECOND</a>;
+<a name="l00025"></a>00025 }
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="preprocessor">#endif  // INCLUDE_AVR_CONFIG_H_</span>
+<a name="l00028"></a>00028 <span class="preprocessor"></span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
@@ -134,7 +144,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:11 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:54:56 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

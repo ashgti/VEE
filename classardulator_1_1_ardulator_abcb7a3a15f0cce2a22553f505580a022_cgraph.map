@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="169,5,245,32"/>
+<area shape="rect" id="node5" href="$classardulator_1_1_ardulator.html#ae79954d61717aea74e2901c218913b86" title="Finalize the state of the pins after the scenario is finished." alt="" coords="150,56,263,83"/>
+<area shape="rect" id="node7" href="$arduino_8h.html#a8098d1d35b08421d79df526f4d77d799" title="Important Must be implemented for the Arduino code to work." alt="" coords="183,107,230,133"/>
+<area shape="rect" id="node9" href="$classardulator_1_1_ardulator.html#acca397f0bfc841cb328e8c44192d4b89" title="Initialize the scenario." alt="" coords="147,157,267,184"/>
+<area shape="rect" id="node19" href="$classardulator_1_1_ardulator.html#a62d3f036470d80d707b7989608142b73" title="Updates pins, checks if we need to fire interrupt." alt="" coords="150,208,263,235"/>
+<area shape="rect" id="node11" href="$arduino_8h.html#a5e94e0fd1e5a500bbf68cff3d3545e08" title="Important Must be implemented in the target Arduino Code." alt="" coords="315,107,434,133"/>
+<area shape="rect" id="node13" href="$arduino_8h.html#a8a9fc9ef5be15482174764c12710d52f" title="Important Must be implemented for the Arduino code to work." alt="" coords="347,157,402,184"/>
+<area shape="rect" id="node15" href="$classardulator_1_1_ardulator.html#a669867a4d7d8f82067c4290b793645a9" title="Constructs a mapping of pins to signal names, useful reference." alt="" coords="317,208,432,235"/>
+<area shape="rect" id="node17" href="$classardulator_1_1containers_1_1_bit_value.html#a77347babe4b425694f81425f841896f2" title="Retrieve a reference to the memory register so you can access it from other places." alt="" coords="483,208,762,235"/>
+</map>

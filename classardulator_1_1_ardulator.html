@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -109,8 +108,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <!-- doxytag: class="ardulator::Ardulator" -->
 <p>Main instance of the emulator.  
  <a href="classardulator_1_1_ardulator.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="ardulator_8h_source.html">ardulator.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for Ardulator:</div>
 <div class="dyncontent">
@@ -137,7 +134,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#ab048d40e331246eeadf6c0838b236d11">~Ardulator</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#a8a9d87cf3b9a973c11ff21e7fbde9ada">configurePin</a> (uint8_t id, uint8_t mode)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#abcb7a3a15f0cce2a22553f505580a022">runScenario</a> (double length)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the scenario for a given amount of time.  <a href="#abcb7a3a15f0cce2a22553f505580a022"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the scenario for a given length.  <a href="#abcb7a3a15f0cce2a22553f505580a022"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#aa2ea26c966ada0e484a4a3ee8b8f397b">registerInterrupt</a> (uint8_t pin_id, void(*)(void), uint8_t mode)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers an interrupt handler.  <a href="#aa2ea26c966ada0e484a4a3ee8b8f397b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#a083eae559b6af6235ea63fbbbf26053d">dropInterrupt</a> (uint8_t pin_id)</td></tr>
@@ -164,9 +161,13 @@ Data Fields</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">Clock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#a550e40772fb170ea45c434060a2c9b73">timer_</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Current time of the simulation.  <a href="#a550e40772fb170ea45c434060a2c9b73"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classardulator_1_1_ardulator.html#aff6b44931a2ff0b872e9c9e03154cbd0">InterruptMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#a66387353bbfffbcc9bb9d02926192aae">interrupts_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A list of interrupts, matching the pin and type to a function callback.  <a href="#a66387353bbfffbcc9bb9d02926192aae"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classardulator_1_1_ardulator.html#aa3ca8f0d555746b0d8efd30c189f4264">PinConfigs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#a668dee8273e0161ed5d0fda47f2a6d67">pin_config_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A map of pins to their respective PinConfigs.  <a href="#a668dee8273e0161ed5d0fda47f2a6d67"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classardulator_1_1_ardulator.html#a646b15e90a1311bae531713dc8a5ab5a">UnusedPinConfigs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#a0e8a74494c29be49e40d39f5bcab60cd">unused_pin_config_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A list of unused pins.  <a href="#a0e8a74494c29be49e40d39f5bcab60cd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classardulator_1_1_ardulator.html#af0f708e949b9537c350c68e01266b074">SingalNameMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#af10bebbc6768c57486cc8780cb29d4e0">signal_names_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A map to connect a signal name to a given pin.  <a href="#af10bebbc6768c57486cc8780cb29d4e0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#a71a346ef4cf727dc39a38ffa7524d3d8">debug_</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug log file.  <a href="#a71a346ef4cf727dc39a38ffa7524d3d8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#a47fc011676080aadfb96b8f449950043">buffers_</a> [256]</td></tr>
@@ -178,17 +179,16 @@ Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#acca397f0bfc841cb328e8c44192d4b89">prepareScenario</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the scenario.  <a href="#acca397f0bfc841cb328e8c44192d4b89"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#a62d3f036470d80d707b7989608142b73">updatePinState</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the state of each pin in the internal pin registery.  <a href="#a62d3f036470d80d707b7989608142b73"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates pins, checks if we need to fire interrupt.  <a href="#a62d3f036470d80d707b7989608142b73"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#a669867a4d7d8f82067c4290b793645a9">updatePinMaps</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the pins so they are connected to the various memory registers.  <a href="#a669867a4d7d8f82067c4290b793645a9"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a mapping of pins to signal names, useful reference.  <a href="#a669867a4d7d8f82067c4290b793645a9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#ae79954d61717aea74e2901c218913b86">finalizePinState</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">For each pin, finalize the state of the pin.  <a href="#ae79954d61717aea74e2901c218913b86"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize the state of the pins after the scenario is finished.  <a href="#ae79954d61717aea74e2901c218913b86"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#aad2ad493dab62c011f9c406cbe991d3c">timestamp</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#aae594d5d5bc2b7eed1f75063e0fa3be5">log_</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Log file for all events that happen in the scenario.  <a href="#aae594d5d5bc2b7eed1f75063e0fa3be5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#afc91b8eecb836eea4d132c356701e8ac">max_pins_</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#a34633988207aabcad6fc42a7225dbbde">runtime_</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The total runtime as a double to make comparisions easier.  <a href="#a34633988207aabcad6fc42a7225dbbde"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classardulator_1_1_ardulator.html#ac35376f1a577eb8d62c25e97ff240f16">registered_identifers_</a></td></tr>
@@ -208,7 +208,7 @@ Private Attributes</h2></td></tr>
 <dd>
 pinConfiguraiton </dd></dl>
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00037">37</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00040">40</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 </div><hr/><h2>Member Typedef Documentation</h2>
 <a class="anchor" id="af5a9c3d0f882fdc099859e73fe1aaa0a"></a><!-- doxytag: member="ardulator::Ardulator::InterruptIterator" ref="af5a9c3d0f882fdc099859e73fe1aaa0a" args="" -->
 <div class="memitem">
@@ -221,7 +221,7 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00062">62</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00068">68</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -236,7 +236,7 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00061">61</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00067">67</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -251,7 +251,7 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00066">66</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00073">73</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -266,7 +266,7 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00065">65</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00072">72</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -281,7 +281,7 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00073">73</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00080">80</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -296,7 +296,7 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00074">74</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00081">81</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -311,7 +311,7 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00070">70</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00077">77</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -326,7 +326,7 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00069">69</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00076">76</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -345,9 +345,9 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00035">35</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00041">41</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00077">Ardulator::debug_</a>, and <a class="el" href="ardulator_8h_source.html#l00039">Ardulator::log_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00085">Ardulator::debug_</a>, and <a class="el" href="ardulator_8h_source.html#l00042">Ardulator::log_</a>.</p>
 
 </div>
 </div>
@@ -365,9 +365,9 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00052">52</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00058">58</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00077">Ardulator::debug_</a>, and <a class="el" href="ardulator_8h_source.html#l00039">Ardulator::log_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00085">Ardulator::debug_</a>, and <a class="el" href="ardulator_8h_source.html#l00042">Ardulator::log_</a>.</p>
 
 </div>
 </div>
@@ -397,9 +397,9 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00293">293</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00308">308</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00067">Ardulator::pin_config_</a>, <a class="el" href="ardulator_8h_source.html#l00075">Ardulator::signal_names_</a>, and <a class="el" href="ardulator_8h_source.html#l00071">Ardulator::unused_pin_config_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00074">Ardulator::pin_config_</a>, <a class="el" href="ardulator_8h_source.html#l00082">Ardulator::signal_names_</a>, <a class="el" href="ardulator_8cc_source.html#l00039">ardulator::thread_lock</a>, and <a class="el" href="ardulator_8h_source.html#l00078">Ardulator::unused_pin_config_</a>.</p>
 
 </div>
 </div>
@@ -428,9 +428,18 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00307">307</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00324">324</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="hardware__serial_8cc_source.html#l00200">HardwareSerial::pin()</a>, and <a class="el" href="ardulator_8h_source.html#l00075">Ardulator::signal_names_</a>.</p>
+<p>References <a class="el" href="hardware__serial_8cc_source.html#l00200">HardwareSerial::pin()</a>, <a class="el" href="ardulator_8h_source.html#l00082">Ardulator::signal_names_</a>, and <a class="el" href="ardulator_8cc_source.html#l00039">ardulator::thread_lock</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classardulator_1_1_ardulator_ae93addc1483c5c4ee208e7ccccdeaf44_cgraph.png" border="0" usemap="#classardulator_1_1_ardulator_ae93addc1483c5c4ee208e7ccccdeaf44_cgraph" alt=""/></div>
+<map name="classardulator_1_1_ardulator_ae93addc1483c5c4ee208e7ccccdeaf44_cgraph" id="classardulator_1_1_ardulator_ae93addc1483c5c4ee208e7ccccdeaf44_cgraph">
+<area shape="rect" id="node3" href="class_hardware_serial.html#acf826b9bc518dd52a74cf53e58a3523a" title="Returns the rxPin." alt="" coords="133,5,272,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -451,9 +460,9 @@ pinConfiguraiton </dd></dl>
 
 <p>addTicks is used to increment the interanl clock and increment the total runtime of the emulation. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00139">139</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00146">146</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00041">Ardulator::runtime_</a>, <a class="el" href="config_8h_source.html#l00010">TICKS_PER_SECOND</a>, and <a class="el" href="ardulator_8h_source.html#l00059">Ardulator::timer_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00044">Ardulator::runtime_</a>, <a class="el" href="ardulator_8cc_source.html#l00039">ardulator::thread_lock</a>, <a class="el" href="config_8h_source.html#l00015">TICKS_PER_SECOND</a>, and <a class="el" href="ardulator_8h_source.html#l00065">Ardulator::timer_</a>.</p>
 
 </div>
 </div>
@@ -482,9 +491,9 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00063">63</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00069">69</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00077">Ardulator::debug_</a>, and <a class="el" href="ardulator_8h_source.html#l00067">Ardulator::pin_config_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00085">Ardulator::debug_</a>, and <a class="el" href="ardulator_8h_source.html#l00074">Ardulator::pin_config_</a>.</p>
 
 </div>
 </div>
@@ -537,9 +546,18 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00252">252</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00265">265</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8cc_source.html#l00139">Ardulator::addTicks()</a>, <a class="el" href="ardulator_8h_source.html#l00077">Ardulator::debug_</a>, <a class="el" href="ardulator_8h_source.html#l00039">Ardulator::log_</a>, <a class="el" href="ardulator_8h_source.html#l00067">Ardulator::pin_config_</a>, <a class="el" href="ardulator_8h_source.html#l00075">Ardulator::signal_names_</a>, <a class="el" href="config_8h_source.html#l00010">TICKS_PER_SECOND</a>, and <a class="el" href="ardulator_8cc_source.html#l00174">Ardulator::updatePinState()</a>.</p>
+<p>References <a class="el" href="ardulator_8cc_source.html#l00146">Ardulator::addTicks()</a>, <a class="el" href="ardulator_8h_source.html#l00085">Ardulator::debug_</a>, <a class="el" href="ardulator_8h_source.html#l00042">Ardulator::log_</a>, <a class="el" href="ardulator_8h_source.html#l00074">Ardulator::pin_config_</a>, <a class="el" href="ardulator_8h_source.html#l00082">Ardulator::signal_names_</a>, <a class="el" href="ardulator_8cc_source.html#l00039">ardulator::thread_lock</a>, <a class="el" href="config_8h_source.html#l00015">TICKS_PER_SECOND</a>, and <a class="el" href="ardulator_8cc_source.html#l00183">Ardulator::updatePinState()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classardulator_1_1_ardulator_a60fc9f4d143d7526d1273f3d5cd9c56e_cgraph.png" border="0" usemap="#classardulator_1_1_ardulator_a60fc9f4d143d7526d1273f3d5cd9c56e_cgraph" alt=""/></div>
+<map name="classardulator_1_1_ardulator_a60fc9f4d143d7526d1273f3d5cd9c56e_cgraph" id="classardulator_1_1_ardulator_a60fc9f4d143d7526d1273f3d5cd9c56e_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="182,5,258,32"/><area shape="rect" id="node5" href="classardulator_1_1_ardulator.html#a62d3f036470d80d707b7989608142b73" title="Updates pins, checks if we need to fire interrupt." alt="" coords="163,56,277,83"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -566,9 +584,9 @@ pinConfiguraiton </dd></dl>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00345">345</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00366">366</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00063">Ardulator::interrupts_</a>, and <a class="el" href="ardulator_8h_source.html#l00067">Ardulator::pin_config_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00069">Ardulator::interrupts_</a>, <a class="el" href="ardulator_8h_source.html#l00074">Ardulator::pin_config_</a>, and <a class="el" href="ardulator_8cc_source.html#l00039">ardulator::thread_lock</a>.</p>
 
 </div>
 </div>
@@ -603,11 +621,12 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>For each pin, finalize the state of the pin. </p>
+<p>Finalize the state of the pins after the scenario is finished. </p>
+<p>For each pin, finalize the state of the pin.</p>
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00206">206</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00215">215</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00067">Ardulator::pin_config_</a>, and <a class="el" href="ardulator_8h_source.html#l00059">Ardulator::timer_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00074">Ardulator::pin_config_</a>, and <a class="el" href="ardulator_8h_source.html#l00065">Ardulator::timer_</a>.</p>
 
 </div>
 </div>
@@ -627,11 +646,21 @@ pinConfiguraiton </dd></dl>
 <div class="memdoc">
 
 <p>Get the value of a given pin and increment the clock based off the kind of access. </p>
+<p>Analog Reads take 100 s Digital Reads 58 cycles</p>
 <p>Analog Reads take 100 ms Digital Reads 58 cycles </p>
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00228">228</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00237">237</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8cc_source.html#l00139">Ardulator::addTicks()</a>, <a class="el" href="arduino_8h_source.html#l00051">LOW</a>, <a class="el" href="config_8h_source.html#l00012">MS2T()</a>, <a class="el" href="ardulator_8h_source.html#l00067">Ardulator::pin_config_</a>, <a class="el" href="cdefs_8h_source.html#l00015">VT_ANALOG</a>, <a class="el" href="cdefs_8h_source.html#l00013">VT_DIGITAL</a>, and <a class="el" href="cdefs_8h_source.html#l00014">VT_SERIAL</a>.</p>
+<p>References <a class="el" href="ardulator_8cc_source.html#l00146">Ardulator::addTicks()</a>, <a class="el" href="arduino_8h_source.html#l00051">LOW</a>, <a class="el" href="config_8h_source.html#l00023">MS2T()</a>, <a class="el" href="ardulator_8h_source.html#l00074">Ardulator::pin_config_</a>, <a class="el" href="ardulator_8cc_source.html#l00039">ardulator::thread_lock</a>, <a class="el" href="cdefs_8h_source.html#l00015">VT_ANALOG</a>, <a class="el" href="cdefs_8h_source.html#l00013">VT_DIGITAL</a>, and <a class="el" href="cdefs_8h_source.html#l00014">VT_SERIAL</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classardulator_1_1_ardulator_a82c8e85a2712e540cc7f17baa27c8702_cgraph.png" border="0" usemap="#classardulator_1_1_ardulator_a82c8e85a2712e540cc7f17baa27c8702_cgraph" alt=""/></div>
+<map name="classardulator_1_1_ardulator_a82c8e85a2712e540cc7f17baa27c8702_cgraph" id="classardulator_1_1_ardulator_a82c8e85a2712e540cc7f17baa27c8702_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="115,5,191,32"/><area shape="rect" id="node5" href="config_8h.html#a082385d26c1f2339206e6135779e94a2" title="MS2T" alt="" coords="125,56,182,83"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -695,9 +724,9 @@ pinConfiguraiton </dd></dl>
 
 <p>Returns current time as a double instead of the internal time structure format. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00218">218</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00227">227</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00059">Ardulator::timer_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00065">Ardulator::timer_</a>.</p>
 
 </div>
 </div>
@@ -716,11 +745,21 @@ pinConfiguraiton </dd></dl>
 <div class="memdoc">
 
 <p>Initialize the scenario. </p>
+<p>Prepares the scenario, initializing any variables required for the rest of the simulation.</p>
 <p>This is only run once </p>
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00077">77</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00084">84</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="arduino_8h.html#a5e94e0fd1e5a500bbf68cff3d3545e08">pinConfiguration()</a>, <a class="el" href="ardulator_8h_source.html#l00047">Ardulator::prepared_</a>, <a class="el" href="arduino_8h.html#a8a9fc9ef5be15482174764c12710d52f">setup()</a>, <a class="el" href="ardulator_8h_source.html#l00059">Ardulator::timer_</a>, and <a class="el" href="ardulator_8cc_source.html#l00152">Ardulator::updatePinMaps()</a>.</p>
+<p>References <a class="el" href="arduino_8h.html#a5e94e0fd1e5a500bbf68cff3d3545e08">pinConfiguration()</a>, <a class="el" href="ardulator_8h_source.html#l00051">Ardulator::prepared_</a>, <a class="el" href="arduino_8h.html#a8a9fc9ef5be15482174764c12710d52f">setup()</a>, <a class="el" href="ardulator_8h_source.html#l00065">Ardulator::timer_</a>, and <a class="el" href="ardulator_8cc_source.html#l00161">Ardulator::updatePinMaps()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classardulator_1_1_ardulator_acca397f0bfc841cb328e8c44192d4b89_cgraph.png" border="0" usemap="#classardulator_1_1_ardulator_acca397f0bfc841cb328e8c44192d4b89_cgraph" alt=""/></div>
+<map name="classardulator_1_1_ardulator_acca397f0bfc841cb328e8c44192d4b89_cgraph" id="classardulator_1_1_ardulator_acca397f0bfc841cb328e8c44192d4b89_cgraph">
+<area shape="rect" id="node3" href="arduino_8h.html#a5e94e0fd1e5a500bbf68cff3d3545e08" title="Important Must be implemented in the target Arduino Code." alt="" coords="174,5,293,32"/><area shape="rect" id="node5" href="arduino_8h.html#a8a9fc9ef5be15482174764c12710d52f" title="Important Must be implemented for the Arduino code to work." alt="" coords="206,56,261,83"/><area shape="rect" id="node7" href="classardulator_1_1_ardulator.html#a669867a4d7d8f82067c4290b793645a9" title="Constructs a mapping of pins to signal names, useful reference." alt="" coords="176,107,291,133"/><area shape="rect" id="node9" href="classardulator_1_1containers_1_1_bit_value.html#a77347babe4b425694f81425f841896f2" title="Retrieve a reference to the memory register so you can access it from other places." alt="" coords="342,107,621,133"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -765,9 +804,9 @@ pinConfiguraiton </dd></dl>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00333">333</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00352">352</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00063">Ardulator::interrupts_</a>, and <a class="el" href="ardulator_8h_source.html#l00067">Ardulator::pin_config_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00069">Ardulator::interrupts_</a>, <a class="el" href="ardulator_8h_source.html#l00074">Ardulator::pin_config_</a>, and <a class="el" href="ardulator_8cc_source.html#l00039">ardulator::thread_lock</a>.</p>
 
 </div>
 </div>
@@ -785,9 +824,9 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00312">312</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00331">331</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00067">Ardulator::pin_config_</a>, and <a class="el" href="ardulator_8h_source.html#l00071">Ardulator::unused_pin_config_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00074">Ardulator::pin_config_</a>, and <a class="el" href="ardulator_8h_source.html#l00078">Ardulator::unused_pin_config_</a>.</p>
 
 </div>
 </div>
@@ -806,11 +845,22 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Run the scenario for a given amount of time. </p>
+<p>Run the scenario for a given length. </p>
+<p>Run the scenario for a given amount of time.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the exact amount of time the scenario ran for </dd></dl>
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00097">97</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00104">104</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8cc_source.html#l00139">Ardulator::addTicks()</a>, <a class="el" href="ardulator_8h_source.html#l00077">Ardulator::debug_</a>, <a class="el" href="ardulator_8cc_source.html#l00206">Ardulator::finalizePinState()</a>, <a class="el" href="arduino_8h.html#a8098d1d35b08421d79df526f4d77d799">loop()</a>, <a class="el" href="ardulator_8h_source.html#l00026">ardulator::LOOP_CONST</a>, <a class="el" href="ardulator_8cc_source.html#l00077">Ardulator::prepareScenario()</a>, <a class="el" href="ardulator_8h_source.html#l00041">Ardulator::runtime_</a>, <a class="el" href="ardulator_8h_source.html#l00043">Ardulator::scenario_length_</a>, <a class="el" href="config_8h_source.html#l00010">TICKS_PER_SECOND</a>, <a class="el" href="ardulator_8h_source.html#l00059">Ardulator::timer_</a>, and <a class="el" href="ardulator_8cc_source.html#l00174">Ardulator::updatePinState()</a>.</p>
+<p>References <a class="el" href="ardulator_8cc_source.html#l00146">Ardulator::addTicks()</a>, <a class="el" href="ardulator_8h_source.html#l00085">Ardulator::debug_</a>, <a class="el" href="ardulator_8cc_source.html#l00215">Ardulator::finalizePinState()</a>, <a class="el" href="arduino_8h.html#a8098d1d35b08421d79df526f4d77d799">loop()</a>, <a class="el" href="ardulator_8h_source.html#l00029">ardulator::LOOP_CONST</a>, <a class="el" href="ardulator_8cc_source.html#l00084">Ardulator::prepareScenario()</a>, <a class="el" href="ardulator_8h_source.html#l00044">Ardulator::runtime_</a>, <a class="el" href="ardulator_8h_source.html#l00047">Ardulator::scenario_length_</a>, <a class="el" href="config_8h_source.html#l00015">TICKS_PER_SECOND</a>, <a class="el" href="ardulator_8h_source.html#l00065">Ardulator::timer_</a>, and <a class="el" href="ardulator_8cc_source.html#l00183">Ardulator::updatePinState()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classardulator_1_1_ardulator_abcb7a3a15f0cce2a22553f505580a022_cgraph.png" border="0" usemap="#classardulator_1_1_ardulator_abcb7a3a15f0cce2a22553f505580a022_cgraph" alt=""/></div>
+<map name="classardulator_1_1_ardulator_abcb7a3a15f0cce2a22553f505580a022_cgraph" id="classardulator_1_1_ardulator_abcb7a3a15f0cce2a22553f505580a022_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="169,5,245,32"/><area shape="rect" id="node5" href="classardulator_1_1_ardulator.html#ae79954d61717aea74e2901c218913b86" title="Finalize the state of the pins after the scenario is finished." alt="" coords="150,56,263,83"/><area shape="rect" id="node7" href="arduino_8h.html#a8098d1d35b08421d79df526f4d77d799" title="Important Must be implemented for the Arduino code to work." alt="" coords="183,107,230,133"/><area shape="rect" id="node9" href="classardulator_1_1_ardulator.html#acca397f0bfc841cb328e8c44192d4b89" title="Initialize the scenario." alt="" coords="147,157,267,184"/><area shape="rect" id="node19" href="classardulator_1_1_ardulator.html#a62d3f036470d80d707b7989608142b73" title="Updates pins, checks if we need to fire interrupt." alt="" coords="150,208,263,235"/><area shape="rect" id="node11" href="arduino_8h.html#a5e94e0fd1e5a500bbf68cff3d3545e08" title="Important Must be implemented in the target Arduino Code." alt="" coords="315,107,434,133"/><area shape="rect" id="node13" href="arduino_8h.html#a8a9fc9ef5be15482174764c12710d52f" title="Important Must be implemented for the Arduino code to work." alt="" coords="347,157,402,184"/><area shape="rect" id="node15" href="classardulator_1_1_ardulator.html#a669867a4d7d8f82067c4290b793645a9" title="Constructs a mapping of pins to signal names, useful reference." alt="" coords="317,208,432,235"/><area shape="rect" id="node17" href="classardulator_1_1containers_1_1_bit_value.html#a77347babe4b425694f81425f841896f2" title="Retrieve a reference to the memory register so you can access it from other places." alt="" coords="483,208,762,235"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -839,9 +889,9 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00246">246</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00257">257</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00067">Ardulator::pin_config_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00074">Ardulator::pin_config_</a>, and <a class="el" href="ardulator_8cc_source.html#l00039">ardulator::thread_lock</a>.</p>
 
 </div>
 </div>
@@ -859,9 +909,9 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00287">287</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00302">302</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8h_source.html#l00059">Ardulator::timer_</a>.</p>
+<p>References <a class="el" href="ardulator_8h_source.html#l00065">Ardulator::timer_</a>.</p>
 
 </div>
 </div>
@@ -879,11 +929,21 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Update the pins so they are connected to the various memory registers. </p>
+<p>Constructs a mapping of pins to signal names, useful reference. </p>
+<p>Update the pins so they are connected to the various memory registers.</p>
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00152">152</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00161">161</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="bit__value_8cc_source.html#l00024">BitValue::getStateRef()</a>, <a class="el" href="ardulator_8h_source.html#l00067">Ardulator::pin_config_</a>, <a class="el" href="env_8cc_source.html#l00028">PORTB</a>, <a class="el" href="env_8cc_source.html#l00033">PORTC</a>, and <a class="el" href="env_8cc_source.html#l00038">PORTD</a>.</p>
+<p>References <a class="el" href="bit__value_8cc_source.html#l00023">BitValue::getStateRef()</a>, <a class="el" href="ardulator_8h_source.html#l00074">Ardulator::pin_config_</a>, <a class="el" href="env_8cc_source.html#l00028">PORTB</a>, <a class="el" href="env_8cc_source.html#l00033">PORTC</a>, and <a class="el" href="env_8cc_source.html#l00038">PORTD</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classardulator_1_1_ardulator_a669867a4d7d8f82067c4290b793645a9_cgraph.png" border="0" usemap="#classardulator_1_1_ardulator_a669867a4d7d8f82067c4290b793645a9_cgraph" alt=""/></div>
+<map name="classardulator_1_1_ardulator_a669867a4d7d8f82067c4290b793645a9_cgraph" id="classardulator_1_1_ardulator_a669867a4d7d8f82067c4290b793645a9_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1containers_1_1_bit_value.html#a77347babe4b425694f81425f841896f2" title="Retrieve a reference to the memory register so you can access it from other places." alt="" coords="169,5,447,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -901,11 +961,12 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Updates the state of each pin in the internal pin registery. </p>
+<p>Updates pins, checks if we need to fire interrupt. </p>
+<p>Updates the state of each pin in the internal pin registery.</p>
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00174">174</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00183">183</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8cc_source.html#l00031">ardulator::ef</a>, <a class="el" href="ardulator_8h_source.html#l00044">Ardulator::inside_interrupt_handler_</a>, <a class="el" href="ardulator_8h_source.html#l00067">Ardulator::pin_config_</a>, <a class="el" href="ardulator_8h_source.html#l00043">Ardulator::scenario_length_</a>, <a class="el" href="ardulator_8h_source.html#l00059">Ardulator::timer_</a>, and <a class="el" href="ardulator_8h_source.html#l00071">Ardulator::unused_pin_config_</a>.</p>
+<p>References <a class="el" href="ardulator_8cc_source.html#l00034">ardulator::ef</a>, <a class="el" href="ardulator_8h_source.html#l00048">Ardulator::inside_interrupt_handler_</a>, <a class="el" href="ardulator_8h_source.html#l00074">Ardulator::pin_config_</a>, <a class="el" href="ardulator_8h_source.html#l00047">Ardulator::scenario_length_</a>, <a class="el" href="ardulator_8h_source.html#l00065">Ardulator::timer_</a>, and <a class="el" href="ardulator_8h_source.html#l00078">Ardulator::unused_pin_config_</a>.</p>
 
 </div>
 </div>
@@ -940,7 +1001,7 @@ pinConfiguraiton </dd></dl>
 
 <p>Hardware serial ports buffers. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00078">78</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00086">86</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -957,7 +1018,7 @@ pinConfiguraiton </dd></dl>
 
 <p>Debug log file. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00077">77</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00085">85</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -974,7 +1035,7 @@ pinConfiguraiton </dd></dl>
 
 <p>A guard to prevent interrupts from happening inside an interrupt handler. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00044">44</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00048">48</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -989,7 +1050,9 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00063">63</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>A list of interrupts, matching the pin and type to a function callback. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00069">69</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -1006,7 +1069,7 @@ pinConfiguraiton </dd></dl>
 
 <p>Controlls the ability to dispatch interrupts. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00080">80</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00088">88</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -1023,22 +1086,7 @@ pinConfiguraiton </dd></dl>
 
 <p>Log file for all events that happen in the scenario. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00039">39</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="afc91b8eecb836eea4d132c356701e8ac"></a><!-- doxytag: member="ardulator::Ardulator::max_pins_" ref="afc91b8eecb836eea4d132c356701e8ac" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int <a class="el" href="classardulator_1_1_ardulator.html#afc91b8eecb836eea4d132c356701e8ac">max_pins_</a><code> [private]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00040">40</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00042">42</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -1053,7 +1101,9 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00067">67</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>A map of pins to their respective PinConfigs. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00074">74</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -1070,7 +1120,7 @@ pinConfiguraiton </dd></dl>
 
 <p>A gaurd for initalizing the scenario. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00047">47</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00051">51</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -1085,7 +1135,7 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00042">42</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00046">46</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -1102,7 +1152,7 @@ pinConfiguraiton </dd></dl>
 
 <p>The total runtime as a double to make comparisions easier. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00041">41</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00044">44</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -1119,7 +1169,7 @@ pinConfiguraiton </dd></dl>
 
 <p>The total amount of time the scenario should run. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00043">43</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00047">47</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -1134,7 +1184,9 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00075">75</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>A map to connect a signal name to a given pin. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00082">82</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -1151,7 +1203,7 @@ pinConfiguraiton </dd></dl>
 
 <p>Current time of the simulation. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00059">59</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00065">65</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -1166,7 +1218,9 @@ pinConfiguraiton </dd></dl>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00071">71</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>A list of unused pins. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00078">78</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -1195,7 +1249,7 @@ pinConfiguraiton </dd></dl>
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:19 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:55:01 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

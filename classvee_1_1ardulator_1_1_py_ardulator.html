@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -105,34 +104,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">PyArdulator Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="vee::ardulator::PyArdulator" --><table class="memberdecls">
+<!-- doxytag: class="vee::ardulator::PyArdulator" -->
+<p>This represents an instance of the Ardulator Emulator.  
+ <a href="classvee_1_1ardulator_1_1_py_ardulator.html#details">More...</a></p>
+<table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html#ac775ee34451fdfa742b318538164070e">__init__</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html#aedcaade7dd45761ddcc3b3cc07005314">run</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initalization of the emulator.  <a href="#ac775ee34451fdfa742b318538164070e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html#a395505a13f187d8c1ad90ed687e78e60">run_secnario</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Do NOT change self.signals after you call run, it will not regenerate the signals.  <a href="#a395505a13f187d8c1ad90ed687e78e60"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html#af9d495c1655d813d553030485d00fea7">length</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The estimated runtime length.  <a href="#af9d495c1655d813d553030485d00fea7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html#a5135668386ab64a05b794e9bb383f359">current_time</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The current time, this is useful for when you step through your program.  <a href="#a5135668386ab64a05b794e9bb383f359"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html#a0de0a2c91773619dac1660c29940c55e">signals</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html#ad617fd03e0c7ac85dd3111c2acd763b2">failures</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The set of all signals for this scenario.  <a href="#a0de0a2c91773619dac1660c29940c55e"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html#a2244cf67cc4ef0e279182be02e13758c">_generate_signal_data</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the C interfacing data from signals.  <a href="#a2244cf67cc4ef0e279182be02e13758c"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html#af44f009a2e927706d2885759c915072a">_data</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference for internal purpose of the data from the config file.  <a href="#af44f009a2e927706d2885759c915072a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html#a7fe92e4fe335b1626c82fe1d24354318">_signals_generate</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A check to see if the signals have ben generated from the config.  <a href="#a7fe92e4fe335b1626c82fe1d24354318"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><div class="fragment"><pre class="fragment">
-This represents an instance of the Ardulator Emulator. Currently because
-of the way the emulator calls the functions in the students code you can
-only have 1 instances of the Ardulator class. This could be worked around
-in future versions of the code, but currently its a limitation of the
-emulator.
-</pre></div> 
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00064">64</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+<div class="textblock"><p>This represents an instance of the Ardulator Emulator. </p>
+<p>Currently because of the way the emulator calls the functions in the students code you can only have 1 instances of the Ardulator class. This could be worked around in future versions of the code, but currently its a limitation of the emulator. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00079">79</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ac775ee34451fdfa742b318538164070e"></a><!-- doxytag: member="vee::ardulator::PyArdulator::__init__" ref="ac775ee34451fdfa742b318538164070e" args="" -->
 <div class="memitem">
@@ -164,8 +169,10 @@ emulator.
       </table>
 </div>
 <div class="memdoc">
-<div class="fragment"><pre class="fragment">Initalization of the emulator.</pre></div> 
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00072">72</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+
+<p>Initalization of the emulator. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00081">81</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
 
 </div>
 </div>
@@ -185,18 +192,20 @@ emulator.
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00098">98</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+<p>Generates the C interfacing data from signals. </p>
 
-<p>References <a class="el" href="ardulator_8py_source.html#l00072">PyArdulator::_data</a>, <a class="el" href="ardulator_8py_source.html#l00072">PyArdulator::_signals_generate</a>, <a class="el" href="ardulator_8py_source.html#l00072">PyArdulator::length</a>, <a class="el" href="ardulator_8py_source.html#l00060">vee::ardulator::register_signal</a>, and <a class="el" href="ardulator_8py_source.html#l00072">PyArdulator::signals</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00114">114</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+
+<p>References <a class="el" href="ardulator_8py_source.html#l00086">PyArdulator::_data</a>, <a class="el" href="ardulator_8py_source.html#l00087">PyArdulator::_signals_generate</a>, <a class="el" href="ardulator_8py_source.html#l00082">PyArdulator::length</a>, <a class="el" href="ardulator_8py_source.html#l00069">vee::ardulator::register_signal</a>, and <a class="el" href="ardulator_8py_source.html#l00085">PyArdulator::signals</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aedcaade7dd45761ddcc3b3cc07005314"></a><!-- doxytag: member="vee::ardulator::PyArdulator::run" ref="aedcaade7dd45761ddcc3b3cc07005314" args="" -->
+<a class="anchor" id="a395505a13f187d8c1ad90ed687e78e60"></a><!-- doxytag: member="vee::ardulator::PyArdulator::run_secnario" ref="a395505a13f187d8c1ad90ed687e78e60" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def run </td>
+          <td class="memname">def run_secnario </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>self</em>, </td>
@@ -215,13 +224,21 @@ emulator.
       </table>
 </div>
 <div class="memdoc">
-<div class="fragment"><pre class="fragment">
-Do NOT change self.signals after you call run, it will not regenerate
-the signals.
-</pre></div> 
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00081">81</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
 
-<p>References <a class="el" href="ardulator_8py_source.html#l00098">PyArdulator::_generate_signal_data()</a>, <a class="el" href="ardulator_8py_source.html#l00072">PyArdulator::current_time</a>, and <a class="el" href="ardulator_8py_source.html#l00072">PyArdulator::length</a>.</p>
+<p>Do NOT change self.signals after you call run, it will not regenerate the signals. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00100">100</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+
+<p>References <a class="el" href="ardulator_8py_source.html#l00114">PyArdulator::_generate_signal_data()</a>, <a class="el" href="ardulator_8py_source.html#l00084">PyArdulator::current_time</a>, <a class="el" href="ardulator_8py_source.html#l00082">PyArdulator::length</a>, and <a class="el" href="ardulator_8py_source.html#l00064">vee::ardulator::run</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classvee_1_1ardulator_1_1_py_ardulator_a395505a13f187d8c1ad90ed687e78e60_cgraph.png" border="0" usemap="#classvee_1_1ardulator_1_1_py_ardulator_a395505a13f187d8c1ad90ed687e78e60_cgraph" alt=""/></div>
+<map name="classvee_1_1ardulator_1_1_py_ardulator_a395505a13f187d8c1ad90ed687e78e60_cgraph" id="classvee_1_1ardulator_1_1_py_ardulator_a395505a13f187d8c1ad90ed687e78e60_cgraph">
+<area shape="rect" id="node3" href="classvee_1_1ardulator_1_1_py_ardulator.html#a2244cf67cc4ef0e279182be02e13758c" title="Generates the C interfacing data from signals." alt="" coords="152,5,309,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -237,7 +254,9 @@ the signals.
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00072">72</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+<p>Reference for internal purpose of the data from the config file. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00086">86</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
 
 </div>
 </div>
@@ -252,7 +271,9 @@ the signals.
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00072">72</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+<p>A check to see if the signals have ben generated from the config. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00087">87</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
 
 </div>
 </div>
@@ -267,22 +288,9 @@ the signals.
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00072">72</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+<p>The current time, this is useful for when you step through your program. </p>
 
-</div>
-</div>
-<a class="anchor" id="ad617fd03e0c7ac85dd3111c2acd763b2"></a><!-- doxytag: member="vee::ardulator::PyArdulator::failures" ref="ad617fd03e0c7ac85dd3111c2acd763b2" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html#ad617fd03e0c7ac85dd3111c2acd763b2">failures</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00072">72</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00084">84</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
 
 </div>
 </div>
@@ -297,7 +305,9 @@ the signals.
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00072">72</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+<p>The estimated runtime length. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00082">82</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
 
 </div>
 </div>
@@ -312,7 +322,9 @@ the signals.
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00072">72</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+<p>The set of all signals for this scenario. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00085">85</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
 
 </div>
 </div>
@@ -341,7 +353,7 @@ the signals.
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:19 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:55:01 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

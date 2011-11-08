@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -106,15 +105,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <!-- doxytag: class="ardulator::PinConfig" -->
 <p><a class="el" href="structardulator_1_1_pin_config.html" title="PinConfig is a single pin on the board.">PinConfig</a> is a single pin on the board.  
  <a href="structardulator_1_1_pin_config.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="pin__config_8h_source.html">pin_config.h</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for PinConfig:</div>
-<div class="dyncontent">
-<div class="center"><img src="structardulator_1_1_pin_config__coll__graph.png" border="0" usemap="#_pin_config_coll__map" alt="Collaboration graph"/></div>
-<map name="_pin_config_coll__map" id="_pin_config_coll__map">
-<area shape="rect" id="node2" href="struct_history.html" title="Records the history of a signal." alt="" coords="13,5,77,32"/></map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -140,8 +130,9 @@ Data Fields</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structardulator_1_1_pin_config.html#a2b2dd321615f36a1ee93be14f35c47f9">bit_mask_</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The bit mask for the memory register this pin belongs to.  <a href="#a2b2dd321615f36a1ee93be14f35c47f9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">volatile uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structardulator_1_1_pin_config.html#a3da4aa05f5167a148b73e1b7e8c4502c">bit_container_</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_history.html">History</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structardulator_1_1_pin_config.html#a1f7da62e2bae8dfc06bed221aa65fd4f">pin_history_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the location of the memory address for PORTs.  <a href="#a3da4aa05f5167a148b73e1b7e8c4502c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">SignalContainer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">signal_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A signal associated with the pin.  <a href="#a39b6aab908c3933e58afbf127cd9cc2c"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structardulator_1_1_pin_config.html" title="PinConfig is a single pin on the board.">PinConfig</a> is a single pin on the board. </p>
@@ -197,15 +188,14 @@ Data Fields</h2></td></tr>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">prev</td><td>The current Signal. </td></tr>
-    <tr><td class="paramname">next</td><td>The next Signal.</td></tr>
+    <tr><td class="paramname">next</td><td>The next Signal. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Fixup this function. Needs to dispatch interrupts. </dd></dl>
 
-<p>Definition at line <a class="el" href="pin__config_8cc_source.html#l00037">37</a> of file <a class="el" href="pin__config_8cc_source.html">pin_config.cc</a>.</p>
+<p>Definition at line <a class="el" href="pin__config_8cc_source.html#l00036">36</a> of file <a class="el" href="pin__config_8cc_source.html">pin_config.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="pin__config_8h_source.html#l00031">PinConfig::caught_flag_</a>, <a class="el" href="arduino_8h_source.html#l00073">CHANGE</a>, <a class="el" href="ardulator_8h_source.html#l00077">Ardulator::debug_</a>, <a class="el" href="cdefs_8h_source.html#l00035">ValueImp::digital</a>, <a class="el" href="arduino_8h_source.html#l00074">FALLING</a>, <a class="el" href="arduino_8h_source.html#l00050">HIGH</a>, <a class="el" href="ardulator_8h_source.html#l00063">Ardulator::interrupts_</a>, <a class="el" href="ardulator_8h_source.html#l00080">Ardulator::interrupts_enabled_</a>, <a class="el" href="arduino_8h_source.html#l00051">LOW</a>, <a class="el" href="cdefs_8h_source.html#l00056">History::missed_evts_</a>, <a class="el" href="pin__config_8h_source.html#l00028">PinConfig::pid_</a>, <a class="el" href="pin__config_8h_source.html#l00039">PinConfig::pin_history_</a>, <a class="el" href="arduino_8h_source.html#l00075">RISING</a>, <a class="el" href="cdefs_8h_source.html#l00057">History::total_evts_</a>, and <a class="el" href="cdefs_8h_source.html#l00046">SignalImp::value</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="pin__config_8h_source.html#l00031">PinConfig::caught_flag_</a>, <a class="el" href="arduino_8h_source.html#l00073">CHANGE</a>, <a class="el" href="ardulator_8h_source.html#l00085">Ardulator::debug_</a>, <a class="el" href="cdefs_8h_source.html#l00035">ValueImp::digital</a>, <a class="el" href="arduino_8h_source.html#l00074">FALLING</a>, <a class="el" href="arduino_8h_source.html#l00050">HIGH</a>, <a class="el" href="ardulator_8h_source.html#l00069">Ardulator::interrupts_</a>, <a class="el" href="ardulator_8h_source.html#l00088">Ardulator::interrupts_enabled_</a>, <a class="el" href="arduino_8h_source.html#l00051">LOW</a>, <a class="el" href="pin__config_8h_source.html#l00028">PinConfig::pid_</a>, <a class="el" href="arduino_8h_source.html#l00075">RISING</a>, and <a class="el" href="cdefs_8h_source.html#l00048">SignalImp::value</a>.</p>
 
 </div>
 </div>
@@ -234,7 +224,16 @@ Data Fields</h2></td></tr>
 
 <p>Definition at line <a class="el" href="pin__config_8cc_source.html#l00017">17</a> of file <a class="el" href="pin__config_8cc_source.html">pin_config.cc</a>.</p>
 
-<p>References <a class="el" href="pin__config_8h_source.html#l00037">PinConfig::bit_container_</a>, <a class="el" href="pin__config_8h_source.html#l00034">PinConfig::bit_mask_</a>, <a class="el" href="pin__config_8cc_source.html#l00037">PinConfig::dispatchingInterrupt()</a>, <a class="el" href="arduino_8h_source.html#l00050">HIGH</a>, <a class="el" href="pin__config_8h_source.html#l00030">PinConfig::interrupt_</a>, <a class="el" href="pin__config_8h_source.html#l00040">PinConfig::signal_</a>, and <a class="el" href="cdefs_8h_source.html#l00013">VT_DIGITAL</a>.</p>
+<p>References <a class="el" href="pin__config_8h_source.html#l00037">PinConfig::bit_container_</a>, <a class="el" href="pin__config_8h_source.html#l00034">PinConfig::bit_mask_</a>, <a class="el" href="pin__config_8cc_source.html#l00036">PinConfig::dispatchingInterrupt()</a>, <a class="el" href="arduino_8h_source.html#l00050">HIGH</a>, <a class="el" href="pin__config_8h_source.html#l00030">PinConfig::interrupt_</a>, <a class="el" href="pin__config_8h_source.html#l00040">PinConfig::signal_</a>, and <a class="el" href="cdefs_8h_source.html#l00013">VT_DIGITAL</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structardulator_1_1_pin_config_ab84cbfb62ceae1b01d27cb34b6f593cd_cgraph.png" border="0" usemap="#structardulator_1_1_pin_config_ab84cbfb62ceae1b01d27cb34b6f593cd_cgraph" alt=""/></div>
+<map name="structardulator_1_1_pin_config_ab84cbfb62ceae1b01d27cb34b6f593cd_cgraph" id="structardulator_1_1_pin_config_ab84cbfb62ceae1b01d27cb34b6f593cd_cgraph">
+<area shape="rect" id="node3" href="structardulator_1_1_pin_config.html#a7d5cc7bda646a3590927e5e80ed84fa7" title="Check if dispatch an interrupt is required." alt="" coords="125,5,264,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -249,6 +248,8 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+
+<p>A pointer to the location of the memory address for PORTs. </p>
 
 <p>Definition at line <a class="el" href="pin__config_8h_source.html#l00037">37</a> of file <a class="el" href="pin__config_8h_source.html">pin_config.h</a>.</p>
 
@@ -339,21 +340,6 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1f7da62e2bae8dfc06bed221aa65fd4f"></a><!-- doxytag: member="ardulator::PinConfig::pin_history_" ref="a1f7da62e2bae8dfc06bed221aa65fd4f" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_history.html">History</a> <a class="el" href="structardulator_1_1_pin_config.html#a1f7da62e2bae8dfc06bed221aa65fd4f">pin_history_</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="pin__config_8h_source.html#l00039">39</a> of file <a class="el" href="pin__config_8h_source.html">pin_config.h</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a7f2c98aba3cea3f015b82327884c13f0"></a><!-- doxytag: member="ardulator::PinConfig::pull_up_" ref="a7f2c98aba3cea3f015b82327884c13f0" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -381,6 +367,8 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+
+<p>A signal associated with the pin. </p>
 
 <p>Definition at line <a class="el" href="pin__config_8h_source.html#l00040">40</a> of file <a class="el" href="pin__config_8h_source.html">pin_config.h</a>.</p>
 
@@ -428,7 +416,7 @@ Data Fields</h2></td></tr>
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:19 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:55:01 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -102,23 +101,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">src/ardulator.cc File Reference</div>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><code>#include &lt;errno.h&gt;</code><br/>
-<code>#include &lt;sys/types.h&gt;</code><br/>
-<code>#include &lt;sys/stat.h&gt;</code><br/>
-<code>#include &lt;cmath&gt;</code><br/>
-<code>#include &lt;cassert&gt;</code><br/>
-<code>#include &lt;iomanip&gt;</code><br/>
-<code>#include &lt;cstdio&gt;</code><br/>
-<code>#include &quot;<a class="el" href="ardulator_8h_source.html">ardulator.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="arduino_8h_source.html">arduino.h</a>&quot;</code><br/>
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for ardulator.cc:</div>
-<div class="dyncontent">
-<div class="center"><img src="ardulator_8cc__incl.png" border="0" usemap="#src_2ardulator_8cc" alt=""/></div>
-<map name="src_2ardulator_8cc" id="src_2ardulator_8cc">
-<area shape="rect" id="node17" href="ardulator_8h.html" title="ardulator.h" alt="" coords="1079,155,1164,181"/><area shape="rect" id="node55" href="arduino_8h.html" title="The main interface to the emulation system." alt="" coords="660,80,737,107"/><area shape="rect" id="node29" href="bit__value_8h.html" title="ardulator/containers/bit_value.h" alt="" coords="1172,229,1380,256"/><area shape="rect" id="node35" href="clock_8h.html" title="ardulator/containers/clock.h" alt="" coords="1375,304,1560,331"/><area shape="rect" id="node39" href="config_8h.html" title="avr/config.h" alt="" coords="1292,379,1383,405"/><area shape="rect" id="node41" href="history_8h.html" title="ardulator/containers/history.h" alt="" coords="1585,304,1777,331"/><area shape="rect" id="node43" href="signals_8h.html" title="ardulator/containers/signals.h" alt="" coords="1854,304,2049,331"/><area shape="rect" id="node48" href="pin__config_8h.html" title="ardulator/pin_config.h" alt="" coords="1606,229,1756,256"/><area shape="rect" id="node45" href="cdefs_8h.html" title="ardulator/cdefs.h" alt="" coords="1873,379,1993,405"/></map>
-</div>
-</div>
+
 <p><a href="ardulator_8cc_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="nested-classes"></a>
@@ -130,7 +113,10 @@ Namespaces</h2></td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static EmulatorFinished&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceardulator.html#ae16b2bed8d30cb5e48d89edaf917e449">ef</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize static variables.  <a href="#ae16b2bed8d30cb5e48d89edaf917e449"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static ProcessingSignalException&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceardulator.html#ab9acc697db7d68e388dc74d437c073ab">p</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static pthread_mutex_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceardulator.html#a02067e8c19c3802e921c7f4a6fb8045c">thread_lock</a> = PTHREAD_MUTEX_INITIALIZER</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Thead lock to make the emulator thread safe.  <a href="#a02067e8c19c3802e921c7f4a6fb8045c"></a><br/></td></tr>
 </table>
 </div>
 </div>
@@ -152,7 +138,7 @@ Variables</h2></td></tr>
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:12 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:54:56 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

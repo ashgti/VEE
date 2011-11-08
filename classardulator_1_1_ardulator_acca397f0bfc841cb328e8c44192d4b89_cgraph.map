@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$arduino_8h.html#a5e94e0fd1e5a500bbf68cff3d3545e08" title="Important Must be implemented in the target Arduino Code." alt="" coords="174,5,293,32"/>
+<area shape="rect" id="node5" href="$arduino_8h.html#a8a9fc9ef5be15482174764c12710d52f" title="Important Must be implemented for the Arduino code to work." alt="" coords="206,56,261,83"/>
+<area shape="rect" id="node7" href="$classardulator_1_1_ardulator.html#a669867a4d7d8f82067c4290b793645a9" title="Constructs a mapping of pins to signal names, useful reference." alt="" coords="176,107,291,133"/>
+<area shape="rect" id="node9" href="$classardulator_1_1containers_1_1_bit_value.html#a77347babe4b425694f81425f841896f2" title="Retrieve a reference to the memory register so you can access it from other places." alt="" coords="342,107,621,133"/>
+</map>

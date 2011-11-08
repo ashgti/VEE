@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -107,27 +106,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>The main interface to the emulation system.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br/>
-<code>#include &lt;stdlib.h&gt;</code><br/>
-<code>#include &lt;<a class="el" href="config_8h_source.html">avr/config.h</a>&gt;</code><br/>
-<code>#include &lt;string&gt;</code><br/>
-<code>#include &quot;binary.h&quot;</code><br/>
-<code>#include &quot;<a class="el" href="ardulator_8h_source.html">ardulator.h</a>&quot;</code><br/>
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for arduino.h:</div>
-<div class="dyncontent">
-<div class="center"><img src="arduino_8h__incl.png" border="0" usemap="#include_2arduino_8h" alt=""/></div>
-<map name="include_2arduino_8h" id="include_2arduino_8h">
-<area shape="rect" id="node7" href="config_8h.html" title="avr/config.h" alt="" coords="904,304,995,331"/><area shape="rect" id="node13" href="ardulator_8h.html" title="ardulator.h" alt="" coords="541,80,627,107"/><area shape="rect" id="node24" href="bit__value_8h.html" title="ardulator/containers/bit_value.h" alt="" coords="672,155,880,181"/><area shape="rect" id="node29" href="clock_8h.html" title="ardulator/containers/clock.h" alt="" coords="70,229,255,256"/><area shape="rect" id="node34" href="history_8h.html" title="ardulator/containers/history.h" alt="" coords="331,229,524,256"/><area shape="rect" id="node36" href="signals_8h.html" title="ardulator/containers/signals.h" alt="" coords="549,229,744,256"/><area shape="rect" id="node41" href="pin__config_8h.html" title="ardulator/pin_config.h" alt="" coords="395,155,545,181"/><area shape="rect" id="node38" href="cdefs_8h.html" title="ardulator/cdefs.h" alt="" coords="586,304,707,331"/></map>
-</div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="arduino_8h__dep__incl.png" border="0" usemap="#include_2arduino_8hdep" alt=""/></div>
-<map name="include_2arduino_8hdep" id="include_2arduino_8hdep">
-<area shape="rect" id="node3" href="hardware__serial_8cc.html" title="src/ardulator/hardware_serial.cc" alt="" coords="5,80,216,107"/><area shape="rect" id="node5" href="pin__config_8cc.html" title="src/ardulator/pin_config.cc" alt="" coords="241,80,417,107"/><area shape="rect" id="node7" href="env_8cc.html" title="src/c_interface/env.cc" alt="" coords="442,80,592,107"/><area shape="rect" id="node9" href="interface_8cc.html" title="src/c_interface/interface.cc" alt="" coords="617,80,796,107"/><area shape="rect" id="node11" href="ardulator_8cc.html" title="src/ardulator.cc" alt="" coords="821,80,933,107"/><area shape="rect" id="node13" href="emulator__commands_8cc.html" title="src/emulator_commands.cc" alt="" coords="958,80,1143,107"/><area shape="rect" id="node15" href="interrupt__commands_8cc.html" title="src/interrupt_commands.cc" alt="" coords="1167,80,1349,107"/><area shape="rect" id="node17" href="pin__commands_8cc.html" title="src/pin_commands.cc" alt="" coords="1374,80,1524,107"/></map>
-</div>
-</div>
+
 <p><a href="arduino_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="nested-classes"></a>
@@ -1189,7 +1168,16 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="pin__commands_8cc_source.html#l00030">30</a> of file <a class="el" href="pin__commands_8cc_source.html">pin_commands.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8cc_source.html#l00228">Ardulator::getPin()</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8cc_source.html#l00237">Ardulator::getPin()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_a87d83bd2ec533c4e151fa8404d5f2a8b_cgraph.png" border="0" usemap="#arduino_8h_a87d83bd2ec533c4e151fa8404d5f2a8b_cgraph" alt=""/></div>
+<map name="arduino_8h_a87d83bd2ec533c4e151fa8404d5f2a8b_cgraph" id="arduino_8h_a87d83bd2ec533c4e151fa8404d5f2a8b_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#a82c8e85a2712e540cc7f17baa27c8702" title="Get the value of a given pin and increment the clock based off the kind of access." alt="" coords="147,31,328,57"/><area shape="rect" id="node5" href="classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="376,5,573,32"/><area shape="rect" id="node7" href="config_8h.html#a082385d26c1f2339206e6135779e94a2" title="MS2T" alt="" coords="446,56,503,83"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1280,7 +1268,16 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="interrupt__commands_8cc_source.html#l00010">10</a> of file <a class="el" href="interrupt__commands_8cc_source.html">interrupt_commands.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="ardulator_8cc_source.html#l00333">Ardulator::registerInterrupt()</a>, and <a class="el" href="interrupt__commands_8cc_source.html#l00022">sei()</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="ardulator_8cc_source.html#l00352">Ardulator::registerInterrupt()</a>, and <a class="el" href="interrupt__commands_8cc_source.html#l00022">sei()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_ad5759754ad2d4e4106bd9418f288b14e_cgraph.png" border="0" usemap="#arduino_8h_ad5759754ad2d4e4106bd9418f288b14e_cgraph" alt=""/></div>
+<map name="arduino_8h_ad5759754ad2d4e4106bd9418f288b14e_cgraph" id="arduino_8h_ad5759754ad2d4e4106bd9418f288b14e_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#aa2ea26c966ada0e484a4a3ee8b8f397b" title="Registers an interrupt handler." alt="" coords="163,5,400,32"/><area shape="rect" id="node5" href="arduino_8h.html#a05eedbdaac4cff5e38ced1c9706eec54" title="Enable interrupts." alt="" coords="262,56,301,83"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1302,7 +1299,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="interrupt__commands_8cc_source.html#l00028">28</a> of file <a class="el" href="interrupt__commands_8cc_source.html">interrupt_commands.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8h_source.html#l00080">Ardulator::interrupts_enabled_</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8h_source.html#l00088">Ardulator::interrupts_enabled_</a>.</p>
 
 </div>
 </div>
@@ -1331,7 +1328,16 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="time__commands_8cc_source.html#l00012">12</a> of file <a class="el" href="time__commands_8cc_source.html">time_commands.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8cc_source.html#l00139">Ardulator::addTicks()</a>, <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="config_8h_source.html#l00012">MS2T()</a>.</p>
+<p>References <a class="el" href="ardulator_8cc_source.html#l00146">Ardulator::addTicks()</a>, <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="config_8h_source.html#l00023">MS2T()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_a6bc5f943544a887f8b23cadfb26a5e30_cgraph.png" border="0" usemap="#arduino_8h_a6bc5f943544a887f8b23cadfb26a5e30_cgraph" alt=""/></div>
+<map name="arduino_8h_a6bc5f943544a887f8b23cadfb26a5e30_cgraph" id="arduino_8h_a6bc5f943544a887f8b23cadfb26a5e30_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="107,5,304,32"/><area shape="rect" id="node5" href="config_8h.html#a082385d26c1f2339206e6135779e94a2" title="MS2T" alt="" coords="177,56,234,83"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1377,7 +1383,16 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="interrupt__commands_8cc_source.html#l00016">16</a> of file <a class="el" href="interrupt__commands_8cc_source.html">interrupt_commands.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8cc_source.html#l00345">Ardulator::dropInterrupt()</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8cc_source.html#l00366">Ardulator::dropInterrupt()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_a965cc79b2ef14a5ab499ffe1fb2ea653_cgraph.png" border="0" usemap="#arduino_8h_a965cc79b2ef14a5ab499ffe1fb2ea653_cgraph" alt=""/></div>
+<map name="arduino_8h_a965cc79b2ef14a5ab499ffe1fb2ea653_cgraph" id="arduino_8h_a965cc79b2ef14a5ab499ffe1fb2ea653_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#a083eae559b6af6235ea63fbbbf26053d" title="Removes an interrupt handler." alt="" coords="166,5,386,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1407,7 +1422,16 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="pin__commands_8cc_source.html#l00020">20</a> of file <a class="el" href="pin__commands_8cc_source.html">pin_commands.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="ardulator_8cc_source.html#l00228">Ardulator::getPin()</a>, <a class="el" href="arduino_8h_source.html#l00050">HIGH</a>, and <a class="el" href="arduino_8h_source.html#l00051">LOW</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="ardulator_8cc_source.html#l00237">Ardulator::getPin()</a>, <a class="el" href="arduino_8h_source.html#l00050">HIGH</a>, and <a class="el" href="arduino_8h_source.html#l00051">LOW</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_ad911fab1774e2bd11c2b0bf629671650_cgraph.png" border="0" usemap="#arduino_8h_ad911fab1774e2bd11c2b0bf629671650_cgraph" alt=""/></div>
+<map name="arduino_8h_ad911fab1774e2bd11c2b0bf629671650_cgraph" id="arduino_8h_ad911fab1774e2bd11c2b0bf629671650_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#a82c8e85a2712e540cc7f17baa27c8702" title="Get the value of a given pin and increment the clock based off the kind of access." alt="" coords="144,31,325,57"/><area shape="rect" id="node5" href="classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="373,5,571,32"/><area shape="rect" id="node7" href="config_8h.html#a082385d26c1f2339206e6135779e94a2" title="MS2T" alt="" coords="443,56,501,83"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1447,7 +1471,16 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="pin__commands_8cc_source.html#l00025">25</a> of file <a class="el" href="pin__commands_8cc_source.html">pin_commands.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8cc_source.html#l00246">Ardulator::setPin()</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8cc_source.html#l00257">Ardulator::setPin()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_a6b04e9789e7640468fea79499a5720ee_cgraph.png" border="0" usemap="#arduino_8h_a6b04e9789e7640468fea79499a5720ee_cgraph" alt=""/></div>
+<map name="arduino_8h_a6b04e9789e7640468fea79499a5720ee_cgraph" id="arduino_8h_a6b04e9789e7640468fea79499a5720ee_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#a8c60785181eee1054e4defbbce8a3296" title="ardulator::Ardulator::setPin" alt="" coords="142,5,322,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1484,9 +1517,18 @@ Variables</h2></td></tr>
 
 <p>Initialize the simulation. </p>
 
-<p>Definition at line <a class="el" href="interface_8cc_source.html#l00036">36</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="interface_8cc_source.html#l00032">32</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
 
 <p>References <a class="el" href="interface_8cc_source.html#l00020">initalized</a>, and <a class="el" href="env_8cc_source.html#l00016">ardulator::setupArduino()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_a082e36ea937c50cac47b0991d19fd80c_cgraph.png" border="0" usemap="#arduino_8h_a082e36ea937c50cac47b0991d19fd80c_cgraph" alt=""/></div>
+<map name="arduino_8h_a082e36ea937c50cac47b0991d19fd80c_cgraph" id="arduino_8h_a082e36ea937c50cac47b0991d19fd80c_cgraph">
+<area shape="rect" id="node3" href="namespaceardulator.html#ab8c07f90c609dcc61fff7de4f8d53002" title="Creates a global instance of the Arduino." alt="" coords="181,5,341,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1529,7 +1571,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="time__commands_8cc_source.html#l00022">22</a> of file <a class="el" href="time__commands_8cc_source.html">time_commands.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="config_8h_source.html#l00010">TICKS_PER_SECOND</a>, and <a class="el" href="ardulator_8h_source.html#l00059">Ardulator::timer_</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="config_8h_source.html#l00015">TICKS_PER_SECOND</a>, and <a class="el" href="ardulator_8h_source.html#l00065">Ardulator::timer_</a>.</p>
 
 </div>
 </div>
@@ -1553,7 +1595,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="time__commands_8cc_source.html#l00017">17</a> of file <a class="el" href="time__commands_8cc_source.html">time_commands.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="config_8h_source.html#l00010">TICKS_PER_SECOND</a>, and <a class="el" href="ardulator_8h_source.html#l00059">Ardulator::timer_</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="config_8h_source.html#l00015">TICKS_PER_SECOND</a>, and <a class="el" href="ardulator_8h_source.html#l00065">Ardulator::timer_</a>.</p>
 
 </div>
 </div>
@@ -1615,7 +1657,16 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="pin__commands_8cc_source.html#l00015">15</a> of file <a class="el" href="pin__commands_8cc_source.html">pin_commands.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8cc_source.html#l00063">Ardulator::configurePin()</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8cc_source.html#l00069">Ardulator::configurePin()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_aa6456e73e166f459f54a547e58f4e3a7_cgraph.png" border="0" usemap="#arduino_8h_aa6456e73e166f459f54a547e58f4e3a7_cgraph" alt=""/></div>
+<map name="arduino_8h_aa6456e73e166f459f54a547e58f4e3a7_cgraph" id="arduino_8h_aa6456e73e166f459f54a547e58f4e3a7_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#a8a9d87cf3b9a973c11ff21e7fbde9ada" title="ardulator::Ardulator::configurePin" alt="" coords="129,5,346,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1645,7 +1696,16 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="emulator__commands_8cc_source.html#l00010">10</a> of file <a class="el" href="emulator__commands_8cc_source.html">emulator_commands.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8cc_source.html#l00252">Ardulator::dispatchSignal()</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8cc_source.html#l00265">Ardulator::dispatchSignal()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_a355721d3a5f066c9ea1fb4b88635fd35_cgraph.png" border="0" usemap="#arduino_8h_a355721d3a5f066c9ea1fb4b88635fd35_cgraph" alt=""/></div>
+<map name="arduino_8h_a355721d3a5f066c9ea1fb4b88635fd35_cgraph" id="arduino_8h_a355721d3a5f066c9ea1fb4b88635fd35_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#a60fc9f4d143d7526d1273f3d5cd9c56e" title="ardulator::Ardulator::dispatchSignal" alt="" coords="161,31,391,57"/><area shape="rect" id="node5" href="classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="459,5,656,32"/><area shape="rect" id="node7" href="classardulator_1_1_ardulator.html#a62d3f036470d80d707b7989608142b73" title="Updates pins, checks if we need to fire interrupt." alt="" coords="440,56,675,83"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1705,9 +1765,18 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="interface_8cc_source.html#l00043">43</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="interface_8cc_source.html#l00039">39</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="interface_8cc_source.html#l00036">initalize_simulator()</a>, <a class="el" href="cdefs_8h_source.html#l00048">SignalImp::name</a>, <a class="el" href="pin__config_8h_source.html#l00040">PinConfig::signal_</a>, and <a class="el" href="ardulator_8h_source.html#l00071">Ardulator::unused_pin_config_</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="interface_8cc_source.html#l00032">initalize_simulator()</a>, <a class="el" href="cdefs_8h_source.html#l00050">SignalImp::name</a>, <a class="el" href="pin__config_8h_source.html#l00040">PinConfig::signal_</a>, and <a class="el" href="ardulator_8h_source.html#l00078">Ardulator::unused_pin_config_</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_a64a98bfd8808a28190804552e156e205_cgraph.png" border="0" usemap="#arduino_8h_a64a98bfd8808a28190804552e156e205_cgraph" alt=""/></div>
+<map name="arduino_8h_a64a98bfd8808a28190804552e156e205_cgraph" id="arduino_8h_a64a98bfd8808a28190804552e156e205_cgraph">
+<area shape="rect" id="node3" href="arduino_8h.html#a082e36ea937c50cac47b0991d19fd80c" title="Initialize the simulation." alt="" coords="163,5,291,32"/><area shape="rect" id="node5" href="namespaceardulator.html#ab8c07f90c609dcc61fff7de4f8d53002" title="Creates a global instance of the Arduino." alt="" coords="339,5,499,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1747,7 +1816,16 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="emulator__commands_8cc_source.html#l00014">14</a> of file <a class="el" href="emulator__commands_8cc_source.html">emulator_commands.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8cc_source.html#l00293">Ardulator::addPin()</a>, and <a class="el" href="env_8cc_source.html#l00023">ardu</a>.</p>
+<p>References <a class="el" href="ardulator_8cc_source.html#l00308">Ardulator::addPin()</a>, and <a class="el" href="env_8cc_source.html#l00023">ardu</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_a8da469127f8e0acea80db9a51d86070c_cgraph.png" border="0" usemap="#arduino_8h_a8da469127f8e0acea80db9a51d86070c_cgraph" alt=""/></div>
+<map name="arduino_8h_a8da469127f8e0acea80db9a51d86070c_cgraph" id="arduino_8h_a8da469127f8e0acea80db9a51d86070c_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#a74e74ea34f0c36f40ab5c15de2302a62" title="ardulator::Ardulator::addPin" alt="" coords="139,5,325,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1788,7 +1866,16 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="emulator__commands_8cc_source.html#l00018">18</a> of file <a class="el" href="emulator__commands_8cc_source.html">emulator_commands.cc</a>.</p>
 
-<p>References <a class="el" href="ardulator_8cc_source.html#l00307">Ardulator::addSerial()</a>, and <a class="el" href="env_8cc_source.html#l00023">ardu</a>.</p>
+<p>References <a class="el" href="ardulator_8cc_source.html#l00324">Ardulator::addSerial()</a>, and <a class="el" href="env_8cc_source.html#l00023">ardu</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_a3eadcc1cddef6e281d5746c0a2d33264_cgraph.png" border="0" usemap="#arduino_8h_a3eadcc1cddef6e281d5746c0a2d33264_cgraph" alt=""/></div>
+<map name="arduino_8h_a3eadcc1cddef6e281d5746c0a2d33264_cgraph" id="arduino_8h_a3eadcc1cddef6e281d5746c0a2d33264_cgraph">
+<area shape="rect" id="node3" href="classardulator_1_1_ardulator.html#ae93addc1483c5c4ee208e7ccccdeaf44" title="ardulator::Ardulator::addSerial" alt="" coords="155,5,355,32"/><area shape="rect" id="node5" href="class_hardware_serial.html#acf826b9bc518dd52a74cf53e58a3523a" title="Returns the rxPin." alt="" coords="403,5,541,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1874,9 +1961,18 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="interface_8cc_source.html#l00030">30</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="interface_8cc_source.html#l00026">26</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="interface_8cc_source.html#l00036">initalize_simulator()</a>, and <a class="el" href="ardulator_8cc_source.html#l00097">Ardulator::runScenario()</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="interface_8cc_source.html#l00032">initalize_simulator()</a>, and <a class="el" href="ardulator_8cc_source.html#l00104">Ardulator::runScenario()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="arduino_8h_ab0227379a7a456485b0b11462d8efa40_cgraph.png" border="0" usemap="#arduino_8h_ab0227379a7a456485b0b11462d8efa40_cgraph" alt=""/></div>
+<map name="arduino_8h_ab0227379a7a456485b0b11462d8efa40_cgraph" id="arduino_8h_ab0227379a7a456485b0b11462d8efa40_cgraph">
+<area shape="rect" id="node3" href="arduino_8h.html#a082e36ea937c50cac47b0991d19fd80c" title="Initialize the simulation." alt="" coords="140,31,268,57"/><area shape="rect" id="node7" href="classardulator_1_1_ardulator.html#abcb7a3a15f0cce2a22553f505580a022" title="Run the scenario for a given length." alt="" coords="96,132,312,159"/><area shape="rect" id="node5" href="namespaceardulator.html#ab8c07f90c609dcc61fff7de4f8d53002" title="Creates a global instance of the Arduino." alt="" coords="401,5,561,32"/><area shape="rect" id="node9" href="classardulator_1_1_ardulator.html#acca397f0bfc841cb328e8c44192d4b89" title="Initialize the scenario." alt="" coords="360,56,603,83"/><area shape="rect" id="node19" href="classardulator_1_1_ardulator.html#a62d3f036470d80d707b7989608142b73" title="Updates pins, checks if we need to fire interrupt." alt="" coords="364,107,599,133"/><area shape="rect" id="node21" href="arduino_8h.html#a8098d1d35b08421d79df526f4d77d799" title="Important Must be implemented for the Arduino code to work." alt="" coords="458,157,505,184"/><area shape="rect" id="node23" href="classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="383,208,580,235"/><area shape="rect" id="node25" href="classardulator_1_1_ardulator.html#ae79954d61717aea74e2901c218913b86" title="Finalize the state of the pins after the scenario is finished." alt="" coords="363,259,599,285"/><area shape="rect" id="node11" href="arduino_8h.html#a5e94e0fd1e5a500bbf68cff3d3545e08" title="Important Must be implemented in the target Arduino Code." alt="" coords="710,5,829,32"/><area shape="rect" id="node13" href="arduino_8h.html#a8a9fc9ef5be15482174764c12710d52f" title="Important Must be implemented for the Arduino code to work." alt="" coords="742,56,797,83"/><area shape="rect" id="node15" href="classardulator_1_1_ardulator.html#a669867a4d7d8f82067c4290b793645a9" title="Constructs a mapping of pins to signal names, useful reference." alt="" coords="651,107,887,133"/><area shape="rect" id="node17" href="classardulator_1_1containers_1_1_bit_value.html#a77347babe4b425694f81425f841896f2" title="Retrieve a reference to the memory register so you can access it from other places." alt="" coords="937,107,1215,133"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -1898,7 +1994,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="interrupt__commands_8cc_source.html#l00022">22</a> of file <a class="el" href="interrupt__commands_8cc_source.html">interrupt_commands.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8h_source.html#l00080">Ardulator::interrupts_enabled_</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, and <a class="el" href="ardulator_8h_source.html#l00088">Ardulator::interrupts_enabled_</a>.</p>
 
 </div>
 </div>
@@ -1994,7 +2090,7 @@ Variables</h2></td></tr>
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:11 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:54:56 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

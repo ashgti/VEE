@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -108,7 +107,10 @@ Data Structures</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Python Implementation of the Signal Data structure.  <a href="classvee_1_1ardulator_1_1_py_signal_imp.html#details">More...</a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_value_imp.html">PyValueImp</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Python implementation of the <a class="el" href="union_value_imp.html" title="Represents all of the potential values of a signal.">ValueImp</a>.  <a href="classvee_1_1ardulator_1_1_py_value_imp.html#details">More...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_history_imp.html">PyHistoryImp</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Python Implmenetaiton of the History Data Structure.  <a href="classvee_1_1ardulator_1_1_py_history_imp.html#details">More...</a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvee_1_1ardulator_1_1_py_ardulator.html">PyArdulator</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This represents an instance of the Ardulator Emulator.  <a href="classvee_1_1ardulator_1_1_py_ardulator.html#details">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevee_1_1ardulator.html#a629d61dfe4da763164a4d1a2d85b0afd">__author__</a> = &quot;John Harrison &lt;ash.gti@gmail.com&gt;&quot;</td></tr>
@@ -116,7 +118,9 @@ Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevee_1_1ardulator.html#a59569fefcc55a1f2286c58a76f9414e2">veelib</a> = None</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevee_1_1ardulator.html#ad33144e513218c876000cb8bf8114384">SiganlCallback</a> = CFUNCTYPE(None, c_double, POINTER(<a class="el" href="classvee_1_1ardulator_1_1_py_signal_imp.html">PySignalImp</a>))</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevee_1_1ardulator.html#a0f40b896b2461e250ebafd4e27b8ff54">run</a> = veelib.run</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Run command, from C.  <a href="#a0f40b896b2461e250ebafd4e27b8ff54"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevee_1_1ardulator.html#a388c1c4b7fa5a8579068d3c6d1623330">register_signal</a> = veelib.register_signal</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">register_signal command, from C.  <a href="#a388c1c4b7fa5a8579068d3c6d1623330"></a><br/></td></tr>
 </table>
 <hr/><h2>Variable Documentation</h2>
 <a class="anchor" id="aa4a022e6ddacd362b83964da5cc5d044"></a><!-- doxytag: member="vee::ardulator::__all__" ref="aa4a022e6ddacd362b83964da5cc5d044" args="" -->
@@ -160,7 +164,9 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00060">60</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+<p>register_signal command, from C. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00069">69</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
 
 </div>
 </div>
@@ -175,7 +181,9 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00056">56</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
+<p>Run command, from C. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8py_source.html#l00064">64</a> of file <a class="el" href="ardulator_8py_source.html">ardulator.py</a>.</p>
 
 </div>
 </div>
@@ -230,7 +238,7 @@ Variables</h2></td></tr>
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:19 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:55:01 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

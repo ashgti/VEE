@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -117,35 +116,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00023"></a>00023   <a class="code" href="interface_8cc.html#a01143f6725f562bed4255476fa737925">runtime</a> = 0;
 <a name="l00024"></a>00024 }
 <a name="l00025"></a>00025 
-<a name="l00026"></a><a class="code" href="interface_8cc.html#ac6bf1a12c5c98ddec5b65e07fe74cabe">00026</a> <span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">void</span> <a class="code" href="interface_8cc.html#ac6bf1a12c5c98ddec5b65e07fe74cabe">step</a>() {
-<a name="l00028"></a>00028 }
-<a name="l00029"></a>00029 
-<a name="l00030"></a><a class="code" href="interface_8cc.html#ab0227379a7a456485b0b11462d8efa40">00030</a> <span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">double</span> <a class="code" href="namespacevee_1_1ardulator.html#a0f40b896b2461e250ebafd4e27b8ff54">run</a>(<span class="keywordtype">double</span> length) {
-<a name="l00031"></a>00031   <a class="code" href="arduino_8h.html#a082e36ea937c50cac47b0991d19fd80c" title="Initialize the simulation.">initalize_simulator</a>();
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033   <span class="keywordflow">return</span> <a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#abcb7a3a15f0cce2a22553f505580a022" title="Run the scenario for a given amount of time.">runScenario</a>(length);
-<a name="l00034"></a>00034 }
-<a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="interface_8cc.html#a082e36ea937c50cac47b0991d19fd80c">00036</a> <span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">void</span> <a class="code" href="arduino_8h.html#a082e36ea937c50cac47b0991d19fd80c" title="Initialize the simulation.">initalize_simulator</a>() {
-<a name="l00037"></a>00037   <span class="keywordflow">if</span> (!<a class="code" href="interface_8cc.html#ab5abf983bd95bc1f7f4ad879d2684957">initalized</a>) {
-<a name="l00038"></a>00038     <a class="code" href="namespaceardulator.html#ab8c07f90c609dcc61fff7de4f8d53002" title="Creates a global instance of the Arduino.">ardulator::setupArduino</a>();
-<a name="l00039"></a>00039     <a class="code" href="interface_8cc.html#ab5abf983bd95bc1f7f4ad879d2684957">initalized</a> = <span class="keyword">true</span>;
-<a name="l00040"></a>00040   }
-<a name="l00041"></a>00041 }
-<a name="l00042"></a>00042 
-<a name="l00043"></a><a class="code" href="interface_8cc.html#a44c647f4a9dab121e8c49ab5e5ecfd17">00043</a> <span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">bool</span> <a class="code" href="namespacevee_1_1ardulator.html#a388c1c4b7fa5a8579068d3c6d1623330">register_signal</a>(<a class="code" href="struct_signal_imp.html" title="Represents a single signal value.">SignalImp</a>* first) {
-<a name="l00044"></a>00044   <a class="code" href="arduino_8h.html#a082e36ea937c50cac47b0991d19fd80c" title="Initialize the simulation.">initalize_simulator</a>();
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046   puts(<span class="stringliteral">&quot;Registering signal...\n&quot;</span>);
-<a name="l00047"></a>00047   printf(<span class="stringliteral">&quot;Signal ID: %s\n&quot;</span>, first-&gt;<a class="code" href="struct_signal_imp.html#a8f8f80d37794cde9472343e4487ba3eb" title="The name of the signal.">name</a>);
-<a name="l00048"></a>00048   <a class="code" href="structardulator_1_1_pin_config.html" title="PinConfig is a single pin on the board.">PinConfig</a>* pin = <span class="keyword">new</span> <a class="code" href="structardulator_1_1_pin_config.html" title="PinConfig is a single pin on the board.">PinConfig</a>();
-<a name="l00049"></a>00049   pin-&gt;<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">signal_</a>.current_ = first;
-<a name="l00050"></a>00050   pin-&gt;<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">signal_</a>.head_ = first;
-<a name="l00051"></a>00051   <a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#a0e8a74494c29be49e40d39f5bcab60cd">unused_pin_config_</a>.insert(make_pair(std::string(first-&gt;<a class="code" href="struct_signal_imp.html#a8f8f80d37794cde9472343e4487ba3eb" title="The name of the signal.">name</a>), pin));
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00054"></a>00054 }
-<a name="l00055"></a>00055 
+<a name="l00026"></a><a class="code" href="interface_8cc.html#ab0227379a7a456485b0b11462d8efa40">00026</a> <span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">double</span> <a class="code" href="namespacevee_1_1ardulator.html#a0f40b896b2461e250ebafd4e27b8ff54" title="Run command, from C.">run</a>(<span class="keywordtype">double</span> length) {
+<a name="l00027"></a>00027   <a class="code" href="arduino_8h.html#a082e36ea937c50cac47b0991d19fd80c" title="Initialize the simulation.">initalize_simulator</a>();
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029   <span class="keywordflow">return</span> <a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#abcb7a3a15f0cce2a22553f505580a022" title="Run the scenario for a given length.">runScenario</a>(length);
+<a name="l00030"></a>00030 }
+<a name="l00031"></a>00031 
+<a name="l00032"></a><a class="code" href="interface_8cc.html#a082e36ea937c50cac47b0991d19fd80c">00032</a> <span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">void</span> <a class="code" href="arduino_8h.html#a082e36ea937c50cac47b0991d19fd80c" title="Initialize the simulation.">initalize_simulator</a>() {
+<a name="l00033"></a>00033   <span class="keywordflow">if</span> (!<a class="code" href="interface_8cc.html#ab5abf983bd95bc1f7f4ad879d2684957">initalized</a>) {
+<a name="l00034"></a>00034     <a class="code" href="namespaceardulator.html#ab8c07f90c609dcc61fff7de4f8d53002" title="Creates a global instance of the Arduino.">ardulator::setupArduino</a>();
+<a name="l00035"></a>00035     <a class="code" href="interface_8cc.html#ab5abf983bd95bc1f7f4ad879d2684957">initalized</a> = <span class="keyword">true</span>;
+<a name="l00036"></a>00036   }
+<a name="l00037"></a>00037 }
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="interface_8cc.html#a44c647f4a9dab121e8c49ab5e5ecfd17">00039</a> <span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">bool</span> <a class="code" href="namespacevee_1_1ardulator.html#a388c1c4b7fa5a8579068d3c6d1623330" title="register_signal command, from C.">register_signal</a>(<a class="code" href="struct_signal_imp.html" title="Represents a single signal value.">SignalImp</a>* first) {
+<a name="l00040"></a>00040   <a class="code" href="arduino_8h.html#a082e36ea937c50cac47b0991d19fd80c" title="Initialize the simulation.">initalize_simulator</a>();
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042   puts(<span class="stringliteral">&quot;Registering signal...\n&quot;</span>);
+<a name="l00043"></a>00043   printf(<span class="stringliteral">&quot;Signal ID: %s\n&quot;</span>, first-&gt;<a class="code" href="struct_signal_imp.html#a8f8f80d37794cde9472343e4487ba3eb" title="The name of the signal.">name</a>);
+<a name="l00044"></a>00044   <a class="code" href="structardulator_1_1_pin_config.html" title="PinConfig is a single pin on the board.">PinConfig</a>* pin = <span class="keyword">new</span> <a class="code" href="structardulator_1_1_pin_config.html" title="PinConfig is a single pin on the board.">PinConfig</a>();
+<a name="l00045"></a>00045   pin-&gt;<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c" title="A signal associated with the pin.">signal_</a>.current_ = first;
+<a name="l00046"></a>00046   pin-&gt;<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c" title="A signal associated with the pin.">signal_</a>.head_ = first;
+<a name="l00047"></a>00047   <a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#a0e8a74494c29be49e40d39f5bcab60cd" title="A list of unused pins.">unused_pin_config_</a>.insert(make_pair(std::string(first-&gt;<a class="code" href="struct_signal_imp.html#a8f8f80d37794cde9472343e4487ba3eb" title="The name of the signal.">name</a>), pin));
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00050"></a>00050 }
+<a name="l00051"></a>00051 
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
@@ -166,7 +162,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:11 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:54:56 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

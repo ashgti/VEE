@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -101,23 +100,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">src/c_interface/interface.cc File Reference</div>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="arduino_8h_source.html">arduino.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="ardulator_8h_source.html">ardulator.h</a>&quot;</code><br/>
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for interface.cc:</div>
-<div class="dyncontent">
-<div class="center"><img src="interface_8cc__incl.png" border="0" usemap="#src_2c__interface_2interface_8cc" alt=""/></div>
-<map name="src_2c__interface_2interface_8cc" id="src_2c__interface_2interface_8cc">
-<area shape="rect" id="node3" href="arduino_8h.html" title="The main interface to the emulation system." alt="" coords="937,80,1015,107"/><area shape="rect" id="node15" href="ardulator_8h.html" title="ardulator.h" alt="" coords="664,155,749,181"/><area shape="rect" id="node9" href="config_8h.html" title="avr/config.h" alt="" coords="876,379,967,405"/><area shape="rect" id="node26" href="bit__value_8h.html" title="ardulator/containers/bit_value.h" alt="" coords="65,229,273,256"/><area shape="rect" id="node31" href="clock_8h.html" title="ardulator/containers/clock.h" alt="" coords="698,304,883,331"/><area shape="rect" id="node36" href="history_8h.html" title="ardulator/containers/history.h" alt="" coords="481,304,673,331"/><area shape="rect" id="node38" href="signals_8h.html" title="ardulator/containers/signals.h" alt="" coords="5,304,200,331"/><area shape="rect" id="node43" href="pin__config_8h.html" title="ardulator/pin_config.h" alt="" coords="631,229,781,256"/><area shape="rect" id="node40" href="cdefs_8h.html" title="ardulator/cdefs.h" alt="" coords="61,379,181,405"/></map>
-</div>
-</div>
+
 <p><a href="interface_8cc_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8cc.html#afa853b486fa00f6ddfe691388123f7b9">reset_simulator</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the state of the simulation.  <a href="#afa853b486fa00f6ddfe691388123f7b9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8cc.html#ac6bf1a12c5c98ddec5b65e07fe74cabe">step</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8cc.html#ab0227379a7a456485b0b11462d8efa40">run</a> (double length)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the emulation for a given amount of time and return the time the simulation ran for.  <a href="#ab0227379a7a456485b0b11462d8efa40"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8cc.html#a082e36ea937c50cac47b0991d19fd80c">initalize_simulator</a> ()</td></tr>
@@ -146,9 +135,18 @@ Variables</h2></td></tr>
 
 <p>Initialize the simulation. </p>
 
-<p>Definition at line <a class="el" href="interface_8cc_source.html#l00036">36</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="interface_8cc_source.html#l00032">32</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
 
 <p>References <a class="el" href="interface_8cc_source.html#l00020">initalized</a>, and <a class="el" href="env_8cc_source.html#l00016">ardulator::setupArduino()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="interface_8cc_a082e36ea937c50cac47b0991d19fd80c_cgraph.png" border="0" usemap="#interface_8cc_a082e36ea937c50cac47b0991d19fd80c_cgraph" alt=""/></div>
+<map name="interface_8cc_a082e36ea937c50cac47b0991d19fd80c_cgraph" id="interface_8cc_a082e36ea937c50cac47b0991d19fd80c_cgraph">
+<area shape="rect" id="node3" href="namespaceardulator.html#ab8c07f90c609dcc61fff7de4f8d53002" title="Creates a global instance of the Arduino." alt="" coords="181,5,341,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -175,9 +173,18 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="interface_8cc_source.html#l00043">43</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="interface_8cc_source.html#l00039">39</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
 
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="interface_8cc_source.html#l00036">initalize_simulator()</a>, <a class="el" href="cdefs_8h_source.html#l00048">SignalImp::name</a>, <a class="el" href="pin__config_8h_source.html#l00040">PinConfig::signal_</a>, and <a class="el" href="ardulator_8h_source.html#l00071">Ardulator::unused_pin_config_</a>.</p>
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="interface_8cc_source.html#l00032">initalize_simulator()</a>, <a class="el" href="cdefs_8h_source.html#l00050">SignalImp::name</a>, <a class="el" href="pin__config_8h_source.html#l00040">PinConfig::signal_</a>, and <a class="el" href="ardulator_8h_source.html#l00078">Ardulator::unused_pin_config_</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="interface_8cc_a44c647f4a9dab121e8c49ab5e5ecfd17_cgraph.png" border="0" usemap="#interface_8cc_a44c647f4a9dab121e8c49ab5e5ecfd17_cgraph" alt=""/></div>
+<map name="interface_8cc_a44c647f4a9dab121e8c49ab5e5ecfd17_cgraph" id="interface_8cc_a44c647f4a9dab121e8c49ab5e5ecfd17_cgraph">
+<area shape="rect" id="node3" href="arduino_8h.html#a082e36ea937c50cac47b0991d19fd80c" title="Initialize the simulation." alt="" coords="163,5,291,32"/><area shape="rect" id="node5" href="namespaceardulator.html#ab8c07f90c609dcc61fff7de4f8d53002" title="Creates a global instance of the Arduino." alt="" coords="339,5,499,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -226,28 +233,18 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="interface_8cc_source.html#l00030">30</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
-
-<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="interface_8cc_source.html#l00036">initalize_simulator()</a>, and <a class="el" href="ardulator_8cc_source.html#l00097">Ardulator::runScenario()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ac6bf1a12c5c98ddec5b65e07fe74cabe"></a><!-- doxytag: member="interface.cc::step" ref="ac6bf1a12c5c98ddec5b65e07fe74cabe" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void step </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Implement step. To step through an execution of the emulation. </dd></dl>
-
 <p>Definition at line <a class="el" href="interface_8cc_source.html#l00026">26</a> of file <a class="el" href="interface_8cc_source.html">interface.cc</a>.</p>
+
+<p>References <a class="el" href="env_8cc_source.html#l00023">ardu</a>, <a class="el" href="interface_8cc_source.html#l00032">initalize_simulator()</a>, and <a class="el" href="ardulator_8cc_source.html#l00104">Ardulator::runScenario()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="interface_8cc_ab0227379a7a456485b0b11462d8efa40_cgraph.png" border="0" usemap="#interface_8cc_ab0227379a7a456485b0b11462d8efa40_cgraph" alt=""/></div>
+<map name="interface_8cc_ab0227379a7a456485b0b11462d8efa40_cgraph" id="interface_8cc_ab0227379a7a456485b0b11462d8efa40_cgraph">
+<area shape="rect" id="node3" href="arduino_8h.html#a082e36ea937c50cac47b0991d19fd80c" title="Initialize the simulation." alt="" coords="140,31,268,57"/><area shape="rect" id="node7" href="classardulator_1_1_ardulator.html#abcb7a3a15f0cce2a22553f505580a022" title="Run the scenario for a given length." alt="" coords="96,132,312,159"/><area shape="rect" id="node5" href="namespaceardulator.html#ab8c07f90c609dcc61fff7de4f8d53002" title="Creates a global instance of the Arduino." alt="" coords="401,5,561,32"/><area shape="rect" id="node9" href="classardulator_1_1_ardulator.html#acca397f0bfc841cb328e8c44192d4b89" title="Initialize the scenario." alt="" coords="360,56,603,83"/><area shape="rect" id="node19" href="classardulator_1_1_ardulator.html#a62d3f036470d80d707b7989608142b73" title="Updates pins, checks if we need to fire interrupt." alt="" coords="364,107,599,133"/><area shape="rect" id="node21" href="arduino_8h.html#a8098d1d35b08421d79df526f4d77d799" title="Important Must be implemented for the Arduino code to work." alt="" coords="458,157,505,184"/><area shape="rect" id="node23" href="classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="383,208,580,235"/><area shape="rect" id="node25" href="classardulator_1_1_ardulator.html#ae79954d61717aea74e2901c218913b86" title="Finalize the state of the pins after the scenario is finished." alt="" coords="363,259,599,285"/><area shape="rect" id="node11" href="arduino_8h.html#a5e94e0fd1e5a500bbf68cff3d3545e08" title="Important Must be implemented in the target Arduino Code." alt="" coords="710,5,829,32"/><area shape="rect" id="node13" href="arduino_8h.html#a8a9fc9ef5be15482174764c12710d52f" title="Important Must be implemented for the Arduino code to work." alt="" coords="742,56,797,83"/><area shape="rect" id="node15" href="classardulator_1_1_ardulator.html#a669867a4d7d8f82067c4290b793645a9" title="Constructs a mapping of pins to signal names, useful reference." alt="" coords="651,107,887,133"/><area shape="rect" id="node17" href="classardulator_1_1containers_1_1_bit_value.html#a77347babe4b425694f81425f841896f2" title="Retrieve a reference to the memory register so you can access it from other places." alt="" coords="937,107,1215,133"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -302,7 +299,7 @@ Variables</h2></td></tr>
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:12 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:54:56 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

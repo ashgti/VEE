@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -115,51 +114,52 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00015"></a>00015 }
 <a name="l00016"></a>00016 
 <a name="l00017"></a><a class="code" href="structardulator_1_1_pin_config.html#ab84cbfb62ceae1b01d27cb34b6f593cd">00017</a> <span class="keywordtype">void</span> <a class="code" href="structardulator_1_1_pin_config.html#ab84cbfb62ceae1b01d27cb34b6f593cd" title="Set the pin state, if the time has passed the current pins expiration then update the current signal...">PinConfig::setState</a>(<span class="keyword">const</span> Clock &amp;t) {
-<a name="l00018"></a>00018   <span class="keywordflow">if</span> (t.now() &gt; <a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">signal_</a>.current_-&gt;tick) {
-<a name="l00019"></a>00019     <span class="keywordflow">if</span> (<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">signal_</a>.current_-&gt;type == <a class="code" href="cdefs_8h.html#ad9971b6ef33e02ba2c75d19c1d2518a1a8f3b03aa41ad67899c562bb725de0526">VT_DIGITAL</a>) {
-<a name="l00020"></a>00020       <span class="keywordflow">if</span> (<a class="code" href="structardulator_1_1_pin_config.html#a3da4aa05f5167a148b73e1b7e8c4502c">bit_container_</a>) {
-<a name="l00021"></a>00021         <span class="keywordflow">if</span> (<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">signal_</a>.current_-&gt;next-&gt;value.digital == <a class="code" href="arduino_8h.html#a5bb885982ff66a2e0a0a45a8ee9c35e2">HIGH</a>) {
-<a name="l00022"></a>00022           *<a class="code" href="structardulator_1_1_pin_config.html#a3da4aa05f5167a148b73e1b7e8c4502c">bit_container_</a> |= <a class="code" href="structardulator_1_1_pin_config.html#a2b2dd321615f36a1ee93be14f35c47f9" title="The bit mask for the memory register this pin belongs to.">bit_mask_</a> &amp; 0xff;
+<a name="l00018"></a>00018   <span class="keywordflow">if</span> (t.now() &gt; <a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c" title="A signal associated with the pin.">signal_</a>.current_-&gt;tick) {
+<a name="l00019"></a>00019     <span class="keywordflow">if</span> (<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c" title="A signal associated with the pin.">signal_</a>.current_-&gt;type == <a class="code" href="cdefs_8h.html#ad9971b6ef33e02ba2c75d19c1d2518a1a8f3b03aa41ad67899c562bb725de0526">VT_DIGITAL</a>) {
+<a name="l00020"></a>00020       <span class="keywordflow">if</span> (<a class="code" href="structardulator_1_1_pin_config.html#a3da4aa05f5167a148b73e1b7e8c4502c" title="A pointer to the location of the memory address for PORTs.">bit_container_</a>) {
+<a name="l00021"></a>00021         <span class="keywordflow">if</span> (<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c" title="A signal associated with the pin.">signal_</a>.current_-&gt;next-&gt;value.digital == <a class="code" href="arduino_8h.html#a5bb885982ff66a2e0a0a45a8ee9c35e2">HIGH</a>) {
+<a name="l00022"></a>00022           *<a class="code" href="structardulator_1_1_pin_config.html#a3da4aa05f5167a148b73e1b7e8c4502c" title="A pointer to the location of the memory address for PORTs.">bit_container_</a> |= <a class="code" href="structardulator_1_1_pin_config.html#a2b2dd321615f36a1ee93be14f35c47f9" title="The bit mask for the memory register this pin belongs to.">bit_mask_</a> &amp; 0xff;
 <a name="l00023"></a>00023         } <span class="keywordflow">else</span> {
-<a name="l00024"></a>00024           *<a class="code" href="structardulator_1_1_pin_config.html#a3da4aa05f5167a148b73e1b7e8c4502c">bit_container_</a> |= <a class="code" href="structardulator_1_1_pin_config.html#a2b2dd321615f36a1ee93be14f35c47f9" title="The bit mask for the memory register this pin belongs to.">bit_mask_</a> &amp; 0x00;
+<a name="l00024"></a>00024           *<a class="code" href="structardulator_1_1_pin_config.html#a3da4aa05f5167a148b73e1b7e8c4502c" title="A pointer to the location of the memory address for PORTs.">bit_container_</a> |= <a class="code" href="structardulator_1_1_pin_config.html#a2b2dd321615f36a1ee93be14f35c47f9" title="The bit mask for the memory register this pin belongs to.">bit_mask_</a> &amp; 0x00;
 <a name="l00025"></a>00025         }
 <a name="l00026"></a>00026       }
 <a name="l00027"></a>00027     }
 <a name="l00028"></a>00028 
 <a name="l00029"></a>00029     <span class="keywordflow">if</span> (<a class="code" href="structardulator_1_1_pin_config.html#aee268e11eacf1fff9804ecd1ccb4a412" title="Is this pin an interrupt?">interrupt_</a>)
-<a name="l00030"></a>00030       <a class="code" href="structardulator_1_1_pin_config.html#a7d5cc7bda646a3590927e5e80ed84fa7" title="Check if dispatch an interrupt is required.">dispatchingInterrupt</a>(*<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">signal_</a>.current_, *<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">signal_</a>.current_-&gt;next);
+<a name="l00030"></a>00030       <a class="code" href="structardulator_1_1_pin_config.html#a7d5cc7bda646a3590927e5e80ed84fa7" title="Check if dispatch an interrupt is required.">dispatchingInterrupt</a>(*<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c" title="A signal associated with the pin.">signal_</a>.current_, *<a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c" title="A signal associated with the pin.">signal_</a>.current_-&gt;next);
 <a name="l00031"></a>00031 
-<a name="l00032"></a>00032     <a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">signal_</a>.current_ = <a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c">signal_</a>.current_-&gt;next;
+<a name="l00032"></a>00032     <a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c" title="A signal associated with the pin.">signal_</a>.current_ = <a class="code" href="structardulator_1_1_pin_config.html#a39b6aab908c3933e58afbf127cd9cc2c" title="A signal associated with the pin.">signal_</a>.current_-&gt;next;
 <a name="l00033"></a>00033   }
 <a name="l00034"></a>00034 }
 <a name="l00035"></a>00035 
-<a name="l00037"></a><a class="code" href="structardulator_1_1_pin_config.html#a7d5cc7bda646a3590927e5e80ed84fa7">00037</a> <span class="keywordtype">void</span> <a class="code" href="structardulator_1_1_pin_config.html#a7d5cc7bda646a3590927e5e80ed84fa7" title="Check if dispatch an interrupt is required.">PinConfig::dispatchingInterrupt</a>(<span class="keyword">const</span> <a class="code" href="struct_signal_imp.html" title="Represents a single signal value.">SignalImp</a> &amp;prev, <span class="keyword">const</span> <a class="code" href="struct_signal_imp.html" title="Represents a single signal value.">SignalImp</a> &amp;next) {
-<a name="l00038"></a>00038   fprintf(<a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#a71a346ef4cf727dc39a38ffa7524d3d8" title="Debug log file.">debug_</a>, <span class="stringliteral">&quot;Signal: %d switched.&quot;</span>, <a class="code" href="structardulator_1_1_pin_config.html#a4879997bf70d4e90e1ecdacbda1f3c61" title="Pin Id, eg pin 1, 2, 3...">pid_</a>);
-<a name="l00039"></a>00039   <a class="code" href="classardulator_1_1_ardulator.html#af5a9c3d0f882fdc099859e73fe1aaa0a">Ardulator::InterruptIterator</a> int_iter;
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041   <span class="keywordflow">if</span> (<a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#a7cf3b94fa06a6aaa7a27189081b70ffe" title="Controlls the ability to dispatch interrupts.">interrupts_enabled_</a> == <span class="keyword">true</span> &amp;&amp;
-<a name="l00042"></a>00042      (int_iter = <a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#a66387353bbfffbcc9bb9d02926192aae">interrupts_</a>.find(<a class="code" href="structardulator_1_1_pin_config.html#a4879997bf70d4e90e1ecdacbda1f3c61" title="Pin Id, eg pin 1, 2, 3...">pid_</a>)) != <a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#a66387353bbfffbcc9bb9d02926192aae">interrupts_</a>.end()) {
-<a name="l00043"></a>00043     <span class="keywordflow">if</span> (next.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a> == <a class="code" href="arduino_8h.html#ab811d8c6ff3a505312d3276590444289">LOW</a>) {
-<a name="l00044"></a>00044       <span class="comment">// LOW EVENT</span>
-<a name="l00045"></a>00045       <span class="keywordflow">if</span> (int_iter-&gt;second.first == <a class="code" href="arduino_8h.html#ab811d8c6ff3a505312d3276590444289">LOW</a>) {
-<a name="l00046"></a>00046         int_iter-&gt;second.second();
-<a name="l00047"></a>00047       }
-<a name="l00048"></a>00048     }
-<a name="l00049"></a>00049     <span class="keywordflow">if</span> (prev.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a> == <a class="code" href="arduino_8h.html#ab811d8c6ff3a505312d3276590444289">LOW</a> &amp;&amp; next.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a> == <a class="code" href="arduino_8h.html#a5bb885982ff66a2e0a0a45a8ee9c35e2">HIGH</a>) {
-<a name="l00050"></a>00050       <span class="comment">// FIRE RISING EVENT</span>
-<a name="l00051"></a>00051       <span class="keywordflow">if</span> (int_iter-&gt;second.first == <a class="code" href="arduino_8h.html#aeea2b49478f3b13faedba764985c6e96">RISING</a>) {
-<a name="l00052"></a>00052         int_iter-&gt;second.second();
-<a name="l00053"></a>00053       }
-<a name="l00054"></a>00054       <a class="code" href="structardulator_1_1_pin_config.html#a1f7da62e2bae8dfc06bed221aa65fd4f">pin_history_</a>.<a class="code" href="struct_history.html#ae2781e076beefcb936126f17b14c11bc" title="The total number of events.">total_evts_</a> += 1;
-<a name="l00055"></a>00055       <a class="code" href="structardulator_1_1_pin_config.html#a52b8e9e36f177ef630c8164da604ec80" title="Whether or not any signals have been caught.">caught_flag_</a> = <span class="keyword">false</span>;
-<a name="l00056"></a>00056     }
-<a name="l00057"></a>00057     <span class="keywordflow">if</span> (prev.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a> == <a class="code" href="arduino_8h.html#a5bb885982ff66a2e0a0a45a8ee9c35e2">HIGH</a> &amp;&amp; next.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a> == <a class="code" href="arduino_8h.html#ab811d8c6ff3a505312d3276590444289">LOW</a>) {
-<a name="l00058"></a>00058       <span class="comment">// FIRE FALLING EVENT</span>
-<a name="l00059"></a>00059       <span class="keywordflow">if</span> (int_iter-&gt;second.first == <a class="code" href="arduino_8h.html#ac00eb6fc2047dc399280f31b0c5f4472">FALLING</a>) {
-<a name="l00060"></a>00060         int_iter-&gt;second.second();
-<a name="l00061"></a>00061       }
-<a name="l00062"></a>00062       <span class="keywordflow">if</span> (<a class="code" href="structardulator_1_1_pin_config.html#a52b8e9e36f177ef630c8164da604ec80" title="Whether or not any signals have been caught.">caught_flag_</a> == <span class="keyword">false</span>) {
-<a name="l00063"></a>00063           <a class="code" href="structardulator_1_1_pin_config.html#a1f7da62e2bae8dfc06bed221aa65fd4f">pin_history_</a>.<a class="code" href="struct_history.html#a1f7be1e00699251baa369ead59aa355b" title="The total number missed events.">missed_evts_</a> += 1;
+<a name="l00036"></a><a class="code" href="structardulator_1_1_pin_config.html#a7d5cc7bda646a3590927e5e80ed84fa7">00036</a> <span class="keywordtype">void</span> <a class="code" href="structardulator_1_1_pin_config.html#a7d5cc7bda646a3590927e5e80ed84fa7" title="Check if dispatch an interrupt is required.">PinConfig::dispatchingInterrupt</a>(<span class="keyword">const</span> <a class="code" href="struct_signal_imp.html" title="Represents a single signal value.">SignalImp</a> &amp;prev, <span class="keyword">const</span> <a class="code" href="struct_signal_imp.html" title="Represents a single signal value.">SignalImp</a> &amp;next) {
+<a name="l00037"></a>00037   fprintf(<a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#a71a346ef4cf727dc39a38ffa7524d3d8" title="Debug log file.">debug_</a>, <span class="stringliteral">&quot;Signal: %d switched.&quot;</span>, <a class="code" href="structardulator_1_1_pin_config.html#a4879997bf70d4e90e1ecdacbda1f3c61" title="Pin Id, eg pin 1, 2, 3...">pid_</a>);
+<a name="l00038"></a>00038   <a class="code" href="classardulator_1_1_ardulator.html#af5a9c3d0f882fdc099859e73fe1aaa0a">Ardulator::InterruptIterator</a> int_iter;
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040   <span class="keywordflow">if</span> (<a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#a7cf3b94fa06a6aaa7a27189081b70ffe" title="Controlls the ability to dispatch interrupts.">interrupts_enabled_</a> == <span class="keyword">true</span> &amp;&amp;
+<a name="l00041"></a>00041      (int_iter = <a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#a66387353bbfffbcc9bb9d02926192aae" title="A list of interrupts, matching the pin and type to a function callback.">interrupts_</a>.find(<a class="code" href="structardulator_1_1_pin_config.html#a4879997bf70d4e90e1ecdacbda1f3c61" title="Pin Id, eg pin 1, 2, 3...">pid_</a>)) != <a class="code" href="ardulator_8h.html#ad256be8d405696639ba9e94f5306ae24" title="Globalally Used Values.">ardu</a>-&gt;<a class="code" href="classardulator_1_1_ardulator.html#a66387353bbfffbcc9bb9d02926192aae" title="A list of interrupts, matching the pin and type to a function callback.">interrupts_</a>.end()) {
+<a name="l00042"></a>00042     <span class="keywordflow">if</span> (next.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a> == <a class="code" href="arduino_8h.html#ab811d8c6ff3a505312d3276590444289">LOW</a>) {
+<a name="l00043"></a>00043       <span class="comment">// LOW EVENT</span>
+<a name="l00044"></a>00044       <span class="keywordflow">if</span> (int_iter-&gt;second.first == <a class="code" href="arduino_8h.html#ab811d8c6ff3a505312d3276590444289">LOW</a>) {
+<a name="l00045"></a>00045         int_iter-&gt;second.second();
+<a name="l00046"></a>00046       }
+<a name="l00047"></a>00047     }
+<a name="l00048"></a>00048     <span class="keywordflow">if</span> (prev.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a> == <a class="code" href="arduino_8h.html#ab811d8c6ff3a505312d3276590444289">LOW</a> &amp;&amp; next.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a> == <a class="code" href="arduino_8h.html#a5bb885982ff66a2e0a0a45a8ee9c35e2">HIGH</a>) {
+<a name="l00049"></a>00049       <span class="comment">// FIRE RISING EVENT</span>
+<a name="l00050"></a>00050       <span class="keywordflow">if</span> (int_iter-&gt;second.first == <a class="code" href="arduino_8h.html#aeea2b49478f3b13faedba764985c6e96">RISING</a>) {
+<a name="l00051"></a>00051         int_iter-&gt;second.second();
+<a name="l00052"></a>00052       }
+<a name="l00053"></a>00053       <span class="comment">// pin_history_.total_evts_ += 1;</span>
+<a name="l00054"></a>00054       <a class="code" href="structardulator_1_1_pin_config.html#a52b8e9e36f177ef630c8164da604ec80" title="Whether or not any signals have been caught.">caught_flag_</a> = <span class="keyword">false</span>;
+<a name="l00055"></a>00055     }
+<a name="l00056"></a>00056     <span class="keywordflow">if</span> (prev.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a> == <a class="code" href="arduino_8h.html#a5bb885982ff66a2e0a0a45a8ee9c35e2">HIGH</a> &amp;&amp; next.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a> == <a class="code" href="arduino_8h.html#ab811d8c6ff3a505312d3276590444289">LOW</a>) {
+<a name="l00057"></a>00057       <span class="comment">// FIRE FALLING EVENT</span>
+<a name="l00058"></a>00058       <span class="keywordflow">if</span> (int_iter-&gt;second.first == <a class="code" href="arduino_8h.html#ac00eb6fc2047dc399280f31b0c5f4472">FALLING</a>) {
+<a name="l00059"></a>00059         int_iter-&gt;second.second();
+<a name="l00060"></a>00060       }
+<a name="l00061"></a>00061       <span class="keywordflow">if</span> (<a class="code" href="structardulator_1_1_pin_config.html#a52b8e9e36f177ef630c8164da604ec80" title="Whether or not any signals have been caught.">caught_flag_</a> == <span class="keyword">false</span>) {
+<a name="l00062"></a>00062         <span class="comment">// \todo get this history recording done right.</span>
+<a name="l00063"></a>00063         <span class="comment">// signals_-&gt;current-&gt;history pin_history_.missed_evts_ += 1;</span>
 <a name="l00064"></a>00064       }
 <a name="l00065"></a>00065     }
 <a name="l00066"></a>00066     <span class="keywordflow">if</span> (prev.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a> != next.<a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>.<a class="code" href="union_value_imp.html#adf9181b3d5eb75c5832b779f8664dd3b">digital</a>) {
@@ -193,7 +193,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:11 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:54:56 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

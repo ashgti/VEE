@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -105,8 +104,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <!-- doxytag: class="SignalImp" -->
 <p>Represents a single signal value.  
  <a href="struct_signal_imp.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="cdefs_8h_source.html">cdefs.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for SignalImp:</div>
 <div class="dyncontent">
@@ -129,11 +126,12 @@ Data Fields</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the signal.  <a href="#a8f8f80d37794cde9472343e4487ba3eb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct_signal_imp.html">SignalImp</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_signal_imp.html#add78f7fd2f4e5a0ff3efaafcb866d486">next</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the next signal.  <a href="#add78f7fd2f4e5a0ff3efaafcb866d486"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct HistoryImp *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_signal_imp.html#a34b0400663326305ae532e77100abdc2">hist</a></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Represents a single signal value. </p>
 
-<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00043">43</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
+<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00045">45</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
 </div><hr/><h2>Field Documentation</h2>
 <a class="anchor" id="ab9f68ef753113e9b47b3363a00156209"></a><!-- doxytag: member="SignalImp::duration" ref="ab9f68ef753113e9b47b3363a00156209" args="" -->
 <div class="memitem">
@@ -148,7 +146,22 @@ Data Fields</h2></td></tr>
 
 <p>Duration the signal goes high. </p>
 
-<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00045">45</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
+<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00047">47</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a34b0400663326305ae532e77100abdc2"></a><!-- doxytag: member="SignalImp::hist" ref="a34b0400663326305ae532e77100abdc2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct HistoryImp* <a class="el" href="struct_signal_imp.html#a34b0400663326305ae532e77100abdc2">hist</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00052">52</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
 
 </div>
 </div>
@@ -165,7 +178,7 @@ Data Fields</h2></td></tr>
 
 <p>The name of the signal. </p>
 
-<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00048">48</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
+<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00050">50</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
 
 </div>
 </div>
@@ -182,7 +195,7 @@ Data Fields</h2></td></tr>
 
 <p>Pointer to the next signal. </p>
 
-<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00049">49</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
+<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00051">51</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
 
 </div>
 </div>
@@ -199,7 +212,7 @@ Data Fields</h2></td></tr>
 
 <p>Tick for changinge values. </p>
 
-<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00044">44</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
+<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00046">46</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
 
 </div>
 </div>
@@ -216,7 +229,7 @@ Data Fields</h2></td></tr>
 
 <p>The type of value. </p>
 
-<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00047">47</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
+<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00049">49</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
 
 </div>
 </div>
@@ -233,7 +246,7 @@ Data Fields</h2></td></tr>
 
 <p>Value of the current tick. </p>
 
-<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00046">46</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
+<p>Definition at line <a class="el" href="cdefs_8h_source.html#l00048">48</a> of file <a class="el" href="cdefs_8h_source.html">cdefs.h</a>.</p>
 
 </div>
 </div>
@@ -260,7 +273,7 @@ Data Fields</h2></td></tr>
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:18 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:55:01 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

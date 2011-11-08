@@ -1,10 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" id="node5" href="$ardulator_8h.html" title="ardulator.h" alt="" coords="677,80,763,107"/>
-<area shape="rect" id="node16" href="$bit__value_8h.html" title="ardulator/containers/bit_value.h" alt="" coords="81,155,289,181"/>
-<area shape="rect" id="node22" href="$clock_8h.html" title="ardulator/containers/clock.h" alt="" coords="733,229,917,256"/>
-<area shape="rect" id="node26" href="$config_8h.html" title="avr/config.h" alt="" coords="685,304,776,331"/>
-<area shape="rect" id="node28" href="$history_8h.html" title="ardulator/containers/history.h" alt="" coords="413,229,605,256"/>
-<area shape="rect" id="node30" href="$signals_8h.html" title="ardulator/containers/signals.h" alt="" coords="193,229,388,256"/>
-<area shape="rect" id="node35" href="$pin__config_8h.html" title="ardulator/pin_config.h" alt="" coords="506,155,656,181"/>
-<area shape="rect" id="node32" href="$cdefs_8h.html" title="ardulator/cdefs.h" alt="" coords="357,304,477,331"/>
+<area shape="rect" id="node5" href="$ardulator_8h.html" title="ardulator.h" alt="" coords="415,80,500,107"/>
+<area shape="rect" id="node18" href="$bit__value_8h.html" title="ardulator/containers/bit_value.h" alt="" coords="508,155,716,181"/>
+<area shape="rect" id="node24" href="$clock_8h.html" title="ardulator/containers/clock.h" alt="" coords="935,229,1120,256"/>
+<area shape="rect" id="node28" href="$config_8h.html" title="avr/config.h" alt="" coords="787,304,877,331"/>
+<area shape="rect" id="node30" href="$history_8h.html" title="ardulator/containers/history.h" alt="" coords="718,229,911,256"/>
+<area shape="rect" id="node32" href="$signals_8h.html" title="ardulator/containers/signals.h" alt="" coords="1197,229,1392,256"/>
+<area shape="rect" id="node37" href="$pin__config_8h.html" title="ardulator/pin_config.h" alt="" coords="953,155,1103,181"/>
+<area shape="rect" id="node34" href="$cdefs_8h.html" title="ardulator/cdefs.h" alt="" coords="1215,304,1336,331"/>
 </map>

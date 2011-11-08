@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -128,27 +127,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00037"></a><a class="code" href="union_value_imp.html#ad16fbc2733b5460661f255fb3d3994ce">00037</a>   <a class="code" href="cdefs_8h.html#ae1ce3f4af14619861d2404efe9cc307b" title="ValueCallback is a callback for values that require feedback from the runtime to calculate the next s...">ValueCallback</a> <a class="code" href="union_value_imp.html#ad16fbc2733b5460661f255fb3d3994ce">cb</a>;
 <a name="l00038"></a>00038 };
 <a name="l00039"></a>00039 
-<a name="l00043"></a><a class="code" href="struct_signal_imp.html">00043</a> <span class="keyword">struct </span><a class="code" href="struct_signal_imp.html" title="Represents a single signal value.">SignalImp</a> {
-<a name="l00044"></a><a class="code" href="struct_signal_imp.html#a6318a3476230d303b5f444d9cbac5041">00044</a>   <span class="keywordtype">double</span> <a class="code" href="struct_signal_imp.html#a6318a3476230d303b5f444d9cbac5041" title="Tick for changinge values.">tick</a>; 
-<a name="l00045"></a><a class="code" href="struct_signal_imp.html#ab9f68ef753113e9b47b3363a00156209">00045</a>   <span class="keywordtype">double</span> <a class="code" href="struct_signal_imp.html#ab9f68ef753113e9b47b3363a00156209" title="Duration the signal goes high.">duration</a>; 
-<a name="l00046"></a><a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc">00046</a>   <span class="keyword">union </span><a class="code" href="union_value_imp.html" title="Represents all of the potential values of a signal.">ValueImp</a> <a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>; 
-<a name="l00047"></a><a class="code" href="struct_signal_imp.html#a916393eb4f9fcc06a8cdfe791dfb1ed8">00047</a>   <a class="code" href="cdefs_8h.html#ad9971b6ef33e02ba2c75d19c1d2518a1">ValueType</a> <a class="code" href="struct_signal_imp.html#a916393eb4f9fcc06a8cdfe791dfb1ed8" title="The type of value.">type</a>; 
-<a name="l00048"></a><a class="code" href="struct_signal_imp.html#a8f8f80d37794cde9472343e4487ba3eb">00048</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="struct_signal_imp.html#a8f8f80d37794cde9472343e4487ba3eb" title="The name of the signal.">name</a>; 
-<a name="l00049"></a><a class="code" href="struct_signal_imp.html#add78f7fd2f4e5a0ff3efaafcb866d486">00049</a>   <span class="keyword">struct </span><a class="code" href="struct_signal_imp.html" title="Represents a single signal value.">SignalImp</a>* <a class="code" href="struct_signal_imp.html#add78f7fd2f4e5a0ff3efaafcb866d486" title="Pointer to the next signal.">next</a>; 
-<a name="l00050"></a>00050 };
-<a name="l00051"></a>00051 
-<a name="l00055"></a><a class="code" href="struct_history.html">00055</a> <span class="keyword">struct </span><a class="code" href="struct_history.html" title="Records the history of a signal.">History</a> {
-<a name="l00056"></a><a class="code" href="struct_history.html#a1f7be1e00699251baa369ead59aa355b">00056</a>   <span class="keywordtype">int</span> <a class="code" href="struct_history.html#a1f7be1e00699251baa369ead59aa355b" title="The total number missed events.">missed_evts_</a>;   
-<a name="l00057"></a><a class="code" href="struct_history.html#ae2781e076beefcb936126f17b14c11bc">00057</a>   <span class="keywordtype">int</span> <a class="code" href="struct_history.html#ae2781e076beefcb936126f17b14c11bc" title="The total number of events.">total_evts_</a>;    
-<a name="l00058"></a><a class="code" href="struct_history.html#a17f5d36b983952b01b93c39634d9f26a">00058</a>   <span class="keywordtype">int</span> <a class="code" href="struct_history.html#a17f5d36b983952b01b93c39634d9f26a" title="The total number of events handled.">caught_evts_</a>;   
-<a name="l00059"></a><a class="code" href="struct_history.html#ab37e24d61a851697b6d4c439e7526a47">00059</a>   <span class="keywordtype">double</span> <a class="code" href="struct_history.html#ab37e24d61a851697b6d4c439e7526a47" title="The average response time to handle an event.">avg_response_time_</a>; 
-<a name="l00060"></a>00060 };
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062 <span class="preprocessor">#ifdef __cplusplus</span>
-<a name="l00063"></a>00063 <span class="preprocessor"></span>}
-<a name="l00064"></a>00064 <span class="preprocessor">#endif</span>
-<a name="l00065"></a>00065 <span class="preprocessor"></span>
-<a name="l00066"></a>00066 <span class="preprocessor">#endif  // INCLUDE_ARDULATOR_CDEFS_H_</span>
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041 
+<a name="l00045"></a><a class="code" href="struct_signal_imp.html">00045</a> <span class="keyword">struct </span><a class="code" href="struct_signal_imp.html" title="Represents a single signal value.">SignalImp</a> {
+<a name="l00046"></a><a class="code" href="struct_signal_imp.html#a6318a3476230d303b5f444d9cbac5041">00046</a>   <span class="keywordtype">double</span> <a class="code" href="struct_signal_imp.html#a6318a3476230d303b5f444d9cbac5041" title="Tick for changinge values.">tick</a>; 
+<a name="l00047"></a><a class="code" href="struct_signal_imp.html#ab9f68ef753113e9b47b3363a00156209">00047</a>   <span class="keywordtype">double</span> <a class="code" href="struct_signal_imp.html#ab9f68ef753113e9b47b3363a00156209" title="Duration the signal goes high.">duration</a>; 
+<a name="l00048"></a><a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc">00048</a>   <span class="keyword">union </span><a class="code" href="union_value_imp.html" title="Represents all of the potential values of a signal.">ValueImp</a> <a class="code" href="struct_signal_imp.html#a99ddaba65b7cbd2388395817ed9580dc" title="Value of the current tick.">value</a>; 
+<a name="l00049"></a><a class="code" href="struct_signal_imp.html#a916393eb4f9fcc06a8cdfe791dfb1ed8">00049</a>   <a class="code" href="cdefs_8h.html#ad9971b6ef33e02ba2c75d19c1d2518a1">ValueType</a> <a class="code" href="struct_signal_imp.html#a916393eb4f9fcc06a8cdfe791dfb1ed8" title="The type of value.">type</a>; 
+<a name="l00050"></a><a class="code" href="struct_signal_imp.html#a8f8f80d37794cde9472343e4487ba3eb">00050</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="struct_signal_imp.html#a8f8f80d37794cde9472343e4487ba3eb" title="The name of the signal.">name</a>; 
+<a name="l00051"></a><a class="code" href="struct_signal_imp.html#add78f7fd2f4e5a0ff3efaafcb866d486">00051</a>   <span class="keyword">struct </span><a class="code" href="struct_signal_imp.html" title="Represents a single signal value.">SignalImp</a>* <a class="code" href="struct_signal_imp.html#add78f7fd2f4e5a0ff3efaafcb866d486" title="Pointer to the next signal.">next</a>; 
+<a name="l00052"></a><a class="code" href="struct_signal_imp.html#a34b0400663326305ae532e77100abdc2">00052</a>   <span class="keyword">struct </span>HistoryImp* <a class="code" href="struct_signal_imp.html#a34b0400663326305ae532e77100abdc2">hist</a>;
+<a name="l00053"></a>00053 };
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 <span class="preprocessor">#ifdef __cplusplus</span>
+<a name="l00056"></a>00056 <span class="preprocessor"></span>}
+<a name="l00057"></a>00057 <span class="preprocessor">#endif</span>
+<a name="l00058"></a>00058 <span class="preprocessor"></span>
+<a name="l00059"></a>00059 <span class="preprocessor">#endif  // INCLUDE_ARDULATOR_CDEFS_H_</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
@@ -169,7 +164,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:11 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:54:56 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

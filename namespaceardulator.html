@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -125,7 +124,10 @@ Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceardulator.html#a3133ff5195602972de7b82f241b1ee5b">LOOP_CONST</a> = 240</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A setting for the amount a single loop of the user code costs in terms of clock ticks.  <a href="#a3133ff5195602972de7b82f241b1ee5b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classardulator_1_1_emulator_finished.html">EmulatorFinished</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceardulator.html#ae16b2bed8d30cb5e48d89edaf917e449">ef</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize static variables.  <a href="#ae16b2bed8d30cb5e48d89edaf917e449"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classardulator_1_1_processing_signal_exception.html">ProcessingSignalException</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceardulator.html#ab9acc697db7d68e388dc74d437c073ab">p</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static pthread_mutex_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceardulator.html#a02067e8c19c3802e921c7f4a6fb8045c">thread_lock</a> = PTHREAD_MUTEX_INITIALIZER</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Thead lock to make the emulator thread safe.  <a href="#a02067e8c19c3802e921c7f4a6fb8045c"></a><br/></td></tr>
 </table>
 <hr/><h2>Function Documentation</h2>
 <a class="anchor" id="ab8c07f90c609dcc61fff7de4f8d53002"></a><!-- doxytag: member="ardulator::setupArduino" ref="ab8c07f90c609dcc61fff7de4f8d53002" args="()" -->
@@ -162,7 +164,9 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00031">31</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Initialize static variables. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00034">34</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
 </div>
 </div>
@@ -179,7 +183,7 @@ Variables</h2></td></tr>
 
 <p>A setting for the amount a single loop of the user code costs in terms of clock ticks. </p>
 
-<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00026">26</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8h_source.html#l00029">29</a> of file <a class="el" href="ardulator_8h_source.html">ardulator.h</a>.</p>
 
 </div>
 </div>
@@ -194,7 +198,24 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00033">33</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00036">36</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a02067e8c19c3802e921c7f4a6fb8045c"></a><!-- doxytag: member="ardulator::thread_lock" ref="a02067e8c19c3802e921c7f4a6fb8045c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pthread_mutex_t <a class="el" href="namespaceardulator.html#a02067e8c19c3802e921c7f4a6fb8045c">thread_lock</a> = PTHREAD_MUTEX_INITIALIZER<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Thead lock to make the emulator thread safe. </p>
+
+<p>Definition at line <a class="el" href="ardulator_8cc_source.html#l00039">39</a> of file <a class="el" href="ardulator_8cc_source.html">ardulator.cc</a>.</p>
 
 </div>
 </div>
@@ -218,7 +239,7 @@ Variables</h2></td></tr>
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:19 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:55:01 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

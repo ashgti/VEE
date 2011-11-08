@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -101,14 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">include/avr/config.h File Reference</div>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="config_8h__dep__incl.png" border="0" usemap="#include_2avr_2config_8hdep" alt=""/></div>
-<map name="include_2avr_2config_8hdep" id="include_2avr_2config_8hdep">
-<area shape="rect" id="node3" href="clock_8h.html" title="include/ardulator/containers/clock.h" alt="" coords="639,80,869,107"/><area shape="rect" id="node7" href="ardulator_8h.html" title="include/ardulator.h" alt="" coords="799,229,931,256"/><area shape="rect" id="node9" href="arduino_8h.html" title="The main interface to the emulation system." alt="" coords="585,304,708,331"/><area shape="rect" id="node5" href="pin__config_8h.html" title="include/ardulator/pin_config.h" alt="" coords="631,155,827,181"/><area shape="rect" id="node13" href="pin__config_8cc.html" title="src/ardulator/pin_config.cc" alt="" coords="5,379,181,405"/><area shape="rect" id="node11" href="hardware__serial_8cc.html" title="src/ardulator/hardware_serial.cc" alt="" coords="762,379,973,405"/><area shape="rect" id="node15" href="env_8cc.html" title="src/c_interface/env.cc" alt="" coords="381,379,531,405"/><area shape="rect" id="node17" href="interface_8cc.html" title="src/c_interface/interface.cc" alt="" coords="998,379,1177,405"/><area shape="rect" id="node19" href="ardulator_8cc.html" title="src/ardulator.cc" alt="" coords="1202,379,1315,405"/><area shape="rect" id="node21" href="emulator__commands_8cc.html" title="src/emulator_commands.cc" alt="" coords="1339,379,1524,405"/><area shape="rect" id="node25" href="pin__commands_8cc.html" title="src/pin_commands.cc" alt="" coords="206,379,356,405"/><area shape="rect" id="node33" href="time__commands_8cc.html" title="src/time_commands.cc" alt="" coords="733,304,891,331"/><area shape="rect" id="node23" href="interrupt__commands_8cc.html" title="src/interrupt_commands.cc" alt="" coords="555,379,737,405"/></map>
-</div>
-</div>
+
 <p><a href="config_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="func-members"></a>
@@ -118,9 +110,14 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#af8aec3e1b32625746de6027cee696234">F_CPU</a> = 16000000</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a> = (<a class="el" href="config_8h.html#af8aec3e1b32625746de6027cee696234">F_CPU</a> / 2)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a18c2a0adc83f66f0508c4aa03fba145b">TICKS_PER_MICRO_SECOND</a> = 1000</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#aab90b926c4ae73234fd33a1dcbb566c7">TICKS_PER_MILLI_SECOND</a> = 1000000</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a18c2a0adc83f66f0508c4aa03fba145b">TICKS_PER_MICRO_SECOND</a> = (1 / 1000000) * <a class="el" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#aab90b926c4ae73234fd33a1dcbb566c7">TICKS_PER_MILLI_SECOND</a> = (1 / 1000) * <a class="el" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Ticks per cycle.  <a href="#aab90b926c4ae73234fd33a1dcbb566c7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a20a7185974e71ed92ab0ee31fc6244f7">TICKS_PER_SECOND</a> = <a class="el" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a414922a00823759568215f7f4cf23911">DIGITAL_READ_TIME</a> = 58</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a7b126ffe54294c1f08669cfd1526688c">A2D_PRESCALE</a> = 128</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a4f90f3fa6887385654bec9f998c5b355">A2D_CLOCK_COUNT</a> = 13</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#ab12d981550c73252a92c58dfa81414fc">A2D_RATE</a> = (<a class="el" href="config_8h.html#af8aec3e1b32625746de6027cee696234">F_CPU</a> / <a class="el" href="config_8h.html#a7b126ffe54294c1f08669cfd1526688c">A2D_PRESCALE</a>) / <a class="el" href="config_8h.html#a4f90f3fa6887385654bec9f998c5b355">A2D_CLOCK_COUNT</a></td></tr>
 </table>
 <hr/><h2>Function Documentation</h2>
 <a class="anchor" id="a082385d26c1f2339206e6135779e94a2"></a><!-- doxytag: member="config.h::MS2T" ref="a082385d26c1f2339206e6135779e94a2" args="(uint32_t x)" -->
@@ -138,13 +135,73 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="config_8h_source.html#l00012">12</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p>Definition at line <a class="el" href="config_8h_source.html#l00023">23</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
-<p>References <a class="el" href="config_8h_source.html#l00008">TICKS_PER_MICRO_SECOND</a>.</p>
+<p>References <a class="el" href="config_8h_source.html#l00010">TICKS_PER_MICRO_SECOND</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Variable Documentation</h2>
+<a class="anchor" id="a4f90f3fa6887385654bec9f998c5b355"></a><!-- doxytag: member="config.h::A2D_CLOCK_COUNT" ref="a4f90f3fa6887385654bec9f998c5b355" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint32_t <a class="el" href="config_8h.html#a4f90f3fa6887385654bec9f998c5b355">A2D_CLOCK_COUNT</a> = 13</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="config_8h_source.html#l00020">20</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7b126ffe54294c1f08669cfd1526688c"></a><!-- doxytag: member="config.h::A2D_PRESCALE" ref="a7b126ffe54294c1f08669cfd1526688c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint32_t <a class="el" href="config_8h.html#a7b126ffe54294c1f08669cfd1526688c">A2D_PRESCALE</a> = 128</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="config_8h_source.html#l00019">19</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab12d981550c73252a92c58dfa81414fc"></a><!-- doxytag: member="config.h::A2D_RATE" ref="ab12d981550c73252a92c58dfa81414fc" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint32_t <a class="el" href="config_8h.html#ab12d981550c73252a92c58dfa81414fc">A2D_RATE</a> = (<a class="el" href="config_8h.html#af8aec3e1b32625746de6027cee696234">F_CPU</a> / <a class="el" href="config_8h.html#a7b126ffe54294c1f08669cfd1526688c">A2D_PRESCALE</a>) / <a class="el" href="config_8h.html#a4f90f3fa6887385654bec9f998c5b355">A2D_CLOCK_COUNT</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="config_8h_source.html#l00021">21</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a414922a00823759568215f7f4cf23911"></a><!-- doxytag: member="config.h::DIGITAL_READ_TIME" ref="a414922a00823759568215f7f4cf23911" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint32_t <a class="el" href="config_8h.html#a414922a00823759568215f7f4cf23911">DIGITAL_READ_TIME</a> = 58</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="config_8h_source.html#l00017">17</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="af8aec3e1b32625746de6027cee696234"></a><!-- doxytag: member="config.h::F_CPU" ref="af8aec3e1b32625746de6027cee696234" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -171,7 +228,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="config_8h_source.html#l00007">7</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p>Definition at line <a class="el" href="config_8h_source.html#l00008">8</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -180,13 +237,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint32_t <a class="el" href="config_8h.html#a18c2a0adc83f66f0508c4aa03fba145b">TICKS_PER_MICRO_SECOND</a> = 1000</td>
+          <td class="memname">const uint32_t <a class="el" href="config_8h.html#a18c2a0adc83f66f0508c4aa03fba145b">TICKS_PER_MICRO_SECOND</a> = (1 / 1000000) * <a class="el" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="config_8h_source.html#l00008">8</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p>Definition at line <a class="el" href="config_8h_source.html#l00010">10</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -195,13 +252,15 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint32_t <a class="el" href="config_8h.html#aab90b926c4ae73234fd33a1dcbb566c7">TICKS_PER_MILLI_SECOND</a> = 1000000</td>
+          <td class="memname">const uint32_t <a class="el" href="config_8h.html#aab90b926c4ae73234fd33a1dcbb566c7">TICKS_PER_MILLI_SECOND</a> = (1 / 1000) * <a class="el" href="config_8h.html#ad3e65faad16de888bfd7e67b049aba53">TICKS_PER_FREQ</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="config_8h_source.html#l00009">9</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p>Ticks per cycle. </p>
+
+<p>Definition at line <a class="el" href="config_8h_source.html#l00013">13</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -216,7 +275,7 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="config_8h_source.html#l00010">10</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
+<p>Definition at line <a class="el" href="config_8h_source.html#l00015">15</a> of file <a class="el" href="config_8h_source.html">config.h</a>.</p>
 
 </div>
 </div>
@@ -240,7 +299,7 @@ Variables</h2></td></tr>
 </div>
 
 
-    <li class="footer">Generated on Tue Nov 1 2011 01:38:12 for Virtual Embedded Enviorment by
+    <li class="footer">Generated on Tue Nov 8 2011 01:54:56 for Virtual Embedded Enviorment by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.5.1 </li>
    </ul>

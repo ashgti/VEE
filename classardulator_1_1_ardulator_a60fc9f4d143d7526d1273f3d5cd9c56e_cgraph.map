@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="182,5,258,32"/>
+<area shape="rect" id="node5" href="$classardulator_1_1_ardulator.html#a62d3f036470d80d707b7989608142b73" title="Updates pins, checks if we need to fire interrupt." alt="" coords="163,56,277,83"/>
+</map>

@@ -1,11 +1,11 @@
 <map id="G" name="G">
-<area shape="rect" id="node7" href="$ardulator_8h.html" title="ardulator.h" alt="" coords="515,155,600,181"/>
-<area shape="rect" id="node44" href="$arduino_8h.html" title="The main interface to the emulation system." alt="" coords="813,80,891,107"/>
-<area shape="rect" id="node18" href="$bit__value_8h.html" title="ardulator/containers/bit_value.h" alt="" coords="833,229,1041,256"/>
-<area shape="rect" id="node24" href="$clock_8h.html" title="ardulator/containers/clock.h" alt="" coords="745,304,929,331"/>
-<area shape="rect" id="node28" href="$config_8h.html" title="avr/config.h" alt="" coords="1116,379,1207,405"/>
-<area shape="rect" id="node30" href="$history_8h.html" title="ardulator/containers/history.h" alt="" coords="475,304,668,331"/>
-<area shape="rect" id="node32" href="$signals_8h.html" title="ardulator/containers/signals.h" alt="" coords="255,304,451,331"/>
-<area shape="rect" id="node37" href="$pin__config_8h.html" title="ardulator/pin_config.h" alt="" coords="607,229,757,256"/>
-<area shape="rect" id="node34" href="$cdefs_8h.html" title="ardulator/cdefs.h" alt="" coords="421,379,541,405"/>
+<area shape="rect" id="node7" href="$ardulator_8h.html" title="ardulator.h" alt="" coords="653,155,739,181"/>
+<area shape="rect" id="node46" href="$arduino_8h.html" title="The main interface to the emulation system." alt="" coords="565,80,643,107"/>
+<area shape="rect" id="node20" href="$bit__value_8h.html" title="ardulator/containers/bit_value.h" alt="" coords="772,229,980,256"/>
+<area shape="rect" id="node26" href="$clock_8h.html" title="ardulator/containers/clock.h" alt="" coords="647,304,832,331"/>
+<area shape="rect" id="node30" href="$config_8h.html" title="avr/config.h" alt="" coords="264,379,355,405"/>
+<area shape="rect" id="node32" href="$history_8h.html" title="ardulator/containers/history.h" alt="" coords="430,304,623,331"/>
+<area shape="rect" id="node34" href="$signals_8h.html" title="ardulator/containers/signals.h" alt="" coords="94,304,289,331"/>
+<area shape="rect" id="node39" href="$pin__config_8h.html" title="ardulator/pin_config.h" alt="" coords="391,229,541,256"/>
+<area shape="rect" id="node36" href="$cdefs_8h.html" title="ardulator/cdefs.h" alt="" coords="118,379,239,405"/>
 </map>

@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classardulator_1_1_ardulator.html#a82c8e85a2712e540cc7f17baa27c8702" title="Get the value of a given pin and increment the clock based off the kind of access." alt="" coords="144,31,325,57"/>
+<area shape="rect" id="node5" href="$classardulator_1_1_ardulator.html#ad452dae63ced95090d98dbe78d4e198e" title="addTicks is used to increment the interanl clock and increment the total runtime of the emulation..." alt="" coords="373,5,571,32"/>
+<area shape="rect" id="node7" href="$config_8h.html#a082385d26c1f2339206e6135779e94a2" title="MS2T" alt="" coords="443,56,501,83"/>
+</map>
