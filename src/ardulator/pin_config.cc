@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cassert>
 #include <queue>
+#include <cstdio>
 
 #include "ardulator/pin_config.h"
 #include "arduino.h"
@@ -50,17 +51,12 @@ void PinConfig::dispatchingInterrupt(const SignalImp &prev, const SignalImp &nex
       if (int_iter->second.first == RISING) {
         int_iter->second.second();
       }
-      // pin_history_.total_evts_ += 1;
       caught_flag_ = false;
     }
     if (prev.value.digital == HIGH && next.value.digital == LOW) {
       // FIRE FALLING EVENT
       if (int_iter->second.first == FALLING) {
         int_iter->second.second();
-      }
-      if (caught_flag_ == false) {
-        // \todo get this history recording done right.
-        // signals_->current->history pin_history_.missed_evts_ += 1;
       }
     }
     if (prev.value.digital != next.value.digital) {

@@ -9,6 +9,14 @@
 extern "C" {
 #endif
 
+struct SignalImp;
+
+/**
+ * ValueCallback is a callback for values that require feedback from the
+ * runtime to calculate the next status update.
+**/
+typedef void (*ValueCallback)(double time, struct SignalImp* current_signal);
+
 enum ValueType {
   VT_DIGITAL = 1 << 0,
   VT_SERIAL = 1 << 1,
@@ -16,14 +24,6 @@ enum ValueType {
   VT_OTHER  = 1 << 3,
   VT_RAND_STRING = 1 << 4
 };
-
-struct SignalImp;
-
-/**
- * ValueCallback is a callback for values that require feedback from the
- * runtime to calculate the next status update.
- */
-typedef void (*ValueCallback)(double time, struct SignalImp* current_signal);
 
 /**
  * Represents all of the potential values of a signal.
@@ -37,7 +37,9 @@ union ValueImp {
   ValueCallback cb;
 };
 
-
+struct HistoryImp {
+  double caught_at;
+};
 
 /**
  * Represents a single signal value.
@@ -48,8 +50,8 @@ struct SignalImp {
   union ValueImp value; //!< Value of the current tick
   ValueType type; //!< The type of value
   const char *name; //!< The name of the signal
+  struct HistoryImp hist; //!< The history of the pin;
   struct SignalImp* next; //!< Pointer to the next signal
-  struct HistoryImp* hist;
 };
 
 #ifdef __cplusplus

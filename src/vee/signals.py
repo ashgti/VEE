@@ -1,18 +1,18 @@
 # Copyright John Harrison, 2011
 
+from __future__ import print_function
+
+import random
+
+from ardulator import DIGITAL_ID, SERIAL_ID, ANALOG_ID, CALLBACK_ID, OTHER_ID
+
 __all__ = [ 'Exp', 'Uni', 'Digital', 'Analog', 'Serial',
             'SineWave', 'SquareWave', 'generate_signal']
 
-DIGITAL_ID = 1 << 0
-SERIAL_ID = 1 << 1
-ANALOG_ID = 1 << 2
-CALLBACK_ID = 1 << 3
-OTHER_ID = 1 << 4
 
 ## Generates a signal from a configuration hash.
 def generate_signal(pin_data):
-    print pin_data
-
+    print(pin_data)
     if pin_data['dataType'] == 'digital':
         value = Digital()
     elif pin_data['dataType'] == 'serial':
@@ -38,22 +38,22 @@ class Signal(object):
 #  Represents an Exponential Distribution on a signal.
 class Exp(object):
     def __init__(self, l, duration):
-        self.l = l
-        self.duration = duration
+        self.l = float(l)
+        self.duration = float(duration)
 
     def next(self):
-        return self.l
+        return random.expovariate(1.0 / self.l)
 
 ## \class Uni
 #  Represents a Uniform Distribution on a signal.
 class Uni(object):
     def __init__(self, a, b, duration):
-        self.a = a
-        self.b = b
-        self.duration = duration
+        self.a = float(a)
+        self.b = float(b)
+        self.duration = float(duration)
 
     def next(self):
-        return 1
+        return random.uniform(self.a, self.b)
 
 ## \class Digital
 #  Represents a Digital Signal value.
@@ -85,13 +85,19 @@ class Analog(object):
         self.type_id = ANALOG_ID
 
     def next_value(self, pin_id):
-        assert 0 > pin_id > 5
+        raise NotImplementedError("Do not use Analog Directly, use a child of\
+                                   Analog")
 
-class SineWave(object):
+class SineWave(Analog):
     def __init__(self, **kwargs):
         super(SineWave, self).__init__(**kwargs)
 
-class SquareWave(object):
+    def next_value(self):
+        pass
+
+class SquareWave(Analog):
     def __int__(self, **kwargs):
         super(SquareWave, self).__init__(**kwargs)
 
+    def next_value(self):
+        pass

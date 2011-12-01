@@ -8,7 +8,6 @@
 namespace ardulator {
 namespace containers {
 
-
 /**
  * A simple container that references the list of SignalImps.
  * Its used to keep track of the head of the list and the current item being
@@ -20,6 +19,7 @@ struct SignalContainer {
   SignalImp* current_; //!< The current item of the list for dispatching
                        //!< purposes.
 };
+
 
 }  // end namesapce containers
 }  // end namespace ardulator

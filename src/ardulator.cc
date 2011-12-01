@@ -19,9 +19,6 @@ using ::std::vector;
 using ::std::fprintf;
 using ::std::make_pair;
 
-// extern "C" void loop() __attribute__((weak));
-// extern "C" void setup() __attribute__((weak));
-
 namespace ardulator {
 
 using ::ardulator::containers::Clock;
@@ -102,6 +99,7 @@ void Ardulator::prepareScenario() {
  * Run the scenario for a given amount of time.
  */
 double Ardulator::runScenario(double length) {
+  printf("Gonna run now\n");
   prepareScenario();
 
   scenario_length_.seconds_ = static_cast<int>(length);
@@ -121,6 +119,7 @@ double Ardulator::runScenario(double length) {
   }
   while (runtime_ < length) {
     try {
+      double f = now();
       loop();
       addTicks(LOOP_CONST);
       updatePinState();
@@ -235,13 +234,10 @@ double Ardulator::now() {
  * Digital Reads 58 cycles
  */
 int Ardulator::getPin(uint8_t pin_id) {
-  pthread_mutex_lock(&thread_lock);
   if (pin_config_.find(pin_id) == pin_config_.end()) {
     return LOW;
   } else {
-    if (pin_config_[pin_id]->signal_.current_->type == VT_SERIAL) {
-      return LOW;
-    } else if (pin_config_[pin_id]->signal_.current_->type == VT_DIGITAL) {
+    if (pin_config_[pin_id]->signal_.current_->type == VT_DIGITAL) {
       addTicks(58);
       return pin_config_[pin_id]->signal_.current_->value.digital;
     } else if (pin_config_[pin_id]->signal_.current_->type == VT_ANALOG) {
@@ -251,7 +247,7 @@ int Ardulator::getPin(uint8_t pin_id) {
       return LOW;
     }
   }
-  pthread_mutex_unlock(&thread_lock);
+
 }
 
 void Ardulator::setPin(uint8_t pin_id, uint8_t val) {
@@ -282,6 +278,8 @@ void Ardulator::dispatchSignal(const char *signal_id) {
   pthread_mutex_lock(&thread_lock);
   size_t id = signal_names_[signal_id];
   double processing_time = pin_config_[id]->signal_.current_->duration;
+  if (pin_config_[id]->signal_.current_->hist.caught_at == 0.0)
+    pin_config_[id]->signal_.current_->hist.caught_at = now();
   int wait_till = 0;
   pthread_mutex_unlock(&thread_lock);
 
@@ -293,9 +291,9 @@ void Ardulator::dispatchSignal(const char *signal_id) {
                 wait_till);
 
   while (wait_till) {
-     wait_till--;
-     addTicks(1);
-     updatePinState();
+    wait_till--;
+    addTicks(1);
+    updatePinState();
   }
 }
 

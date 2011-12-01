@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Docs.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Doxygen.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>Run GUI.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -23,6 +33,11 @@
 			<true/>
 		</dict>
 		<key>5226989014434F9000F97FA9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>522EAE76145F28EE006A9350</key>
 		<dict>
 			<key>primary</key>
 			<true/>

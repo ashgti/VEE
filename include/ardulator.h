@@ -13,7 +13,6 @@
 
 #include "ardulator/containers/bit_value.h"
 #include "ardulator/containers/clock.h"
-#include "ardulator/containers/history.h"
 #include "ardulator/containers/signals.h"
 #include "ardulator/pin_config.h"
 #include "avr/config.h"

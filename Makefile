@@ -24,16 +24,16 @@ docs/doxygen.cfg: docs/Doxyfile.cfg.in
 	  -e 's/@PACKAGE_VERSION@/HEAD/' \
 	  -e 's/@abs_top_builddir@/./g' > $@
 
+.PHONY: help
 help:
 	@echo "all: build run_py_sample"
 	@echo "app: Build an OS X .app for the GUI Components"
-	@ehco "build: Builds the C++ src"
+	@echo "build: Builds the C++ src"
 	@echo "docs: Builds the documentation for the C/C++ and Python Code."
 	@echo "clean: removes compile time code"
 	@echo "wipe: dist-clean"
 	@echo "zip: Create a zip of the current work, for distribution."
 	@echo ""
-.PHONY: help
 
 %.ui: %.py
 	$(PYSIDE_UIC) -o $@ $<
@@ -86,9 +86,12 @@ clean: clean_python
 	rm -f build/libvee.a
 	rm -f build/libvee.so
 	cd build && make clean
+	rm -rf build/*
+	rm -rf docs/doxygen/*
 .PHONY: clean
 
 wipe: clean
 	rm -rf dist
 	rm -rf build
 .PHONY: wipe
+

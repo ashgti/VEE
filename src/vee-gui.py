@@ -3,6 +3,8 @@
 ##
 #  MainWindow is the driver program for the GUI components of VEE.
 
+from __future__ import print_function
+
 import sys, os
 import os.path
 import pickle
@@ -12,7 +14,8 @@ from subprocess import Popen, PIPE
 try:
     from PySide import QtCore, QtGui
 except ImportError as e:
-    sys.path.insert(0, os.path.join(os.getcwd(), 'lib', 'python2.7','lib-dynload')) ## Added to fix dynlib bug
+    ## Added to fix dynlib bug
+    sys.path.insert(0, os.path.join(os.getcwd(), 'lib', 'python2.7','lib-dynload'))
     from PySide import QtCore, QtGui
 from vee.configuration_ui import Ui_MainWindow as CWindow
 
@@ -22,7 +25,7 @@ SRC_DIR = '/Users/john/Projects/VEE'
 class ApplicationRunner(object):
     ## Initialize the ApplicationRunner
     def __init__(self, dest):
-        print dest
+        print(dest)
         self.scenario_main = dest
         os.chdir(SRC_DIR)
 
@@ -121,12 +124,20 @@ class MainWindow(QtGui.QMainWindow):
             self.ui.studentFiles.addItem("/Users/john/Projects/VEE/student.cc")
 
         # Default Configurations
-        ui.expLambda.setEnabled(True)
-        ui.expDuration.setEnabled(True)
+        ui.exponential.setEnabled(False)
+        ui.expLambda.setEnabled(False)
+        ui.expDuration.setEnabled(False)
+        ui.uniform.setEnabled(False)
         ui.uniA.setEnabled(False)
         ui.uniB.setEnabled(False)
         ui.uniDuration.setEnabled(False)
+        ui.deterministic.setEnabled(False)
+        ui.deterministicInterval.setEnabled(False)
+        ui.deterministicDuration.setEnabled(False)
 
+        ui.digital.setEnabled(False)
+        ui.analog.setEnabled(False)
+        ui.serial.setEnabled(False)
         ui.sineWave.setEnabled(False)
         ui.squareWave.setEnabled(False)
         ui.maxAnalogValue.setEnabled(False)
@@ -151,15 +162,15 @@ class MainWindow(QtGui.QMainWindow):
 
     def runScenario(self):
         scenario_file = self.ui.studentFiles.currentItem()
-        print scenario_file.text()
+        print(scenario_file.text())
         a = ApplicationRunner(scenario_file.text())
         tmp_file = tempfile.NamedTemporaryFile()
         self._saveAs(tmp_file)
-        print tmp_file.name
+        print(tmp_file.name)
         r = a.make()
-        print r
+        print(r)
         r = a.run()
-        print r
+        print(r)
 
     def updatePinConfiguration(self):
         "Update the configuration settings."
@@ -253,16 +264,16 @@ class MainWindow(QtGui.QMainWindow):
 
     def saveScenario(self):
         "Saves the settings"
-        print "Saveing", self.settings
-        print "Pickled", pickle.dumps(self.settings)
+        print("Saveing", self.settings)
+        print("Pickled", pickle.dumps(self.settings))
         (filename, _) = QtGui.QFileDialog.getSaveFileName(self)
-        print 'filename:', filename
+        print('filename:', filename)
         if not filename:
             return
         if not filename.endswith('.cfg'):
             filename += '.cfg'
 
-        print filename
+        print(filename)
         with open(filename, 'w+') as f:
             self._saveAs(f)
 
@@ -288,6 +299,14 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.digital.setChecked(False)
         self.ui.maxAnalogValue.clear()
         self.ui.serialLineEdit.clear()
+
+        self.ui.exponential.setEnabled(True)
+        self.ui.uniform.setEnabled(True)
+        self.ui.deterministic.setEnabled(True)
+        
+        self.ui.digital.setEnabled(True)
+        self.ui.analog.setEnabled(True)
+        self.ui.serial.setEnabled(True)
 
         self.ui.sineWave.setEnabled(False)
         self.ui.squareWave.setEnabled(False)

@@ -1,5 +1,6 @@
 // Copyright John Harrison, 2011
 
+#include "ardulator.h"
 #include "ardulator/containers/bit_value.h"
 
 namespace ardulator {
@@ -27,6 +28,7 @@ volatile uint8_t* BitValue::getStateRef() {
 BitValue&
 BitValue::operator=(const int &b) {
     /* Potential spot to increase the clock */
+    ardu->addTicks(1);
     state_ = b;
     return *this;
 }
@@ -49,6 +51,7 @@ BitValue::operator&(const int &b) const {
 BitValue&
 BitValue::operator^=(const int &b) {
     /* Potential spot to increase the clock */
+    ardu->addTicks(1);
     if (!ro_)
         state_ ^= b;
     return *this;
@@ -57,6 +60,7 @@ BitValue::operator^=(const int &b) {
 BitValue&
 BitValue::operator|=(const int &b) {
     /* Potential spot to increase the clock */
+    ardu->addTicks(1);
     if (!ro_)
         state_ |= b;
     return *this;
@@ -65,6 +69,7 @@ BitValue::operator|=(const int &b) {
 BitValue&
 BitValue::operator&=(const int &b) {
     /* Potential spot to increase the clock */
+    ardu->addTicks(1);
     if (!ro_)
         state_ &= b;
     return *this;
@@ -73,6 +78,7 @@ BitValue::operator&=(const int &b) {
 BitValue&
 BitValue::operator^=(const BitValue &b) {
     /* Potential spot to increase the clock */
+    ardu->addTicks(1);
     if (!ro_)
         state_ ^= const_cast<BitValue&>(b).state();
     return *this;
@@ -81,6 +87,7 @@ BitValue::operator^=(const BitValue &b) {
 BitValue&
 BitValue::operator|=(const BitValue &b) {
     /* Potential spot to increase the clock */
+    ardu->addTicks(1);
     if (!ro_)
         state_ |= const_cast<BitValue&>(b).state();
     return *this;
@@ -89,6 +96,7 @@ BitValue::operator|=(const BitValue &b) {
 BitValue&
 BitValue::operator&=(const BitValue &b) {
     /* Potential spot to increase the clock */
+    ardu->addTicks(1);
     if (!ro_)
         state_ &= const_cast<BitValue&>(b).state();
     return *this;
@@ -97,6 +105,7 @@ BitValue::operator&=(const BitValue &b) {
 BitValue&
 BitValue::operator=(const BitValue &b) {
     /* Potential spot to increase the clock */
+    ardu->addTicks(1);
     if (!ro_)
         state_ = const_cast<BitValue&>(b).state();
     return *this;

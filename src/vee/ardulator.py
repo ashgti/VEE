@@ -5,71 +5,122 @@ Ardulator Interfaces
 This contains a way to connect to the Emulator Runtime via C interfaces called from ctypes.
 """
 
+from __future__ import print_function
+
 __author__ = "John Harrison <ash.gti@gmail.com>"
 __all__ = ['Arduino']
 
 import os
 import sys
-from ctypes import *
+import pylab as p
+import itertools as i
+import ctypes as c
 from ctypes.util import find_library
 
 global veelib
 # The library itself.
 veelib = None
 if 'VEE_ROOT' in os.environ:
-    veelib = cdll.LoadLibrary(find_library(os.environ['VEE_ROOT'] + '/build/libvee'))
+    veelib = c.cdll.LoadLibrary(find_library(os.environ['VEE_ROOT'] + '/build/libvee'))
 else:
-    veelib = cdll.LoadLibrary(find_library('build/libvee'))
+    veelib = c.cdll.LoadLibrary(find_library('build/libvee'))
 
 if not veelib:
     raise ImportError("Could not load the libvee library. Please check your installation.")
 
 # Data Structures
 
+DIGITAL_ID = 1 << 0
+SERIAL_ID = 1 << 1
+ANALOG_ID = 1 << 2
+CALLBACK_ID = 1 << 3
+OTHER_ID = 1 << 4
 
 ## \class PySignalImp
 #  Python Implementation of the Signal Data structure.
 #  \see SignalImp
-class PySignalImp(Structure):
-    pass
+class PySignalImp(c.Structure):
     # doing this because this is an incomplete type.
+    def __iter__(self):
+        current = self
+        while True:
+            yield current
+            if bool(current.next) == False:
+                break
+            current = current.next[0]
 
+    def __str__(self):
+        value = None
+        if self.type == DIGITAL_ID:
+            value = self.value.digital
+        elif self.type == SERIAL_ID:
+            value = self.value.str
+        elif self.type == ANALOG_ID:
+            value = self.value.analog
+        elif self.type == CALLBACK_ID:
+            value = '<callback>'
+        elif self.type == OTHER_ID:
+            value = '<other>'
+        else:
+            raise ArithmeticError("specified data type not recognized: ")
+        return "{{ 'tick': {0!s}, 'duration': {1!s}, 'value': {2!s}, 'type': {3!s}, 'hist': {4!s}}}".format(
+                    self.tick,
+                    self.duration,
+                    value,
+                    self.type,
+                    str(self.hist))
 
-SiganlCallback = CFUNCTYPE(None, c_double, POINTER(PySignalImp))
+SignalCallback = c.CFUNCTYPE(None, c.c_double, c.POINTER(PySignalImp))
 
 ## Python implementation of the ValueImp.
 #  \see ValueImp
-class PyValueImp(Union):
-    _fields_ = [("str", c_char_p),
-                ("digital", c_uint8),
-                ("analog", c_uint16),
-                ]
+class PyValueImp(c.Union):
+    _fields_ = [("str", c.c_char_p),
+                ("digital", c.c_uint8),
+                ("analog", c.c_uint16),
+                ('cb', SignalCallback)]
 
 ## Python Implmenetaiton of the History Data Structure.
-class PyHistoryImp(Structure):
-    _fields_ = [("missed_evts", c_int),
-                ("total_evts", c_int),
-                ("caught_evts", c_int),
-                ("avg_response_time", c_double)]
+class PyHistoryImp(c.Structure):
+    _fields_ = [('caught_at', c.c_double)]
 
-PySignalImp._fields_ = [("tick", c_double),
-                        ("duration", c_double),
+    def __str__(self):
+        return '{{ \'caught_at\': {0!s}}}'.format(self.caught_at)
+
+
+PySignalImp._fields_ = [("tick", c.c_double),
+                        ("duration", c.c_double),
                         ("value", PyValueImp),
-                        ("type", c_uint32),
-                        ("name", c_char_p),
-                        ("next", POINTER(PySignalImp))]
+                        ("type", c.c_uint32),
+                        ("name", c.c_char_p),
+                        ('hist', PyHistoryImp),
+                        ("next", c.POINTER(PySignalImp))]
 
 # Interface prototypes
 ## Run command, from C.
 run = veelib.run
-run.restype = c_double
-run.argstypes = [c_double]
+run.restype = c.c_double
+run.argstypes = [c.c_double]
 
 ## register_signal command, from C.
 register_signal = veelib.register_signal
-register_signal.restype = c_bool
-register_signal.argstypes = [POINTER(PySignalImp)]
+register_signal.restype = c.c_bool
+register_signal.argstypes = [c.POINTER(PySignalImp)]
 
+def format_data(name, data, offset=0):
+    currently = 0
+    changes = []
+    for x in data:
+        start = x.tick
+        if x.hist.caught_at > 0:
+            p.axvspan(x.hist.caught_at, x.hist.caught_at + x.duration,
+                      alpha=0.25, label='Processing ' + name,
+                      color='red')
+        if currently != x.value.digital:
+            changes.append((start, offset + currently))
+            changes.append((start, offset + x.value.digital))
+            currently = x.value.digital
+    return changes
 
 ## This represents an instance of the Ardulator Emulator. Currently because
 #  of the way the emulator calls the functions in the students code you can
@@ -97,14 +148,15 @@ class PyArdulator(object):
 
     ## Do NOT change self.signals after you call run, it will not regenerate
     #  the signals.
-    def run_secnario(self, length=None):
+    def run_scenario(self, length=None):
         global veelib
         self._generate_signal_data()
         if length == None:
             if self.length - self.current_time < 0:
                 return self.current_time
             else:
-                self.current_time = run(c_double(self.length - self.current_time))
+                self.current_time = run(c.c_double(self.length
+                                                 - self.current_time))
                 return self.current_time
         else:
             self.current_time = run(c_double(length))
@@ -115,30 +167,61 @@ class PyArdulator(object):
         if self._signals_generate:
             return
         else:
-            print 'generating...'
+            print('generating...')
         for s in self.signals:
             rate = self.signals[s].rate
             value = self.signals[s].value
 
-            print 'rate:', rate
-            print 'value:', value
+            print('rate:', rate)
+            print('value:', value)
 
-            dv = ValueImp()
-            dv.digital = c_uint8(1)
-            data = SignalImp(0.0, float(rate.duration), dv, value.type_id, s, None)
+            dv = PyValueImp()
+            dv.digital = c.c_uint8(1)
+            data = PySignalImp(0.0,
+                               float(rate.duration),
+                               dv,
+                               value.type_id,
+                               s,
+                               PyHistoryImp(0.0),
+                               None)
             orig_data = data
             runtime = 0
             while runtime < self.length:
                 next_in = float(rate.next())
                 runtime += next_in
 
-                dv = ValueImp()
-                dv.digital = c_uint8(value.next_value())
-                next_data = SignalImp(runtime, float(rate.duration), dv, value.type_id, s, None)
-                data.next = pointer(next_data)
+                dv = PyValueImp()
+                dv.digital = c.c_uint8(value.next_value())
+                next_data = PySignalImp(runtime,
+                                        float(rate.duration),
+                                        dv,
+                                        value.type_id,
+                                        s,
+                                        PyHistoryImp(0.0),
+                                        None)
+                data.next = c.pointer(next_data)
                 data = next_data
             self._data[s] = orig_data
         self._signals_generate = True
         for x in self._data:
-            register_signal(pointer(self._data[x]))
+            register_signal(c.pointer(self._data[x]))
+
+    ## Generates a report for each pin.
+    def generate_reports(self, display_graph=False):
+        colors = i.cycle(['blue', 'green', 'black'])
+        offset = 0
+        for s in self.signals:
+            l = list(self._data[s])
+            j = {i : v.hist.caught_at for i, v in enumerate(l)
+                                          if v.hist.caught_at > 0}
+            print('Pin:', s, len(j), 'of', len(l),)
+            print('data: [', ', '.join([str(z) for z in l]), ']', "\n")
+            if display_graph:
+                changes = format_data(s, l, offset)
+                xs, ys = zip(*changes)
+                p.plot(xs, ys, color=colors.next())
+            offset += 1.5
+            p.xlim(-1, max(xs) + 1)
+        p.ylim(-0.5, 3.0)
+        p.show()
 

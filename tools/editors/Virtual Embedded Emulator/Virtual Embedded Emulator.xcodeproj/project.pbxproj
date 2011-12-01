@@ -1358,12 +1358,26 @@
 			passBuildSettingsInEnvironment = 1;
 			productName = "Run GUI";
 		};
+		522EAE76145F28EE006A9350 /* Docs */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 522EAE77145F28EE006A9350 /* Build configuration list for PBXLegacyTarget "Docs" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			dependencies = (
+			);
+			name = Docs;
+			passBuildSettingsInEnvironment = 1;
+			productName = Docs;
+		};
 /* End PBXLegacyTarget section */
 
 /* Begin PBXProject section */
 		522695F614434CEC00F97FA9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "Auburn University";
 			};
 			buildConfigurationList = 522695F914434CEC00F97FA9 /* Build configuration list for PBXProject "Virtual Embedded Emulator" */;
@@ -1385,6 +1399,7 @@
 			targets = (
 				522695FB14434CEC00F97FA9 /* Virtual Embedded Emulator */,
 				5226989014434F9000F97FA9 /* Run GUI */,
+				522EAE76145F28EE006A9350 /* Docs */,
 			);
 		};
 /* End PBXProject section */
@@ -1477,6 +1492,29 @@
 			};
 			name = Release;
 		};
+		522EAE78145F28EE006A9350 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		522EAE79145F28EE006A9350 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1496,12 +1534,22 @@
 				5226960014434CED00F97FA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5226989114434F9000F97FA9 /* Build configuration list for PBXLegacyTarget "Run GUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5226989214434F9000F97FA9 /* Debug */,
 				5226989314434F9000F97FA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		522EAE77145F28EE006A9350 /* Build configuration list for PBXLegacyTarget "Docs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				522EAE78145F28EE006A9350 /* Debug */,
+				522EAE79145F28EE006A9350 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};

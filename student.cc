@@ -38,7 +38,6 @@ void blink() {
   // std::cout << "bv: " << _BV(1) << std::endl;
   int val = digitalRead(0);
   // int val = (PORTD & _BV(1)) ? 1 : 0;
-  std::cout << "val: " << val << std::endl;
   int_count++;
   PORTB |= _BV(5);
 }

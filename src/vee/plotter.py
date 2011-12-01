@@ -22,7 +22,7 @@ class Plot(QtGui.QWidget):
         layout.addWidget(self.imageLabel)
         self.need_update = False
         self.setLayout(layout)
-        self.plot()
+        # self.plot()
 
     def plot(self, *args):
         """Pasthrough"""
@@ -72,13 +72,14 @@ def generate_range(start, stop, step=1.0, square=True):
     return r
 
 if __name__ == '__main__':
-    a = generate_range(1, 10)
+    pass
+    # a = generate_range(1, 10)
+    # 
+    # (xs, ys) = zip(*a)
 
-    (xs, ys) = zip(*a)
+    # xlim(-0.5, 10.5)
+    # ylim(-0.5, 1.5)
 
-    xlim(-0.5, 10.5)
-    ylim(-0.5, 1.5)
+    # plot(xs, ys, label="Blink")
 
-    plot(xs, ys, label="Blink")
-
-    show()
+    # show()

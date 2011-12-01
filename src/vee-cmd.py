@@ -4,8 +4,11 @@
 #  This program has a few options requires a configuration file to be passed
 #  when you start the program.
 
+from __future__ import print_function
+
 from optparse import OptionParser
 from pickle import load
+import ctypes as c
 from vee.signals import *
 from vee.ardulator import PyArdulator
 
@@ -28,16 +31,19 @@ def main(options, args):
     if len(args) > 0:
         with open(args[0], 'r') as f:
             settings = load(f)
-        print settings
+        print(settings)
         signals = {pin_id: generate_signal(settings[pin_id]) for pin_id in settings}
-        print "signals:", signals
+        print("signals:", signals)
         a = PyArdulator(options.runtime, signals)
         # a.length = 50.0 # Another way of setting the secnario length
         # a.signals = signals # Updating the signals
-        print a.run_scenario()
-        print 'Total runtime:', a.length
+        print(a.run_scenario())
+
+        a.generate_reports(True) # options.graph)
+
+        print('Total runtime:', a.length)
     else:
-        print "Please pass the program a configuration file."
+        print("Please pass the program a configuration file.")
 
 if __name__ == '__main__':
     (options, args) = parser.parse_args()

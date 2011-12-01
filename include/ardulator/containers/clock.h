@@ -33,7 +33,7 @@ struct Clock {
    * in other places we reference time as a floating point number.
   **/
   double now() const {
-    return seconds_ + (ticks_ / TICKS_PER_SECOND);
+    return seconds_ + (static_cast<double>(ticks_) / TICKS_PER_SECOND);
   }
 
   /**
