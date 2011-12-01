@@ -5,6 +5,7 @@
 
 #include <stdint.h>
 
+#include <cstdio>
 #include <string>
 
 #include "avr/config.h"

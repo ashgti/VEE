@@ -32,7 +32,10 @@ def main(options, args):
         with open(args[0], 'r') as f:
             settings = load(f)
         print(settings)
-        signals = {pin_id: generate_signal(settings[pin_id]) for pin_id in settings}
+        signals = {}
+        for pin_id in settings:
+          signals[pin_id] = generate_signal(settings[pin_id])
+        # signals = {pin_id: generate_signal(settings[pin_id]) for pin_id in settings}
         print("signals:", signals)
         a = PyArdulator(options.runtime, signals)
         # a.length = 50.0 # Another way of setting the secnario length

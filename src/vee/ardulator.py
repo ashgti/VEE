@@ -23,7 +23,13 @@ veelib = None
 if 'VEE_ROOT' in os.environ:
     veelib = c.cdll.LoadLibrary(find_library(os.environ['VEE_ROOT'] + '/build/libvee'))
 else:
-    veelib = c.cdll.LoadLibrary(find_library('build/libvee'))
+    if find_library('build/libvee') == None:
+        if os.uname()[0] == 'Linux':
+            veelib = c.cdll.LoadLibrary('build/libvee.so')
+        else:
+            veelib = c.cdll.LoadLibrary('build/libvee.dylib')
+    else:
+        veelib = c.cdll.LoadLibrary(find_library('build/libvee'))
 
 if not veelib:
     raise ImportError("Could not load the libvee library. Please check your installation.")
@@ -208,16 +214,20 @@ class PyArdulator(object):
 
     ## Generates a report for each pin.
     def generate_reports(self, display_graph=False):
+        import itertools as i
         colors = i.cycle(['blue', 'green', 'black'])
         offset = 0
-        for s in self.signals:
-            l = list(self._data[s])
-            j = {i : v.hist.caught_at for i, v in enumerate(l)
-                                          if v.hist.caught_at > 0}
-            print('Pin:', s, len(j), 'of', len(l),)
-            print('data: [', ', '.join([str(z) for z in l]), ']', "\n")
+        for signal_name in self.signals:
+            pin_history = list(self._data[signal_name])
+            caught_signals = dict()
+            for i, v in enumerate(pin_history):
+                if v.hist.caught_at > 0:
+                    caught_signals[i] = v.hist.caught_at
+            print('Pin:', signal_name, len(caught_signals), 'of',
+                  len(pin_history),)
+            print('data: [', ', '.join([str(change) for change in pin_history]), ']', "\n")
             if display_graph:
-                changes = format_data(s, l, offset)
+                changes = format_data(signal_name, pin_history, offset)
                 xs, ys = zip(*changes)
                 p.plot(xs, ys, color=colors.next())
             offset += 1.5
