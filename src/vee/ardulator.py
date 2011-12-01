@@ -172,14 +172,9 @@ class PyArdulator(object):
     def _generate_signal_data(self):
         if self._signals_generate:
             return
-        else:
-            print('generating...')
         for s in self.signals:
             rate = self.signals[s].rate
             value = self.signals[s].value
-
-            print('rate:', rate)
-            print('value:', value)
 
             dv = PyValueImp()
             dv.digital = c.c_uint8(1)
@@ -217,6 +212,7 @@ class PyArdulator(object):
         import itertools as i
         colors = i.cycle(['blue', 'green', 'black'])
         offset = 0
+        max_size = 0
         for signal_name in self.signals:
             pin_history = list(self._data[signal_name])
             caught_signals = dict()
@@ -230,8 +226,10 @@ class PyArdulator(object):
                 changes = format_data(signal_name, pin_history, offset)
                 xs, ys = zip(*changes)
                 p.plot(xs, ys, color=colors.next())
+                max_size = max(max_size, *xs)
             offset += 1.5
-            p.xlim(-1, max(xs) + 1)
-        p.ylim(-0.5, 3.0)
-        p.show()
+        if display_graph:
+            p.xlim(-1, max_size + 1.0)
+            p.ylim(-0.5, 3.0)
+            p.show()
 

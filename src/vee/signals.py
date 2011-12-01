@@ -12,13 +12,12 @@ __all__ = [ 'Exp', 'Uni', 'Digital', 'Analog', 'Serial',
 
 ## Generates a signal from a configuration hash.
 def generate_signal(pin_data):
-    print(pin_data)
     if pin_data['dataType'] == 'digital':
         value = Digital()
     elif pin_data['dataType'] == 'serial':
-        value = None
+        value = Serial()
     elif pin_data['dataType'] == 'analog':
-        value = None
+        value = Analog()
 
     if pin_data['signalType'] == 'exp':
         rate = Exp(pin_data['expLambda'], pin_data['expDuration'])
@@ -93,11 +92,18 @@ class SineWave(Analog):
         super(SineWave, self).__init__(**kwargs)
 
     def next_value(self):
-        pass
+        raise NotImplementedError("TODO: I have not been able to properly\
+paramterize sine waves.")
 
 class SquareWave(Analog):
-    def __int__(self, **kwargs):
+    def __int__(self, max_value, **kwargs):
         super(SquareWave, self).__init__(**kwargs)
+        self._max_value = max_value
+        self._count = 0
 
     def next_value(self):
-        pass
+        self._count += 1
+        if self._count % 2 == 0:
+            return 0
+        else:
+            return self._max_value

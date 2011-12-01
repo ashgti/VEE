@@ -1,5 +1,3 @@
 TODO:
-* Signal Mapping (in's go to out's)
-* Response time Management
-* UI to control and build Signals 
-* Delayed Responses
+* Currently, None
+

@@ -15,17 +15,17 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="0" column="1">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
         <string>Scenaio View</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
+        <item row="0" column="1">
          <widget class="QGroupBox" name="groupBox">
           <property name="maximumSize">
            <size>
@@ -59,33 +59,14 @@
            <item>
             <widget class="QPushButton" name="pushButton">
              <property name="text">
-              <string>Remove</string>
+              <string>Remove From List</string>
              </property>
             </widget>
            </item>
           </layout>
          </widget>
         </item>
-        <item row="0" column="2" rowspan="3">
-         <widget class=" Plot" name="plot_area" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>350</width>
-            <height>300</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background: rgb(0, 0, 0);</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
+        <item row="0" column="2" rowspan="2">
          <widget class="QGroupBox" name="groupBox_6">
           <property name="title">
            <string>Build Log</string>
@@ -97,7 +78,7 @@
           </layout>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="1" column="1">
          <widget class="QGroupBox" name="groupBox">
           <property name="title">
            <string>Scenario Control</string>
@@ -574,14 +555,6 @@
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class> Plot</class>
-   <extends>QWidget</extends>
-   <header>plotter</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

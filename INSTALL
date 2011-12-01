@@ -1,0 +1,52 @@
+Prerequisites:
+
+  Command Line Simulations:
+    CMake 2.8
+    Python 2.6 or Python 2.7
+    C and C++ Compiler
+
+  Configuration GUI:
+    CMake 2.8
+    Python 2.6 or Python 2.7
+    Qt GUI Framework
+    PySide - The Python interfaces to the Qt GUI
+    C and C++ Compiler
+
+  Optional Requirements:
+    git - Source Code tracking
+    Matplotlib - for graphing purposes
+
+This has been tested and developed with Python 2.6, Python 2.7, gcc-4.2,
+g++-4.2, gcc-4.5, g++-4.5, Qt 4.7.x, PySide 1.0.x, CMake 2.6, CMake 2.8.
+
+This was tested on Ubuntu Linux 10.04, Ubuntu Linux 10.10, Ubuntu Linux 11.10,
+Mac OS X 10.7.
+
+It should work with any operating system that supports the above version of
+Python, CMake and Qt.
+
+
+OS X Install Instructions
+
+Using homebrew:
+  $ brew install cmake pyside git
+  
+  This will install all of the dependencies using brew's package management system.
+
+Without homebrew:
+  1. Install XCode
+  2. Install CMake, see http://cmake.org/cmake/resources/software.html or http://www.cmake.org/files/v2.8/cmake-2.8.6-Darwin64-universal.dmg
+  3. Install Qt and PySide, see http://developer.qt.nokia.com/wiki/PySide_Binaries_MacOSX
+    3.a. Install Qt 4.7.4, see http://qt.nokia.com/downloads/qt-for-open-source-cpp-development-on-mac-os-x or http://get.qt.nokia.com/qt/source/qt-mac-opensource-4.7.4.dmg
+    3.b. Install PySide, see http://developer.qt.nokia.com/wiki/PySide_Binaries_MacOSX
+         Depending on the system default version of python, you will need to install:
+           Python2.7 http://pyside.markus-ullmann.de/pyside-1.0.9-qt47-py27apple.pkg
+         Or
+           Python2.6 http://pyside.markus-ullmann.de/pyside-1.0.9-qt47-py26apple.pkg
+
+         To determine the default version of python, execute:
+           $ python --version
+           > Python 2.7.1
+         The default for OS X 10.6 Snow Leopard is python2.6, the default for OS X 10.7 Lion is python2.7.
+  4. Install Matplotlib, see http://matplotlib.sourceforge.net/users/installing.html
+    $ easy_install matplotlib

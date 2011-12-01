@@ -99,7 +99,6 @@ void Ardulator::prepareScenario() {
  * Run the scenario for a given amount of time.
  */
 double Ardulator::runScenario(double length) {
-  printf("Gonna run now\n");
   prepareScenario();
 
   scenario_length_.seconds_ = static_cast<int>(length);
@@ -119,7 +118,6 @@ double Ardulator::runScenario(double length) {
   }
   while (runtime_ < length) {
     try {
-      double f = now();
       loop();
       addTicks(LOOP_CONST);
       updatePinState();

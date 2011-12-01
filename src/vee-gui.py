@@ -5,11 +5,14 @@
 
 from __future__ import print_function
 
-import sys, os
+import os
+import sys
+import pty
 import os.path
 import pickle
 import tempfile
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
+import threading
 
 try:
     from PySide import QtCore, QtGui
@@ -19,47 +22,41 @@ except ImportError as e:
     from PySide import QtCore, QtGui
 from vee.configuration_ui import Ui_MainWindow as CWindow
 
-SRC_DIR = '/Users/john/Projects/VEE'
+SRC_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 
-## ApplicationRunner, an abstract way of running commands, such as make.
-class ApplicationRunner(object):
-    ## Initialize the ApplicationRunner
-    def __init__(self, dest):
-        print(dest)
-        self.scenario_main = dest
-        os.chdir(SRC_DIR)
-
-    ## Build the students work.
-    def make(self):
-        """
-        Operations:
-          1. Copy Files to a new location.
-          2. Extract Files if compressed.
-          3. Compile against students code.
-        """
-        os.chdir(SRC_DIR)
-        os.system('make')
-        # while make.poll() == False:
-        #     print make.communicate()[0]
-
-    ## Run the student's program with a given scenario
-    def run(self):
-        """
-        Run the scenario with the current configuration files.
-        """
-        os.chdir(SRC_DIR)
-        os.system('python ./src/vee-cmd.py /Users/john/Projects/VEE/test/test.cfg')
-        # while run.poll() == False:
-        #     print run.communicate()[0]
-
-    def results(self):
-        """
-        Return the results of the run.
-        """
-        pass
+print(SRC_DIR)
 
 class ConfigurationError(ValueError):
     pass
+
+global proc
+proc = None
+
+class RunnerThread(QtCore.QThread):
+    dataReady = QtCore.Signal(object)
+
+    def __init__(self, file_name, parent=None):
+        QtCore.QThread.__init__(self, parent)
+        self.file_name = file_name
+
+    def run(self):
+        global proc
+        os.chdir(SRC_DIR)
+        proc = Popen(['python', '-u', './src/vee-cmd.py', '--graph', self.file_name],
+                     stdin=PIPE, stdout=PIPE, stderr=STDOUT, shell=False, close_fds=True)
+        while True:
+            return_code = proc.poll()
+            if return_code == None:
+                print("reading1")
+                print('Processid:', proc.pid)
+                out = proc.stdout.readline()
+                print('got', out)
+                self.dataReady.emit(out)
+            else:
+                print("Breaking")
+                break
+        print("Done")
+        proc.wait()
 
 ## Main application window.
 class MainWindow(QtGui.QMainWindow):
@@ -70,6 +67,7 @@ class MainWindow(QtGui.QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = ui
         self.settings = {}
+        self._thread = None
         self.ui.setupUi(self)
         self.connectComponents()
         self.ui.outputPinsList.setCurrentRow(0)
@@ -116,8 +114,11 @@ class MainWindow(QtGui.QMainWindow):
         # Button Behaviors
         ui.browserFiles.clicked.connect(self.browse)
 
-        ui.addSignal.clicked.connect(self.addSignal)
+        ui.addSignal.clicked.connect(self.addOutputSignal)
+        ui.addInputSignal.clicked.connect(self.addInputSignal)
+        ui.pushBuild.clicked.connect(self.buildScenario)
         ui.pushRun.clicked.connect(self.runScenario)
+        ui.pushStop.clicked.connect(self.stopScenario)
 
         # A useful default. Should not exist in production.
         if os.path.isfile("/Users/john/Projects/VEE/student.cc"):
@@ -143,12 +144,23 @@ class MainWindow(QtGui.QMainWindow):
         ui.maxAnalogValue.setEnabled(False)
         ui.serialLineEdit.setEnabled(False)
 
-    def addSignal(self):
+    def addOutputSignal(self):
         """Add a signal to the list of signals."""
         name = self.ui.signalName.text()
-        if name:
+        if name and not self.ui.inputPinsList.findItems(name, QtCore.Qt.MatchExactly) \
+                and not self.ui.outputPinsList.findItems(name, QtCore.Qt.MatchExactly):
             self.ui.outputPinsList.addItem(name)
             self.ui.signalName.clear()
+        else:
+            return
+
+    def addInputSignal(self):
+        """Adds an output signal to the signal list."""
+        name = self.ui.inputSignalName.text()
+        if name and not self.ui.inputPinsList.findItems(name, QtCore.Qt.MatchExactly) \
+                and not self.ui.outputPinsList.findItems(name, QtCore.Qt.MatchExactly):
+            self.ui.inputPinsList.addItem(name)
+            self.ui.inputSignalName.clear()
         else:
             return
 
@@ -160,21 +172,54 @@ class MainWindow(QtGui.QMainWindow):
         else:
             None
 
-    def runScenario(self):
+    def buildScenario(self):
+        "Run a scenario."
         scenario_file = self.ui.studentFiles.currentItem()
-        print(scenario_file.text())
-        a = ApplicationRunner(scenario_file.text())
-        tmp_file = tempfile.NamedTemporaryFile()
-        self._saveAs(tmp_file)
-        print(tmp_file.name)
-        r = a.make()
-        print(r)
-        r = a.run()
-        print(r)
+        print(type(scenario_file))
+        print(dir(scenario_file))
+        if not scenario_file:
+            return
+        os.chdir(SRC_DIR)
+        builder = Popen(['make'], stdout=PIPE, env={'VEE_TARGET':scenario_file.text()})
+        builder.wait()
+        (out, err) = builder.communicate()
+        print("Output: " + out)
+        self.ui.buildLog.setReadOnly(True)
+        self.ui.buildLog.setPlainText(out)
+
+    def runScenario(self):
+        "Run a scenario."
+        self.buildScenario()
+        if self._thread == None:
+            scenario_file = self.ui.studentFiles.currentItem()
+            if not scenario_file:
+                return
+            self.__tmp_file = tempfile.NamedTemporaryFile()
+            self._saveAs(self.__tmp_file)
+            self.__tmp_file.seek(0)
+            self.__tmp_file.flush()
+            os.fsync(self.__tmp_file.fileno())
+            self._thread = RunnerThread(self.__tmp_file.name)
+            self._thread.dataReady.connect(self._updateOutputText, QtCore.Qt.QueuedConnection)
+            self._thread.start()
+        else:
+            sys.stderr.write("Trying to start a second application runner. Error")
+
+    def _updateOutputText(self, data):
+        old_txt = self.ui.buildLog.toPlainText()
+        self.ui.buildLog.setPlainText(old_txt + ' ' + data)
+
+    def stopScenario(self):
+        "Run a scenario."
+        global proc
+        if self._thread != None:
+            proc.terminate()
+            self._thread.exit()
+            self._thread = None
 
     def updatePinConfiguration(self):
         "Update the configuration settings."
-        pinData = { }
+        pinData = dict()
 
         if self.getCurrentSignalId() == None:
             return
@@ -232,7 +277,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def resetData(self):
         "Resets the currently stored data."
-        self.settings = {}
+        self.settings = dict()
 
     def browse(self):
         "Browers for listing emulation files."

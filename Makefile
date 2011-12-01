@@ -2,6 +2,7 @@ VEE_TARGET=student.cc
 PYSIDE_UIC=/usr/local/bin/pyside-uic
 CC=clang
 CXX=clang++
+CMAKE=/usr/local/bin/cmake
 
 DOXYGEN = doxygen
 
@@ -43,7 +44,7 @@ src/vee/configuration_ui.py: resources/configuration_ui.ui
 
 zip:
 	@echo "Creating a zip out of the current directory."
-	@tar -czvf vee-contents.tar.gz `find CMakeLists.txt Makefile include src -type f`
+	@tar -czvf vee-contents.tar.gz `find student.cc CMakeLists.txt Makefile include src -type f`
 .PHONY: zip
 
 gen: src/vee/configuration_ui.py
@@ -63,12 +64,12 @@ build:
 	@echo $(CURDIR)
 	@mkdir -p ./build
 	@mkdir -p ./bin
-	cd build && cmake .. -DVEE_SRC_FILE=$(VEE_TARGET)
+	cd build && $(CMAKE) .. -DVEE_SRC_FILE=$(VEE_TARGET)
 	cd build && make
 .PHONY: build
 
 sample: build test/test.cfg
-	@nice python src/vee-cmd.py test/test.cfg
+	@nice python src/vee-cmd.py test/test.cfg -g
 .PHONY: sample
 
 gui: gen
