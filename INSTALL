@@ -37,7 +37,7 @@ Python, CMake and Qt.
 
 OS X Install Instructions
 
-Using homebrew:
+Using homebrew, see http://mxcl.github.com/homebrew/ for more information on homebrew:
   $ brew install cmake pyside git
   
   This will install all of the dependencies using brew's package management system.
